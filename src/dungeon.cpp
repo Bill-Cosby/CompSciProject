@@ -69,45 +69,59 @@ void dungeons::hallwaymaker()
     std::stack<coordinate> mazeEnd;
     mazeEnd.push(mazebegin);
     dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+    std::cout << dungeon_grid[0].size() << "," << dungeon_grid.size() << std::endl;
     while(true)
     {
         test++;
         previousMove=direction;
-        direction=diceroller(generator);
-        std::cout << mazeEnd.top().x << "," << mazeEnd.top().y << "\tdirection: " << direction << std::endl;
-        if (mazeEnd.top().y-2>0 and dungeon_grid[mazeEnd.top().x][mazeEnd.top().y-2]==false and direction==1)
+        if (mazeEnd.size()>0)
         {
-            mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y-1));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-            mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y-1));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+            while (true)
+            {
+                direction=diceroller(generator);
+                if (mazeEnd.top().y-2>0 and dungeon_grid[mazeEnd.top().x][mazeEnd.top().y-2]==false and direction==1 and previousMove!=3)
+                {
+                    std::cout << mazeEnd.top().x << "," << mazeEnd.top().y << "\tdirection: " << direction << std::endl;
+                    mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y-1));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y-1));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    break;
+                }
+                else if (mazeEnd.top().x+2<dungeon_grid[0].size()-1 and dungeon_grid[mazeEnd.top().x+2][mazeEnd.top().y]==false and direction==2 and previousMove!=4)
+                {
+                    std::cout << mazeEnd.top().x << "," << mazeEnd.top().y << "\tdirection: " << direction << std::endl;
+                    mazeEnd.push(coordinate(mazeEnd.top().x+1,mazeEnd.top().y));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    mazeEnd.push(coordinate(mazeEnd.top().x+1,mazeEnd.top().y));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    break;
+                }
+                else if (mazeEnd.top().y+2<dungeon_grid.size() and dungeon_grid[mazeEnd.top().x][mazeEnd.top().y+2]==false and direction==3 and previousMove!=1)
+                {
+                    std::cout << mazeEnd.top().x << "," << mazeEnd.top().y << "\tdirection: " << direction << std::endl;
+                    mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y+1));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y+1));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    break;
+                }
+                else if (mazeEnd.top().x-2>0 and dungeon_grid[mazeEnd.top().x-2][mazeEnd.top().y]==false and direction==4 and previousMove!=2)
+                {
+                    std::cout << mazeEnd.top().x << "," << mazeEnd.top().y << "\tdirection: " << direction << std::endl;
+                    mazeEnd.push(coordinate(mazeEnd.top().x-1,mazeEnd.top().y));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    mazeEnd.push(coordinate(mazeEnd.top().x-1,mazeEnd.top().y));
+                    dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
+                    break;
+                }
+                else if (mazeEnd.size()-1>0)
+                {
+                    mazeEnd.pop();
+                }
+            }
         }
-        else if (mazeEnd.top().x+2<dungeon_grid[0].size()-1 and dungeon_grid[mazeEnd.top().x+2][mazeEnd.top().y]==false and direction==2)
-        {
-            mazeEnd.push(coordinate(mazeEnd.top().x+1,mazeEnd.top().y));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-            mazeEnd.push(coordinate(mazeEnd.top().x+1,mazeEnd.top().y));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-        }
-        else if (mazeEnd.top().y+2<dungeon_grid.size() and dungeon_grid[mazeEnd.top().x][mazeEnd.top().y+2]==false and direction==3)
-        {
-            mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y+1));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-            mazeEnd.push(coordinate(mazeEnd.top().x,mazeEnd.top().y+1));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-        }
-        else if (mazeEnd.top().x-2>0 and dungeon_grid[mazeEnd.top().x-2][mazeEnd.top().y]==false and direction==4)
-        {
-            mazeEnd.push(coordinate(mazeEnd.top().x-1,mazeEnd.top().y));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-            mazeEnd.push(coordinate(mazeEnd.top().x-1,mazeEnd.top().y));
-            dungeon_grid[mazeEnd.top().x][mazeEnd.top().y]=true;
-        }
-        else
-        {
-            mazeEnd.pop();
-        }
-        if (mazeEnd.top().x==mazebegin.x and mazeEnd.top().y==mazebegin.y or test==60000)
+        if (mazeEnd.top().x==mazebegin.x and mazeEnd.top().y==mazebegin.y or test==6000)
         {
             std::cout << test;
             break;
