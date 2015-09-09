@@ -6,21 +6,25 @@ dungeons::dungeons()
     std::ofstream myfile;
     std::uniform_int_distribution<int> mazeSize(500,1000);
     std::uniform_int_distribution<int> mazestart(0,1000);
-    w=mazeSize(generator);
-    h=w;
+//    w=mazeSize(generator);
+//    h=w;
+    w=5;
+    h=5;
+    mazebegin.x=2;
+    mazebegin.y=3;
     directions[0]=coordinate(0,-1);
     directions[1]=coordinate(1,0);
     directions[2]=coordinate(0,1);
     directions[3]=coordinate(-1,0);
-    while(true)
-    {
-        mazebegin.x=mazestart(generator);
-        mazebegin.y=mazestart(generator);
-        if (mazebegin.x<w and mazebegin.y<h)
-        {
-            break;
-        }
-    }
+//    while(true)
+//    {
+//        mazebegin.x=mazestart(generator);
+//        mazebegin.y=mazestart(generator);
+//        if (mazebegin.x<w and mazebegin.y<h)
+//        {
+//            break;
+//        }
+//    }
 
     dungeon_grid.resize(h);
 
@@ -57,25 +61,33 @@ dungeons::dungeons()
 
 void dungeons::hallwaymaker()
 {
+    //Random Number Generators
     std::default_random_engine generator(time(0));
     std::stack<coordinate> mazetracker;
     std::vector<int>directionsToCheck;
     std::uniform_int_distribution<int> roomDirection(1,4);
+
+    //variable declaration
     int direction;
     int temp;
     bool timeToBreak;
+
+    //begin stack
     mazetracker.push(mazebegin);
+    dungeon_grid[mazetracker.top().y][mazetracker.top().x]=true;
+    //algorithm begin
     while (true)
     {
         if (mazetracker.size()==0)
         {
-            std::cout << "Here\n";
+            //std::cout << "Stack is empty\n";
             break;
         }
         directionsToCheck=adjacencyCheck(mazetracker.top(), dungeon_grid);
+        //std::cout << mazetracker.top().x << "," << mazetracker.top().y << "\t" << direction << std::endl;
         if (directionsToCheck.size()==0)
         {
-            std::cout << mazetracker.top().x << "," << mazetracker.top().y << std::endl;
+            //std::cout << "No where else to go\n";
             break;
         }
         while (timeToBreak==false)
@@ -83,25 +95,44 @@ void dungeons::hallwaymaker()
             temp=roomDirection(generator);
             for (int i=0;i<directionsToCheck.size();i++)
             {
+                std::cout << directionsToCheck[i] << std::endl;
                 if (directionsToCheck[i]==temp)
                 {
                     direction=temp;
+                    std::cout << direction << std::endl;
                     timeToBreak=true;
                 }
             }
+            std::cout << std::endl;
         }
         timeToBreak=false;
-        if (dungeon_grid[mazetracker.top().y+directions[direction-1].y][mazetracker.top().x+directions[direction-1].x]==false and mazetracker.top().y+directions[direction-1+direction-1].y>0 and mazetracker.top().y+directions[direction-1+direction-1].y<h and mazetracker.top().y+directions[direction-1+direction-1].y>0 and mazetracker.top().x+directions[direction-1+direction-1].x<w)
+        if (dungeon_grid[mazetracker.top().y+directions[direction-1].y][mazetracker.top().x+directions[direction-1].x]==false and mazetracker.top().y+directions[(direction-1)*2].y>0 and mazetracker.top().y+directions[direction-1*2].y<h and mazetracker.top().y+directions[(direction-1)*2].y>0 and mazetracker.top().x+directions[(direction-1)*2].x<w)
         {
             mazetracker.push(coordinate(mazetracker.top().x+directions[direction-1].x,mazetracker.top().y+directions[direction-1].y));
             dungeon_grid[mazetracker.top().y][mazetracker.top().x]=true;
-            mazetracker.push(coordinate(mazetracker.top().x+directions[direction-1].x,mazetracker.top().y+directions[direction-1].y));
-            dungeon_grid[mazetracker.top().y][mazetracker.top().x]=true;
+//            mazetracker.push(coordinate(mazetracker.top().x+directions[direction-1].x,mazetracker.top().y+directions[direction-1].y));
+//            dungeon_grid[mazetracker.top().y][mazetracker.top().x]=true;
         }
         else
         {
             mazetracker.pop();
-            //mazetracker.pop();
+            std::cout << "pop!\n";
+        }
+         std::cout << mazetracker.top().x << "," << mazetracker.top().y << std::endl;
+        for (int i=0;i<5;i++)
+        {
+            for (int j=0;j<5;j++)
+            {
+                if (mazetracker.top().x==j and mazetracker.top().y == i)
+                {
+                    std::cout<< "!";
+                }
+                else
+                {
+                    std::cout << dungeon_grid[i][j];
+                }
+            }
+            std::cout << std::endl;
         }
         directionsToCheck.clear();
     }
