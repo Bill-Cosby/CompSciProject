@@ -1,18 +1,13 @@
+
 #include "ofApp.h"
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
+#include <vector>
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetColor(ofColor(0,0,255));
-    for (int i=0;i<test.dungeon_grid.size();i++)
-    {
-        for (int j=0;j<test.dungeon_grid[0].size();i++)
-        {
-            if (test.dungeon_grid[i][j]==true)
-            {
-                tiles.push_back(ofRectangle(i*10,j*10,10,10));
-            }
-        }
-    }
+callPerlin();
 }
 
 //--------------------------------------------------------------
@@ -22,10 +17,13 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    for (int i=0;i<tiles.size();i++)
-    {
-        tiles[i];
+for(int x=0; x<1000; x++)
+{
+    for(int y=0; y<1000; y++)
+    {   ofSetColor(PerlinNoise.perlin_noise_sum[x][y]+400,PerlinNoise.perlin_noise_sum[x][y]+400,150*PerlinNoise.perlin_noise_sum[x][y]+400);
+        ofCircle(x,y,1);
     }
+}
 }
 
 //--------------------------------------------------------------
@@ -72,3 +70,6 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
+
+
+
