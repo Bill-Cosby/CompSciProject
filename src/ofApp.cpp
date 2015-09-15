@@ -8,7 +8,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 //callPerlin();
-ofSetColor(ofColor(0,0,0));
+screenPosition=testDungeon.mazeBegin;
+playerPosition=screenPosition;
 }
 
 //--------------------------------------------------------------
@@ -18,16 +19,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetColor(ofColor(0,0,0));
     for (int i=0;i<testDungeon.dungeon_grid.size();i++)
     {
         for (int j=0;j<testDungeon.dungeon_grid[0].size();j++)
         {
             if (testDungeon.dungeon_grid[i][j]==true)
             {
-                ofRect(i,j,1,1);
+                ofRect(i*10-screenPosition.x,j*10-screenPosition.y,10,10);
             }
         }
     }
+    ofSetColor(ofColor(255,0,0));
+    ofCircle(400,300,5);
 for(int x=0; x<1000; x++)
 {
     for(int y=0; y<1000; y++)
@@ -40,7 +44,22 @@ for(int x=0; x<1000; x++)
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key== OF_KEY_LEFT)
+    {
+        screenPosition.x-=10;
+    }
+    else if (key== OF_KEY_RIGHT)
+    {
+        screenPosition.x+=10;
+    }
+    else if (key== OF_KEY_UP)
+    {
+        screenPosition.y-=10;
+    }
+    else if (key== OF_KEY_DOWN)
+    {
+        screenPosition.y+=10;
+    }
 }
 
 //--------------------------------------------------------------

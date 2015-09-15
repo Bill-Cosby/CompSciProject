@@ -2,9 +2,10 @@
 
 dungeon::dungeon()
 {
+    std::vector<std::vector<bool> > temp_grid;
+    int firstY=-1,firstX;
     std::default_random_engine generator(time(0));
     std::uniform_int_distribution<int> mazeSize(0,1000);    //random number engine
-
     w=mazeSize(generator);
     h=mazeSize(generator);                              //self explanatory
 
@@ -21,8 +22,35 @@ dungeon::dungeon()
     mazeBegin.x=w/2;
     mazeBegin.y=h/2;
     hallwayMaker();
-
-
+    for (int i=0;i<h;i++)
+    {
+        for (int j=0;j<w;j++){
+            if (dungeon_grid[i][j]==true and firstY==-1){
+                firstY=i;
+                firstX=j;
+                temp_grid.resize(h-firstY);
+            }
+            if (dungeon_grid[i][j]== true and j<firstX){
+                firstX=j;
+            }
+        }
+    }
+    for (int i=0;i<h;i++)
+    {
+        for (int j=0;j<w;j++)
+        {
+            if (dungeon_grid[i][j]==true)
+            {
+                dungeon_grid[i-firstY][j-firstX]=true;
+                dungeon_grid[i][j]=false;
+            }
+        }
+    }
+    dungeon_grid.resize(h-firstY);
+    for (int i=0;i<dungeon_grid.size();i++)
+    {
+        dungeon_grid[i].resize(w-firstX);
+    }
     std::string mapOutput;
     for (int i=0;i<h;i++)
     {

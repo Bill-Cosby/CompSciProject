@@ -21,4 +21,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
         dungeon testDungeon;
+        coordinate screenPosition;
+        coordinate playerPosition;
 };
