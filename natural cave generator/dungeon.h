@@ -1,12 +1,12 @@
 #ifndef DUNGEON_H_INCLUDED
 #define DUNGEON_H_INCLUDED
-#include <random>
 #include <vector>
+#include <random>
+#include <stdlib.h>
+#include <time.h>
+#include <stack>
 #include <iostream>
 #include <fstream>
-#include <time.h>
-#include <functional>
-#include <stack>
 
 class coordinate
 {
@@ -16,28 +16,17 @@ public:
     coordinate();
 };
 
-class room
-{
-public:
-    int x,y,w,h;
-    room(int,int,int,int);
-};
-
-class dungeons
+class dungeon
 {
 private:
-    coordinate directions[4];
-public:
-
+    coordinate directions[4]={coordinate(0,-1),coordinate(1,0),coordinate(0,1),coordinate(-1,0)};
+    coordinate mazeBegin;
     int w,h;
-    coordinate mazebegin;
+public:
     std::vector<std::vector<bool> > dungeon_grid;
-    std::vector<room> rooms;
-    dungeons();
-    void hallwaymaker();
-    void smoother();
+    dungeon();
+    void hallwayMaker();
 };
 
-std::vector<int> adjacencyCheck(coordinate, std::vector<std::vector<bool> >);
 
 #endif // DUNGEON_H_INCLUDED
