@@ -120,6 +120,7 @@
 		</Unit>
 		<Unit filename="src/dungeon.cpp" />
 		<Unit filename="src/dungeon.h" />
+		<Unit filename="src/items.h" />
 		<Unit filename="src/main.cpp">
 			<Option virtualFolder="src" />
 		</Unit>
@@ -129,6 +130,8 @@
 		<Unit filename="src/ofApp.h">
 			<Option virtualFolder="src" />
 		</Unit>
+		<Unit filename="src/tiles.cpp" />
+		<Unit filename="src/tiles.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
