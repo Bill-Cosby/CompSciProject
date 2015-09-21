@@ -21,6 +21,7 @@ class dungeon
 private:
     coordinate directions[4]={coordinate(0,-1),coordinate(1,0),coordinate(0,1),coordinate(-1,0)};
     coordinate mazeBegin;
+    coordinate mazeEnd;
     int w,h;
 public:
     std::vector<std::vector<bool> > dungeon_grid;

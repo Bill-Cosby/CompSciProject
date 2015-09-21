@@ -4,7 +4,7 @@
 class item
 {
 public:
-    string name;
+    std::string name;
 };
 
 #endif // ITEMS_H_INCLUDED

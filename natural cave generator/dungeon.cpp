@@ -1,5 +1,5 @@
 #include "dungeon.h"
-
+#include "astar.cpp"
 dungeon::dungeon()
 {
     std::default_random_engine generator(time(0));
@@ -75,6 +75,7 @@ void dungeon::hallwayMaker()
             mazeTracker.push(coordinate(mazeTracker.top().x+directions[direction-1].x, mazeTracker.top().y+directions[direction-1].y));
             if (mazeTracker.top().x<w and mazeTracker.top().x<0 or mazeTracker.top().y>h or mazeTracker.top().y<0)
             {
+                mazeEnd=mazeTracker.top();
                 mazeTracker.pop();
             }
             else

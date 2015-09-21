@@ -14,3 +14,44 @@
 1442290092 source:c:\users\david\documents\code stuff\here we fucking go again\dungeon.cpp
 	"dungeon.h"
 
+1442865756 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\dungeon.cpp
+	"dungeon.h"
+	"astar.cpp"
+
+1442865641 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\dungeon.h
+	<vector>
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<iostream>
+	<fstream>
+
+1442865756 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\main.cpp
+	"dungeon.h"
+
+1442866174 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\astar.cpp
+	"astar.h"
+
+1442865901 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\astar.cpp
+	<iostream>
+	<iomanip>
+	<queue>
+	<string>
+	<math.h>
+	<ctime>
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+
+1442866174 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\natural cave generator\astar.h
+	<iostream>
+	<iomanip>
+	<queue>
+	<string>
+	<math.h>
+	<ctime>
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "dungeon.h"
+#include "micropather.h"
 
 class ofApp : public ofBaseApp{
 
