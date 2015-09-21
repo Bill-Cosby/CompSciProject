@@ -1,11 +1,11 @@
 #ifndef PATHFINDING_H_INCLUDED
 #define PATHFINDING_H_INCLUDED
 #include <vector>
-
+#include "searchCell.h"
 class Vector3
 {
 public:
-    int x,y;
+    int x,y,z;
 };
 
 class pathFinding

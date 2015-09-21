@@ -33,6 +33,9 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="pathFinding.cpp" />
+		<Unit filename="pathFinding.h" />
+		<Unit filename="searchCell.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

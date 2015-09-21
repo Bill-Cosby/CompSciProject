@@ -14,7 +14,7 @@ public:
 
     searchCell() : parent(0) {}
     searchCell(int,int,searchCell *_parent = 0) : m_xcoord(x), m_ycoord(y),
-    parent(_parent), m_id(y * WORLD_SIZE + y), G(0), H(0) {};
+    parent(_parent), m_id(y * WORLD_SIZE + x), G(0), H(0) {};
 
     float GetF() {return G+H;}
     float manhattanDistance(searchCell *nodeEnd)
