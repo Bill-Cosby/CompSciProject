@@ -1,7 +1,17 @@
 # depslib dependency file v1.0
-1385320478 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
+1443040801 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
 	<iostream>
+	<random>
+	<stdlib.h>
+	<time.h>
+	"aStar.h"
 
 1442873060 source:c:\users\maya\desktop\astar\astar\main.cpp
 	<iostream>
+
+1443040807 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
+	"aStar.h"
+
+1443040760 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.h
+	<vector>
 

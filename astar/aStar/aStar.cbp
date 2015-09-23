@@ -32,10 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="aStar.cpp" />
+		<Unit filename="aStar.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="pathFinding.cpp" />
-		<Unit filename="pathFinding.h" />
-		<Unit filename="searchCell.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
