@@ -1,7 +1,7 @@
 #pragma once
-
+#include "perlinNoise.h"
 #include "ofMain.h"
-#include "dungeon.h"
+//#include "dungeon.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,7 +20,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-        dungeon testDungeon;
-        coordinate screenPosition;
-        coordinate playerPosition;
+       // dungeon testDungeon;
+       // coordinate screenPosition;
+        //coordinate playerPosition;
+        perlinNoise z;
 };
