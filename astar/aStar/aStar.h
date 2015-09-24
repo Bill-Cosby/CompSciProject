@@ -1,6 +1,7 @@
 #ifndef ASTAR_H_INCLUDED
 #define ASTAR_H_INCLUDED
 #include <vector>
+#include <iostream>
 #include <stdlib.h>
 class coordinate
 {
@@ -14,13 +15,16 @@ class node
 {
 public:
     coordinate position;
+    coordinate parent;
+    int costSoFar;
     int gCost;
     int hCost;
     int fCost;
-    node(coordinate,coordinate,coordinate, int);
+    node(coordinate,coordinate, int);
+    node();
 };
 
 float heuristic(coordinate,coordinate);
 
-std::vector<coordinate> pathFinder(bool, coordinate, coordinate);
+std::vector<coordinate> pathFinder(bool[][20], coordinate, coordinate);
 #endif // ASTAR_H_INCLUDED
