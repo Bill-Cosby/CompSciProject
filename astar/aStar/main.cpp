@@ -28,13 +28,36 @@ int main()
             }
         }
     }
-    std::cout << foundPath.size();
     for (int i=0;i<20;i++)
     {
         for (int j=0;j<20;j++)
         {
-
+            bool nice=false;
+            for (int k=0;k<foundPath.size();k++)
+            {
+                //std::cout << foundPath[k].x << "," <<foundPath[k].y << std::endl;
+                if (foundPath[k].x==i&&foundPath[k].y==j)
+                {
+                    nice=true;
+                }
+            }
+            if (nice==false)
+            {
+                if (test_map[i][j]==true)
+                {
+                    //std::cout << "#";
+                }
+                else
+                {
+                    //std::cout << ".";
+                }
+                nice=false;
+            }
+            else
+            {
+                //std::cout << "p";
+            }
         }
+        std::cout << endl;
     }
-    std::cout << "Here";
 }

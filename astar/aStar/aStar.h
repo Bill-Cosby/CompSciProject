@@ -19,7 +19,6 @@ public:
     coordinate parent;
 
     //integer declarations
-    int costSoFar;
     int gCost;
     int hCost;
 

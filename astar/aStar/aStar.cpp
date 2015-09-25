@@ -43,8 +43,10 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
         //=============SET CURRENT NODE=================
         currentNode = openNodes[0];
         for (int i=0;i<openNodes.size();i++){
+            //std::cout << openNodes[i].position.x << "," << openNodes[i].position.y << std::endl;
             if (openNodes[i].fCost()<currentNode.fCost() || openNodes[i].fCost()==currentNode.fCost() && openNodes[i].hCost<currentNode.hCost)
             {
+                //std::cout << "Here\n";
                 currentNode=openNodes[i];
             }
         }
@@ -55,19 +57,25 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
         {
             if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
             {
-                openNodes.erase(openNodes.begin()+i);
                 closedNodes.push_back(currentNode);
+                //std::cout << closedNodes[i].parent.x << "," << closedNodes[i].parent.y << std::endl;
+                openNodes.erase(openNodes.begin()+i);
             }
         }
 
         if (currentNode.position.x == goal.x and currentNode.position.y == goal.y)
         {
-            //things!!!
+            for (int i=0;i<closedNodes.size();i++)
+            {
+                std::cout << closedNodes[i].parent.x << "," << closedNodes[i].parent.y << std::endl;
+                foundPath.push_back(closedNodes[i].parent);
+            }
+            return foundPath;
         }
         //==============================================
 
 
-        neighbors=getNeighbors(currentNode,test_map,goal,costSoFar);
+        neighbors=getNeighbors(currentNode,test_map,goal,currentNode.gCost);
         for (int i=0;i<neighbors.size();i++)
         {
             neighbor=neighbors[i];
@@ -79,24 +87,38 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                     if (openNodes.size()==0)
                     {
                         neighbors[i].gCost = newGCost;
-                        neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
+                        neighbors[i].hCost = heuristic(neighbor.position, goal)/*getDistance(neighbors[i], node(goal,goal,0))*/;
                         neighbors[i].parent=currentNode.position;
+                        //std::cout << "Neighbor hcost: " << neighbors[i].hCost << std::endl;
                         openNodes.push_back(neighbors[i]);
-                        std::cout << currentNode.position.x << " , " << currentNode.position.y << std::endl;
+                        //std::cout << currentNode.position.x << " , " << currentNode.position.y << std::endl;
                     }
 
+                    bool yougood=true;
                     for (int k=0;k<openNodes.size();k++)
                     {
-                        if (openNodes[k].position.x!=neighbors[i].position.x and openNodes[k].position.y!=neighbors[i].position.y)
+                        if (openNodes[k].position.x==neighbors[i].position.x and openNodes[k].position.y==neighbors[i].position.y)
                         {
-                            if (newGCost<neighbors[i].gCost)
-                            {
-                                neighbors[i].gCost = newGCost;
-                                neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
-                                neighbors[i].parent=currentNode.position;
-                            }
+
+                        //std::cout << openNodes[k].position.x << "," << openNodes[k].position.y << std::endl;
+                        //std::cout << neighbors[i].position.x << "," << neighbors[i].position.y << std::endl;
+                            //std::cout << k << std::endl;
+                            yougood=false;
+                            break;
                         }
                     }
+                    if (yougood==true)
+                    {
+                        if (newGCost<=neighbors[i].gCost)
+                        {
+                            neighbors[i].gCost = newGCost;
+                            neighbors[i].hCost = heuristic(neighbor.position, goal);
+                            neighbor=neighbors[i];
+                        }
+                        neighbors[i].parent=currentNode.position;
+                        openNodes.push_back(neighbors[i]);
+                    }
+
                 }
             }
         }
@@ -135,7 +157,12 @@ int getDistance(node nodeA, node nodeB)
     int distY= abs(nodeA.position.y - nodeB.position.y);
 
     if (distX > distY){
+            //std::cout << 14*distY + 10*(distX-distY) << std::endl;
         return 14*distY + 10*(distX-distY);
     }
-    return 14*distY + 10*(distY-distX);
+    else{
+        //std::cout << 14*distY + 10*(distY-distX) << std::endl;
+        return 14*distY + 10*(distY-distX);
+    }
+
 }
