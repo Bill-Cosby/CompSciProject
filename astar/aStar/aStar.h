@@ -14,17 +14,29 @@ public:
 class node
 {
 public:
+    //important coordinates
     coordinate position;
     coordinate parent;
+
+    //integer declarations
     int costSoFar;
     int gCost;
     int hCost;
-    int fCost;
+
+    //automatic variables
+    int fCost(){
+        return this->gCost+this->hCost;
+    }
+
+    //constructors
     node(coordinate,coordinate, int);
     node();
 };
 
-float heuristic(coordinate,coordinate);
-
 std::vector<coordinate> pathFinder(bool[][20], coordinate, coordinate);
+std::vector<node> getNeighbors(node,bool[][20],coordinate,int);
+
+float heuristic(coordinate,coordinate);
+int getDistance(node, node);
+
 #endif // ASTAR_H_INCLUDED

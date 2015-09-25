@@ -1,5 +1,5 @@
 #include "aStar.h"
-
+#include <unordered_set>
 coordinate::coordinate(int x_t, int y_t)
 {
     x=x_t;
@@ -20,7 +20,6 @@ node::node(coordinate current, coordinate goal, int costSoFar)
 {
     gCost=10+costSoFar;
     hCost=heuristic(current, goal);
-    fCost=gCost+hCost;
     position=current;
 }
 
@@ -30,100 +29,113 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     int lowestF_Cost=99999999;
 
     node currentNode;
-
+    node neighbor;
+    node temp;
 
     std::vector<node> openNodes;    //set to be evaluated
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
-
+    std::vector<node> neighbors;
 
     openNodes.push_back(node(start,goal,0)); //initialize open set
-
-    while (true)
+    while (openNodes.size()!=0)
     {
         //=============SET CURRENT NODE=================
-        for (int i=0;i<openNodes.size();i++)
-        {
-            if (openNodes[i].fCost<lowestF_Cost)
+        currentNode = openNodes[0];
+        for (int i=0;i<openNodes.size();i++){
+            if (openNodes[i].fCost()<currentNode.fCost() || openNodes[i].fCost()==currentNode.fCost() && openNodes[i].hCost<currentNode.hCost)
             {
-                lowestF_Cost=openNodes[i].fCost;
                 currentNode=openNodes[i];
             }
         }
-
         //==============================================
 
-        //====ADD NODE TO CLOSED AND REMOVE FROM OPEN===
+        //REMOVE NODE FROM openNodes AND ADD TO closedNodes
         for (int i=0;i<openNodes.size();i++)
         {
-            if (openNodes[i].position.x==currentNode.position.x and openNodes[i].position.y==currentNode.position.y)
+            if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
             {
-                closedNodes.push_back(openNodes[i]);
                 openNodes.erase(openNodes.begin()+i);
+                closedNodes.push_back(currentNode);
             }
-            if (currentNode.position.x==goal.x&&currentNode.position.y==goal.y)
-            {
-                while (currentNode.parent.x!=start.x and currentNode.parent.y!=start.y)
-                {
-                    foundPath.push_back(currentNode.parent);
-                    for (int j=0;j<closedNodes.size();i++)
-                    {
-                        if (closedNodes[j].position.x==currentNode.parent.x&&closedNodes[j].position.y==currentNode.parent.y)
-                        {
-                            currentNode=closedNodes[j];
-                            break;
-                        }
-                    }
-                }
-                return foundPath;
-            }
+        }
+
+        if (currentNode.position.x == goal.x and currentNode.position.y == goal.y)
+        {
+            //things!!!
         }
         //==============================================
 
-        //=======FOR EACH NEIGHBOR IN CURRENT NODE======
-        for (int x=-1;x<2;x++)
+
+        neighbors=getNeighbors(currentNode,test_map,goal,costSoFar);
+        for (int i=0;i<neighbors.size();i++)
         {
-            for (int y=-1;y<2;y++)
+            neighbor=neighbors[i];
+            for (int j=0;j<closedNodes.size();j++)
             {
-                //====if neighbor is current node====
-                if (x!=0&&y!=0)
+                if (test_map[neighbors[i].position.x][neighbors[i].position.y]!=1 or closedNodes[j].position.x!=neighbors[i].position.x and closedNodes[j].position.y!=neighbors[i].position.y)
                 {
-                    node neighbor=node(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal, currentNode.gCost);
-                    //====if neighbor is walkable====
-                    if (test_map[neighbor.position.x][neighbor.position.y]==0)
+                    int newGCost = currentNode.gCost + getDistance(currentNode, neighbors[i]);
+                    if (openNodes.size()==0)
                     {
-                        for (int i=0;i<closedNodes.size();i++)
+                        neighbors[i].gCost = newGCost;
+                        neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
+                        neighbors[i].parent=currentNode.position;
+                        openNodes.push_back(neighbors[i]);
+                        std::cout << currentNode.position.x << " , " << currentNode.position.y << std::endl;
+                    }
+
+                    for (int k=0;k<openNodes.size();k++)
+                    {
+                        if (openNodes[k].position.x!=neighbors[i].position.x and openNodes[k].position.y!=neighbors[i].position.y)
                         {
-                            //====if neighbor isn't a closed node====
-                            if (neighbor.position.x!=closedNodes[i].position.x && neighbor.position.y!=closedNodes[i].position.y)
+                            if (newGCost<neighbors[i].gCost)
                             {
-                                for (int i=0;i<openNodes.size();i++)
-                                {
-                                    int newGCost=currentNode.gCost+14;
-                                    if (openNodes[i].position.x!=neighbor.position.x && openNodes[i].position.y!=neighbor.position.y || newGCost<neighbor.gCost)
-                                    {
-                                        neighbor.parent=currentNode.position;
-                                        if (newGCost<neighbor.gCost)
-                                        {
-                                            openNodes.push_back(neighbor);
-                                        }
-                                    }
-                                }
-                            }
-                            if (openNodes.size()==0)
-                            {
-                                openNodes.push_back(neighbor);
+                                neighbors[i].gCost = newGCost;
+                                neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
+                                neighbors[i].parent=currentNode.position;
                             }
                         }
                     }
                 }
             }
         }
-        //===============================================
+
+
     }
 }
 
 float heuristic(coordinate current, coordinate goal)
 {
     return abs(current.x-goal.x)+abs(current.y-current.y);
+}
+
+std::vector<node> getNeighbors(node Node, bool test_map[][20], coordinate goal, int costSoFar)
+{
+    std::vector<node> neighbors;
+    for (int x=-1;x<=1;x++){
+        for (int y=-1;y<=1;y++){
+            if (x==0 and y==0){
+                continue;
+            }
+            int checkX=Node.position.x+x, checkY=Node.position.y+y;
+            if (checkX>=0 and checkX<20 and checkY>=0 and checkY<20)
+            {
+                neighbors.push_back(node(coordinate(checkX,checkY), goal, costSoFar));
+            }
+        }
+    }
+
+    return neighbors;
+}
+
+int getDistance(node nodeA, node nodeB)
+{
+    int distX= abs(nodeA.position.x - nodeB.position.x);
+    int distY= abs(nodeA.position.y - nodeB.position.y);
+
+    if (distX > distY){
+        return 14*distY + 10*(distX-distY);
+    }
+    return 14*distY + 10*(distY-distX);
 }
