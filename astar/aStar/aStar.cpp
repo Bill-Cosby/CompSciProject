@@ -38,6 +38,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     std::vector<node> neighbors;
 
     openNodes.push_back(node(start,goal,0)); //initialize open set
+    currentNode = openNodes[0];
     while (openNodes.size()!=0)
     {
         std::cout << "\n==========================================\n";
@@ -48,7 +49,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
             bool nice=false;
             for (int k=0;k<foundPath.size();k++)
             {
-                //std::cout << foundPath[k].x << "," <<foundPath[k].y << std::endl;
+                std::cout << foundPath[k].x << "," <<foundPath[k].y << std::endl;
                 if (foundPath[k].x==i&&foundPath[k].y==j)
                 {
                     nice=true;
@@ -74,14 +75,14 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
         std::cout << std::endl;
     }
         //=============SET CURRENT NODE=================
-        currentNode = openNodes[0];
         for (int i=0;i<openNodes.size();i++){
+            lowestF_Cost=openNodes[0].fCost();
             //std::cout << openNodes[i].position.x << "," << openNodes[i].position.y << std::endl;
-            if (openNodes[i].fCost()<currentNode.fCost())
+            if (openNodes[i].fCost()<=lowestF_Cost)
             {
                 lowestF_Cost=currentNode.fCost();
                 currentNode=openNodes[i];
-                foundPath.push_back(currentNode.position);
+                std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
             }
             else if (openNodes[i].fCost()==currentNode.fCost() && openNodes[i].hCost<currentNode.hCost and openNodes[i].fCost()<lowestF_Cost)
             {
@@ -119,15 +120,15 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                 if (test_map[neighbors[i].position.y][neighbors[i].position.x]==0 and closedNodes[j].position.x!=neighbors[i].position.x and closedNodes[j].position.y!=neighbors[i].position.y)
                 {
                     int newGCost = currentNode.gCost + getDistance(currentNode, neighbors[i]);
-//                    if (openNodes.size()==0)
-//                    {
-//                        neighbors[i].gCost = newGCost;
-//                        neighbors[i].hCost = heuristic(neighbor.position, goal)/*getDistance(neighbors[i], node(goal,goal,0))*/;
-//                        neighbors[i].parent=currentNode.position;
-//                        //std::cout << "Neighbor hcost: " << neighbors[i].hCost << std::endl;
-//                        openNodes.push_back(neighbors[i]);
-//                        //std::cout << currentNode.position.x << " , " << currentNode.position.y << std::endl;
-//                    }
+                    if (openNodes.size()==0)
+                    {
+                        neighbors[i].gCost = newGCost;
+                        neighbors[i].hCost = heuristic(neighbor.position, goal)/*getDistance(neighbors[i], node(goal,goal,0))*/;
+                        neighbors[i].parent=currentNode.position;
+                        //std::cout << "Neighbor hcost: " << neighbors[i].hCost << std::endl;
+                        openNodes.push_back(neighbors[i]);
+                        //std::cout << currentNode.position.x << " , " << currentNode.position.y << std::endl;
+                    }
                     //std::cout << openNodes.size() << std::endl;
                     bool yougood=true;
                     for (int k=0;k<openNodes.size();k++)
@@ -135,8 +136,8 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                         if (openNodes[k].position.x==neighbors[i].position.x and openNodes[k].position.y==neighbors[i].position.y)
                         {
 
-                        //std::cout << openNodes[k].position.x << "," << openNodes[k].position.y << std::endl;
-                        //std::cout << neighbors[i].position.x << "," << neighbors[i].position.y << std::endl;
+                        std::cout << openNodes[k].position.x << "," << openNodes[k].position.y << std::endl;
+                        std::cout << neighbors[i].position.x << "," << neighbors[i].position.y << std::endl;
                             //std::cout << k << std::endl;
                             yougood=false;
                             break;
@@ -147,7 +148,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                         if (newGCost<neighbors[i].gCost)
                         {
                             neighbors[i].gCost = newGCost;
-                            neighbors[i].hCost = heuristic(neighbor.position, goal);
+                            neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
                             neighbor=neighbors[i];
                             std::cout << "Here\n";
                         }
