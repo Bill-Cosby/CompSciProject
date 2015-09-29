@@ -24,7 +24,7 @@ private:
 public:
     coordinate mazeBegin;
     std::vector<std::vector<bool> > dungeon_grid;
-    dungeon();
+     dungeon();
     void hallwayMaker();
 };
 

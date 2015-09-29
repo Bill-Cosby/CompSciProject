@@ -56,7 +56,7 @@ void perlinNoise::callPerlin()
 
     }
 
-    for(int f=0; f<4; f++)
+    for(int f=0; f<3; f++)
     {
         grid_length=1000/pow(2,f);
         gradients.push_back(blank3);
@@ -77,9 +77,13 @@ void perlinNoise::callPerlin()
         {
             for(int y=0; y<1000; y++)
             {
-                coordinate[0]=fmod(x,grid_length)/grid_length;
-                coordinate[1]=fmod(y,grid_length)/grid_length;
-                perlin_noise_sum[x][y]+=400/pow(2,f)*perlin_noise(coordinate,gradients[f][x/grid_length][y/grid_length],gradients[f][x/grid_length+1][y/grid_length],gradients[f][x/grid_length+1][y/grid_length+1],gradients[f][x/grid_length][y/grid_length+1]);
+                double x0=x/grid_length;
+                int x1=x/grid_length;
+                double y0=y/grid_length;
+                int y1=y/grid_length;
+                coordinate[0]=x0-x1;
+                coordinate[1]=y0-y1;
+                perlin_noise_sum[x][y]+=400/pow(2,f)*perlin_noise(coordinate,gradients[f][x1][y1],gradients[f][x1+1][y1],gradients[f][x1+1][y1+1],gradients[f][x1][y1+1]);
 
             }
         }//calls perlin_noise at each point

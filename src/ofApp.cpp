@@ -1,9 +1,10 @@
 #include "ofApp.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
-z.callPerlin();
-/*screenPosition=testDungeon.mazeBegin;
-playerPosition=screenPosition;*/
+//z.callPerlin();
+screenPosition=testDungeon.mazeBegin;
+playerPosition.x=300;
+playerPosition.y=400;
 }
 
 //--------------------------------------------------------------
@@ -13,7 +14,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-  /*  ofSetColor(ofColor(0,0,0));
+    ofSetColor(ofColor(0,0,0));
    for (int i=0;i<testDungeon.dungeon_grid.size();i++)
     {
         for (int j=0;j<testDungeon.dungeon_grid[0].size();j++)
@@ -25,35 +26,37 @@ void ofApp::draw(){
         }
     }
     ofSetColor(ofColor(255,0,0));
-    ofCircle(400,300,5);*/
-for(int x=0; x<1000; x++)
+    ofCircle(playerPosition.x,playerPosition.y,5);
+/*for(int x=0; x<1000; x++)
 {
     for(int y=0; y<1000; y++)
     {
         ofSetColor(z.perlin_noise_sum[x][y]+150,z.perlin_noise_sum[x][y]+150,z.perlin_noise_sum[x][y]+150);
         ofCircle(x,y,1);
     }
-}
+}*/
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-   /* if (key== OF_KEY_LEFT)
+   int  i=(playerPosition.x+screenPosition.x)/10;
+    int j=(playerPosition.y+screenPosition.y)/10;
+    if (key== OF_KEY_LEFT and testDungeon.dungeon_grid[i-1][j])
     {
         screenPosition.x-=10;
     }
-    else if (key== OF_KEY_RIGHT)
+    else if (key== OF_KEY_RIGHT and testDungeon.dungeon_grid[i+1][j])
     {
-        screenPosition.x+=10;
+       screenPosition.x+=10;
     }
-    else if (key== OF_KEY_UP)
+    else if (key==OF_KEY_UP and testDungeon.dungeon_grid[i][j-1])
     {
         screenPosition.y-=10;
     }
-    else if (key== OF_KEY_DOWN)
+    else if (key== OF_KEY_DOWN and testDungeon.dungeon_grid[i][j+1])
     {
         screenPosition.y+=10;
-    }*/
+    }
 }
 
 //--------------------------------------------------------------

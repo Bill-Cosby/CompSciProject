@@ -30,11 +30,12 @@ dungeon::dungeon()
                 firstX=j;
                 temp_grid.resize(h-firstY);
             }
-            if (dungeon_grid[i][j]== true and j<firstX){
+            if (dungeon_grid[i][j]==true and j<firstX){
                 firstX=j;
             }
         }
     }
+
     for (int i=0;i<h;i++)
     {
         for (int j=0;j<w;j++)
@@ -46,6 +47,7 @@ dungeon::dungeon()
             }
         }
     }
+
     dungeon_grid.resize(h-firstY);
     for (int i=0;i<dungeon_grid.size();i++)
     {
