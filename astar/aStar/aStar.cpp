@@ -27,6 +27,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
 {
     int costSoFar=0;
     int lowestF_Cost=99999999;
+    int breakChecker;
 
     node currentNode;
     node neighbor;
@@ -41,7 +42,6 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     currentNode = openNodes[0];
     while (openNodes.size()!=0)
     {
-
         //=============SET CURRENT NODE=================
         for (int i=0;i<openNodes.size();i++){
             lowestF_Cost=openNodes[0].fCost();
@@ -59,7 +59,6 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
             }
         }
         //==============================================
-
         for (int i=0;i<openNodes.size();i++)
         {
             if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
@@ -68,6 +67,10 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                 //std::cout << closedNodes[i].parent.x << "," << closedNodes[i].parent.y << std::endl;
                 openNodes.erase(openNodes.begin()+i);
             }
+        }
+        if (closedNodes.size()>20*20)
+        {
+            break;
         }
         if (currentNode.position.x == goal.x and currentNode.position.y == goal.y)
         {
