@@ -17,7 +17,7 @@ int main()
         for (int j=0;j<20;j++)
         {
             int temp=distributor(engine);
-            if (temp>10)
+            if (temp<3 )
             {
                 test_map[i][j]=1;
             }
@@ -25,7 +25,9 @@ int main()
             {
                 test_map[i][j]=0;
             }
+            std::cout << test_map[i][j];
         }
+        std::cout << std::endl;
     }
     std::vector<coordinate> foundPath=pathFinder(test_map,coordinate(0,0),coordinate(19,19));
     for (int i=0;i<20;i++)
@@ -55,7 +57,7 @@ int main()
             }
             else
             {
-                //std::cout << "p";
+                std::cout << "p";
             }
         }
         std::cout << endl;
