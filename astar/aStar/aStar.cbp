@@ -34,8 +34,6 @@
 		</Compiler>
 		<Unit filename="aStar.cpp" />
 		<Unit filename="aStar.h" />
-		<Unit filename="cat.cpp" />
-		<Unit filename="cat.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

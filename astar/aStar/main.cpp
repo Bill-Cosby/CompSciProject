@@ -1,53 +1,65 @@
 #include <iostream>
-#include "cat.h"
+#include <random>
+#include <time.h>
+#include "aStar.h"
+
 
 using namespace std;
 
 int main()
 {
-    cat_ai cat;
-    bool catSpot=false;
+
+    std::default_random_engine engine(time(NULL));
+    std::uniform_int_distribution<int> distributor(1,10);
     bool test_map[20][20];
     for (int i=0;i<20;i++)
     {
         for (int j=0;j<20;j++)
         {
-            test_map[i][j]=0;
+            int temp=distributor(engine);
+            if (temp<3 )
+            {
+                test_map[i][j]=1;
+            }
+            else
+            {
+                test_map[i][j]=0;
+            }
+            std::cout << test_map[i][j];
         }
+        std::cout << std::endl;
     }
-    while (true)
+    std::vector<coordinate> foundPath=pathFinder(test_map,coordinate(0,0),coordinate(19,19));
+    for (int i=0;i<20;i++)
     {
-        cat.decide(test_map);
-
-//        for (int i=0;i<20;i++)
-//        {
-//            for (int j=0;j<20;j++)
-//            {
-//                if (cat.position.x==j and cat.position.x==i)
-//                {
-//                    std::cout << "C";
-//                    catSpot=true;
-//                }
-//                else if (i==cat.bed.y && j==cat.bed.x)
-//                {
-//                    std::cout << "B";
-//                }
-//                else if (i==cat.food.y && j==cat.food.x)
-//                {
-//                    std::cout << "F";
-//                }
-//                else if (i==cat.litterBox.y && j==cat.litterBox.x)
-//                {
-//                    std::cout << "#";
-//                }
-//                else
-//                {
-//                    std::cout << ".";
-//                }
-//            }
-//            catSpot=false;
-//            std::cout << std::endl;
-//        }
+        for (int j=0;j<20;j++)
+        {
+            bool nice=false;
+            for (int k=0;k<foundPath.size();k++)
+            {
+                //std::cout << foundPath[k].x << "," <<foundPath[k].y << std::endl;
+                if (foundPath[k].x==i&&foundPath[k].y==j)
+                {
+                    nice=true;
+                }
+            }
+            if (nice==false)
+            {
+                if (test_map[i][j]==true)
+                {
+                    std::cout << "#";
+                }
+                else
+                {
+                    std::cout << ".";
+                }
+                nice=false;
+            }
+            else
+            {
+                std::cout << "p";
+            }
+        }
+        std::cout << endl;
     }
-
 }
