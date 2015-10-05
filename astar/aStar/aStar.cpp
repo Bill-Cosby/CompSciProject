@@ -99,7 +99,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
             neighbor=neighbors[i];
             for (int j=0;j<closedNodes.size();j++)
             {
-                if (/*test_map[neighbors[i].position.y][neighbors[i].position.x]==0 and*/ closedNodes[j].position.x!=neighbors[i].position.x and closedNodes[j].position.y!=neighbors[i].position.y)
+                if (closedNodes[j].position.x!=neighbors[i].position.x or closedNodes[j].position.y!=neighbors[i].position.y)
                 {
                     int newGCost = currentNode.gCost + getDistance(currentNode, neighbors[i]);
                     if (openNodes.size()==0)
