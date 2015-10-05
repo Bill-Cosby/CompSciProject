@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1444063588 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
+1444062277 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
 	<iostream>
 	<random>
 	<time.h>
-	"statelessAI.h"
+	"aStar.h"
 
 1442873060 source:c:\users\maya\desktop\astar\astar\main.cpp
 	<iostream>
 
-1444062822 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
+1443544765 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -16,10 +16,4 @@
 	<vector>
 	<iostream>
 	<stdlib.h>
-
-1444063428 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\statelessai.h
-	"aStar.h"
-
-1444063588 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\statelessai.cpp
-	"statelessAI.h"
 
