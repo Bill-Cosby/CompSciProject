@@ -35,6 +35,8 @@
 		<Unit filename="aStar.cpp" />
 		<Unit filename="aStar.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="statelessAI.cpp" />
+		<Unit filename="statelessAI.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

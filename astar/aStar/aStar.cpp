@@ -117,10 +117,6 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                     {
                         if (openNodes[k].position.x==neighbors[i].position.x and openNodes[k].position.y==neighbors[i].position.y)
                         {
-
-                        //std::cout << openNodes[k].position.x << "," << openNodes[k].position.y << std::endl;
-                        //std::cout << neighbors[i].position.x << "," << neighbors[i].position.y << std::endl;
-                            //std::cout << k << std::endl;
                             yougood=false;
                             break;
                         }
@@ -130,7 +126,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                         if (newGCost<neighbors[i].gCost)
                         {
                             neighbors[i].gCost = newGCost;
-                            neighbors[i].hCost = /*heuristic(neighbor.position, goal)*/getDistance(neighbors[i], node(goal,goal,0));
+                            neighbors[i].hCost = getDistance(neighbors[i], node(goal,goal,0));
                             neighbor=neighbors[i];
                         }
                         neighbors[i].parent=currentNode.position;
