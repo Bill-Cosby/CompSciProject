@@ -7,7 +7,11 @@ class firstAi
 public:
     std::vector<coordinate> aiPath;
     coordinate position;
+    coordinate food;
+    coordinate shit;
     coordinate goal;
+    int hunger,pooper;
+    int placeInPath;
     firstAi();
     void decide(bool[][20]);
 };

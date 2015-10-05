@@ -25,9 +25,7 @@ int main()
             {
                 test_map[i][j]=0;
             }
-            std::cout << test_map[i][j];
         }
-        std::cout << std::endl;
     }
 
 
@@ -37,12 +35,21 @@ int main()
             for (int j=0;j<20;j++)
             {
                 bool nice=false;
-                if (test.position.y==i and test.position.x==j)
+                bool nicenice=false;
+                if (test.position.x==i and test.position.y==j)
                 {
                     std::cout << "@";
                     nice=true;
                 }
-                if (nice==false)
+                for (int h=0;h<test.aiPath.size();h++)
+                {
+                    if (test.aiPath[h].y==j and test.aiPath[h].x==i and nice==false)
+                    {
+                        std::cout << "*";
+                        nicenice=true;
+                    }
+                }
+                if (nice==false and nicenice==false)
                 {
                     if (test_map[i][j]==true)
                     {
@@ -57,6 +64,7 @@ int main()
             }
             std::cout << endl;
         }
+        std::cout << endl;
         test.decide(test_map);
     }
 

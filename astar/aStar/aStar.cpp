@@ -121,6 +121,13 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                             break;
                         }
                     }
+                    for (int k=0;k<closedNodes.size();k++)
+                    {
+                        if (closedNodes[k].fCost()<neighbors[i].fCost())
+                        {
+                            yougood=false;
+                        }
+                    }
                     if (yougood==true)
                     {
                         if (newGCost<neighbors[i].gCost)

@@ -3,33 +3,47 @@
 firstAi::firstAi()
 {
     position=coordinate(0,0);
+    food = coordinate(15,8);
+    shit = coordinate(2,2);
+    hunger=0;
+    pooper=10;
 }
 
 void firstAi::decide(bool test_map[20][20])
 {
+    hunger--;
+    pooper--;
+    if (position.x==food.x and position.y==food.y)
+    {
+        hunger=20;
+    }
+    if (position.x==shit.x and position.y==shit.y)
+    {
+        pooper=20;
+    }
     if (aiPath.size()==0)
     {
-        while (true)
+        if (hunger<=0)
         {
-            int goal_x,goal_y;
-            std::cout << "Where am I walking?: ";
-            std::cin >> goal_x;
-            std::cout << ",";
-            std::cin >> goal_y;
-            if (test_map[goal_y][goal_x]==1)
-            {
-                std::cout << "That's a wall man\n";
-            }
-            else
-            {
-                goal=coordinate(goal_x,goal_y);
-                break;
-            }
+            goal=food;
+        }
+        else if (pooper<=0)
+        {
+            goal=shit;
+        }
+        if (position.x!=goal.x and position.y!=goal.y)
+        {
+            aiPath=pathFinder(test_map,position,goal);
         }
     }
-    else
+    else if(goal.x==position.x and goal.y==position.y)
     {
-        position=aiPath[0];
+        aiPath.clear();
     }
-    aiPath=pathFinder(test_map,position,goal);
+    if (aiPath.size()!=0)
+    {
+        placeInPath=aiPath.size()-1;
+        position=aiPath[placeInPath];
+        aiPath.erase(aiPath.begin()+placeInPath);
+    }
 }
