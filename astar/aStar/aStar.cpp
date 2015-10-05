@@ -18,7 +18,7 @@ node::node()
 
 node::node(coordinate current, coordinate goal, int costSoFar)
 {
-    gCost=costSoFar;
+    gCost=10+costSoFar;
     hCost=heuristic(current, goal);
     position=current;
 }
@@ -163,7 +163,7 @@ std::vector<node> getNeighbors(node Node, bool test_map[][20], coordinate goal, 
             int checkX=Node.position.x+x, checkY=Node.position.y+y;
             if (checkX>=0 and checkX<20 and checkY>=0 and checkY<20 and test_map[Node.position.x+x][Node.position.y+y]==0)
             {
-                neighbors.push_back(node(coordinate(checkX,checkY), goal, costSoFar/*+((abs(x)+abs(y))+1))*/));
+                neighbors.push_back(node(coordinate(checkX,checkY), goal, costSoFar));
                 neighbors[0].parent=Node.position;
             }
         }
