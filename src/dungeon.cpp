@@ -1,4 +1,4 @@
-#include "dungeon.h"
+/*#include "dungeon.h"
 
 dungeon::dungeon()
 {
@@ -38,7 +38,7 @@ dungeon::dungeon()
 
     for (int i=0;i<h;i++)
     {
-        for (int j=0;j<w;j++)
+        for (int j=0;j<w;j++)//test
         {
             if (dungeon_grid[i][j]==true)
             {
@@ -132,3 +132,4 @@ coordinate::coordinate(int x_t,int y_t)
 coordinate::coordinate()
 {
 }
+*/

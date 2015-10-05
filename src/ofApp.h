@@ -20,8 +20,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-        dungeon testDungeon;
+        /*dungeon testDungeon;
         coordinate screenPosition;
         coordinate playerPosition;
-        perlinNoise z;
+        perlinNoise z;*/
 };

@@ -1,10 +1,10 @@
 #include "ofApp.h"
 //--------------------------------------------------------------
 void ofApp::setup(){
-//z.callPerlin();
+/*z.callPerlin();
 screenPosition=testDungeon.mazeBegin;
 playerPosition.x=300;
-playerPosition.y=400;
+playerPosition.y=400;*/
 }
 
 //--------------------------------------------------------------
@@ -14,7 +14,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(ofColor(0,0,0));
+    /*ofSetColor(ofColor(0,0,0));
    for (int i=0;i<testDungeon.dungeon_grid.size();i++)
     {
         for (int j=0;j<testDungeon.dungeon_grid[0].size();j++)
@@ -27,7 +27,7 @@ void ofApp::draw(){
     }
     ofSetColor(ofColor(255,0,0));
     ofCircle(playerPosition.x,playerPosition.y,5);
-/*for(int x=0; x<1000; x++)
+for(int x=0; x<1000; x++)
 {
     for(int y=0; y<1000; y++)
     {
@@ -39,7 +39,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-   int  i=(playerPosition.x+screenPosition.x)/10;
+  /* int  i=(playerPosition.x+screenPosition.x)/10;
     int j=(playerPosition.y+screenPosition.y)/10;
     if (key== OF_KEY_LEFT and testDungeon.dungeon_grid[i-1][j])
     {
@@ -56,7 +56,7 @@ void ofApp::keyPressed(int key){
     else if (key== OF_KEY_DOWN and testDungeon.dungeon_grid[i][j+1])
     {
         screenPosition.y+=10;
-    }
+    }*/
 }
 
 //--------------------------------------------------------------

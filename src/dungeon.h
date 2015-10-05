@@ -1,12 +1,12 @@
-#ifndef DUNGEON_H_INCLUDED
+/*#ifndef DUNGEON_H_INCLUDED
 #define DUNGEON_H_INCLUDED
-#include <vector>
 #include <random>
 #include <stdlib.h>
 #include <time.h>
 #include <stack>
 #include <iostream>
 #include <fstream>
+#include "tiles.h"
 
 class coordinate
 {
