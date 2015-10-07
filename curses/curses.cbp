@@ -32,12 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="curses.h" />
+		<Unit filename="include/curses.h" />
+		<Unit filename="include/panel.h" />
+		<Unit filename="lib/pdcurses.lib" />
 		<Unit filename="main.cpp" />
-		<Unit filename="ncurses.h" />
-		<Unit filename="panel.h" />
-		<Unit filename="xcurses.h" />
-		<Unit filename="xpanel.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
