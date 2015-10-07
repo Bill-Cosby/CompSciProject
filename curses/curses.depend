@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1444242773 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+	<iostream>
+	"include/curses.h"
+	<cstdlib>
+
+1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
+	"xcurses.h"
+
+1110652044 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\xcurses.h
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<os2.h>
+	<stdlib.h>
+	<sys/video.h>
+	<os2.h>
+	<dos.h>
+	<windows.h>
+	<windows.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<i86.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<stdio.h>
+	<curspriv.h>
+	<stdlib.h>
+
+1220933418 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+

@@ -8,11 +8,6 @@ using namespace std;
 
 int main()
 {
-    std::string strarr[3] = {"ram", "mohan", "sita"};
-for(std::string & str : strarr) {
-  std::cout << str << std::endl;
-}
-
     std::default_random_engine engine(time(NULL));
     std::uniform_int_distribution<int> distributor(1,10);
     bool test_map[20][20];
