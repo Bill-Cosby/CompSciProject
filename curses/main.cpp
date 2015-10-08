@@ -37,7 +37,7 @@ int main()
         {
             for (int x=0;x<20;x++)
             {
-                putchar(y,x,tileArray[chpos].defaultchar);
+                mvaddch(y,x,tileArray[chpos].defaultchar);
             }
             chpos++;
             if (chpos>=3)
