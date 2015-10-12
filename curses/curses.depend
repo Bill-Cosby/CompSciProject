@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1444250622 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1444679236 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	<iostream>
 	"include/curses.h"
 	<cstdlib>
@@ -39,7 +39,7 @@
 	<curspriv.h>
 	<stdlib.h>
 
-1444249163 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
+1220933418 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
