@@ -7,11 +7,12 @@ using namespace std;
 class tile
 {
 public:
+    bool corner;
     char occupychar;
     char defaultchar;
     int movementCost;
     tile(char,char,int);
-    tile(){};
+    tile(){corner=false;};
 };
 
 class player
@@ -19,7 +20,7 @@ class player
 public:
     int x,y;
     char symbol;
-    void movement(tile[][25]);
+    void movement(tile[][25],char);
     player();
 };
 
@@ -37,9 +38,9 @@ tile::tile(char oc,char dc, int mc)
     movementCost=mc;
 }
 
-void player::movement(tile map_[25][25])
+void player::movement(tile map_[25][25], char ch)
 {
-    int ch=getch();
+
     if (ch=='w')
     {
         if (map_[y-1][x].movementCost!=-1)
@@ -99,7 +100,7 @@ int main()
     map_[6][9]=tile('+','+',0);
     WINDOW* gameView;
     gameView=initscr();
-    WINDOW* inv = derwin(gameView,4,4,5,9);
+    WINDOW* inv = newwin(15,20,4,2);
     //WINDOW* box = subwin(inv,2,2,2,2);
     resize_term(50,100);
     keypad(gameView,true);
@@ -108,8 +109,27 @@ int main()
     curs_set(0);
     int ch;
     int chpos=0;
-    while ((ch=getch())!='p')
+    while (ch!='p')
     {
+        test.movement(map_, ch);
+        if (ch=='i' and inventory==false)
+        {
+            ch=0;
+            wborder(inv,0,0,0,0,0,0,0,0);
+            touchwin(inv);
+            wrefresh(inv);
+            inventory=true;
+            while (ch!='i')
+            {
+                mvwaddstr(inv,1,1,"yo");
+                wrefresh(inv);
+                ch=getch();
+            }
+            delwin(inv);
+            touchwin(gameView);
+            wrefresh(gameView);
+            inventory=false;
+        }
         for (int y=0;y<25;y++)
         {
             for (int x=0;x<25;x++)
@@ -124,22 +144,9 @@ int main()
                 }
             }
         }
-        if (ch=='i' and inventory==false)
-        {
-            wborder(inv,0,0,0,0,0,0,0,0);
-            touchwin(inv);
-            wrefresh(inv);
-            inventory=true;
-        }
-
-        if (ch=='i' and inventory==true)
-        {
-
-        }
-
-        test.movement(map_);
+        ch=getch();
         refresh();
-        doupdate();
+//        doupdate();
     }
     endwin();
 }
