@@ -88,8 +88,17 @@ int main()
                 }
                 else
                 {
-                    map_[i][j]=tile('#','#',-1);
+                    if (i==1 and j==1 or j==1 and i==9 or j==9 and i==9 or j==9 and i==1)
+                    {
+                        map_[i][j]=tile('0','0',-1);
+                        map_[i][j].corner=true;
+                    }
+                    else
+                    {
+                        map_[i][j]=tile('#','#',-1);
+                    }
                 }
+
             }
             else
             {
@@ -101,7 +110,6 @@ int main()
     WINDOW* gameView;
     gameView=initscr();
     WINDOW* inv = newwin(15,20,4,2);
-    //WINDOW* box = subwin(inv,2,2,2,2);
     resize_term(50,100);
     keypad(gameView,true);
     noecho();
