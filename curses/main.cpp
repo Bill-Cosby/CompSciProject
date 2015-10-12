@@ -11,7 +11,24 @@ public:
     char defaultchar;
     int movementCost;
     tile(char,char,int);
+    tile(){};
 };
+
+class player
+{
+public:
+    int x,y;
+    char symbol;
+    void movement(tile[][25]);
+    player();
+};
+
+player::player()
+{
+    x=3;
+    y=3;
+    symbol='@';
+}
 
 tile::tile(char oc,char dc, int mc)
 {
@@ -20,32 +37,109 @@ tile::tile(char oc,char dc, int mc)
     movementCost=mc;
 }
 
+void player::movement(tile map_[25][25])
+{
+    int ch=getch();
+    if (ch=='w')
+    {
+        if (map_[y-1][x].movementCost!=-1)
+        {
+            y--;
+        }
+    }
+    if (ch=='s')
+    {
+        if (map_[y+1][x].movementCost!=-1)
+        {
+            y++;
+        }
+    }
+    if (ch=='a')
+    {
+        if (map_[y][x-1].movementCost!=-1)
+        {
+            x--;
+        }
+    }
+    if (ch=='d')
+    {
+        if (map_[y][x+1].movementCost!=-1)
+        {
+            x++;
+        }
+    }
+}
+
 int main()
 {
-    tile tileArray[3]={tile('#','#',-1),tile('+','+',0),tile(',',',',0)};
-    WINDOW* penis;
-    penis=initscr();
+    bool inventory=false;
+    tile map_[25][25];
+    player test;
+    for (int i=0;i<25;i++)
+    {
+        for (int j=0;j<25;j++)
+        {
+            if (i>0 and i<10 and j>0 and j<10)
+            {
+                if (i<9 and i>1 and j<9 and j>1)
+                {
+                    map_[i][j]=tile('+','+',0);
+                }
+                else
+                {
+                    map_[i][j]=tile('#','#',-1);
+                }
+            }
+            else
+            {
+                map_[i][j]=tile('.','.',0);
+            }
+        }
+    }
+    map_[6][9]=tile('+','+',0);
+    WINDOW* gameView;
+    gameView=initscr();
+    WINDOW* inv = derwin(gameView,4,4,5,9);
+    //WINDOW* box = subwin(inv,2,2,2,2);
     resize_term(50,100);
-    keypad(penis,true);
+    keypad(gameView,true);
     noecho();
+    cbreak();
     curs_set(0);
     int ch;
     int chpos=0;
     while ((ch=getch())!='p')
     {
-        for (int y=0;y<20;y++)
+        for (int y=0;y<25;y++)
         {
-            for (int x=0;x<20;x++)
+            for (int x=0;x<25;x++)
             {
-                mvaddch(y,x,tileArray[chpos].defaultchar);
-            }
-            chpos++;
-            if (chpos>=3)
-            {
-                chpos=0;
+                if (test.x == x and test.y == y)
+                {
+                    mvaddch(y,x,test.symbol);
+                }
+                else
+                {
+                    mvaddch(y,x,map_[y][x].defaultchar);
+                }
             }
         }
+        if (ch=='i' and inventory==false)
+        {
+            wborder(inv,0,0,0,0,0,0,0,0);
+            touchwin(inv);
+            wrefresh(inv);
+            inventory=true;
+        }
+
+        if (ch=='i' and inventory==true)
+        {
+
+        }
+
+        test.movement(map_);
         refresh();
+        doupdate();
     }
     endwin();
 }
