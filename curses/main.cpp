@@ -71,8 +71,17 @@ void player::movement(tile map_[25][25], char ch)
     }
 }
 
+class coord
+{
+public:
+    int x,y;
+    coord(int x_,int y_){x=x_;y=y_;};
+    coord(){};
+};
+
 int main()
 {
+    coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
     bool inventory=false;
     tile map_[25][25];
     player test;
@@ -88,21 +97,29 @@ int main()
                 }
                 else
                 {
-                    if (i==1 and j==1 or j==1 and i==9 or j==9 and i==9 or j==9 and i==1)
-                    {
-                        map_[i][j]=tile('0','0',-1);
-                        map_[i][j].corner=true;
-                    }
-                    else
-                    {
-                        map_[i][j]=tile('#','#',-1);
-                    }
+                    map_[i][j]=tile('#','#',-1);
                 }
-
             }
             else
             {
                 map_[i][j]=tile('.','.',0);
+            }
+        }
+    }
+    for (int y=0;y<25;y++)
+    {
+        for (int x=0;x<25;x++)
+        {
+            for (int i=0;i<4;i++)
+            {
+                if (map_[y][x].movementCost==-1)
+                {
+                    if (map_[y+direction[i].y][x+direction[i].x].movementCost==-1 and map_[y+direction[i].y*-1][x+direction[i].x*-1].movementCost==-1)
+                    {
+                        break;
+                    }
+                    map_[y][x]=tile('0','0',0);
+                }
             }
         }
     }
@@ -154,7 +171,6 @@ int main()
         }
         ch=getch();
         refresh();
-//        doupdate();
     }
     endwin();
 }
