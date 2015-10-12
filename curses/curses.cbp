@@ -33,6 +33,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/curses.h" />
+		<Unit filename="include/dungeon.cpp" />
+		<Unit filename="include/dungeon.h" />
 		<Unit filename="include/panel.h" />
 		<Unit filename="lib/pdcurses.lib" />
 		<Unit filename="main.cpp" />

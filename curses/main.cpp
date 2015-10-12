@@ -1,5 +1,6 @@
 #include <iostream>
 #include "include/curses.h"
+#include "include/dungeon.h"
 #include <cstdlib>
 
 using namespace std;
@@ -20,7 +21,7 @@ class player
 public:
     int x,y;
     char symbol;
-    void movement(tile[][25],char);
+    void movement(tile[][0],char);
     player();
 };
 
@@ -83,46 +84,44 @@ int main()
 {
     coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
     bool inventory=false;
-    tile map_[25][25];
-    player test;
-    for (int i=0;i<25;i++)
+    std::vector< std::vector<bool> > map_t=dungeon().dungeon_grid;
+    tile map_[map_t.size()][map_t[0].size()];
+    for (int y=0;y<map_t.size();y++)
     {
-        for (int j=0;j<25;j++)
+        for (int x=0;x<map_t[0].size();x++)
         {
-            if (i>0 and i<10 and j>0 and j<10)
+            if (map_t[y][x]==1)
             {
-                if (i<9 and i>1 and j<9 and j>1)
-                {
-                    map_[i][j]=tile('+','+',0);
-                }
-                else
-                {
-                    map_[i][j]=tile('#','#',-1);
-                }
+                map_[y][x]=tile('#','#',-1);
             }
             else
             {
-                map_[i][j]=tile('.','.',0);
+                map_[y][x]=tile('.','.',0);
             }
         }
     }
-    for (int y=0;y<25;y++)
-    {
-        for (int x=0;x<25;x++)
-        {
-            for (int i=0;i<4;i++)
-            {
-                if (map_[y][x].movementCost==-1)
-                {
-                    if (map_[y+direction[i].y][x+direction[i].x].movementCost==-1 and map_[y+direction[i].y*-1][x+direction[i].x*-1].movementCost==-1)
-                    {
-                        break;
-                    }
-                    map_[y][x]=tile('0','0',0);
-                }
-            }
-        }
-    }
+    player test;
+//    for (int i=0;i<25;i++)
+//    {
+//        for (int j=0;j<25;j++)
+//        {
+//            if (i>0 and i<10 and j>0 and j<10)
+//            {
+//                if (i<9 and i>1 and j<9 and j>1)
+//                {
+//                    map_[i][j]=tile('=','=',0);
+//                }
+//                else
+//                {
+//                    map_[i][j]=tile('#','#',-1);
+//                }
+//            }
+//            else
+//            {
+//                map_[i][j]=tile('.','.',0);
+//            }
+//        }
+//    }
     map_[6][9]=tile('+','+',0);
     WINDOW* gameView;
     gameView=initscr();
@@ -146,7 +145,7 @@ int main()
             inventory=true;
             while (ch!='i')
             {
-                mvwaddstr(inv,1,1,"yo");
+                mvwaddstr(inv,1,1,"menu");
                 wrefresh(inv);
                 ch=getch();
             }
