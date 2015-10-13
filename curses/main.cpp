@@ -21,7 +21,7 @@ class player
 public:
     int x,y;
     char symbol;
-    void movement(tile[][0],char);
+    void movement(vector<vector<tile> >,char);
     player();
 };
 
@@ -39,7 +39,7 @@ tile::tile(char oc,char dc, int mc)
     movementCost=mc;
 }
 
-void player::movement(tile map_[25][25], char ch)
+void player::movement(vector<vector<tile> > map_, char ch)
 {
 
     if (ch=='w')
@@ -85,43 +85,26 @@ int main()
     coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
     bool inventory=false;
     std::vector< std::vector<bool> > map_t=dungeon().dungeon_grid;
-    tile map_[map_t.size()][map_t[0].size()];
+    std::vector<std::vector<tile> > map_;
+    map_.resize(map_t.size());
+    player test;
     for (int y=0;y<map_t.size();y++)
     {
+        map_[y].resize(map_t[0].size());
         for (int x=0;x<map_t[0].size();x++)
         {
             if (map_t[y][x]==1)
             {
-                map_[y][x]=tile('#','#',-1);
+                map_[y][x]=tile('.','.',0);
+                test.x=x;
+                test.y=y;
             }
             else
             {
-                map_[y][x]=tile('.','.',0);
+                map_[y][x]=tile('#','#',-1);
             }
         }
     }
-    player test;
-//    for (int i=0;i<25;i++)
-//    {
-//        for (int j=0;j<25;j++)
-//        {
-//            if (i>0 and i<10 and j>0 and j<10)
-//            {
-//                if (i<9 and i>1 and j<9 and j>1)
-//                {
-//                    map_[i][j]=tile('=','=',0);
-//                }
-//                else
-//                {
-//                    map_[i][j]=tile('#','#',-1);
-//                }
-//            }
-//            else
-//            {
-//                map_[i][j]=tile('.','.',0);
-//            }
-//        }
-//    }
     map_[6][9]=tile('+','+',0);
     WINDOW* gameView;
     gameView=initscr();
@@ -154,17 +137,17 @@ int main()
             wrefresh(gameView);
             inventory=false;
         }
-        for (int y=0;y<25;y++)
+        for (int y=test.y-12;y<test.y+12;y++)
         {
-            for (int x=0;x<25;x++)
+            for (int x=test.x-12;x<test.x+12;x++)
             {
-                if (test.x == x and test.y == y)
+                if (y-test.y==0 and x-test.x==0)
                 {
-                    mvaddch(y,x,test.symbol);
+                    mvaddch(y-test.y+12,x-test.x+12,test.symbol);
                 }
                 else
                 {
-                    mvaddch(y,x,map_[y][x].defaultchar);
+                    mvaddch(y-test.y+12,x-test.x+12, map_[y][x].defaultchar);
                 }
             }
         }
