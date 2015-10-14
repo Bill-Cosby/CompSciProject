@@ -81,7 +81,7 @@ void dungeon::hallwayMaker()
 
             mazeTracker.push(coordinate(mazeTracker.top().x+directions[direction-1].x, mazeTracker.top().y+directions[direction-1].y));
 
-            if (mazeTracker.top().x<w and mazeTracker.top().x<0 or mazeTracker.top().y>h or mazeTracker.top().y<0)
+            if (mazeTracker.top().x<w and mazeTracker.top().x<0 or mazeTracker.top().y>h or mazeTracker.top().y<0 and mazeTracker.size()>0)
             {
                 mazeTracker.pop();
             }

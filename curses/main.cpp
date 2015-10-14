@@ -15,12 +15,14 @@ public:
 
 int main()
 {
+    //direction array
     coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
-    bool inventory=false;
+    //stores the dungeon
     std::vector< std::vector<bool> > map_t=dungeon().dungeon_grid;
+    //the map the player interacts with
     std::vector<std::vector<tile> > map_;
     map_.resize(map_t.size());
-    player test;
+
     for (int y=0;y<map_t.size();y++)
     {
         map_[y].resize(map_t[0].size());
@@ -38,15 +40,26 @@ int main()
             }
         }
     }
-    map_[6][9]=tile('+','+',0);
+    //instantiate the player
+    player test;
+
+    instatiate the game window
     WINDOW* gameView;
     gameView=initscr();
+
+    //set the size and position of the inventory window
     WINDOW* inv = newwin(15,20,4,2);
+    //resize the terminal
     resize_term(50,100);
+    //allow the game view window and it's children to use the keyboard
     keypad(gameView,true);
+    //characters pressed don't show up on screen
     noecho();
+    //characters pressed are immediately available to program
     cbreak();
+    //cursor is invisible
     curs_set(0);
+    //stores key pressed
     int ch;
     int chpos=0;
     while (ch!='p')
@@ -56,7 +69,6 @@ int main()
         {
             ch=0;
             touchwin(inv);
-            wrefresh(inv);
             while (ch!='i')
             {
                 mvwaddstr(inv,1,1,"menu");
