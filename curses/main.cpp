@@ -5,7 +5,6 @@
 #include <cstdlib>
 
 using namespace std;
-
 class coord
 {
 public:
@@ -56,10 +55,10 @@ int main()
         if (ch=='i')
         {
             ch=0;
+            touchwin(inv);
+            wrefresh(inv);
             while (ch!='i')
             {
-                touchwin(inv);
-                wrefresh(inv);
                 mvwaddstr(inv,1,1,"menu");
                 wborder(inv,0,0,0,0,0,0,0,0);
                 wrefresh(inv);
