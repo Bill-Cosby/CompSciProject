@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1444701418 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1444846992 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	<iostream>
 	"include/curses.h"
 	"include/dungeon.h"
+	"actor.h"
 	<cstdlib>
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
@@ -46,7 +47,7 @@
 	<stdio.h>
 	<wchar.h>
 
-1444698982 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+1444704882 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
 1444698982 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
@@ -56,4 +57,13 @@
 	<stack>
 	<iostream>
 	<fstream>
+
+1444847002 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+	<vector>
+	"tile.h"
+
+1444847011 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+
+1444847603 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+	"actor.h"
 

@@ -1,76 +1,10 @@
 #include <iostream>
 #include "include/curses.h"
 #include "include/dungeon.h"
+#include "actor.h"
 #include <cstdlib>
 
 using namespace std;
-
-class tile
-{
-public:
-    bool corner;
-    char occupychar;
-    char defaultchar;
-    int movementCost;
-    tile(char,char,int);
-    tile(){corner=false;};
-};
-
-class player
-{
-public:
-    int x,y;
-    char symbol;
-    void movement(vector<vector<tile> >,char);
-    player();
-};
-
-player::player()
-{
-    x=3;
-    y=3;
-    symbol='@';
-}
-
-tile::tile(char oc,char dc, int mc)
-{
-    occupychar=oc;
-    defaultchar=dc;
-    movementCost=mc;
-}
-
-void player::movement(vector<vector<tile> > map_, char ch)
-{
-
-    if (ch=='w')
-    {
-        if (map_[y-1][x].movementCost!=-1)
-        {
-            y--;
-        }
-    }
-    if (ch=='s')
-    {
-        if (map_[y+1][x].movementCost!=-1)
-        {
-            y++;
-        }
-    }
-    if (ch=='a')
-    {
-        if (map_[y][x-1].movementCost!=-1)
-        {
-            x--;
-        }
-    }
-    if (ch=='d')
-    {
-        if (map_[y][x+1].movementCost!=-1)
-        {
-            x++;
-        }
-    }
-}
 
 class coord
 {
@@ -119,16 +53,15 @@ int main()
     while (ch!='p')
     {
         test.movement(map_, ch);
-        if (ch=='i' and inventory==false)
+        if (ch=='i')
         {
             ch=0;
-            wborder(inv,0,0,0,0,0,0,0,0);
-            touchwin(inv);
-            wrefresh(inv);
-            inventory=true;
             while (ch!='i')
             {
+                touchwin(inv);
+                wrefresh(inv);
                 mvwaddstr(inv,1,1,"menu");
+                wborder(inv,0,0,0,0,0,0,0,0);
                 wrefresh(inv);
                 ch=getch();
             }

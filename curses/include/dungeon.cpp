@@ -51,27 +51,6 @@ dungeon::dungeon()
     {
         dungeon_grid[i].resize(w-firstX);
     }
-    std::string mapOutput;
-    for (int i=0;i<h;i++)
-    {
-        for (int j=0;j<w;j++)
-        {
-            if (dungeon_grid[i][j]==true)
-            {
-                mapOutput+='.';
-            }
-            else
-            {
-                mapOutput+='H';
-            }
-        }
-        mapOutput+='\n';
-    }
-
-    std::ofstream myfile;
-    myfile.open("map.txt");
-    myfile << mapOutput;
-    myfile.close();
 }
 
 void dungeon::hallwayMaker()

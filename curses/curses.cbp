@@ -32,12 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="actor.cpp" />
+		<Unit filename="actor.h" />
 		<Unit filename="include/curses.h" />
 		<Unit filename="include/dungeon.cpp" />
 		<Unit filename="include/dungeon.h" />
 		<Unit filename="include/panel.h" />
 		<Unit filename="lib/pdcurses.lib" />
 		<Unit filename="main.cpp" />
+		<Unit filename="tile.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
