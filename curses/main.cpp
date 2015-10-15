@@ -15,6 +15,7 @@ public:
 
 int main()
 {
+    player test;
     //direction array
     coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
     //stores the dungeon
@@ -30,7 +31,7 @@ int main()
         {
             if (map_t[y][x]==1)
             {
-                map_[y][x]=tile('.','.',0);
+                map_[y][x]=tile(' ',' ',0);
                 test.x=x;
                 test.y=y;
             }
@@ -41,14 +42,12 @@ int main()
         }
     }
     //instantiate the player
-    player test;
 
-    instatiate the game window
-    WINDOW* gameView;
-    gameView=initscr();
+    //instantiate the game window
+    WINDOW* gameView=initscr();
 
     //set the size and position of the inventory window
-    WINDOW* inv = newwin(15,20,4,2);
+    WINDOW* inv;
     //resize the terminal
     resize_term(50,100);
     //allow the game view window and it's children to use the keyboard
@@ -68,18 +67,19 @@ int main()
         if (ch=='i')
         {
             ch=0;
+            inv=newwin(15,20,4,2);
             touchwin(inv);
             while (ch!='i')
             {
                 mvwaddstr(inv,1,1,"menu");
                 wborder(inv,0,0,0,0,0,0,0,0);
                 wrefresh(inv);
-                ch=getch();
+                ch=wgetch(inv);
             }
+            ch=0;
+            wclear(inv);
             delwin(inv);
             touchwin(gameView);
-            wrefresh(gameView);
-            inventory=false;
         }
         for (int y=test.y-12;y<test.y+12;y++)
         {
