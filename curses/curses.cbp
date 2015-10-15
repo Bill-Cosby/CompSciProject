@@ -42,8 +42,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.h" />
 		<Unit filename="tile.h" />
-		<Unit filename="window.cpp" />
-		<Unit filename="window.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

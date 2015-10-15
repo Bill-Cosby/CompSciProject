@@ -1,6 +1,7 @@
 #include <iostream>
-#include "window.h"
+#include "include/curses.h"
 #include "include/dungeon.h"
+#include "actor.h"
 #include <cstdlib>
 
 using namespace std;
@@ -14,7 +15,8 @@ public:
 
 int main()
 {
-    actor test('@',3,3);
+    //direction array
+    coord direction[4]={coord(0,-1),coord(1,0),coord(0,+1),coord(-1,0)};
     //stores the dungeon
     std::vector< std::vector<bool> > map_t=dungeon().dungeon_grid;
     //the map the player interacts with
@@ -29,6 +31,8 @@ int main()
             if (map_t[y][x]==1)
             {
                 map_[y][x]=tile('.','.',0);
+                test.x=x;
+                test.y=y;
             }
             else
             {
@@ -37,7 +41,9 @@ int main()
         }
     }
     //instantiate the player
+    player test;
 
+    instatiate the game window
     WINDOW* gameView;
     gameView=initscr();
 
@@ -55,6 +61,7 @@ int main()
     curs_set(0);
     //stores key pressed
     int ch;
+    int chpos=0;
     while (ch!='p')
     {
         test.movement(map_, ch);
@@ -72,18 +79,19 @@ int main()
             delwin(inv);
             touchwin(gameView);
             wrefresh(gameView);
+            inventory=false;
         }
-        for (int y=test.row()-12;y<test.row()+12;y++)
+        for (int y=test.y-12;y<test.y+12;y++)
         {
-            for (int x=test.col()-12;x<test.col()+12;x++)
+            for (int x=test.x-12;x<test.x+12;x++)
             {
-                if (y-test.row()==0 and x-test.col()==0)
+                if (y-test.y==0 and x-test.x==0)
                 {
-                    mvaddch(y-test.row()+12,x-test.col()+12,test.symbol());
+                    mvaddch(y-test.y+12,x-test.x+12,test.symbol);
                 }
                 else
                 {
-                    mvaddch(y-test.row()+12,x-test.col()+12, map_[y][x].defaultchar);
+                    mvaddch(y-test.y+12,x-test.x+12, map_[y][x].defaultchar);
                 }
             }
         }
