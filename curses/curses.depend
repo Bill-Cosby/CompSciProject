@@ -1,9 +1,7 @@
 # depslib dependency file v1.0
-1444956137 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
-	<iostream>
-	"include/curses.h"
+1445012535 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"include/dungeon.h"
-	"actor.h"
+	"window.h"
 	<cstdlib>
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
@@ -41,16 +39,16 @@
 	<curspriv.h>
 	<stdlib.h>
 
-1444692345 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
+1444662737 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
 	<wchar.h>
 
-1444953100 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+1444853339 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1444692929 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
+1444852901 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
@@ -58,12 +56,21 @@
 	<iostream>
 	<fstream>
 
-1444953270 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1445009970 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	<vector>
 	"tile.h"
 
-1444850752 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1444852901 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 
-1444953270 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1445009839 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
+
+1445012659 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+	"actor.h"
+	"include/curses.h"
+	<string>
+
+1445012530 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+	"window.h"
+	<iostream>
 

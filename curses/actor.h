@@ -3,13 +3,17 @@
 #include <vector>
 #include "tile.h"
 
-class player
+class actor
 {
-public:
     int x,y;
-    char symbol;
+    char _symbol;
+public:
     void movement(std::vector<std::vector<tile> >,char);
-    player();
+    actor();
+    int row(){return y;}
+    int col(){return x;}
+    char symbol(){return _symbol;}
+    void pos(int _y,int _x){x=_x;y=_y;}
 };
 
 #endif // ACTOR_H_INCLUDED

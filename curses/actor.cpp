@@ -1,13 +1,13 @@
 #include "actor.h"
 
-player::player()
+actor::actor()
 {
     x=3;
     y=3;
-    symbol='@';
+    _symbol='@';
 }
 
-void player::movement(std::vector<std::vector<tile> > map_, char ch)
+void actor::movement(std::vector<std::vector<tile> > map_, char ch)
 {
 
     if (ch=='w' or ch=='8'){
