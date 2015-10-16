@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="PerlinNoise.cpp" />
+		<Unit filename="PerlinNoise.h" />
 		<Unit filename="actor.cpp" />
 		<Unit filename="actor.h" />
 		<Unit filename="include/curses.h" />
@@ -42,6 +44,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.h" />
 		<Unit filename="tile.h" />
+		<Unit filename="window.cpp" />
+		<Unit filename="window.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
