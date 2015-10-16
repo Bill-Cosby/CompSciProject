@@ -21,7 +21,8 @@ class frame{
 public:
     WINDOW* sub;
 
-    frame(WINDOW* parent, int w, int h)
+    frame(WINDOW* parent, int w, int h);
+    void draw(const char*);
 };
 
 #endif // WINDOW_H_INCLUDED

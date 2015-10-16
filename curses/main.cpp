@@ -55,7 +55,8 @@ int main()
     //curs_set(0);
     //stores key pressed
     screen scr(100,50);
-    scr.add("Welcome!!");
+    frame thing(scr.win,100,50);
+    thing.draw("trying");
     int ch;
     int chpos=0;
     while (ch!='p')
