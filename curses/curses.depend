@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1445385376 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1445387048 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"include/dungeon.h"
 	"window.h"
 	<cstdlib>

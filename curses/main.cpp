@@ -8,10 +8,7 @@ using namespace std;
 int main()
 {
     actor test;
-//    //direction array
-    //stores the dungeon
     std::vector< std::vector<bool> > map_t=dungeon().dungeon_grid;
-//    //the map the actor interacts with
     std::vector<std::vector<tile> > _map;
     std::vector<actor> actors;
     actors.push_back(test);
@@ -33,13 +30,6 @@ int main()
             }
         }
     }
-
-    //set the size and position of the inventory window
-    //WINDOW* inv;
-    //resize the terminal
-    //resize_term(50,100);
-    //allow the game view window and it's children to use the keyboard
-    //keypad(gameView,true);
 
     screen scr(100,50);
     char ch;

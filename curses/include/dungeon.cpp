@@ -6,8 +6,8 @@ dungeon::dungeon()
     int firstY=-1,firstX;
     std::default_random_engine generator(time(0));
     std::uniform_int_distribution<int> mazeSize(0,1000);    //random number engine
-    w=mazeSize(generator);
-    h=mazeSize(generator);                              //self explanatory
+    w=2000;
+    h=2000;                              //self explanatory
 
     dungeon_grid.resize(h);
     for (int i=0;i<h;i++)                                   //initialize dungeon_grid to false
