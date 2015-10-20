@@ -8,8 +8,10 @@ class actor
     int x,y;
     char _symbol;
 public:
-    void movement(std::vector<std::vector<tile> >,char);
+    void movement(std::vector<std::vector<tile> >, char);
     actor();
+    bool player;
+
     int row(){return y;}
     int col(){return x;}
     char symbol(){return _symbol;}
