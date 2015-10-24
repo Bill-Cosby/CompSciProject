@@ -1,18 +1,7 @@
 #ifndef WINDOW_H_INCLUDED
 #define WINDOW_H_INCLUDED
 #include "actor.h"
-#include "include/curses.h"
 #include <string>
-
-class coord
-{
-public:
-    int x,y;
-    coord(int x_,int y_){x=x_;y=y_;};
-    coord(){};
-
-    bool operator == (coord coordinate2){return(x==coordinate2.x&&y==coordinate2.y);}
-};
 
 class frame{
     int _w,_h;

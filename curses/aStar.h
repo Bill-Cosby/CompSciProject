@@ -1,9 +1,10 @@
 #ifndef ASTAR_H_INCLUDED
 #define ASTAR_H_INCLUDED
-#include <vector>
 #include <iostream>
 #include <stdlib.h>
 #include "include/curses.h"
+#include "tile.h"
+#include "heap.h"
 class coordinate
 {
 public:
@@ -11,7 +12,7 @@ public:
     coordinate(int,int);
     coordinate();
 
-    bool operator == (coordinate _c){return (x==_c.x,y==_c.y);}
+    bool operator == (coordinate _c){return (x==_c.x and y==_c.y);}
 };
 
 class node
@@ -22,6 +23,7 @@ public:
     coordinate parent;
 
     //integer declarations
+    int HeapIndex;
     int gCost;
     int hCost;
 
@@ -32,13 +34,16 @@ public:
 
     //constructors
     node(coordinate,coordinate, int);
-    node();
+    node(){}
 
     bool operator == (node _n){return (position==_n.position/*,parent==_n.parent,gCost==_n.gCost,hCost==_n.hCost*/);}
 };
 
-std::vector<coordinate> pathFinder(bool[][20], coordinate, coordinate);
-std::vector<node> getNeighbors(node,bool[][20],coordinate,int);
+
+
+
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> >, coordinate, coordinate);
+std::vector<node> getNeighbors(node,std::vector<std::vector<tile> >,coordinate,int);
 
 float heuristic(coordinate,coordinate);
 int getDistance(coordinate, coordinate);

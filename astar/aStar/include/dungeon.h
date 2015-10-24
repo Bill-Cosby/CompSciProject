@@ -6,7 +6,14 @@
 #include <stack>
 #include <iostream>
 #include <fstream>
-#include "../window.h"
+
+class coordinate
+{
+public:
+    int x,y;
+    coordinate(int,int);
+    coordinate();
+};
 
 class dungeon
 {

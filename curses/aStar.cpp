@@ -12,10 +12,6 @@ coordinate::coordinate()
     y=0;
 }
 
-node::node()
-{
-}
-
 node::node(coordinate current, coordinate goal, int costSoFar)
 {
     gCost=costSoFar;
@@ -23,14 +19,8 @@ node::node(coordinate current, coordinate goal, int costSoFar)
     position=current;
 }
 
-std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coordinate goal)
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coordinate start, coordinate goal)
 {
-    WINDOW* win=initscr();
-    curs_set(0);
-    resize_term(100,50);
-    wrefresh(win);
-    noecho();
-    cbreak();
     int costSoFar = 0;
     int lowestF_Cost;
 
@@ -38,59 +28,25 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     node neighbor;
     node temp;
 
-    std::vector<node> openNodes;    //set to be evaluated
+    heap<node> openNodes;    //set to be evaluated
+    openNodes.currentItemCount=0;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
-    openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
-    while (openNodes.size()>0)
+    openNodes.Add(node(start,goal,0)); //initialize open set
+    while (openNodes.Count()>0)
     {
-        currentNode = openNodes[0];
-        //=============SET CURRENT NODE=================
-        for (node _n:openNodes)
-        {
-            if (_n.fCost()<currentNode.fCost() or _n.hCost<currentNode.hCost and _n.fCost()==currentNode.fCost())
-            {
-                currentNode=_n;
-            }
-        }
+        currentNode = openNodes.RemoveFirst();
         //==============================================
 
-        //==========CURSES DISPLAY======================
-        for (int y=0;y<20;y++)
-        {
-            for (int x=0;x<20;x++)
-            {
-                if (test_map[y][x]==1)
-                {
-                    mvwaddch(win,y,x,'#');
-                }
-                else
-                {
-                    mvwaddch(win,y,x,' ');
-                }
-            }
-        }
-        for (node _n:openNodes)
-        {
-
-            mvwaddch(win,_n.position.y,_n.position.x, 'O');
-        }
-        for (node _n:closedNodes)
-        {
-            mvwaddch(win,_n.position.y,_n.position.x,'C');
-        }
-        refresh();
-        //==============================================
 
         //=========PLACE CURRENT IN CLOSED==============
-        for (int i=0;i<openNodes.size();i++)
+        for (int i=0;i<openNodes.Count();i++)
         {
-            if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
+            if (openNodes.items[i].position.x==currentNode.position.x&&openNodes.items[i].position.y==currentNode.position.y)
             {
                 closedNodes.push_back(currentNode);
-                openNodes.erase(openNodes.begin()+i);
             }
         }
         //==============================================
@@ -130,14 +86,17 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
             {
 //              set movement new Gcost
                 int newMovementCostToNeighbor=currentNode.gCost+getDistance(currentNode.position,_n.position);
-                if (!nodeVectorContains(openNodes,_n))
+                if (!openNodes.Contains(_n) || newMovementCostToNeighbor < _n.gCost)
                 {
-                    if (newMovementCostToNeighbor < _n.gCost)
-                    {
-                        _n.gCost = newMovementCostToNeighbor;
-                    }
+                    _n.gCost = newMovementCostToNeighbor;
                     _n.parent= currentNode.position;
-                    openNodes.push_back(_n);
+                    if (!openNodes.Contains(_n))
+                    {
+                       openNodes.Add(_n);
+                       openNodes.SortUp(_n);
+                    }
+
+
                 }
             }
         }
@@ -145,7 +104,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     }
 }
 
-std::vector<node> getNeighbors(node Node, bool test_map[20][20], coordinate goal, int costSoFar)
+std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_map, coordinate goal, int costSoFar)
 {
     std::vector<node> neighbors;
     for (int x=-1;x<=1;x++){
@@ -157,7 +116,7 @@ std::vector<node> getNeighbors(node Node, bool test_map[20][20], coordinate goal
 
             int checkX=Node.position.x+x, checkY=Node.position.y+y;
 
-            if (checkX>=0 and checkX<20 and checkY>=0 and checkY<20 and test_map[Node.position.y+y][Node.position.x+x]==0)
+            if (checkX>=0 and checkX<test_map[0].size() and checkY>=0 and checkY<test_map.size() and test_map[Node.position.y+y][Node.position.x+x].movementCost==0)
             {
                 neighbors.push_back(node(coordinate(checkX,checkY), goal, costSoFar+getDistance(Node.position,coordinate(Node.position.x+x,Node.position.y+y))));
                 neighbors[0].parent=Node.position;

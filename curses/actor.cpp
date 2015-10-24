@@ -2,10 +2,34 @@
 
 actor::actor()
 {
-    x=3;
-    y=3;
     player=true;
     _symbol='@';
+}
+
+actor::actor(int throwaway)
+{
+    player=false;
+    _symbol='D';
+}
+
+void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal)
+{
+    if (goal == coordinate(x,y))
+    {
+        musttouch=false;
+        path.clear();
+        return;
+    }
+    if ((abs(x-goal.x)+abs(y-goal.y))>5 or musttouch==true)
+    {
+        musttouch=true;
+        path = pathFinder(test_map, coordinate(col(),row()), goal);
+    }
+    if (path.size()>0)
+    {
+        pos(path[path.size()-1].y,path[path.size()-1].x);
+    }
+    return;
 }
 
 void actor::movement(std::vector<std::vector<tile> > map_, char ch)
@@ -59,4 +83,10 @@ void actor::movement(std::vector<std::vector<tile> > map_, char ch)
             y++;
         }
     }
+    if (ch=='5')
+    {
+        y=y;
+        x=x;
+    }
+    refresh();
 }

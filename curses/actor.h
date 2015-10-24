@@ -1,7 +1,8 @@
 #ifndef ACTOR_H_INCLUDED
 #define ACTOR_H_INCLUDED
 #include <vector>
-#include "tile.h"
+#include "include/curses.h"
+#include "aStar.h"
 
 class actor
 {
@@ -9,8 +10,12 @@ class actor
     char _symbol;
 public:
     void movement(std::vector<std::vector<tile> >, char);
+    void aiMovement(std::vector<std::vector<tile> >, coordinate);
     actor();
+    actor(int);
     bool player;
+    bool musttouch;
+    std::vector<coordinate> path;
 
     int row(){return y;}
     int col(){return x;}

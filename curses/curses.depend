@@ -1,7 +1,6 @@
 # depslib dependency file v1.0
-1445387048 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1445680048 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"include/dungeon.h"
-	"window.h"
 	<cstdlib>
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
@@ -45,32 +44,47 @@
 	<stdio.h>
 	<wchar.h>
 
-1445380183 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+1445483169 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1444698982 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
+1445483156 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<iostream>
 	<fstream>
+	"../window.h"
 
-1445384562 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1445677326 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	<vector>
-	"tile.h"
+	"include/curses.h"
+	"aStar.h"
 
 1445384022 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 
-1445384562 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1445677418 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1445385093 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1445483032 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"actor.h"
-	"include/curses.h"
 	<string>
 
-1445385606 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1445496614 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
+
+1445682878 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+	<iostream>
+	<stdlib.h>
+	"include/curses.h"
+	"tile.h"
+	"heap.h"
+
+1445683070 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1445682962 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.h
+	<vector>
 

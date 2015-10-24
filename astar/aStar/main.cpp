@@ -8,6 +8,7 @@ using namespace std;
 
 int main()
 {
+
     std::default_random_engine engine(time(NULL));
     std::uniform_int_distribution<int> distributor(1,10);
     bool test_map[20][20];
@@ -36,7 +37,6 @@ int main()
             bool nice=false;
             for (int k=0;k<foundPath.size();k++)
             {
-                //std::cout << foundPath[k].x << "," <<foundPath[k].y << std::endl;
                 if (foundPath[k].x==i&&foundPath[k].y==j)
                 {
                     nice=true;

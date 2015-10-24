@@ -99,3 +99,13 @@ void dungeon::hallwayMaker()
         }
     }
 }
+
+coordinate::coordinate(int x_t,int y_t)
+{
+    x=x_t;
+    y=y_t;
+}
+
+coordinate::coordinate()
+{
+}

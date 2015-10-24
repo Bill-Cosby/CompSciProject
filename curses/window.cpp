@@ -7,11 +7,14 @@ screen::screen(int w,int h)
     _h=h;
     win=initscr();
     keypad(win,true);
-    noecho();
     curs_set(0);
     resize_term(h,w);
     subwindow=frame(win,h,w);
     wborder(win,0,0,0,0,0,0,0,0);
+    wrefresh(win);
+    noecho();
+    cbreak();
+    nodelay(win,true);
 }
 
 void screen::add(const char* _print)
@@ -24,16 +27,16 @@ void screen::add(const char* _print)
 void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
 {
     touchwin(subwindow.sub);
-    coord startingposition;
-    coord charplaced;
+    coordinate startingposition;
+    coordinate charplaced;
     for (int i=0;i<actors.size();i++)
     {
         if (actors[i].player==true)
         {
-            startingposition=coord(actors[i].col(),actors[i].row());
+            startingposition=coordinate(actors[i].col(),actors[i].row());
         }
     }
-    charplaced=coord(startingposition.x-(subwindow.width()-(subwindow.width()/2)),startingposition.y-(subwindow.height()-(subwindow.height()/2)));
+    charplaced=coordinate(startingposition.x-(subwindow.width()-(subwindow.width()/2)),startingposition.y-(subwindow.height()-(subwindow.height()/2)));
     for (int y=1;y<subwindow.height()-1;y++)
     {
         for (int x=1;x<subwindow.width()-1;x++)
@@ -44,7 +47,7 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
             }
             for (actor _a: actors)
             {
-                if (coord(_a.col(),_a.row())==coord(x+charplaced.x,y+charplaced.y))
+                if (coordinate(_a.col(),_a.row())==coordinate(x+charplaced.x,y+charplaced.y))
                 {
                     mvwaddch(subwindow.sub,y,x,_a.symbol());
                 }
