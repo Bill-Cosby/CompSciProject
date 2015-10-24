@@ -29,12 +29,13 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
     node temp;
 
     heap<node> openNodes;    //set to be evaluated
+
     openNodes.currentItemCount=0;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
-    openNodes.Add(node(start,goal,0)); //initialize open set
+    openNodes.Add(node(start,goal,0)); //initialize open
     while (openNodes.Count()>0)
     {
         currentNode = openNodes.RemoveFirst();
@@ -92,7 +93,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
                     _n.parent= currentNode.position;
                     if (!openNodes.Contains(_n))
                     {
-                       openNodes.Add(_n);
+                       _n=openNodes.Add(_n);
                        openNodes.SortUp(_n);
                     }
 

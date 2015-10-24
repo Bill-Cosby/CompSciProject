@@ -1,7 +1,7 @@
 #ifndef HEAP_H_INCLUDED
 #define HEAP_H_INCLUDED
 #include <vector>
-
+#include <iostream>
 
 template <class T>
 class heap
@@ -11,12 +11,13 @@ public:
 
     int currentItemCount;
 
-    void Add(T item)
+    T Add(T item)
     {
+        currentItemCount++;
         item.HeapIndex = currentItemCount;
         items.push_back(item);
         SortUp(item);
-        currentItemCount++;
+        return item;
     }
 
     T RemoveFirst()
@@ -78,7 +79,7 @@ public:
 
         while (true){
             T parentItem = items[parentIndex];
-            if (item.HeapIndex-parentIndex>0)
+            if (item.HeapIndex+1-parentItem.HeapIndex+1>0)
             {
                 Swap(item,parentItem);
             }
