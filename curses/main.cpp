@@ -38,9 +38,6 @@ int main()
     int chpos=0;
     while (ch!='p')
     {
-        if (actors[0].row()==actors[1].row() and actors[0].col()==actors[1].col())
-        {
-        }
         actors[1].movement(_map, ch);
         scr.drawGameworld(_map,actors);
         coordinate eh(actors[1].col(),actors[1].row());

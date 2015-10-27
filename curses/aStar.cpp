@@ -28,28 +28,19 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
     node neighbor;
     node temp;
 
-    heap<node> openNodes;    //set to be evaluated
-
-    openNodes.currentItemCount=0;
+        //set to be evaluated
+    BST<node> baseNode(node(start,goal,0));
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
-    openNodes.Add(node(start,goal,0)); //initialize open
-    while (openNodes.Count()>0)
+    while (true)
     {
-        currentNode = openNodes.RemoveFirst();
+        currentNode=baseNode.Give();
         //==============================================
 
-
         //=========PLACE CURRENT IN CLOSED==============
-        for (int i=0;i<openNodes.Count();i++)
-        {
-            if (openNodes.items[i].position.x==currentNode.position.x&&openNodes.items[i].position.y==currentNode.position.y)
-            {
-                closedNodes.push_back(currentNode);
-            }
-        }
+        closedNodes.push_back(currentNode);
         //==============================================
 
         //===========IF FOUND GOAL======================
@@ -87,14 +78,14 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
             {
 //              set movement new Gcost
                 int newMovementCostToNeighbor=currentNode.gCost+getDistance(currentNode.position,_n.position);
-                if (!openNodes.Contains(_n) || newMovementCostToNeighbor < _n.gCost)
+                if (!baseNode.contains(_n) || newMovementCostToNeighbor < _n.gCost)
                 {
                     _n.gCost = newMovementCostToNeighbor;
                     _n.parent= currentNode.position;
-                    if (!openNodes.Contains(_n))
+                    if (!baseNode.contains(_n))
                     {
-                       _n=openNodes.Add(_n);
-                       openNodes.SortUp(_n);
+                        BST<node> temp(_n);
+                        baseNode.Add(&temp);
                     }
 
 
