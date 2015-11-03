@@ -14,14 +14,11 @@ public:
     void add(BST* item){
         T ww=item->value;
         bool thing;
-        thing=true;
-        if (Right==nullptr)
-        {
-            thing=false;
-        }
         if (item->value.fCost() < value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost < value.gCost){
             if (Left==nullptr){
                 Left=item;
+                Left->Left=NULL;
+                Left->Right=NULL;
                 return;
             }
             else if(Left!=nullptr){
@@ -31,6 +28,8 @@ public:
         else if (item->value.fCost() > value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost > value.gCost){
             if (Right==nullptr){
                 Right=item;
+                Right->Left=NULL;
+                Right->Right=NULL;
                 return;
             }
             else if (Right!=nullptr){

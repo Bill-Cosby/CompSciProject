@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="perlin noise" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/perlin noise" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/perlin noise" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/noise/basictypes.h" />
+		<Unit filename="include/noise/exception.h" />
+		<Unit filename="include/noise/interp.h" />
+		<Unit filename="include/noise/latlon.h" />
+		<Unit filename="include/noise/mathconsts.h" />
+		<Unit filename="include/noise/misc.h" />
+		<Unit filename="include/noise/model/cylinder.h" />
+		<Unit filename="include/noise/model/line.h" />
+		<Unit filename="include/noise/model/model.h" />
+		<Unit filename="include/noise/model/plane.h" />
+		<Unit filename="include/noise/model/sphere.h" />
+		<Unit filename="include/noise/module/abs.h" />
+		<Unit filename="include/noise/module/add.h" />
+		<Unit filename="include/noise/module/billow.h" />
+		<Unit filename="include/noise/module/blend.h" />
+		<Unit filename="include/noise/module/cache.h" />
+		<Unit filename="include/noise/module/checkerboard.h" />
+		<Unit filename="include/noise/module/clamp.h" />
+		<Unit filename="include/noise/module/const.h" />
+		<Unit filename="include/noise/module/curve.h" />
+		<Unit filename="include/noise/module/cylinders.h" />
+		<Unit filename="include/noise/module/displace.h" />
+		<Unit filename="include/noise/module/exponent.h" />
+		<Unit filename="include/noise/module/invert.h" />
+		<Unit filename="include/noise/module/max.h" />
+		<Unit filename="include/noise/module/min.h" />
+		<Unit filename="include/noise/module/module.h" />
+		<Unit filename="include/noise/module/modulebase.h" />
+		<Unit filename="include/noise/module/multiply.h" />
+		<Unit filename="include/noise/module/perlin.h" />
+		<Unit filename="include/noise/module/power.h" />
+		<Unit filename="include/noise/module/ridgedmulti.h" />
+		<Unit filename="include/noise/module/rotatepoint.h" />
+		<Unit filename="include/noise/module/scalebias.h" />
+		<Unit filename="include/noise/module/scalepoint.h" />
+		<Unit filename="include/noise/module/select.h" />
+		<Unit filename="include/noise/module/spheres.h" />
+		<Unit filename="include/noise/module/terrace.h" />
+		<Unit filename="include/noise/module/translatepoint.h" />
+		<Unit filename="include/noise/module/turbulence.h" />
+		<Unit filename="include/noise/module/voronoi.h" />
+		<Unit filename="include/noise/noise.h" />
+		<Unit filename="include/noise/noisegen.h" />
+		<Unit filename="include/noise/vectortable.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="noiseutils.cpp" />
+		<Unit filename="noiseutils.h" />
+		<Unit filename="src/latlon.cpp" />
+		<Unit filename="src/model/cylinder.cpp" />
+		<Unit filename="src/model/line.cpp" />
+		<Unit filename="src/model/plane.cpp" />
+		<Unit filename="src/model/sphere.cpp" />
+		<Unit filename="src/module/abs.cpp" />
+		<Unit filename="src/module/add.cpp" />
+		<Unit filename="src/module/billow.cpp" />
+		<Unit filename="src/module/blend.cpp" />
+		<Unit filename="src/module/cache.cpp" />
+		<Unit filename="src/module/checkerboard.cpp" />
+		<Unit filename="src/module/clamp.cpp" />
+		<Unit filename="src/module/const.cpp" />
+		<Unit filename="src/module/curve.cpp" />
+		<Unit filename="src/module/cylinders.cpp" />
+		<Unit filename="src/module/displace.cpp" />
+		<Unit filename="src/module/exponent.cpp" />
+		<Unit filename="src/module/invert.cpp" />
+		<Unit filename="src/module/max.cpp" />
+		<Unit filename="src/module/min.cpp" />
+		<Unit filename="src/module/modulebase.cpp" />
+		<Unit filename="src/module/multiply.cpp" />
+		<Unit filename="src/module/perlin.cpp" />
+		<Unit filename="src/module/power.cpp" />
+		<Unit filename="src/module/ridgedmulti.cpp" />
+		<Unit filename="src/module/rotatepoint.cpp" />
+		<Unit filename="src/module/scalebias.cpp" />
+		<Unit filename="src/module/scalepoint.cpp" />
+		<Unit filename="src/module/select.cpp" />
+		<Unit filename="src/module/spheres.cpp" />
+		<Unit filename="src/module/terrace.cpp" />
+		<Unit filename="src/module/translatepoint.cpp" />
+		<Unit filename="src/module/turbulence.cpp" />
+		<Unit filename="src/module/voronoi.cpp" />
+		<Unit filename="src/noisegen.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
