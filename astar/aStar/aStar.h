@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "include/curses.h"
+#include "binarySearchStack.h"
 class coordinate
 {
 public:
@@ -27,7 +28,7 @@ public:
 
     //automatic variables
     int fCost(){
-        return this->gCost+this->hCost;
+        return gCost+hCost;
     }
 
     //constructors
@@ -43,5 +44,6 @@ std::vector<node> getNeighbors(node,bool[][20],coordinate,int);
 float heuristic(coordinate,coordinate);
 int getDistance(coordinate, coordinate);
 bool nodeVectorContains(std::vector<node>, node);
+bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking);
 
 #endif // ASTAR_H_INCLUDED

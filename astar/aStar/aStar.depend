@@ -24,3 +24,27 @@
 	<stdio.h>
 	<wchar.h>
 
+1446569712 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\astar.cpp
+	"aStar.h"
+
+1446569827 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\astar.h
+	<vector>
+	<iostream>
+	<stdlib.h>
+	"include/curses.h"
+	"binarySearchStack.h"
+
+1446567690 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+
+1446567690 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\main.cpp
+	<iostream>
+	<random>
+	<time.h>
+	"aStar.h"
+
+1446572915 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\binarysearchstack.h
+

@@ -1,5 +1,4 @@
 #include "aStar.h"
-#include <unordered_set>
 coordinate::coordinate(int x_t, int y_t)
 {
     x=x_t;
@@ -31,30 +30,32 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     wrefresh(win);
     noecho();
     cbreak();
-    int costSoFar = 0;
-    int lowestF_Cost;
 
     node currentNode;
     node neighbor;
     node temp;
 
     std::vector<node> openNodes;    //set to be evaluated
+    std::vector<BST<node> > nodeLibrary;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
+
+    BST<node> baseNode(node(start,goal,0));
+
     openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
+    currentNode=baseNode.value;
     while (openNodes.size()>0)
     {
-        currentNode = openNodes[0];
         //=============SET CURRENT NODE=================
-        for (node _n:openNodes)
-        {
-            if (_n.fCost()<currentNode.fCost() or _n.hCost<currentNode.hCost and _n.fCost()==currentNode.fCost())
-            {
-                currentNode=_n;
-            }
-        }
+//        for (node _n:openNodes)
+//        {
+//            if (_n.fCost()<currentNode.fCost() or _n.hCost<currentNode.hCost and _n.fCost()==currentNode.fCost())
+//            {
+//                currentNode=_n;
+//            }
+//        }
         //==============================================
 
         //==========CURSES DISPLAY======================
@@ -85,14 +86,14 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
         //==============================================
 
         //=========PLACE CURRENT IN CLOSED==============
-        for (int i=0;i<openNodes.size();i++)
-        {
-            if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
-            {
-                closedNodes.push_back(currentNode);
-                openNodes.erase(openNodes.begin()+i);
-            }
-        }
+//        for (int i=0;i<openNodes.size();i++)
+//        {
+//            if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
+//            {
+//                closedNodes.push_back(currentNode);
+//                openNodes.erase(openNodes.begin()+i);
+//            }
+//        }
         //==============================================
 
         //===========IF FOUND GOAL======================
@@ -130,17 +131,20 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
             {
 //              set movement new Gcost
                 int newMovementCostToNeighbor=currentNode.gCost+getDistance(currentNode.position,_n.position);
-                if (!nodeVectorContains(openNodes,_n))
+                if (!nodeLibraryContains(nodeLibrary,_n))
                 {
                     if (newMovementCostToNeighbor < _n.gCost)
                     {
                         _n.gCost = newMovementCostToNeighbor;
                     }
                     _n.parent= currentNode.position;
-                    openNodes.push_back(_n);
+                    nodeLibrary.push_back(BST<node>(_n));
+                    baseNode.add(&nodeLibrary[nodeLibrary.size()-1]);
                 }
             }
         }
+        currentNode = baseNode.give();
+        closedNodes.push_back(currentNode);
         //==============================================
     }
 }
@@ -173,6 +177,18 @@ bool nodeVectorContains(std::vector<node> checkVector, node nodeChecking)
     for (node _n:checkVector)
     {
         if (_n.position.x==nodeChecking.position.x and _n.position.y==nodeChecking.position.y)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking)
+{
+    for (BST<node> _n:nodeLibrary)
+    {
+        if (_n.value.position.x==nodeChecking.position.x and _n.value.position.y==nodeChecking.position.y)
         {
             return true;
         }
