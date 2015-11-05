@@ -16,7 +16,7 @@ public:
         T ww=item;
         T www=value;
         bool thing;
-        if (item.fCost() < value.fCost() or item.fCost() == value.fCost() and item.gCost < value.gCost or value.gCost==-1){
+        if (item.fCost() < value.fCost() or item.fCost() == value.fCost() and item.gCost < value.gCost){
             if (Left==nullptr){
                 return value.DDS;
             }
@@ -36,8 +36,7 @@ public:
 
     void setNode(BST* item)
     {
-        T www=item->value;
-        if (item->value.fCost() < value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost <= value.gCost or value.gCost==-1){
+        if (item->value.fCost() < value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost < value.gCost){
             Left=item;
         }
         if (item->value.fCost() > value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost > value.gCost){

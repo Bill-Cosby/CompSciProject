@@ -2,9 +2,10 @@
 #define ASTAR_H_INCLUDED
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 #include "include/curses.h"
 #include "tile.h"
-#include "heap.h"
+#include "binarySearchStack.h"
 class coordinate
 {
 public:
@@ -23,24 +24,21 @@ public:
     coordinate parent;
 
     //integer declarations
-    int HeapIndex;
     int gCost;
     int hCost;
+    int DDS;
 
     //automatic variables
     int fCost(){
-        return this->gCost+this->hCost;
+        return gCost+hCost;
     }
 
     //constructors
     node(coordinate,coordinate, int);
-    node(){}
+    node(){};
 
     bool operator == (node _n){return (position==_n.position/*,parent==_n.parent,gCost==_n.gCost,hCost==_n.hCost*/);}
 };
-
-
-
 
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile> >, coordinate, coordinate);
 std::vector<node> getNeighbors(node,std::vector<std::vector<tile> >,coordinate,int);
@@ -48,5 +46,6 @@ std::vector<node> getNeighbors(node,std::vector<std::vector<tile> >,coordinate,i
 float heuristic(coordinate,coordinate);
 int getDistance(coordinate, coordinate);
 bool nodeVectorContains(std::vector<node>, node);
+bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking);
 
 #endif // ASTAR_H_INCLUDED
