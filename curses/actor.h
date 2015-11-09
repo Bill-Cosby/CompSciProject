@@ -1,6 +1,5 @@
 #ifndef ACTOR_H_INCLUDED
 #define ACTOR_H_INCLUDED
-#include <vector>
 #include "include/curses.h"
 #include "aStar.h"
 
