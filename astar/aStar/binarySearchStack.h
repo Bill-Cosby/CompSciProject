@@ -46,7 +46,7 @@ public:
     }
 
     int give(){
-        if (Left==nullptr)
+        if (Left==NULL)
         {
             return value.DDS;
         }
