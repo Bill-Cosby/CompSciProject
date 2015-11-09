@@ -35,25 +35,19 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     node neighbor;
     node temp;
 
-    int lowestFIndex=0;
-
     std::vector<node> openNodes;    //set to be evaluated
     std::vector<BST<node> > nodeLibrary;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
-    nodeLibrary.push_back(BST<node>(node(start,goal,0)));
-    BST<node>baseNode=nodeLibrary[0];
-    baseNode.value.DDS=0;
-    baseNode.value.gCost=-1;
+
+    BST<node> baseNode(node(start,goal,0));
 
     openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
     currentNode=baseNode.value;
-    while (true)
+    while (openNodes.size()>0)
     {
-        nodeLibrary.erase(nodeLibrary.begin()+lowestFIndex);
-        closedNodes.push_back(currentNode);
         //=============SET CURRENT NODE=================
 //        for (node _n:openNodes)
 //        {
@@ -145,14 +139,12 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                     }
                     _n.parent= currentNode.position;
                     nodeLibrary.push_back(BST<node>(_n));
-                    nodeLibrary[nodeLibrary.size()-1].value.DDS=nodeLibrary.size()-1;
-                    int placement = baseNode.add(nodeLibrary[nodeLibrary.size()-1].value);
-                    nodeLibrary[placement].setNode(&nodeLibrary[nodeLibrary.size()-1]);
+                    baseNode.add(&nodeLibrary[nodeLibrary.size()-1]);
                 }
             }
         }
-        lowestFIndex=baseNode.give();
-        currentNode = nodeLibrary[lowestFIndex].value;
+        currentNode = baseNode.give();
+        closedNodes.push_back(currentNode);
         //==============================================
     }
 }

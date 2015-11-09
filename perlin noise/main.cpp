@@ -18,8 +18,8 @@ int main()
   utils::NoiseMapBuilderPlane heightMapBuilder;
   heightMapBuilder.SetSourceModule (myModule);
   heightMapBuilder.SetDestNoiseMap (heightMap);
-  heightMapBuilder.SetDestSize (250, 250);
-  heightMapBuilder.SetBounds (1.0, 3.0, 1.0, 3.0);
+  heightMapBuilder.SetDestSize (10, 20000);
+  heightMapBuilder.SetBounds (1.0, 1.000001, 1.0, 2000.0);
   heightMapBuilder.Build ();
 
   utils::RendererImage renderer;

@@ -29,21 +29,18 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
     node temp;
 
         //set to be evaluated
-    std::vector<BST<node> > nodeLibrary;
+    BST<node> baseNode(node(start,goal,0));
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
-    nodeLibrary.push_back(BST<node>(node(start,goal,0)));
-    BST<node>baseNode=nodeLibrary[0];
-    baseNode.value.DDS=0;
-
-    currentNode=baseNode.value;
 
     while (true)
     {
+        currentNode=baseNode.Give();
         //==============================================
 
         //=========PLACE CURRENT IN CLOSED==============
+        closedNodes.push_back(currentNode);
         //==============================================
 
         //===========IF FOUND GOAL======================
@@ -81,24 +78,20 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coo
             {
 //              set movement new Gcost
                 int newMovementCostToNeighbor=currentNode.gCost+getDistance(currentNode.position,_n.position);
-                if (!nodeLibraryContains(nodeLibrary,_n))
+                if (!baseNode.contains(_n) || newMovementCostToNeighbor < _n.gCost)
                 {
-                    if (newMovementCostToNeighbor < _n.gCost)
-                    {
-                        _n.gCost = newMovementCostToNeighbor;
-                    }
+                    _n.gCost = newMovementCostToNeighbor;
                     _n.parent= currentNode.position;
-                    nodeLibrary.push_back(BST<node>(_n));
-                    nodeLibrary[nodeLibrary.size()-1].value.DDS=nodeLibrary.size()-1;
-                    int placement = baseNode.add(nodeLibrary[nodeLibrary.size()-1].value);
-                    nodeLibrary[placement].setNode(&nodeLibrary[nodeLibrary.size()-1]);
+                    if (!baseNode.contains(_n))
+                    {
+                        BST<node> temp(_n);
+                        baseNode.Add(&temp);
+                    }
+
+
                 }
             }
         }
-        int lowestFIndex=baseNode.give();
-        currentNode = nodeLibrary[lowestFIndex].value;
-        nodeLibrary.erase(nodeLibrary.begin()+lowestFIndex);
-        closedNodes.push_back(currentNode);
         //==============================================
     }
 }
@@ -131,18 +124,6 @@ bool nodeVectorContains(std::vector<node> checkVector, node nodeChecking)
     for (node _n:checkVector)
     {
         if (_n.position.x==nodeChecking.position.x and _n.position.y==nodeChecking.position.y)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking)
-{
-    for (BST<node> _n:nodeLibrary)
-    {
-        if (_n.value.position.x==nodeChecking.position.x and _n.value.position.y==nodeChecking.position.y)
         {
             return true;
         }

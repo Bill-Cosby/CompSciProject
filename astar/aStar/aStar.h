@@ -25,7 +25,6 @@ public:
     //integer declarations
     int gCost;
     int hCost;
-    int DDS;
 
     //automatic variables
     int fCost(){

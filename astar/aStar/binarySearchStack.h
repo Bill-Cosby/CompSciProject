@@ -8,25 +8,29 @@ public:
 
     BST* Left;
     BST* Right;
-    //int DDS;
 
     BST(T item){value = item; Left=NULL; Right=NULL;}
 
-    int add(T item){
-        T ww=item;
-        T www=value;
+    void add(BST* item){
+        T ww=item->value;
         bool thing;
-        if (item.fCost() < value.fCost() or item.fCost() == value.fCost() and item.gCost < value.gCost or value.gCost==-1){
+        if (item->value.fCost() < value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost < value.gCost){
             if (Left==nullptr){
-                return value.DDS;
+                Left=item;
+                Left->Left=NULL;
+                Left->Right=NULL;
+                return;
             }
             else if(Left!=nullptr){
                 Left->add(item);
             }
         }
-        else if (item.fCost() > value.fCost() or item.fCost() == value.fCost() and item.gCost > value.gCost){
+        else if (item->value.fCost() > value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost > value.gCost){
             if (Right==nullptr){
-                return value.DDS;
+                Right=item;
+                Right->Left=NULL;
+                Right->Right=NULL;
+                return;
             }
             else if (Right!=nullptr){
                 Right->add(item);
@@ -34,25 +38,14 @@ public:
         }
     }
 
-    void setNode(BST* item)
-    {
-        T www=item->value;
-        if (item->value.fCost() < value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost <= value.gCost or value.gCost==-1){
-            Left=item;
-        }
-        if (item->value.fCost() > value.fCost() or item->value.fCost() == value.fCost() and item->value.gCost > value.gCost){
-            Right=item;
-        }
-    }
-
-    int give(){
+    T give(){
         if (Left==nullptr)
         {
-            return value.DDS;
+            return value;
         }
         if (Left->Left==nullptr)
         {
-            return Left->value.DDS;
+            return Left->value;
             if (Left->Right!=nullptr)
             {
                 Left=Left->Right;
