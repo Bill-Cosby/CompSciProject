@@ -148,7 +148,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                     nodeLibrary[nodeLibrary.size()-1].value.DDS=nodeLibrary.size()-1;
                     int placement = baseNode.add(nodeLibrary[nodeLibrary.size()-1].value);
                     nodeLibrary[placement].setNode(&nodeLibrary[nodeLibrary.size()-1]);
-                    std::cout << nodeLibrary[placement].value.DDS;
+                    //std::cout << nodeLibrary[placement].value.DDS;
                 }
             }
         }
