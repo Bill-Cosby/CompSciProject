@@ -46,30 +46,40 @@ int main()
         baseNode.give();
     }
 }
+
+
 template <class T>
 BST<T>::BST(T item)
 {
     value=item;
     Left=NULL;
     Right=NULL;
+
 }
 
 template <class T>
 T BST<T>::give()
 {
     T item;
+    item=value;
     if (Left==NULL)
     {
-        item=Parent->value;
-        if (Parent->Right!=NULL){
-            std::cout << Parent->value << std::endl;
-            std::cout << Parent->Left->value << std::endl;
-            std::cout << Parent->Right->value << std::endl;
-            Parent->Left=NULL;
-            Parent->Left=Parent->Right;
+        std::cout << item << std::endl;
+        if (Right!=NULL){
+            if(Parent){
+                Parent->Left=Right;
+            }
+            else{
+                std::cout << "here";
+            }
         }
         else {
-            Parent->Left=NULL;
+            if(Parent){
+                Parent->Left=NULL;
+            }
+            else{
+                std::cout << "here";
+            }
         }
     }
     if (Left!=NULL)
