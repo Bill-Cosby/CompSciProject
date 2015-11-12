@@ -62,29 +62,23 @@ T BST<T>::give()
 {
     T item;
     item=value;
-    if (Left==NULL)
-    {
-        std::cout << item << std::endl;
-        if (Right!=NULL){
-            if(Parent){
-                Parent->Left=Right;
-            }
-            else{
-                std::cout << "here";
-            }
-        }
-        else {
-            if(Parent){
-                Parent->Left=NULL;
-            }
-            else{
-                std::cout << "here";
-            }
-        }
-    }
     if (Left!=NULL)
     {
-        Left->give();
+        if (Left->Left==NULL)
+        {
+            item=Left->value;
+            std::cout << item << std::endl;
+            if (Left->Right!=NULL){
+                Left->Left=Left->Right;
+            }
+            else{
+                Left=NULL;
+            }
+        }
+        if (Left->Left!=NULL)
+        {
+            Left->give();
+        }
     }
     return item;
 }
