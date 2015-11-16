@@ -36,7 +36,7 @@ int main()
     baseNode<int> mainNode;
     srand(time(NULL));
     std::default_random_engine generator(rand()%12349);
-    std::uniform_int_distribution<int> distribution(800,1000);
+    std::uniform_int_distribution<int> distribution(1,100);
     std::uniform_int_distribution<int> ewew(1,1000);
 
     vector<BST<int> > nodeLibrary;
@@ -53,14 +53,16 @@ int main()
     {
         mainNode.child->add(&nodeLibrary[i]);
     }
-    return 0;
     for (int i=0;i<nodeLibrary.size();i++)
     {
-        closedValues.push_back(mainNode.child->give());
         if (mainNode.child->Left==NULL and mainNode.child->Right!=NULL)
         {
             closedValues.push_back(mainNode.child->value);
             mainNode.child=mainNode.child->Right;
+        }
+        else
+        {
+            closedValues.push_back(mainNode.child->give());
         }
     }
     for (int i=0;i<closedValues.size();i++)

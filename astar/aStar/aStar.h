@@ -4,7 +4,31 @@
 #include <iostream>
 #include <stdlib.h>
 #include "include/curses.h"
-#include "binarySearchStack.h"
+
+template<class T>
+class BST
+{
+public:
+
+    T value;
+
+    BST* Left;
+    BST* Right;
+
+    BST* Parent;
+//  constructor
+    BST(T item);
+//  methods
+    void add(BST* item);
+    T give();
+};
+
+template <class T>
+struct baseNode
+{
+    BST<T>* child;
+};
+
 class coordinate
 {
 public:
@@ -12,7 +36,7 @@ public:
     coordinate(int,int);
     coordinate();
 
-    bool operator == (coordinate _c){return (x==_c.x,y==_c.y);}
+    bool operator == (coordinate _c){return (x==_c.x and y==_c.y);}
 };
 
 class node
@@ -45,6 +69,6 @@ std::vector<node> getNeighbors(node,bool[][20],coordinate,int);
 float heuristic(coordinate,coordinate);
 int getDistance(coordinate, coordinate);
 bool nodeVectorContains(std::vector<node>, node);
-bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking);
+bool nodeLibraryContains(std::vector<BST<node> >, node);
 
 #endif // ASTAR_H_INCLUDED

@@ -34,6 +34,7 @@
 		</Compiler>
 		<Unit filename="aStar.cpp" />
 		<Unit filename="aStar.h" />
+		<Unit filename="binarySearchStack.cpp" />
 		<Unit filename="binarySearchStack.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>

@@ -37,32 +37,20 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
 
     int lowestFIndex=0;
 
-    std::vector<node> openNodes;    //set to be evaluated
     std::vector<BST<node> > nodeLibrary;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
-    nodeLibrary.push_back(BST<node>(node(start,goal,0)));
-    BST<node>baseNode=nodeLibrary[0];
-    baseNode.value.DDS=0;
-    baseNode.value.gCost=-1;
+    baseNode<node> mainNode;
+    BST<node> startingNode=node(start,goal,999999);
+    mainNode.child=&startingNode;
 
-    openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
-    currentNode=baseNode.value;
+    //openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
+    currentNode=mainNode.child->value;
     while (true)
     {
-        nodeLibrary.erase(nodeLibrary.begin()+lowestFIndex);
         closedNodes.push_back(currentNode);
-        //=============SET CURRENT NODE=================
-//        for (node _n:openNodes)
-//        {
-//            if (_n.fCost()<currentNode.fCost() or _n.hCost<currentNode.hCost and _n.fCost()==currentNode.fCost())
-//            {
-//                currentNode=_n;
-//            }
-//        }
-        //==============================================
 
         //==========CURSES DISPLAY======================
         for (int y=0;y<20;y++)
@@ -79,27 +67,11 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                 }
             }
         }
-        for (node _n:openNodes)
-        {
-
-            mvwaddch(win,_n.position.y,_n.position.x, 'O');
-        }
         for (node _n:closedNodes)
         {
             mvwaddch(win,_n.position.y,_n.position.x,'C');
         }
         refresh();
-        //==============================================
-
-        //=========PLACE CURRENT IN CLOSED==============
-//        for (int i=0;i<openNodes.size();i++)
-//        {
-//            if (openNodes[i].position.x==currentNode.position.x&&openNodes[i].position.y==currentNode.position.y)
-//            {
-//                closedNodes.push_back(currentNode);
-//                openNodes.erase(openNodes.begin()+i);
-//            }
-//        }
         //==============================================
 
         //===========IF FOUND GOAL======================
@@ -145,16 +117,20 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                     }
                     _n.parent= currentNode.position;
                     nodeLibrary.push_back(BST<node>(_n));
-                    nodeLibrary[nodeLibrary.size()-1].value.DDS=nodeLibrary.size()-1;
-                    int placement = baseNode.add(nodeLibrary[nodeLibrary.size()-1].value);
-                    nodeLibrary[placement].setNode(&nodeLibrary[nodeLibrary.size()-1]);
+                    mainNode.child->add(&nodeLibrary[nodeLibrary.size()-1]);
                     //std::cout << nodeLibrary[placement].value.DDS;
                 }
             }
-        }
-        lowestFIndex=baseNode.give();
-        currentNode = nodeLibrary[lowestFIndex].value;
         //==============================================
+        }
+        currentNode=mainNode.child->give();
+
+        if (mainNode.child->Left==NULL and mainNode.child->Right!=NULL){
+            mainNode.child=mainNode.child->Right;
+        }
+        else{
+            mainNode.child=NULL;
+        }
     }
 }
 
@@ -216,5 +192,69 @@ int getDistance(coordinate nodeA, coordinate nodeB)
     else{
         return 14*distX + 10*(distY-distX);
     }
+}
 
+template <class T>
+BST<T>::BST(T item)
+{
+    value=item;
+    Left=NULL;
+    Right=NULL;
+}
+
+template <class T>
+T BST<T>::give()
+{
+    T item;
+    item=value;
+    if (Left!=NULL)
+    {
+        if (Left->Left==NULL)
+        {
+            item=Left->value;
+            if (Left->Right!=NULL){
+                Left=Left->Right;
+            }
+            else{
+                Left=NULL;
+            }
+            return item;
+        }
+        else{
+            Left->give();
+        }
+    }
+    else
+    {
+        return item;
+    }
+}
+
+template <class T>
+void BST<T>::add(BST* item)
+{
+    if (item->value.fCost()<=value.fCost())
+    {
+        if (Left==NULL)
+        {
+            Left=item;
+            Left->Parent=this;
+        }
+        else
+        {
+            Left->add(item);
+        }
+    }
+    if (item->value.fCost()>value.fCost())
+    {
+        if (Right==NULL)
+        {
+            Right=item;
+            Right->Parent=this;
+        }
+        else
+        {
+            Right->add(item);
+        }
+    }
 }

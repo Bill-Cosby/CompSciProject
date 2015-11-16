@@ -8,15 +8,14 @@
 1442873060 source:c:\users\maya\desktop\astar\astar\main.cpp
 	<iostream>
 
-1447100197 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
+1447708469 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
 	"aStar.h"
 
-1446749700 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.h
+1447707803 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.h
 	<vector>
 	<iostream>
 	<stdlib.h>
 	"include/curses.h"
-	"binarySearchStack.h"
 
 1445971387 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\include\curses.h
 	<stdarg.h>
@@ -48,5 +47,10 @@
 
 1447088082 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\binarysearchstack.h
 
-1447099973 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.h
+1447706843 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.h
+	<stdlib.h>
+	"aStar.h"
+
+1447706843 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.cpp
+	"binarySearchStack.h"
 
