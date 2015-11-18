@@ -38,12 +38,14 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
     int lowestFIndex=0;
 
     std::vector<BST<node> > nodeLibrary;
+    std::vector<node> neighborNodes;
     std::vector<node> closedNodes;  //set already evaluated
     std::vector<coordinate> foundPath;
     std::vector<node> neighbors;
 
     baseNode<node> mainNode;
-    BST<node> startingNode=node(start,goal,999999);
+    BST<node> startingNode=node(start,goal,0);
+    startingNode.value.hCost=9999999;
     mainNode.child=&startingNode;
 
     //openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
@@ -104,6 +106,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
 //              for each node in neighbor
         for (node _n : getNeighbors(currentNode,test_map,goal,currentNode.gCost))
         {
+            neighborNodes.push_back(_n);
 //              if neighbor is in closed list
             if (!nodeVectorContains(closedNodes,_n))
             {
@@ -116,21 +119,19 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                         _n.gCost = newMovementCostToNeighbor;
                     }
                     _n.parent= currentNode.position;
-                    nodeLibrary.push_back(BST<node>(_n));
-                    mainNode.child->add(&nodeLibrary[nodeLibrary.size()-1]);
+                    neighborNodes[neighborNodes.size()-1]=_n;
+                    nodeLibrary.push_back(BST<node>(neighborNodes[neighborNodes.size()-1]));
+                    for (BST<node> _t : nodeLibrary)
+                    {
+                        std::cout << _t.value.fCost() << std::endl;
+                    }
+                    mainNode.add(&nodeLibrary[nodeLibrary.size()-1]);
                     //std::cout << nodeLibrary[placement].value.DDS;
                 }
             }
         //==============================================
         }
-        currentNode=mainNode.child->give();
-
-        if (mainNode.child->Left==NULL and mainNode.child->Right!=NULL){
-            mainNode.child=mainNode.child->Right;
-        }
-        else{
-            mainNode.child=NULL;
-        }
+        currentNode=mainNode.give();
     }
 }
 
@@ -233,28 +234,56 @@ T BST<T>::give()
 template <class T>
 void BST<T>::add(BST* item)
 {
+    T what=value;
+    T tf=item->value;
     if (item->value.fCost()<=value.fCost())
     {
         if (Left==NULL)
         {
             Left=item;
-            Left->Parent=this;
         }
         else
         {
             Left->add(item);
         }
+        std::cout << Left->value.fCost();
     }
-    if (item->value.fCost()>value.fCost())
+    else
     {
         if (Right==NULL)
         {
             Right=item;
-            Right->Parent=this;
         }
         else
         {
             Right->add(item);
         }
     }
+}
+
+template <class T>
+void baseNode<T>::add(BST<T>* item)
+{
+    if (child==NULL)
+    {
+        child=item;
+        return;
+    }
+    child->add(item);
+}
+
+template <class T>
+T baseNode<T>::give()
+{
+    T temp;
+    if (child->Left==NULL and child->Right!=NULL)
+    {
+        temp=child->value;
+        child=child->Right;
+    }
+    else
+    {
+        temp=child->give();
+    }
+    return temp;
 }

@@ -15,7 +15,6 @@ public:
     BST* Left;
     BST* Right;
 
-    BST* Parent;
 //  constructor
     BST(T item);
 //  methods
@@ -24,9 +23,13 @@ public:
 };
 
 template <class T>
-struct baseNode
+class baseNode
 {
+public:
     BST<T>* child;
+
+    T give();
+    void add(BST<T>* item);
 };
 
 class coordinate
@@ -49,7 +52,6 @@ public:
     //integer declarations
     int gCost;
     int hCost;
-    int DDS;
 
     //automatic variables
     int fCost(){
