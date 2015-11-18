@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1445471622 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
+1445971387 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\main.cpp
 	<iostream>
 	<random>
 	<time.h>
@@ -8,16 +8,16 @@
 1442873060 source:c:\users\maya\desktop\astar\astar\main.cpp
 	<iostream>
 
-1447810836 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
+1447881874 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.cpp
 	"aStar.h"
 
-1447808948 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.h
+1447879294 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\astar.h
 	<vector>
 	<iostream>
 	<stdlib.h>
 	"include/curses.h"
 
-1444281349 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\include\curses.h
+1445971387 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\include\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
@@ -48,11 +48,11 @@
 	<stdlib.h>
 	"aStar.h"
 
-1447730702 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.h
+1447706843 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.h
 	<stdlib.h>
 	"aStar.h"
 
-1447730702 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.cpp
+1447706843 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\astar\astar\binarysearchstack.cpp
 	"binarySearchStack.h"
 
 1447863290 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\astar\astar\binarysearchstack.cpp

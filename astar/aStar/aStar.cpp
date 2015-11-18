@@ -45,6 +45,19 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
 
     BST<node> startingNode=node(start,goal,0);
     startingNode.value.hCost=9999999;
+    std::vector<node> thing;
+    std::vector<BST<node> > doublething;
+    for (int i=0;i<5;i++)
+    {
+        thing.push_back(node(start,start,10*10));
+    }for(int i=0;i<5;i++){
+        doublething.push_back(BST<node>(thing[i]));
+        startingNode.add(&doublething[i]);
+    }
+    for (int i=0;i<5;i++)
+    {
+        std::cout << startingNode.give().gCost << std::endl;
+    }
 
 
     //openNodes.push_back(node(coordinate(0,0),coordinate(0,0),0)); //initialize open set
@@ -103,6 +116,7 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
         //===============COMMENCE ASTAR=================
 
 //              for each node in neighbor
+        int woat=0;
         for (node _n : getNeighbors(currentNode,test_map,goal,currentNode.gCost))
         {
 //              if neighbor is in closed list
@@ -117,10 +131,21 @@ std::vector<coordinate> pathFinder(bool test_map[20][20], coordinate start, coor
                         _n.gCost = newMovementCostToNeighbor;
                     }
                     _n.parent= currentNode.position;
+                    if (woat==1){
+                        std::cout << startingNode.Left->value.hCost;
+                        if (startingNode.Left->Left==NULL)
+                        {
+                            std::cout << "WTF";
+                        }
+                    }
                     neighborNodes.push_back(_n);
                     nodeLibrary.push_back(BST<node>(neighborNodes[neighborNodes.size()-1]));
                     startingNode.add(&nodeLibrary[nodeLibrary.size()-1]);
                     std::cout << startingNode.Left->value.hCost;
+                    if (startingNode.Left->Left==NULL){
+                        std::cout << "Godo job fam";
+                    }
+                    woat=1;
                     //mainNode.child.add(&nodeLibrary[nodeLibrary.size()-1]);
                     //std::cout << nodeLibrary[placement].value.DDS;
                 }
