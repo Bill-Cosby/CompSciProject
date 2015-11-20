@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <random>
 #include <time.h>
 #include <stdlib.h>
@@ -16,6 +15,8 @@ int main()
 
     std::vector<std::vector<bool> > _map;
 
+
+//====================================
     _map.resize(20);
     for(std::vector<bool> vec : _map){
         vec.resize(20);
@@ -27,7 +28,20 @@ int main()
         }
         std::cout << std::endl;
     }
+//=====================================
 
+    std::vector<node> nodeLibrary;
+    node baseNode(9999999,0);
+    nodeLibrary.resize(10);
+    for (int i=0;i<10;i++)
+    {
+        nodeLibrary[i].hCost=i*10;
+        baseNode.add(&nodeLibrary[i]);
+    }
 
+    for (int i=0;i<10;i++)
+    {
+        std::cout << baseNode.give().hCost << std::endl;
+    }
 
 }
