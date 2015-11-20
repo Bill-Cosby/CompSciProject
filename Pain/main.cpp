@@ -1,4 +1,3 @@
-#include <iostream>
 #include <random>
 #include <time.h>
 #include <stdlib.h>
@@ -18,30 +17,19 @@ int main()
 
 //====================================
     _map.resize(20);
-    for(std::vector<bool> vec : _map){
-        vec.resize(20);
-        for(bool spot : vec){
-            if (booler(engine)<4){
-                spot=1;
-            }else{spot=0;}
-            std::cout << spot;
+    for (int i=0;i<20;i++){
+        _map[i].resize(20);
+        for (int j=0;j<20;j++){
+            if (booler(engine)<=4){
+                _map[i][j]=1;
+            }
+            else{
+                _map[i][j]=0;
+            }
         }
-        std::cout << std::endl;
     }
 //=====================================
 
-    std::vector<node> nodeLibrary;
-    node baseNode(9999999,0);
-    nodeLibrary.resize(10);
-    for (int i=0;i<10;i++)
-    {
-        nodeLibrary[i].hCost=i*10;
-        baseNode.add(&nodeLibrary[i]);
-    }
-
-    for (int i=0;i<10;i++)
-    {
-        std::cout << baseNode.give().hCost << std::endl;
-    }
+    pathFinder(_map,coordinate(0,0),coordinate(19,19));
 
 }

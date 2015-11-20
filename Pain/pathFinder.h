@@ -2,6 +2,8 @@
 #define PATHFINDER_H_INCLUDED
 #include <vector>
 #include <stdlib.h>
+#include <limits>
+#include <iostream>
 
 class coordinate
 {
@@ -14,18 +16,17 @@ public:
 };
 
 class node{
-
-private:
+public:
     node* Left;
     node* Right;
-
-public:
     int hCost;
     int gCost;
     int fCost(){return hCost+gCost;}
 
     node(int,int,node*,node*);
     node(int,int);
+    node(coordinate,coordinate, int);
+
     node(){hCost=0;gCost=0;Left=NULL;Right=NULL;};
 
     coordinate position;
@@ -37,8 +38,11 @@ public:
     void add(node* item);
     node give();
     bool contains(node item);
+    std::vector<node> findNeighbors(std::vector<std::vector<bool> >, coordinate);
 };
 
 std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > ,coordinate,coordinate);
+int manhattanDistance(coordinate,coordinate);
+bool vectorContains(coordinate, std::vector<node>);
 
 #endif // PATHFINDER_H_INCLUDED
