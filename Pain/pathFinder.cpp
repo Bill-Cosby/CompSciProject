@@ -43,33 +43,50 @@ bool node::contains(node item)
 
 void node::add(node* item)
 {
+    item->Left=NULL;
+    item->Right=NULL;
     if (*item<=*this){
+
         if (Left!=NULL){
+
             Left->add(item);
+
         }else{
+
             Left=item;
+
         }
         return;
     }
     if (Right!=NULL){
+
         Right->add(item);
+
     }else{
+
         Right=item;
+
     }
     return;
 }
 
 node node::give()
 {
+    node temp=*Left;
     if (Left->Left==NULL){
+
         node temp=*Left;
         if (Left->Right!=NULL){
+
             Left=Left->Right;
+
         }else{
+
             Left=NULL;
+
         }
-        return temp;
     }
+    return temp;
 }
 
 std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > _map, coordinate start, coordinate goal){
@@ -78,6 +95,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > _map, coordin
 
     std::vector<node> closedSet;
     std::vector<node> neighborSet;
+    std::vector<node> tempNeighborStorage;
 
     node baseNode(std::numeric_limits<double>::infinity(),0);
     baseNode.position=coordinate(0,0);
@@ -91,14 +109,26 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > _map, coordin
         }
 
         closedSet.push_back(currentNode);
-        std::vector<node> tempNeighborStorage=currentNode.findNeighbors(_map,goal);
-        std::cout << tempNeighborStorage.size();
+        for (int y=-1; y<2; y++){
+            for (int x=-1; x<2; x++){
+                if (y==0 and x==0){
+                    continue;
+                }
+                if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
+                    if (_map[currentNode.position.y+y][currentNode.position.x+x]==0){
+                        std::cout << currentNode.position.x+x << "," << currentNode.position.y+y << std::endl;
+                        tempNeighborStorage.push_back(node(coordinate(currentNode.position.x+x,currentNode.position.y+y), goal, currentNode.gCost + ( abs(x) + abs(y) -1 )));
+                    }
+                }
+            }
+        }
         for (node _n : tempNeighborStorage){
             neighborSet.push_back(_n);
         }
 
         for (node _n : tempNeighborStorage){
             int placeInSet=distanceInNeighborset;
+
             if (vectorContains(_n.position, closedSet)){
                 continue;
             }
@@ -115,37 +145,18 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > _map, coordin
         }
         currentNode=baseNode.give();
 
-
         distanceInNeighborset+=tempNeighborStorage.size();
 
     }
 
 }
 
-std::vector<node> node::findNeighbors(std::vector<std::vector<bool> > _map, coordinate goal)
-{
-    std::vector<node> neighbors;
-    for (int y=-1; y<2; y++){
-        for (int x=-1; x<2; x++){
-            if (y==0 and x==0){
-                continue;
-            }
-            std::cout << position.x+x << "," << position.y+y << std::endl;
-            if (position.x+x>=0 and position.x+x<_map[0].size() and position.y+y>=0 and position.y+y<_map.size()){
-                if (_map[position.y+y][position.x+x]==0){
-                    neighbors.push_back(node(position, position, gCost + ( abs(x) + abs(y) -1 )));
-                    std::cout << "Here\n";
-                }
 
-            }
-        }
-    }
-    return neighbors;
-}
 
 bool vectorContains(coordinate currentPosition, std::vector<node> vectorChecker)
 {
     for (node _n : vectorChecker){
+        node temp=_n;
         if (_n.position==currentPosition){
             return true;
         }

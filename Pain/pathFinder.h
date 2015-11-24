@@ -38,9 +38,10 @@ public:
     void add(node* item);
     node give();
     bool contains(node item);
-    std::vector<node> findNeighbors(std::vector<std::vector<bool> >, coordinate);
+
 };
 
+std::vector<node> findNeighbors(std::vector<std::vector<bool> >, node, coordinate);
 std::vector<coordinate> pathFinder(std::vector<std::vector<bool> > ,coordinate,coordinate);
 int manhattanDistance(coordinate,coordinate);
 bool vectorContains(coordinate, std::vector<node>);

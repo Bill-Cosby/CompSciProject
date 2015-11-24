@@ -51,6 +51,19 @@ dungeon::dungeon()
     {
         dungeon_grid[i].resize(w-firstX);
     }
+
+
+
+}
+
+int dungeon::Passable(int Mx, int My)
+{
+    if (Mx>=0 and Mx<w and My>=0 and My<h){
+        if (dungeon_grid[My][Mx]==0){
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void dungeon::hallwayMaker()

@@ -9,6 +9,9 @@ int main()
     actor test;
     actor enemy(1);
     dungeon map_t;
+
+
+
     std::vector<std::vector<tile> > _map;
     std::vector<actor> actors;
     actors.push_back(enemy);
