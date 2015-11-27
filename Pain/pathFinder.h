@@ -1,9 +1,11 @@
 #ifndef PATHFINDER_H_INCLUDED
 #define PATHFINDER_H_INCLUDED
+#include <algorithm>
 #include <vector>
 #include <stdlib.h>
 #include <limits>
 #include <iostream>
+#include "include/curses.h"
 
 class coordinate
 {
@@ -13,6 +15,7 @@ public:
     coordinate(int _x,int _y){x=_x;y=_y;}
 
     bool operator ==(coordinate t){return t.x==x and t.y==y;};
+    bool operator !=(coordinate t){return x!=t.x and y!=t.y;}
 };
 
 class node{
@@ -32,12 +35,9 @@ public:
     coordinate position;
     coordinate parent;
 
+    //node operator = (const node item) {hCost=item.hCost;gCost=item.gCost;position=item.position;parent=item.parent;}
     bool operator == (node item){return item.position==position;}
-    bool operator <= (node item){return fCost()<=item.fCost() or fCost()==item.gCost and fCost()<=item.gCost;}
-
-    void add(node* item);
-    node give();
-    bool contains(node item);
+    bool operator <= (node item){return fCost()<=item.fCost() or fCost()==item.fCost() and gCost<=item.gCost;}
 
 };
 

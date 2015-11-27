@@ -26,8 +26,11 @@ int main()
             else{
                 _map[i][j]=0;
             }
+            std::cout << _map[i][j];
         }
+        std::cout << std::endl;
     }
+    _map[19][19]=0;
 //=====================================
 
     pathFinder(_map,coordinate(0,0),coordinate(19,19));

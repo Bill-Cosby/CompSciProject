@@ -1,106 +1,105 @@
 #include "aStar.h"
 #include <unordered_set>
-coordinate::coordinate(int x_t, int y_t)
+
+node::node(int h,int g)
 {
-    x=x_t;
-    y=y_t;
+    hCost=h;
+    gCost=g;
+    Left=NULL;
+    Right=NULL;
 }
 
-coordinate::coordinate()
+node::node(coordinate pos, coordinate _goal, int g)
 {
-    x=0;
-    y=0;
+    position=pos;
+    hCost=getDistance(position, _goal);
+    gCost=g;
+    Left=NULL;
+    Right=NULL;
 }
-
-node::node(coordinate current, coordinate goal, int costSoFar)
+node::node(int h, int g, node* L, node* R)
 {
-    gCost=costSoFar;
-    hCost=getDistance(current,goal);
-    position=current;
+    hCost=h;
+    gCost=g;
+    Left=L;
+    Right=R;
 }
-
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > test_map, coordinate start, coordinate goal)
-{
-    int costSoFar = 0;
-    int lowestF_Cost;
-
-    node currentNode;
-    node neighbor;
-    node temp;
-
-        //set to be evaluated
-    std::vector<BST<node> > nodeLibrary;
-    std::vector<node> closedNodes;  //set already evaluated
-    std::vector<coordinate> foundPath;
-    std::vector<node> neighbors;
-    nodeLibrary.push_back(BST<node>(node(start,goal,0)));
-    BST<node>baseNode=nodeLibrary[0];
-    baseNode.value.DDS=0;
-
-    currentNode=baseNode.value;
-
-    while (true)
+struct comparator {
+    bool operator() (const node item, const node n) const
     {
-        //==============================================
-
-        //=========PLACE CURRENT IN CLOSED==============
-        //==============================================
-
-        //===========IF FOUND GOAL======================
-        if (currentNode.position.x == goal.x and currentNode.position.y == goal.y)
-        {
-            closedNodes.push_back(currentNode);
-            coordinate tempStorage;
-            tempStorage=currentNode.position;
-            while (true)
-            {
-                for (int i=0;i<closedNodes.size();i++)
-                {
-                    if (closedNodes[i].position.x==tempStorage.x && closedNodes[i].position.y==tempStorage.y)
-                    {
-                        foundPath.push_back(tempStorage);
-                        tempStorage=coordinate(closedNodes[i].parent.x, closedNodes[i].parent.y);
-                        break;
-                    }
-                }
-                if (tempStorage.x==start.x and tempStorage.y==start.y)
-                {
-                    return foundPath;
-                }
-            }
-        }
-        //==============================================
-
-        //===============COMMENCE ASTAR=================
-
-//              for each node in neighbor
-        for (node _n : getNeighbors(currentNode,test_map,goal,currentNode.gCost))
-        {
-//              if neighbor is in closed list
-            if (!nodeVectorContains(closedNodes,_n))
-            {
-//              set movement new Gcost
-                int newMovementCostToNeighbor=currentNode.gCost+getDistance(currentNode.position,_n.position);
-                if (!nodeLibraryContains(nodeLibrary,_n))
-                {
-                    if (newMovementCostToNeighbor < _n.gCost)
-                    {
-                        _n.gCost = newMovementCostToNeighbor;
-                    }
-                    _n.parent= currentNode.position;
-                    nodeLibrary.push_back(BST<node>(_n));
-                    nodeLibrary[nodeLibrary.size()-1].value.DDS=nodeLibrary.size()-1;
-                    int placement = baseNode.add(nodeLibrary[nodeLibrary.size()-1].value);
-                    nodeLibrary[placement].setNode(&nodeLibrary[nodeLibrary.size()-1]);
-                }
-            }
-        }
-        int lowestFIndex=baseNode.give();
-        currentNode = nodeLibrary[lowestFIndex].value;
-        nodeLibrary.erase(nodeLibrary.begin()+lowestFIndex);
-        closedNodes.push_back(currentNode);
-        //==============================================
+        int itemFcost=item.gCost+item.hCost;
+        int nFcost=n.gCost+n.hCost;
+        return nFcost<=itemFcost;
     }
+};
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal)
+{
+    std::priority_queue<node, std::vector<node>, comparator> openSet;
+
+    int distanceInNeighborset=1;
+
+    std::vector<node> closedSet;
+    std::vector<node> tempNeighborStorage;
+    node currentNode(99999999,0);
+    currentNode.position=start;
+    currentNode.gCost=0;
+
+    openSet.push(currentNode);
+
+    while (openSet.size()!=0){
+        if (abs(currentNode.position.x-goal.x)==1 and abs(currentNode.position.y-goal.y)==1){
+            std::vector<coordinate> path;
+            while(!(currentNode.position==start)){
+                path.push_back(currentNode.position);
+                for (node _n : closedSet){
+                    if (currentNode.parent==_n.position){
+                        currentNode=_n;
+                    }
+                }
+            }
+            return path;
+        }
+
+
+        closedSet.push_back(currentNode);
+        for (int y=-1; y<2; y++){
+            for (int x=-1; x<2; x++){
+                if (y==0 and x==0){
+                    continue;
+                }
+                if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
+                    if (_map[currentNode.position.y+y][currentNode.position.x+x].movementCost!=-1){
+                        tempNeighborStorage.push_back(node(coordinate(currentNode.position.x+x,currentNode.position.y+y), goal, currentNode.gCost+10+(4*abs(y)-abs(x)+1)));
+                    }
+                }
+            }
+        }
+
+        for (node _n : tempNeighborStorage){
+            int placeInSet=distanceInNeighborset;
+
+            if (!vectorContains(closedSet, _n)){
+                int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n.position);
+
+                if (newCostToMove>=_n.gCost){
+                    _n.parent=currentNode.position;
+                    _n.gCost=newCostToMove;
+                }
+
+                openSet.push(_n);
+            }
+
+        }
+        tempNeighborStorage.clear();
+        currentNode.gCost=openSet.top().gCost;
+        currentNode.hCost=openSet.top().hCost;
+        currentNode.parent=openSet.top().parent;
+        currentNode.position.x=openSet.top().position.x;
+        currentNode.position.y=openSet.top().position.y;
+
+        openSet.pop();
+    }
+    std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
 }
 
 std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_map, coordinate goal, int costSoFar)
@@ -126,7 +125,7 @@ std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_m
     return neighbors;
 }
 
-bool nodeVectorContains(std::vector<node> checkVector, node nodeChecking)
+bool vectorContains(std::vector<node> checkVector, node nodeChecking)
 {
     for (node _n:checkVector)
     {
@@ -138,17 +137,6 @@ bool nodeVectorContains(std::vector<node> checkVector, node nodeChecking)
     return false;
 }
 
-bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking)
-{
-    for (BST<node> _n:nodeLibrary)
-    {
-        if (_n.value.position.x==nodeChecking.position.x and _n.value.position.y==nodeChecking.position.y)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
 int getDistance(coordinate nodeA, coordinate nodeB)
 {
@@ -156,10 +144,10 @@ int getDistance(coordinate nodeA, coordinate nodeB)
     int distY= abs(nodeA.y - nodeB.y);
 
     if (distX > distY){
-        return 14*distY + 10*(distX-distY);
+        return (14*distY + 10*(distX-distY));
     }
     else{
-        return 14*distX + 10*(distY-distX);
+        return (14*distX + 10*(distY-distX));
     }
 
 }

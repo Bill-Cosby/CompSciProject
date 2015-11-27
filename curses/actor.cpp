@@ -20,14 +20,18 @@ void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal
         path.clear();
         return;
     }
-    if ((abs(x-goal.x)+abs(y-goal.y))>5 or musttouch==true)
+    if ((abs(x-goal.x)+abs(y-goal.y))>15 or musttouch==true)
     {
         musttouch=true;
-        path = pathFinder(test_map, coordinate(col(),row()), goal);
+        if (memory!=goal){
+            memory=goal;
+            path = pathFinder(test_map,coordinate(col(),row()),goal);
+        }
     }
     if (path.size()>0)
     {
         pos(path[path.size()-1].y,path[path.size()-1].x);
+        path.erase(path.begin()+path.size()-1);
     }
     return;
 }

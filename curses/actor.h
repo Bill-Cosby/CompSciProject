@@ -7,6 +7,7 @@ class actor
 {
     int x,y;
     char _symbol;
+    coordinate memory;
 public:
     void movement(std::vector<std::vector<tile> >, char);
     void aiMovement(std::vector<std::vector<tile> >, coordinate);

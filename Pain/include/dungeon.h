@@ -4,8 +4,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stack>
+#include <iostream>
 #include <fstream>
-#include "../window.h"
+
+class coordinate
+{
+public:
+    int x,y;
+    coordinate(int,int);
+    coordinate();
+};
 
 class dungeon
 {
@@ -17,7 +25,6 @@ public:
     std::vector<std::vector<bool> > dungeon_grid;
     dungeon();
     void hallwayMaker();
-    int Passable(int,int);
 };
 
 

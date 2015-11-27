@@ -1,51 +1,50 @@
 #ifndef ASTAR_H_INCLUDED
 #define ASTAR_H_INCLUDED
-#include <iostream>
-#include <stdlib.h>
+#include <algorithm>
 #include <vector>
+#include <stdlib.h>
+#include <limits>
+#include <iostream>
 #include "include/curses.h"
 #include "tile.h"
-#include "binarySearchStack.h"
+#include <queue>
 class coordinate
 {
 public:
     int x,y;
-    coordinate(int,int);
-    coordinate();
+    coordinate(){x=0;y=0;}
+    coordinate(int _x,int _y){x=_x;y=_y;}
 
-    bool operator == (coordinate _c){return (x==_c.x and y==_c.y);}
+    bool operator ==(coordinate t){return t.x==x and t.y==y;};
+    bool operator !=(coordinate t){return x!=t.x and y!=t.y;}
 };
 
-class node
-{
+class node{
 public:
-    //important coordinates
+    node* Left;
+    node* Right;
+    int hCost;
+    int gCost;
+    int fCost(){return hCost+gCost;}
+
+    node(int,int,node*,node*);
+    node(int,int);
+    node(coordinate,coordinate, int);
+
+    node(){hCost=0;gCost=0;Left=NULL;Right=NULL;};
+
     coordinate position;
     coordinate parent;
 
-    //integer declarations
-    int gCost;
-    int hCost;
-    int DDS;
+    //node operator = (const node item) {hCost=item.hCost;gCost=item.gCost;position=item.position;parent=item.parent;}
+    bool operator == (node item){return item.position==position;}
+    bool operator <= (node item){return fCost()<=item.fCost() or fCost()==item.fCost() and gCost<=item.gCost;}
 
-    //automatic variables
-    int fCost(){
-        return gCost+hCost;
-    }
-
-    //constructors
-    node(coordinate,coordinate, int);
-    node(){};
-
-    bool operator == (node _n){return (position==_n.position/*,parent==_n.parent,gCost==_n.gCost,hCost==_n.hCost*/);}
 };
 
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile> >, coordinate, coordinate);
-std::vector<node> getNeighbors(node,std::vector<std::vector<tile> >,coordinate,int);
-
-float heuristic(coordinate,coordinate);
-int getDistance(coordinate, coordinate);
-bool nodeVectorContains(std::vector<node>, node);
-bool nodeLibraryContains(std::vector<BST<node> > nodeLibrary, node nodeChecking);
+std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > ,coordinate,coordinate);
+int getDistance(coordinate,coordinate);
+bool vectorContains(std::vector<node>,node);
 
 #endif // ASTAR_H_INCLUDED

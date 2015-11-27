@@ -36,7 +36,7 @@ int main()
     baseNode<int> mainNode;
     srand(time(NULL));
     std::default_random_engine generator(rand()%12349);
-    std::uniform_int_distribution<int> distribution(1,100);
+    std::uniform_int_distribution<int> distribution(10000,10000);
     std::uniform_int_distribution<int> ewew(1,1000);
 
     vector<BST<int> > nodeLibrary;
