@@ -5,12 +5,12 @@
 
 class actor
 {
-    int x,y;
     char _symbol;
     coordinate memory;
 public:
+    int x,y;
     void movement(std::vector<std::vector<tile> >, char);
-    void aiMovement(std::vector<std::vector<tile> >, coordinate);
+    void aiMovement(std::vector<std::vector<tile> >, coordinate, std::vector<actor>);
     actor();
     actor(int);
     bool player;

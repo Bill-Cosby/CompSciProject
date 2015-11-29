@@ -12,20 +12,24 @@ actor::actor(int throwaway)
     _symbol='D';
 }
 
-void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal)
+void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal, std::vector<actor> actors)
 {
+    std::vector<coordinate> noGo;
+    for (actor _a : actors){
+        noGo.push_back(coordinate(_a.col(),_a.row()));
+    }
     if (goal == coordinate(x,y))
     {
         musttouch=false;
         path.clear();
         return;
     }
-    if ((abs(x-goal.x)+abs(y-goal.y))>15 or musttouch==true)
+    if ((abs(x-goal.x)+abs(y-goal.y))>5 or musttouch==true)
     {
         musttouch=true;
         if (memory!=goal){
             memory=goal;
-            path = pathFinder(test_map,coordinate(col(),row()),goal);
+            path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
         }
     }
     if (path.size()>0)

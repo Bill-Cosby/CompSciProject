@@ -43,7 +43,7 @@ public:
 };
 
 std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > ,coordinate,coordinate);
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > ,coordinate,coordinate, std::vector<coordinate>);
 int getDistance(coordinate,coordinate);
 bool vectorContains(std::vector<node>,node);
 

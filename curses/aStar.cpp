@@ -32,8 +32,11 @@ struct comparator {
         return nFcost<=itemFcost;
     }
 };
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal)
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
+    for (coordinate _c : noGo){
+        _map[_c.y][_c.x].movementCost=-1;
+    }
     std::priority_queue<node, std::vector<node>, comparator> openSet;
 
     int distanceInNeighborset=1;
@@ -45,15 +48,17 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
     currentNode.gCost=0;
 
     openSet.push(currentNode);
+    int timesthroughLoop=0;
 
     while (openSet.size()!=0){
         if (abs(currentNode.position.x-goal.x)==1 and abs(currentNode.position.y-goal.y)==1){
             std::vector<coordinate> path;
-            while(!(currentNode.position==start)){
-                path.push_back(currentNode.position);
-                for (node _n : closedSet){
-                    if (currentNode.parent==_n.position){
-                        currentNode=_n;
+            while (!(currentNode.position==start)){
+                for (int i=0;i<closedSet.size();i++){
+                    if (closedSet[i].position==currentNode.parent){
+                        path.push_back(currentNode.position);
+                        currentNode=closedSet[i];
+                        break;
                     }
                 }
             }
@@ -80,12 +85,8 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
 
             if (!vectorContains(closedSet, _n)){
                 int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n.position);
-
-                if (newCostToMove>=_n.gCost){
-                    _n.parent=currentNode.position;
-                    _n.gCost=newCostToMove;
-                }
-
+                _n.parent=currentNode.position;
+                _n.gCost=newCostToMove;
                 openSet.push(_n);
             }
 
@@ -98,6 +99,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
         currentNode.position.y=openSet.top().position.y;
 
         openSet.pop();
+        timesthroughLoop++;
     }
     std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
 }
