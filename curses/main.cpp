@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 int main()
 {
     actor test;
@@ -20,6 +19,7 @@ int main()
     actors.push_back(enemy2);
     actors.push_back(enemy3);
     _map.resize(map_t.dungeon_grid.size());
+
 
     for (int y=0;y<map_t.dungeon_grid.size();y++)
     {
@@ -50,7 +50,7 @@ int main()
         scr.drawGameworld(_map,actors);
         coordinate eh(actors[0].col(),actors[0].row());
         actors[1].aiMovement(_map, eh,actors);
-        actors[2].aiMovement(_map, eh,actors);
+        //actors[2].aiMovement(_map, eh,actors);
         //actors[3].aiMovement(_map, eh,actors);
         wrefresh(scr.win);
         ch=wgetch(scr.win);

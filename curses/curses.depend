@@ -93,52 +93,53 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1446567691 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1448903387 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
 	"include/curses.h"
 	"aStar.h"
 
-1446567691 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
+1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
 	<wchar.h>
 
-1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
-	<iostream>
-	<stdlib.h>
+1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
+	<algorithm>
 	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
 	"include/curses.h"
 	"tile.h"
-	"binarySearchStack.h"
+	<queue>
 
 1446567691 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
 
 1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
 
-1447087130 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+1448900059 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
 1448383574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1448384455 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.h
+1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<fstream>
 	"../window.h"
-	"../micropather.h"
 
-1446567691 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
+1448902488 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
 	"actor.h"
 	<string>
 
-1448382385 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1448903350 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"include/dungeon.h"
 	<cstdlib>
 

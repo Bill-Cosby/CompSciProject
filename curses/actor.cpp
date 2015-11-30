@@ -24,7 +24,7 @@ void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal
         path.clear();
         return;
     }
-    if ((abs(x-goal.x)+abs(y-goal.y))>5 or musttouch==true)
+    if ((abs(x-goal.x)+abs(y-goal.y))>15 or musttouch==true)
     {
         musttouch=true;
         if (memory!=goal){
