@@ -2,6 +2,9 @@
 #define WINDOW_H_INCLUDED
 #include "actor.h"
 #include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sstream>
 
 class frame{
     int _w,_h;
@@ -26,6 +29,7 @@ public:
     void add(const char*);
 
     void drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors);
+    void drawStats(int);
 
     int width(){return _w;}
     int height(){return _h;}

@@ -24,6 +24,13 @@ void screen::add(const char* _print)
     wrefresh(win);
 }
 
+void screen::drawStats(int health){
+    std::stringstream ss;
+    ss << health;
+    std::string str = ss.str();
+    mvaddstr(10,60,str);
+}
+
 void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
 {
     touchwin(subwindow.sub);

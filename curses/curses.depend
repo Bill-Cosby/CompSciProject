@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1448916790 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1448919232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"include/dungeon.h"
 	<cstdlib>
 
@@ -61,12 +61,15 @@
 
 1444853298 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 
-1448916621 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1448919232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1445971387 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1448919454 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"actor.h"
 	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
 
 1448916630 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"

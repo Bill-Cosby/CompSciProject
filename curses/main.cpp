@@ -35,7 +35,9 @@ int main()
 
     actors.push_back(test);
     actors.push_back(enemy);
+
     screen scr(100,50);
+
     char ch;
     int chpos=0;
     while (ch!='p')
