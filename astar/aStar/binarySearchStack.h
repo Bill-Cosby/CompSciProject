@@ -1,8 +1,0 @@
-#ifndef BINARYSEARCHSTACK_H_INCLUDED
-#define BINARYSEARCHSTACK_H_INCLUDED
-#include <stdlib.h>
-#include "aStar.h"
-
-
-
-#endif // BINARYSEARCHSTACK_H_INCLUDED

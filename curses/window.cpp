@@ -31,7 +31,7 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
     coordinate charplaced;
     for (int i=0;i<actors.size();i++)
     {
-        if (actors[i].player==true)
+        if (actors[i].controlled==true)
         {
             startingposition=coordinate(actors[i].col(),actors[i].row());
         }

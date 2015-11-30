@@ -1,19 +1,22 @@
 #include "actor.h"
 
-actor::actor()
+player::player()
 {
-    player=true;
     _symbol='@';
+    controlled=true;
 }
 
-actor::actor(int throwaway)
+monster::monster(int _speed, char symbol)
 {
-    player=false;
-    _symbol='D';
+    speed=_speed;
+    _symbol=symbol;
+    counter=0;
+    controlled=false;
 }
 
-void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal, std::vector<actor> actors)
+void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal, std::vector<actor> actors)
 {
+    counter++;
     std::vector<coordinate> noGo;
     for (actor _a : actors){
         noGo.push_back(coordinate(_a.col(),_a.row()));
@@ -24,10 +27,10 @@ void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal
         path.clear();
         return;
     }
-    if ((abs(x-goal.x)+abs(y-goal.y))>15 or musttouch==true)
+    if ((abs(x-goal.x)+abs(y-goal.y))>1 or musttouch==true)
     {
         musttouch=true;
-        if (memory!=goal){
+        if (memory!=goal or counter==5){
             memory=goal;
             path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
         }
@@ -37,10 +40,14 @@ void actor::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal
         pos(path[path.size()-1].y,path[path.size()-1].x);
         path.erase(path.begin()+path.size()-1);
     }
+    if (counter==5)
+    {
+        counter=0;
+    }
     return;
 }
 
-void actor::movement(std::vector<std::vector<tile> > map_, char ch)
+void player::movement(std::vector<std::vector<tile> > map_, char ch)
 {
 
     if (ch=='w' or ch=='8'){
