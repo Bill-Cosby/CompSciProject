@@ -81,7 +81,12 @@ void screen::drawMenu(custom_menu menuToDraw)
                 _b.y=height()-10;
                 position+=width()/menuToDraw.listOfButtons.size();
             }
+            if (_b.selected==true){
+                mvwaddstr(win,10,width()-50,_b.description.c_str());
+                attron(A_STANDOUT);
+            }
             mvwaddstr(win,_b.y,_b.x,_b.name.c_str());
+            attroff(A_STANDOUT);
         }
     }
     refresh();

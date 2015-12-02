@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1448919232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1449093158 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"include/dungeon.h"
+	<string>
 	<cstdlib>
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
@@ -55,8 +56,8 @@
 	<fstream>
 	"../window.h"
 
-1448916621 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
-	"include/curses.h"
+1449089839 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+	"menu.h"
 	"aStar.h"
 
 1444853298 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
@@ -64,14 +65,14 @@
 1448919232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1448919454 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1449089839 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"actor.h"
 	<string>
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
 
-1448916630 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1449093219 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -189,5 +190,13 @@
 	"include/curses.h"
 
 1449076927 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
+	"menu.h"
+
+1449089839 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	"include/curses.h"
+
+1449089839 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
