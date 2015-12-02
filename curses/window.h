@@ -30,6 +30,7 @@ public:
 
     void drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors);
     void drawStats(int);
+    void drawMenu(custom_menu);
 
     int width(){return _w;}
     int height(){return _h;}

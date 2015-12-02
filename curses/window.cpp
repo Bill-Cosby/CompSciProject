@@ -28,7 +28,7 @@ void screen::drawStats(int health){
     std::stringstream ss;
     ss << health;
     std::string str = ss.str();
-    mvaddstr(10,60,str);
+    mvaddstr(10,60,str.c_str());
 }
 
 void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
@@ -62,6 +62,29 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
         }
     }
     wrefresh(subwindow.sub);
+}
+
+void screen::drawMenu(custom_menu menuToDraw)
+{
+    int position=1;
+    if (menuToDraw.verticle==true)
+    {
+        for (menu_button _b : menuToDraw.listOfButtons){
+            if (menuToDraw.verticle==true){
+                _b.y=position;
+                _b.x=10;
+                position+=height()/menuToDraw.listOfButtons.size();
+            }
+            else
+            {
+                _b.x=position;
+                _b.y=height()-10;
+                position+=width()/menuToDraw.listOfButtons.size();
+            }
+            mvwaddstr(win,_b.y,_b.x,_b.name.c_str());
+        }
+    }
+    refresh();
 }
 
 frame::frame(WINDOW* parent, int h, int w)

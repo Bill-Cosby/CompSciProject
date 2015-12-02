@@ -96,11 +96,11 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1448903387 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1449073341 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
-	"include/curses.h"
+1449076734 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+	"menu.h"
 	"aStar.h"
 
 1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
@@ -138,15 +138,18 @@
 	<fstream>
 	"../window.h"
 
-1448902488 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
+1449076841 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
 	"actor.h"
 	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
 
-1448903350 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1449077335 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"include/dungeon.h"
 	<cstdlib>
 
-1446567691 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+1449077393 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -179,4 +182,12 @@
 	<stdio.h>
 	<stdint.h>
 	<stdlib.h>
+
+1449076831 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	"include/curses.h"
+
+1449076927 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
+	"menu.h"
 

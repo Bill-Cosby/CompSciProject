@@ -5,6 +5,22 @@ using namespace std;
 
 int main()
 {
+    screen scr(100,50);
+    char ch;
+
+    std::vector<menu_button> listOfButtons;
+    listOfButtons.push_back(menu_button("test1"));
+    listOfButtons.push_back(menu_button("test2"));
+    listOfButtons.push_back(menu_button("test4"));
+    custom_menu mainMenu(listOfButtons, true);
+
+    while (ch!='p'){
+        scr.drawMenu(mainMenu);
+        ch=wgetch(scr.win);
+    }
+
+
+
     player test;
     monster enemy(5,'D');
     dungeon map_t;
@@ -36,9 +52,6 @@ int main()
     actors.push_back(test);
     actors.push_back(enemy);
 
-    screen scr(100,50);
-
-    char ch;
     int chpos=0;
     while (ch!='p')
     {
@@ -50,6 +63,7 @@ int main()
         actors[1]=enemy;
         wrefresh(scr.win);
         ch=wgetch(scr.win);
+        scr.drawStats(100);
     }
     endwin();
 }
