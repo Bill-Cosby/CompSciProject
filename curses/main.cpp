@@ -11,27 +11,30 @@ int main()
     int menuSelector=0;
     std::vector<menu_button> listOfButtons;
     listOfButtons.push_back(menu_button("DamionSucks","You have no idea how much he sucks"));
+    listOfButtons.push_back(menu_button("Maya is pretty", "shes fuckin cool"));
     listOfButtons.push_back(menu_button("Damion doesn't Suck", "He's sometimes pretty cool"));
+    listOfButtons.push_back(menu_button("Davd", "made a menu"));
     listOfButtons[0].selected=true;
     custom_menu mainMenu(listOfButtons, true);
 
     while (ch!='q'){
         touchwin(scr.win);
         ch=wgetch(scr.win);
-            mvwaddch(scr.win,1,1,ch);
         if (ch=='2'){
             if (menuSelector+1<mainMenu.listOfButtons.size()){
                 mainMenu.listOfButtons[menuSelector].selected=false;
                 menuSelector++;
             }
             ch=='0';
+            clear();
         }
         if(ch=='8'){
-            if (menuSelector-1>0){
+            if (menuSelector-1>=0){
                 mainMenu.listOfButtons[menuSelector].selected=false;
                 menuSelector--;
             }
             ch=='0';
+            clear();
         }
         scr.drawMenu(mainMenu);
         mainMenu.listOfButtons[menuSelector].selected=true;

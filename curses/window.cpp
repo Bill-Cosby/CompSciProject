@@ -14,7 +14,7 @@ screen::screen(int w,int h)
     wrefresh(win);
     noecho();
     cbreak();
-    nodelay(win,true);
+    nodelay(win,false);
 }
 
 void screen::add(const char* _print)
