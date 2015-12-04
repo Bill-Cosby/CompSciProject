@@ -14,7 +14,7 @@ screen::screen(int w,int h)
     wrefresh(win);
     noecho();
     cbreak();
-    nodelay(win,false);
+    nodelay(win,true);
 }
 
 void screen::add(const char* _print)
@@ -67,27 +67,24 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
 void screen::drawMenu(custom_menu menuToDraw)
 {
     int position=1;
-    if (menuToDraw.verticle==true)
-    {
-        for (menu_button _b : menuToDraw.listOfButtons){
-            if (menuToDraw.verticle==true){
-                _b.y=position;
-                _b.x=10;
-                position+=height()/menuToDraw.listOfButtons.size();
-            }
-            else
-            {
-                _b.x=position;
-                _b.y=height()-10;
-                position+=width()/menuToDraw.listOfButtons.size();
-            }
-            if (_b.selected==true){
-                mvwaddstr(win,10,width()-50,_b.description.c_str());
-                attron(A_STANDOUT);
-            }
-            mvwaddstr(win,_b.y,_b.x,_b.name.c_str());
-            attroff(A_STANDOUT);
+    for (menu_button _b : menuToDraw.listOfButtons){
+        if (menuToDraw.verticle==true){
+            _b.y=position;
+            _b.x=10;
+            position+=height()/menuToDraw.listOfButtons.size();
         }
+        else
+        {
+            _b.x=position;
+            _b.y=height()-10;
+            position+=width()/menuToDraw.listOfButtons.size();
+        }
+        if (_b.selected==true){
+            mvwaddstr(win,10,width()-50,_b.description.c_str());
+            attron(A_REVERSE);
+        }
+        mvwaddstr(win,_b.y,_b.x,_b.name.c_str());
+        attroff(A_REVERSE);
     }
     refresh();
 }

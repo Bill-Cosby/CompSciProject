@@ -1,44 +1,53 @@
+
+#define KEY_ENTER 0x157
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
 
 using namespace std;
+bool quit_game=false;
+
 
 int main()
 {
     screen scr(100,50);
     char ch;
     int menuSelector=0;
+    bool buttonSelected=false;
     std::vector<menu_button> listOfButtons;
-    listOfButtons.push_back(menu_button("DamionSucks","You have no idea how much he sucks"));
-    listOfButtons.push_back(menu_button("Maya is pretty", "shes fuckin cool"));
-    listOfButtons.push_back(menu_button("Damion doesn't Suck", "He's sometimes pretty cool"));
-    listOfButtons.push_back(menu_button("Davd", "made a menu"));
+    listOfButtons.push_back(menu_button("New Game","Start a new game"));
+    listOfButtons.push_back(menu_button("Load Game", "Load a previous game"));
+    listOfButtons.push_back(menu_button("New World", "Generate a new world"));
+    listOfButtons.push_back(menu_button("Options", "Options menu"));
+    listOfButtons.push_back(menu_button("Quit"));
     listOfButtons[0].selected=true;
-    custom_menu mainMenu(listOfButtons, true);
+    custom_menu mainMenu(listOfButtons, false);
 
-    while (ch!='q'){
+    while (buttonSelected==false){
         touchwin(scr.win);
         ch=wgetch(scr.win);
-        if (ch=='2'){
+        if (mainMenu.verticle==true and ch=='2' or mainMenu.verticle==false and ch=='6'){
             if (menuSelector+1<mainMenu.listOfButtons.size()){
                 mainMenu.listOfButtons[menuSelector].selected=false;
                 menuSelector++;
             }
             ch=='0';
-            clear();
         }
-        if(ch=='8'){
+        if(mainMenu.verticle==true and ch=='8' or mainMenu.verticle==false and ch=='4'){
             if (menuSelector-1>=0){
                 mainMenu.listOfButtons[menuSelector].selected=false;
                 menuSelector--;
             }
             ch=='0';
-            clear();
         }
+        if (ch==KEY_ENTER){
+            std::cout << "Here\n";
+        }
+        clear();
         scr.drawMenu(mainMenu);
         mainMenu.listOfButtons[menuSelector].selected=true;
     }
+    clear();
 
 
 
@@ -74,7 +83,7 @@ int main()
     actors.push_back(enemy);
 
     int chpos=0;
-    while (ch!='p')
+    while (quit_game==false)
     {
         test.movement(_map, ch);
         actors[0]=test;

@@ -146,11 +146,12 @@
 	<stdlib.h>
 	<sstream>
 
-1449077335 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1449246523 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"include/dungeon.h"
+	<string>
 	<cstdlib>
 
-1449077393 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+1449245917 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
