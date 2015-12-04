@@ -1,6 +1,8 @@
 #include "window.h"
 #include <iostream>
 
+#define COLOR_LIGHTGREEN 10
+
 screen::screen(int w,int h)
 {
     _w=w;
@@ -15,6 +17,9 @@ screen::screen(int w,int h)
     noecho();
     cbreak();
     nodelay(win,true);
+    start_color();
+    init_color(COLOR_LIGHTGREEN,0,1000,500);
+    init_pair(1,COLOR_RED,COLOR_LIGHTGREEN);
 }
 
 void screen::add(const char* _print)
@@ -80,7 +85,9 @@ void screen::drawMenu(custom_menu menuToDraw)
             position+=width()/menuToDraw.listOfButtons.size();
         }
         if (_b.selected==true){
+            attron(COLOR_PAIR(1));
             mvwaddstr(win,10,width()-50,_b.description.c_str());
+
             attron(A_REVERSE);
         }
         mvwaddstr(win,_b.y,_b.x,_b.name.c_str());

@@ -1,5 +1,4 @@
 
-#define KEY_ENTER 0x157
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
@@ -10,6 +9,7 @@ bool quit_game=false;
 
 int main()
 {
+
     screen scr(100,50);
     char ch;
     int menuSelector=0;
@@ -40,8 +40,8 @@ int main()
             }
             ch=='0';
         }
-        if (ch==KEY_ENTER){
-            std::cout << "Here\n";
+        if (ch==10 or ch=='5'){
+
         }
         clear();
         scr.drawMenu(mainMenu);

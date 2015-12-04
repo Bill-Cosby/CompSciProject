@@ -14,10 +14,17 @@ public:
     menu_button(std::string,std::string);
 };
 
+class quitButton : menu_button
+{
+public:
+
+};
+
 class custom_menu
 {
 public:
     std::vector<menu_button> listOfButtons;
     bool verticle;
     custom_menu(std::vector<menu_button> _b,bool _v){listOfButtons=_b;verticle=_v;}
+    void menuSelection(std::vector<menu_button>);
 };
