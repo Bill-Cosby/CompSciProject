@@ -16,7 +16,7 @@ screen::screen(int w,int h)
     wrefresh(win);
     noecho();
     cbreak();
-    nodelay(win,true);
+    nodelay(win,false);
     start_color();
 }
 
@@ -65,40 +65,6 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
         }
     }
     wrefresh(subwindow.sub);
-}
-
-void screen::drawMenu(custom_menu menuToDraw)
-{
-    int position=1;
-    for (menu_button _b : menuToDraw.listOfButtons){
-        if (menuToDraw.verticle==true){
-            _b.y=position;
-            _b.x=10;
-            position+=height()/menuToDraw.listOfButtons.size();
-            if (_b.selected==true){
-            attron(COLOR_PAIR(1));
-            mvwaddstr(win,10,width()-50,_b.description.c_str());
-
-            attron(A_REVERSE);
-        }
-        }
-        else
-        {
-            _b.x=position;
-            _b.y=height()-10;
-            position+=width()/menuToDraw.listOfButtons.size();
-            if (_b.selected==true){
-            attron(COLOR_PAIR(1));
-            mvwaddstr(win,_b.y-10,_b.x,_b.description.c_str());
-
-            attron(A_REVERSE);
-        }
-        }
-
-        mvwaddstr(win,_b.y,_b.x,_b.name.c_str());
-        attroff(A_REVERSE);
-    }
-    refresh();
 }
 
 frame::frame(WINDOW* parent, int h, int w)

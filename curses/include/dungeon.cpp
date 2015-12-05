@@ -71,7 +71,7 @@ void dungeon::hallwayMaker()
     std::default_random_engine generator(time(0));          //random number engine
     std::uniform_int_distribution<int> mazeDirection(1,4);
     int direction=-1;
-    std::stack<coordinate> mazeTracker;                     //maze stack
+    std::stack<xyspot> mazeTracker;                     //maze stack
     mazeTracker.push(mazeBegin);                            //initialize stack
     dungeon_grid[mazeTracker.top().y][mazeTracker.top().x]=true;
 
@@ -92,7 +92,7 @@ void dungeon::hallwayMaker()
                 }
             }
 
-            mazeTracker.push(coordinate(mazeTracker.top().x+directions[direction-1].x, mazeTracker.top().y+directions[direction-1].y));
+            mazeTracker.push(xyspot(mazeTracker.top().x+directions[direction-1].x, mazeTracker.top().y+directions[direction-1].y));
 
             if (mazeTracker.top().x<w and mazeTracker.top().x<0 or mazeTracker.top().y>h or mazeTracker.top().y<0 and mazeTracker.size()>0)
             {

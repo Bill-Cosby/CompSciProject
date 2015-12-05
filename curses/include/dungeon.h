@@ -5,15 +5,22 @@
 #include <time.h>
 #include <stack>
 #include <fstream>
-#include "../window.h"
+
+class xyspot
+{
+public:
+    int x,y;
+    xyspot(int _x,int _y){x=_x;y=_y;}
+    xyspot(){};
+};
 
 class dungeon
 {
 private:
-    coordinate directions[4]={coordinate(0,-1),coordinate(1,0),coordinate(0,1),coordinate(-1,0)};
+    xyspot directions[4]={xyspot(0,-1),xyspot(1,0),xyspot(0,1),xyspot(-1,0)};
     int w,h;
 public:
-    coordinate mazeBegin;
+    xyspot mazeBegin;
     std::vector<std::vector<bool> > dungeon_grid;
     dungeon();
     void hallwayMaker();

@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include "include/curses.h"
+#include "window.h"
 
 class menu_button
 {
@@ -14,17 +15,18 @@ public:
     menu_button(std::string,std::string);
 };
 
-class quitButton : menu_button
-{
-public:
-
-};
-
 class custom_menu
 {
 public:
     std::vector<menu_button> listOfButtons;
     bool verticle;
-    custom_menu(std::vector<menu_button> _b,bool _v){listOfButtons=_b;verticle=_v;}
+    int percentOfScreen;
     void menuSelection(std::vector<menu_button>);
+};
+
+class mainMenu : custom_menu
+{
+public:
+    mainMenu(std::string,bool, int);
+    void mainMenuLoop(screen scr);
 };

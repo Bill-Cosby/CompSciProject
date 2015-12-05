@@ -1,6 +1,5 @@
 #ifndef ACTOR_H_INCLUDED
 #define ACTOR_H_INCLUDED
-#include "menu.h"
 #include "aStar.h"
 
 class actor

@@ -1,6 +1,7 @@
 #ifndef WINDOW_H_INCLUDED
 #define WINDOW_H_INCLUDED
 #include "actor.h"
+#include "tile.h"
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +31,6 @@ public:
 
     void drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors);
     void drawStats(int);
-    void drawMenu(custom_menu);
 
     int width(){return _w;}
     int height(){return _h;}
