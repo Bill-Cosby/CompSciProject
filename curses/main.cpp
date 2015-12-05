@@ -4,7 +4,6 @@
 #include <cstdlib>
 
 using namespace std;
-bool quit_game=false;
 
 
 int main()
@@ -53,7 +52,7 @@ int main()
     actors.push_back(enemy);
 
     int chpos=0;
-    while (quit_game==false)
+    while (first_menu.quit_game==false)
     {
         test.movement(_map, ch);
         actors[0]=test;

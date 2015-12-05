@@ -20,6 +20,7 @@ class custom_menu
 public:
     std::vector<menu_button> listOfButtons;
     bool verticle;
+    bool buttonSelected;
     int percentOfScreen;
     void menuSelection(std::vector<menu_button>);
 };
@@ -27,6 +28,7 @@ public:
 class mainMenu : custom_menu
 {
 public:
+    bool quit_game;
     mainMenu(std::string,bool, int);
     void mainMenuLoop(screen scr);
 };
