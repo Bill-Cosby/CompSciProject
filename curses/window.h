@@ -7,6 +7,13 @@
 #include <stdlib.h>
 #include <sstream>
 
+
+
+#define COLOR_PLAYER 69
+#define COLOR_DOG 70
+
+
+
 class frame{
     int _w,_h;
 public:

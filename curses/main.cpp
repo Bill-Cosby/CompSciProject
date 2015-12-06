@@ -14,7 +14,10 @@ int main()
 
     mainMenu first_menu("Main Menu",false,100);
     first_menu.mainMenuLoop(scr);
-
+    if(first_menu.quit_game==true){
+        endwin();
+        return 0;
+    }
 
     erase();
 

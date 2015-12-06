@@ -64,7 +64,7 @@
 1449354814 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1449354814 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1449363658 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"actor.h"
 	"tile.h"
 	<string>
@@ -72,7 +72,7 @@
 	<stdlib.h>
 	<sstream>
 
-1449357956 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1449363868 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -193,12 +193,13 @@
 1449251249 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1449357845 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+1449362789 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
 	<vector>
 	<string>
+	<SFML/Audio.hpp>
 	"include/curses.h"
 	"window.h"
 
-1449358327 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
+1449363401 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
