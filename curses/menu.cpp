@@ -9,11 +9,12 @@ mainMenu::mainMenu(std::string title,bool _v, int _p)
     quit_game=false;
     buttonSelected=false;
     if (title=="Main Menu"){
+        listOfButtons.push_back(menu_button("","Numpad or WASD for movement \n enter or 5 for selection"));
         listOfButtons.push_back(menu_button("New Game","Start a new game"));
-        listOfButtons.push_back(menu_button("Load Game", "Load a previous game"));
-        listOfButtons.push_back(menu_button("New World", "Generate a new world"));
-        listOfButtons.push_back(menu_button("Options", "Options menu"));
-        listOfButtons.push_back(menu_button("Quit"));
+        listOfButtons.push_back(menu_button("Load Game", "Load a previous game **CURRENTLY SERVES NO PURPOSE**"));
+        listOfButtons.push_back(menu_button("New World", "Generate a new world **CURRENTLY SERVES NO PURPOSE**"));
+        listOfButtons.push_back(menu_button("Options", "**CURRENTLY SERVES NO PURPOSE**"));
+        listOfButtons.push_back(menu_button("Quit", "Exit Game"));
         listOfButtons[0].selected=true;
     }
 }
@@ -41,7 +42,6 @@ void mainMenu::mainMenuLoop(screen scr)
     char ch;
 
     while (buttonSelected==false){
-        ch=wgetch(scr.win);
         if (verticle==true and ch=='2' or verticle==false and ch=='6'){
         erase();
             if (menuSelector+1<listOfButtons.size()){
@@ -86,6 +86,7 @@ void mainMenu::mainMenuLoop(screen scr)
 
 
         for (menu_button _b : listOfButtons){
+            wborder(scr.win,0,0,0,0,0,0,0,0);
             if (verticle==true){
                 _b.y=position;
                 _b.x=10;
@@ -116,6 +117,7 @@ void mainMenu::mainMenuLoop(screen scr)
         }
         position=1;
         refresh();
+        ch=wgetch(scr.win);
 
     }
 

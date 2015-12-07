@@ -57,6 +57,7 @@ int main()
     int chpos=0;
     while (first_menu.quit_game==false)
     {
+        wborder(scr.win,0,0,0,0,0,0,0,0);
         test.movement(_map, ch);
         actors[0]=test;
         scr.drawGameworld(_map,actors);
@@ -64,8 +65,8 @@ int main()
         enemy.aiMovement(_map, eh,actors);
         actors[1]=enemy;
         wrefresh(scr.win);
-        ch=wgetch(scr.win);
         scr.drawStats(100);
+        ch=wgetch(scr.win);
     }
     endwin();
 }
