@@ -97,11 +97,10 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1449073341 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1449595174 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
 
-1449076734 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
-	"menu.h"
+1449595482 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
 	"aStar.h"
 
 1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
@@ -124,34 +123,35 @@
 
 1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
 
-1448900059 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+1449594085 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
-1448383574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.cpp
+1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.h
+1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<fstream>
-	"../window.h"
 
-1449076841 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
+1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
 	"actor.h"
+	"tile.h"
 	<string>
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
 
-1449251236 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1449595482 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+	"menu.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 
-1449251322 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+1449595332 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -185,12 +185,14 @@
 	<stdint.h>
 	<stdlib.h>
 
-1449251245 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.h
+1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.h
 	<vector>
 	<string>
+	<SFML/Audio.hpp>
 	"include/curses.h"
+	"window.h"
 
-1449251249 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
+1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
 1449382976 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h

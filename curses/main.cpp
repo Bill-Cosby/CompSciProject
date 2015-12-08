@@ -53,16 +53,24 @@ int main()
 
     actors.push_back(test);
     actors.push_back(enemy);
-
+    bool iwishiwashappy=false;
     int chpos=0;
     while (first_menu.quit_game==false)
     {
+        if (ch=='g'){
+            iwishiwashappy=true;
+        }
+        if (iwishiwashappy==true){
+            enemy.aiMovement(_map, coordinate(test.col(),test.row()),actors);
+            if (enemy.path.size()==0){
+                iwishiwashappy=false;
+            }
+        }
         wborder(scr.win,0,0,0,0,0,0,0,0);
         test.movement(_map, ch);
         actors[0]=test;
         scr.drawGameworld(_map,actors);
         coordinate eh(actors[0].col(),actors[0].row());
-        enemy.aiMovement(_map, eh,actors);
         actors[1]=enemy;
         wrefresh(scr.win);
         scr.drawStats(100);

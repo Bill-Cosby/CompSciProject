@@ -16,7 +16,7 @@ screen::screen(int w,int h)
     wrefresh(win);
     noecho();
     cbreak();
-    nodelay(win,false);
+    nodelay(win,true);
     start_color();
 }
 

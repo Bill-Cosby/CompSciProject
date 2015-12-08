@@ -26,8 +26,8 @@ public:
 class monster : public actor
 {
     coordinate memory;
-    std::vector<coordinate> path;
 public:
+    std::vector<coordinate> path;
     int speed;
     int counter;
     bool musttouch;
