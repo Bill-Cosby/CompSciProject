@@ -18,12 +18,40 @@ bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkS
 {
     coordinate temp=checkSpot;
     int horzdistance=checkSpot.x;
-    for (int i=0;i<=checkSpot.x;i++)
-    {
-        std::cout <<  (row()-temp.y) << "," << col()-temp.x << std::endl;
-        if(test_map[col()-temp.x][(row()-temp.y)].movementCost==-1)
+    int slopex=col()-temp.x;
+    int slopey=row()-temp.y;
+    float yint=temp.y-(slopey/slopex)*temp.x;
+    int yplace;
+    if (slopex>=0){
+        for (int i=1;i<slopex;i++)
         {
-            return false;
+            if (slopex==0){
+                yplace=checkSpot.y;
+            }
+            else{
+                yplace=(slopey/slopex)*i+yint;
+            }
+            std::cout << (slopey/slopex)*i+yint << "\t" << i << std::endl;
+            if(test_map[row()-yplace][col()-(i)].movementCost==-1)
+            {
+                return false;
+            }
+        }
+    }
+    else{
+        for (int i=-1;i>slopex;i--)
+        {
+            if (slopex==0){
+                yplace=checkSpot.y;
+            }
+            else{
+                yplace=(slopey/slopex)*i+yint;
+            }
+            std::cout << (slopey/slopex)*i+yint << "\t" << i << std::endl;
+            if(test_map[row()-yplace][col()-(i)].movementCost==-1)
+            {
+                return false;
+            }
         }
     }
     return true;
