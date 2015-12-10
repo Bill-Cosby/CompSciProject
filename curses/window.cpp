@@ -16,7 +16,7 @@ screen::screen(int w,int h)
     wrefresh(win);
     noecho();
     cbreak();
-    nodelay(win,true);
+    nodelay(win,false);
     start_color();
 }
 
@@ -36,6 +36,7 @@ void screen::drawStats(int health){
 
 void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
 {
+    //wborder(win,0,0,0,0,0,0,0,0);
     init_color(COLOR_PLAYER,0,200,500);
     init_color(COLOR_DOG,1000,0,0);
 
@@ -55,7 +56,11 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
         }
     }
                     attron(COLOR_PAIR(2));
-    charplaced=coordinate(startingposition.x-(subwindow.width()-(subwindow.width()/2)),startingposition.y-(subwindow.height()-(subwindow.height()/2)));
+    charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
+    //erase();
+    wborder(win,0,0,0,0,0,0,0,0);
+    wborder(subwindow.sub,0,0,0,0,0,0,0,0);
+
     for (int y=1;y<subwindow.height()-1;y++)
     {
         for (int x=1;x<subwindow.width()-1;x++)

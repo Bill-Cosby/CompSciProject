@@ -5,6 +5,17 @@
 
 using namespace std;
 
+const char testarena[10][10]={{'#','#','#','#','#','#','#','#','#','#'},
+                              {'#','+','+','#','+','+','+','#','+','#'},
+                              {'#','+','+','#','+','+','+','+','+','#'},
+                              {'#','+','+','+','+','+','+','#','+','#'},
+                              {'#','+','+','#','+','+','+','#','+','#'},
+                              {'#','+','+','#','+','+','+','#','+','#'},
+                              {'#','+','#','#','#','#','#','#','+','#'},
+                              {'#','+','+','+','+','+','+','+','+','#'},
+                              {'#','+','+','+','+','+','+','+','+','#'},
+                              {'#','#','#','#','#','#','#','#','#','#'}};
+
 
 int main()
 {
@@ -30,26 +41,38 @@ int main()
 
     std::vector<std::vector<tile> > _map;
     std::vector<actor> actors;
-    _map.resize(map_t.dungeon_grid.size());
-
-
-    for (int y=0;y<map_t.dungeon_grid.size();y++)
-    {
-        _map[y].resize(map_t.dungeon_grid[0].size());
-        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-        {
-            if (map_t.dungeon_grid[y][x]==1)
-            {
-                _map[y][x]=tile(' ',' ',0);
-                test.pos(y,x);
-                enemy.pos(y,x);
-            }
-            else
-            {
+    //_map.resize(map_t.dungeon_grid.size());
+    _map.resize(10);
+    for (int y=0;y<10;y++){
+        _map[y].resize(10);
+        for (int x=0;x<10;x++){
+            if (testarena[y][x]=='#'){
                 _map[y][x]=tile('#','#',-1);
+            }
+            else{
+                _map[y][x]=tile('+','+',0);
             }
         }
     }
+
+    test.pos(0,0);
+//    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//    {
+//        _map[y].resize(map_t.dungeon_grid[0].size());
+//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//        {
+//            if (map_t.dungeon_grid[y][x]==1)
+//            {
+//                _map[y][x]=tile(' ',' ',0);
+//                test.pos(y,x);
+//                enemy.pos(y,x);
+//            }
+//            else
+//            {
+//                _map[y][x]=tile('#','#',-1);
+//            }
+//        }
+//    }
 
     actors.push_back(test);
     actors.push_back(enemy);
@@ -66,7 +89,6 @@ int main()
                 iwishiwashappy=false;
             }
         }
-        wborder(scr.win,0,0,0,0,0,0,0,0);
         test.movement(_map, ch);
         actors[0]=test;
         scr.drawGameworld(_map,actors);
