@@ -14,6 +14,21 @@ monster::monster(int _speed, char symbol)
     controlled=false;
 }
 
+bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkSpot)
+{
+    coordinate temp=checkSpot;
+    int horzdistance=checkSpot.x;
+    for (int i=0;i<=checkSpot.x;i++)
+    {
+        std::cout <<  (row()-temp.y) << "," << col()-temp.x << std::endl;
+        if(test_map[col()-temp.x][(row()-temp.y)].movementCost==-1)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal, std::vector<actor> actors)
 {
     counter++;
@@ -27,14 +42,18 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
         path.clear();
         return;
     }
-    if ((abs(x-goal.x)+abs(y-goal.y))>1 or musttouch==true)
+    if (canSee(test_map,goal))
     {
-        musttouch=true;
-        if (memory!=goal or counter==5){
-            memory=goal;
-            path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
+        if ((abs(x-goal.x)+abs(y-goal.y))>1 or musttouch==true)
+        {
+            musttouch=true;
+            if (memory!=goal or counter==5){
+                memory=goal;
+                path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
+            }
         }
     }
+
     if (path.size()>0)
     {
         pos(path[path.size()-1].y,path[path.size()-1].x);

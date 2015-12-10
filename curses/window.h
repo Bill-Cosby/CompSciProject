@@ -44,5 +44,4 @@ public:
 };
 
 
-
 #endif // WINDOW_H_INCLUDED

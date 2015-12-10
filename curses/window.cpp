@@ -57,17 +57,20 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
     }
                     attron(COLOR_PAIR(2));
     charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
-    //erase();
-    wborder(win,0,0,0,0,0,0,0,0);
+    //wborder(win,0,0,0,0,0,0,0,0);
     wborder(subwindow.sub,0,0,0,0,0,0,0,0);
 
-    for (int y=1;y<subwindow.height()-1;y++)
+    for (int y=0;y<subwindow.height()-1;y++)
     {
-        for (int x=1;x<subwindow.width()-1;x++)
+        for (int x=0;x<subwindow.width()-1;x++)
         {
-            if (y+charplaced.y>0 and y+charplaced.y<_map.size() and x+charplaced.x>0 and x+charplaced.x<_map[0].size())
+            if (y+charplaced.y>=0 and y+charplaced.y<_map.size() and x+charplaced.x>=0 and x+charplaced.x<_map[0].size())
             {
                 mvwaddch(subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x].defaultchar);
+            }
+            else
+            {
+                mvwaddch(subwindow.sub,y,x,' ');
             }
             for (actor _a: actors)
             {
@@ -98,3 +101,5 @@ void frame::draw(const char* thing)
     mvwaddstr(sub,1,1,thing);
     wrefresh(sub);
 }
+
+

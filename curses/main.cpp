@@ -55,7 +55,8 @@ int main()
         }
     }
 
-    test.pos(0,0);
+    test.pos(1,1);
+    enemy.pos(8,8);
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
 //        _map[y].resize(map_t.dungeon_grid[0].size());
@@ -93,6 +94,7 @@ int main()
         actors[0]=test;
         scr.drawGameworld(_map,actors);
         coordinate eh(actors[0].col(),actors[0].row());
+        enemy.aiMovement(_map,coordinate(test.col(),test.row()),actors);
         actors[1]=enemy;
         wrefresh(scr.win);
         scr.drawStats(100);

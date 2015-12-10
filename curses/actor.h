@@ -32,7 +32,7 @@ public:
     int counter;
     bool musttouch;
     void aiMovement(std::vector<std::vector<tile> >, coordinate, std::vector<actor>);
-
+    bool canSee(std::vector<std::vector<tile> >, coordinate);
     monster(int,char);
 };
 
