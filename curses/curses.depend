@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1449782124 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1449990562 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"include/dungeon.h"
 	<string>
@@ -40,31 +40,32 @@
 	<curspriv.h>
 	<stdlib.h>
 
-1449354814 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
+1449299755 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
 	<wchar.h>
 
-1449354814 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+1449344350 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1449354814 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
+1449345617 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<fstream>
 
-1449782122 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1449989842 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 
-1449354814 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1449299755 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 
-1449785361 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1449990484 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
+	<cstdlib>
 
-1449782124 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1449983046 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"actor.h"
 	"tile.h"
 	<string>
@@ -72,11 +73,11 @@
 	<stdlib.h>
 	<sstream>
 
-1449782124 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1449983046 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
-1449354814 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+1449299755 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -86,7 +87,7 @@
 	"tile.h"
 	<queue>
 
-1449354814 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+1449299755 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -195,13 +196,13 @@
 1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1449362789 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+1449382976 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
 	<vector>
 	<string>
 	<SFML/Audio.hpp>
 	"include/curses.h"
 	"window.h"
 
-1449782124 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
+1449447114 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
