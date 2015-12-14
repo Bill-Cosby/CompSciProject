@@ -98,10 +98,11 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1449595174 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1450109823 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
+	<cstdlib>
 
-1449595482 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+1450109823 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
 	"aStar.h"
 
 1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
@@ -110,7 +111,7 @@
 	<stdio.h>
 	<wchar.h>
 
-1448900059 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
+1450111143 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -124,7 +125,7 @@
 
 1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
 
-1449594085 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+1450112634 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -138,7 +139,7 @@
 	<stack>
 	<fstream>
 
-1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
+1450109823 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
 	"actor.h"
 	"tile.h"
 	<string>
@@ -146,13 +147,13 @@
 	<stdlib.h>
 	<sstream>
 
-1449768644 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1450109897 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"menu.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 
-1449768571 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+1450111318 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 

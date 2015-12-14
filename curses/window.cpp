@@ -56,7 +56,8 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
         }
     }
                     attron(COLOR_PAIR(2));
-    charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
+    //charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
+    charplaced=coordinate(0,0);
     //wborder(win,0,0,0,0,0,0,0,0);
     wborder(subwindow.sub,0,0,0,0,0,0,0,0);
 

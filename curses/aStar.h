@@ -8,6 +8,10 @@
 #include "include/curses.h"
 #include "tile.h"
 #include <queue>
+
+using std::pair;
+using std::priority_queue;
+
 class coordinate
 {
 public:
@@ -40,6 +44,25 @@ public:
     bool operator == (node item){return item.position==position;}
     bool operator <= (node item){return fCost()<=item.fCost() or fCost()==item.fCost() and gCost<=item.gCost;}
 
+};
+
+template<typename T, typename Number=int>
+struct PriorityQueue {
+  typedef pair<Number, T> PQElement;
+  priority_queue<PQElement, std::vector<PQElement>,
+                 std::greater<PQElement>> elements;
+
+  inline bool empty() { return elements.empty(); }
+
+  inline void put(T item, Number priority) {
+    elements.emplace(priority, item);
+  }
+
+  inline T get() {
+    T best_item = elements.top().second;
+    elements.pop();
+    return best_item;
+  }
 };
 
 std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);

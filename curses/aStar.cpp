@@ -32,12 +32,47 @@ struct comparator {
         return nFcost<=itemFcost;
     }
 };
+
+//void a_star_search(Graph graph,
+//   typename Graph::Location start,
+//   typename Graph::Location goal,
+//   unordered_map<typename Graph::Location, typename Graph::Location>& came_from,
+//   unordered_map<typename Graph::Location, int>& cost_so_far)
+//{
+//  typedef typename Graph::Location Location;
+//  PriorityQueue<Location> frontier;
+//  frontier.put(start, 0);
+//
+//  came_from[start] = start;
+//  cost_so_far[start] = 0;
+//
+//  while (!frontier.empty()) {
+//    auto current = frontier.get();
+//
+//    if (current == goal) {
+//      break;
+//    }
+//
+//    for (auto next : graph.neighbors(current)) {
+//      int new_cost = cost_so_far[current] + graph.cost(current, next);
+//      if (!cost_so_far.count(next) || new_cost < cost_so_far[next]) {
+//        cost_so_far[next] = new_cost;
+//        int priority = new_cost + heuristic(next, goal);
+//        frontier.put(next, priority);
+//        came_from[next] = current;
+//      }
+//    }
+//  }
+//}
+
+
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
     for (coordinate _c : noGo){
         _map[_c.y][_c.x].movementCost=-1;
     }
     std::priority_queue<node, std::vector<node>, comparator> openSet;
+    std::vector<node> heapStorage;
 
     int distanceInNeighborset=1;
 
@@ -51,7 +86,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
     int timesthroughLoop=0;
 
     while (openSet.size()!=0){
-        if (abs(currentNode.position.x-goal.x)==1 and abs(currentNode.position.y-goal.y)==1){
+        if (abs(currentNode.position.x-goal.x)-abs(currentNode.position.y-goal.y)==1){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){
                 for (int i=0;i<closedSet.size();i++){
@@ -84,6 +119,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
             int placeInSet=distanceInNeighborset;
 
             if (!vectorContains(closedSet, _n)){
+
                 int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n.position);
                 _n.parent=currentNode.position;
                 _n.gCost=newCostToMove;
@@ -91,6 +127,9 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
             }
 
         }
+        mvaddch(currentNode.position.y,currentNode.position.x,'C');
+        refresh();
+
         tempNeighborStorage.clear();
         currentNode.gCost=openSet.top().gCost;
         currentNode.hCost=openSet.top().hCost;
