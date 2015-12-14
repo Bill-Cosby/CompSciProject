@@ -1,14 +1,16 @@
 #ifndef TILE_H_INCLUDED
 #define TILE_H_INCLUDED
+#include "node.h"
 
-class tile
+class tile : public node
 {
 public:
     bool corner;
-    char occupychar;
     char defaultchar;
     int movementCost;
-    tile(char oc,char dc,int mc){occupychar=oc;defaultchar=dc;movementCost=mc;};
+    tile(char dc,int mc){defaultchar=dc;movementCost=mc;};
+    tile(coordinate,coordinate,int);
+    tile(int hCost, int costSoFar);
     tile(){corner=false;};
 };
 

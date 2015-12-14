@@ -5,8 +5,6 @@ node::node(int h,int g)
 {
     hCost=h;
     gCost=g;
-    Left=NULL;
-    Right=NULL;
 }
 
 node::node(coordinate pos, coordinate _goal, int g)
@@ -14,15 +12,11 @@ node::node(coordinate pos, coordinate _goal, int g)
     position=pos;
     hCost=getDistance(position, _goal);
     gCost=g;
-    Left=NULL;
-    Right=NULL;
 }
 node::node(int h, int g, node* L, node* R)
 {
     hCost=h;
     gCost=g;
-    Left=L;
-    Right=R;
 }
 struct comparator {
     bool operator() (const node item, const node n) const
@@ -33,52 +27,21 @@ struct comparator {
     }
 };
 
-//void a_star_search(Graph graph,
-//   typename Graph::Location start,
-//   typename Graph::Location goal,
-//   unordered_map<typename Graph::Location, typename Graph::Location>& came_from,
-//   unordered_map<typename Graph::Location, int>& cost_so_far)
-//{
-//  typedef typename Graph::Location Location;
-//  PriorityQueue<Location> frontier;
-//  frontier.put(start, 0);
-//
-//  came_from[start] = start;
-//  cost_so_far[start] = 0;
-//
-//  while (!frontier.empty()) {
-//    auto current = frontier.get();
-//
-//    if (current == goal) {
-//      break;
-//    }
-//
-//    for (auto next : graph.neighbors(current)) {
-//      int new_cost = cost_so_far[current] + graph.cost(current, next);
-//      if (!cost_so_far.count(next) || new_cost < cost_so_far[next]) {
-//        cost_so_far[next] = new_cost;
-//        int priority = new_cost + heuristic(next, goal);
-//        frontier.put(next, priority);
-//        came_from[next] = current;
-//      }
-//    }
-//  }
-//}
-
-
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
     for (coordinate _c : noGo){
         _map[_c.y][_c.x].movementCost=-1;
     }
-    std::priority_queue<node, std::vector<node>, comparator> openSet;
-    std::vector<node> heapStorage;
+    std::priority_queue<tile, std::vector<tile>, comparator> openSet;
+    std::vector<tile> heapStorage;
 
     int distanceInNeighborset=1;
 
-    std::vector<node> closedSet;
-    std::vector<node> tempNeighborStorage;
-    node currentNode(99999999,0);
+    std::vector<tile> closedSet;
+    std::vector<tile*> tempNeighborStorage;
+
+    tile currentNode(99999999,0);
+
     currentNode.position=start;
     currentNode.gCost=0;
 
@@ -88,9 +51,12 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
     while (openSet.size()!=0){
         if (abs(currentNode.position.x-goal.x)-abs(currentNode.position.y-goal.y)==1){
             std::vector<coordinate> path;
-            while (!(currentNode.position==start)){
+            while (currentNode.position!=start){
+
                 for (int i=0;i<closedSet.size();i++){
+
                     if (closedSet[i].position==currentNode.parent){
+
                         path.push_back(currentNode.position);
                         currentNode=closedSet[i];
                         break;
@@ -109,21 +75,31 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
                 }
                 if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
                     if (_map[currentNode.position.y+y][currentNode.position.x+x].movementCost!=-1){
-                        tempNeighborStorage.push_back(node(coordinate(currentNode.position.x+x,currentNode.position.y+y), goal, currentNode.gCost+10+(4*abs(y)-abs(x)+1)));
+                        _map[currentNode.position.y+y][currentNode.position.x+x].position=coordinate(currentNode.position.x+x,currentNode.position.y+y);
+                        _map[currentNode.position.y+y][currentNode.position.x+x].hCost=getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
+                        _map[currentNode.position.y+y][currentNode.position.x+x].gCost=currentNode.gCost+10+(4*abs(y)-abs(x)+1);
+                        tempNeighborStorage.push_back(&_map[currentNode.position.y+y][currentNode.position.x+x]);
                     }
                 }
             }
         }
 
-        for (node _n : tempNeighborStorage){
+        for (tile* _n : tempNeighborStorage){
             int placeInSet=distanceInNeighborset;
 
-            if (!vectorContains(closedSet, _n)){
+            if (!vectorContains(closedSet, *_n)){
 
-                int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n.position);
-                _n.parent=currentNode.position;
-                _n.gCost=newCostToMove;
-                openSet.push(_n);
+
+                int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n->position);
+                if (newCostToMove<_n->gCost){
+                    _n->gCost=newCostToMove;
+                    _n->parent=currentNode.position;
+                }
+                if (heapStorage.size()==0 or !vectorContains(heapStorage,*_n))
+                {
+                    openSet.push(*_n);
+                    heapStorage.push_back(*_n);
+                }
             }
 
         }
@@ -166,9 +142,9 @@ std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_m
     return neighbors;
 }
 
-bool vectorContains(std::vector<node> checkVector, node nodeChecking)
+bool vectorContains(std::vector<tile> checkVector, tile nodeChecking)
 {
-    for (node _n:checkVector)
+    for (tile _n:checkVector)
     {
         if (_n.position.x==nodeChecking.position.x and _n.position.y==nodeChecking.position.y)
         {

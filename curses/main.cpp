@@ -47,10 +47,10 @@ int main()
         _map[y].resize(10);
         for (int x=0;x<10;x++){
             if (testarena[y][x]=='#'){
-                _map[y][x]=tile('#','#',-1);
+                _map[y][x]=tile('#',-1);
             }
             else{
-                _map[y][x]=tile('+','+',0);
+                _map[y][x]=tile('+',0);
             }
         }
     }
