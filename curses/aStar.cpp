@@ -30,7 +30,9 @@ struct comparator {
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
     for (coordinate _c : noGo){
-        _map[_c.y][_c.x].movementCost=-1;
+        if (_c!=goal){
+           _map[_c.y][_c.x].movementCost=-1;
+        }
     }
     std::priority_queue<tile, std::vector<tile>, comparator> openSet;
     std::vector<tile> heapStorage;
@@ -49,14 +51,12 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
     int timesthroughLoop=0;
 
     while (openSet.size()!=0){
-        if (abs(currentNode.position.x-goal.x)-abs(currentNode.position.y-goal.y)==1){
+        if (currentNode.position==goal){
             std::vector<coordinate> path;
-            while (currentNode.position!=start){
+            while (!(currentNode.position==start)){
 
                 for (int i=0;i<closedSet.size();i++){
-
                     if (closedSet[i].position==currentNode.parent){
-
                         path.push_back(currentNode.position);
                         currentNode=closedSet[i];
                         break;
@@ -75,6 +75,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
                 }
                 if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
                     if (_map[currentNode.position.y+y][currentNode.position.x+x].movementCost!=-1){
+                        _map[currentNode.position.y+y][currentNode.position.x+x].parent=currentNode.position;
                         _map[currentNode.position.y+y][currentNode.position.x+x].position=coordinate(currentNode.position.x+x,currentNode.position.y+y);
                         _map[currentNode.position.y+y][currentNode.position.x+x].hCost=getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
                         _map[currentNode.position.y+y][currentNode.position.x+x].gCost=currentNode.gCost+10+(4*abs(y)-abs(x)+1);
@@ -85,6 +86,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
         }
 
         for (tile* _n : tempNeighborStorage){
+                tile neighbor=*_n;
             int placeInSet=distanceInNeighborset;
 
             if (!vectorContains(closedSet, *_n)){
@@ -103,8 +105,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
             }
 
         }
-        mvaddch(currentNode.position.y,currentNode.position.x,'C');
-        refresh();
 
         tempNeighborStorage.clear();
         currentNode.gCost=openSet.top().gCost;
@@ -112,7 +112,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
         currentNode.parent=openSet.top().parent;
         currentNode.position.x=openSet.top().position.x;
         currentNode.position.y=openSet.top().position.y;
-
         openSet.pop();
         timesthroughLoop++;
     }

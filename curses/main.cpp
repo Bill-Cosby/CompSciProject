@@ -82,6 +82,9 @@ int main()
     int chpos=0;
     while (first_menu.quit_game==false)
     {
+        if (test.counter==0){
+
+        }
         if (ch=='g'){
             iwishiwashappy=true;
         }

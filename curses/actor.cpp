@@ -5,13 +5,13 @@ player::player()
 {
     _symbol='@';
     controlled=true;
+    speed=4;
 }
 
 monster::monster(int _speed, char symbol)
 {
     speed=_speed;
     _symbol=symbol;
-    counter=0;
     controlled=false;
     memory=coordinate(-1,-1);
 }
@@ -96,11 +96,7 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
     {
         mvaddstr(26,26,"Caught you!");
         memory=goal;
-        if ((abs(x-goal.x)+abs(y-goal.y))>1 or musttouch==true)
-        {
-            musttouch=true;
-            path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
-        }
+        path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
     }
 
     if (path.size()== 0)
@@ -111,12 +107,12 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
             path=pathFinder(test_map,coordinate(col(),row()),memory,noGo);
             memory=coordinate(-1,-1);
         }
-        else if ((abs(x-post.x)+abs(y-post.y))>2){
+        else if (coordinate(x,y) != post){
             mvaddstr(26,26,"returning to post");
             path=pathFinder(test_map,coordinate(col(),row()),post,noGo);
         }
     }
-    if (true)
+    if (counter==5)
     {
         if (path.size()>0)
         {
@@ -130,7 +126,6 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
 
 void player::movement(std::vector<std::vector<tile> > map_, char ch)
 {
-
     if (ch=='w' or ch=='8'){
         if (map_[y-1][x].movementCost!=-1){
             y--;

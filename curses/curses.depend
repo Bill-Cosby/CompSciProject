@@ -99,11 +99,11 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1450109823 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1450286174 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1450109823 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+1450286897 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
 	"aStar.h"
 
 1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
@@ -112,7 +112,7 @@
 	<stdio.h>
 	<wchar.h>
 
-1450111143 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -122,11 +122,12 @@
 	"tile.h"
 	<queue>
 
-1446567691 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
+	"node.h"
 
 1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
 
-1450112634 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+1450285905 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -148,7 +149,7 @@
 	<stdlib.h>
 	<sstream>
 
-1450109897 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1450282606 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"menu.h"
 	"include/dungeon.h"
 	<string>
@@ -211,5 +212,10 @@
 1450127442 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
 
 1450127424 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+	"tile.h"
+
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
+
+1450282606 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.cpp
 	"tile.h"
 

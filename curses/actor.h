@@ -6,9 +6,15 @@ class actor
 {
 protected:
     char _symbol;
+
+    bool sprinting=0;
+
+    int counter=0;
+    int speed;
     int x,y;
 public:
     bool controlled;
+
     int row(){return y;}
     int col(){return x;}
 
@@ -29,8 +35,6 @@ class monster : public actor
     coordinate post;
 public:
     std::vector<coordinate> path;
-    int speed;
-    int counter;
     bool musttouch;
     void aiMovement(std::vector<std::vector<tile> >, coordinate, std::vector<actor>);
     bool canSee(std::vector<std::vector<tile> >, coordinate);
