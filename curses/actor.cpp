@@ -6,14 +6,18 @@ player::player()
     _symbol='@';
     controlled=true;
     speed=4;
+    counter=0;
+    sprinting=false;
 }
 
 monster::monster(int _speed, char symbol)
 {
+    counter=0;
     speed=_speed;
     _symbol=symbol;
     controlled=false;
     memory=coordinate(-1,-1);
+    path.resize(0);
 }
 
 bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkSpot)
@@ -83,7 +87,6 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
         noGo.push_back(coordinate(_a.col(),_a.row()));
     }
 
-
     if (goal == coordinate(x,y))
     {
         musttouch=false;
@@ -126,58 +129,64 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
 
 void player::movement(std::vector<std::vector<tile> > map_, char ch)
 {
-    if (ch=='w' or ch=='8'){
-        if (map_[y-1][x].movementCost!=-1){
-            y--;
-        }
+    if (ch=='m'){
+        sprinting=!sprinting;
     }
-    if (ch=='s' or ch=='2'){
-        if (map_[y+1][x].movementCost!=-1){
-            y++;
+    if (counter==speed-(speed/2*sprinting)){
+        if (ch=='w' or ch=='8'){
+            if (map_[y-1][x].movementCost!=-1){
+                y--;
+            }
         }
-    }
-    if (ch=='a' or ch=='4'){
-        if (map_[y][x-1].movementCost!=-1){
-            x--;
+        if (ch=='s' or ch=='2'){
+            if (map_[y+1][x].movementCost!=-1){
+                y++;
+            }
         }
-    }
-    if (ch=='d' or ch=='6'){
-        if (map_[y][x+1].movementCost!=-1){
-            x++;
+        if (ch=='a' or ch=='4'){
+            if (map_[y][x-1].movementCost!=-1){
+                x--;
+            }
         }
-    }
-    if (ch=='7')
-    {
-        if (map_[y-1][x-1].movementCost!=-1){
-            x--;
-            y--;
+        if (ch=='d' or ch=='6'){
+            if (map_[y][x+1].movementCost!=-1){
+                x++;
+            }
         }
-    }
-    if (ch=='9')
-    {
-        if (map_[y-1][x+1].movementCost!=-1){
-            x++;
-            y--;
+        if (ch=='7')
+        {
+            if (map_[y-1][x-1].movementCost!=-1){
+                x--;
+                y--;
+            }
         }
-    }
-    if (ch=='3')
-    {
-        if (map_[y+1][x+1].movementCost!=-1){
-            x++;
-            y++;
+        if (ch=='9')
+        {
+            if (map_[y-1][x+1].movementCost!=-1){
+                x++;
+                y--;
+            }
         }
-    }
-    if (ch=='1')
-    {
-        if (map_[y+1][x-1].movementCost!=-1){
-            x--;
-            y++;
+        if (ch=='3')
+        {
+            if (map_[y+1][x+1].movementCost!=-1){
+                x++;
+                y++;
+            }
         }
-    }
-    if (ch=='5')
-    {
-        y=y;
-        x=x;
+        if (ch=='1')
+        {
+            if (map_[y+1][x-1].movementCost!=-1){
+                x--;
+                y++;
+            }
+        }
+        if (ch=='5')
+        {
+            y=y;
+            x=x;
+        }
+        counter=0;
     }
     refresh();
 }

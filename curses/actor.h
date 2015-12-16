@@ -9,10 +9,10 @@ protected:
 
     bool sprinting=0;
 
-    int counter=0;
-    int speed;
     int x,y;
 public:
+    int counter;
+    int speed;
     bool controlled;
 
     int row(){return y;}
@@ -27,6 +27,9 @@ class player : public actor
 public:
     void movement(std::vector<std::vector<tile> >, char);
     player();
+    int getCounter(){return counter;}
+    int getSpeed(){return speed-(.5*speed)-1;}
+    int raiseCounter(){counter++;}
 };
 
 class monster : public actor

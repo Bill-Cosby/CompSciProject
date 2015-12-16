@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1450126453 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1450302945 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"include/dungeon.h"
 	<string>
@@ -56,13 +56,13 @@
 	<stack>
 	<fstream>
 
-1450124051 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1450300364 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 
 1450127281 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"node.h"
 
-1450124051 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1450302965 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -88,7 +88,7 @@
 	"tile.h"
 	<queue>
 
-1450128825 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+1450298724 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
