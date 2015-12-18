@@ -1,0 +1,293 @@
+# depslib dependency file v1.0
+1450472990 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+	"menu.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+
+1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
+	"xcurses.h"
+
+1110652044 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\xcurses.h
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<bios.h>
+	<dos.h>
+	<os2.h>
+	<os2.h>
+	<stdlib.h>
+	<sys/video.h>
+	<os2.h>
+	<dos.h>
+	<windows.h>
+	<windows.h>
+	<windows.h>
+	<bios.h>
+	<dos.h>
+	<i86.h>
+	<os2.h>
+	<windows.h>
+	<bios.h>
+	<stdio.h>
+	<curspriv.h>
+	<stdlib.h>
+
+1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+
+1449605549 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+	"dungeon.h"
+
+1449605549 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<fstream>
+
+1450300364 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+	"aStar.h"
+
+1450127281 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+	"node.h"
+
+1450472990 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+	"actor.h"
+	<cstdlib>
+
+1450472990 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+	"actor.h"
+	"tile.h"
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+
+1450472990 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+	"window.h"
+	<iostream>
+
+1450127442 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	"include/curses.h"
+	"tile.h"
+	<queue>
+
+1450298724 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1445977752 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.h
+	<vector>
+	<iostream>
+
+1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
+	"heap.h"
+
+1450286174 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+	"actor.h"
+	<cstdlib>
+
+1450286897 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+	"aStar.h"
+
+1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	"include/curses.h"
+	"tile.h"
+	<queue>
+
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
+	"node.h"
+
+1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
+
+1450285905 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.cpp
+	"dungeon.h"
+
+1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\dungeon.h
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<fstream>
+
+1450109823 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.h
+	"actor.h"
+	"tile.h"
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+
+1450282606 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+	"menu.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+
+1450111318 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+	"window.h"
+	<iostream>
+
+1446749700 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\binarysearchstack.h
+
+1448384300 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\micropather.h
+	<vector>
+	<float.h>
+	<android/log.h>
+	<assert.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+
+1444366192 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\micropather.cpp
+	<memory.h>
+	<stdio.h>
+	"../grinliz/gldebug.h"
+	"micropather.h"
+
+1448402773 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\micropather.h
+	<vector>
+	<float.h>
+	<android/log.h>
+	<assert.h>
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+
+1449591366 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	<SFML/Audio.hpp>
+	"include/curses.h"
+	"window.h"
+
+1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
+	"menu.h"
+
+1449605549 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	<SFML/Audio.hpp>
+	"include/curses.h"
+	"window.h"
+
+1450472990 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
+	"menu.h"
+
+1450127442 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
+
+1450127424 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+	"tile.h"
+
+1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
+
+1450282606 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.cpp
+	"tile.h"
+
+1450472990 source:c:\users\dhartman0356\desktop\curses davd\actor.cpp
+	"actor.h"
+	<cstdlib>
+
+1450300364 c:\users\dhartman0356\desktop\curses davd\actor.h
+	"aStar.h"
+
+1450474525 c:\users\dhartman0356\desktop\curses davd\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	"include/curses.h"
+	"tile.h"
+	"node.h"
+	<queue>
+
+1220929818 c:\users\dhartman0356\desktop\curses davd\include\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+
+1450473914 c:\users\dhartman0356\desktop\curses davd\tile.h
+
+1450127442 c:\users\dhartman0356\desktop\curses davd\node.h
+
+1450298724 source:c:\users\dhartman0356\desktop\curses davd\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1449605549 source:c:\users\dhartman0356\desktop\curses davd\include\dungeon.cpp
+	"dungeon.h"
+
+1449605549 c:\users\dhartman0356\desktop\curses davd\include\dungeon.h
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<fstream>
+
+1450472990 source:c:\users\dhartman0356\desktop\curses davd\main.cpp
+	"menu.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+
+1450474311 c:\users\dhartman0356\desktop\curses davd\menu.h
+	<vector>
+	<string>
+	<SFML/Audio.hpp>
+	"include/curses.h"
+	"window.h"
+
+1450474311 c:\users\dhartman0356\desktop\curses davd\window.h
+	"actor.h"
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	"tiles.h"
+
+1450473914 c:\users\dhartman0356\desktop\curses davd\tiles.h
+	<vector>
+
+1450472990 source:c:\users\dhartman0356\desktop\curses davd\menu.cpp
+	"menu.h"
+
+1450127424 source:c:\users\dhartman0356\desktop\curses davd\tile.cpp
+	"tile.h"
+
