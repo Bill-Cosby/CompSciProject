@@ -13,11 +13,12 @@ screen::screen(int w,int h)
     resize_term(h,w);
     subwindow=frame(win,h,w);
     wborder(win,0,0,0,0,0,0,0,0);
-    wrefresh(win);
     noecho();
     cbreak();
     nodelay(win,false);
     start_color();
+    init_color(COLOR_PLAYER,0,200,500);
+    init_color(COLOR_DOG,1000,0,0);
 }
 
 void screen::add(const char* _print)
@@ -36,16 +37,12 @@ void screen::drawStats(int health){
 
 void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
 {
-    //wborder(win,0,0,0,0,0,0,0,0);
-    init_color(COLOR_PLAYER,0,200,500);
-    init_color(COLOR_DOG,1000,0,0);
-
-    init_pair(1,COLOR_BLACK,COLOR_PLAYER);
-    init_pair(2,COLOR_BLACK,COLOR_DOG);
-
-
-
     touchwin(subwindow.sub);
+    wclear(subwindow.sub);
+    init_pair(3,COLOR_PLAYER,COLOR_BLACK);
+    init_pair(2,COLOR_RED,COLOR_BLACK);
+
+
     coordinate startingposition;
     coordinate charplaced;
     for (int i=0;i<actors.size();i++)
@@ -56,11 +53,10 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
         }
     }
                     attron(COLOR_PAIR(2));
-    //charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
-    charplaced=coordinate(0,0);
-    //wborder(win,0,0,0,0,0,0,0,0);
+    charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
+    //charplaced=coordinate(0,0);
+    wborder(win,0,0,0,0,0,0,0,0);
     wborder(subwindow.sub,0,0,0,0,0,0,0,0);
-
     for (int y=0;y<subwindow.height()-1;y++)
     {
         for (int x=0;x<subwindow.width()-1;x++)
@@ -69,21 +65,17 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
             {
                 mvwaddch(subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x].defaultchar);
             }
-            else
-            {
-                mvwaddch(subwindow.sub,y,x,' ');
-            }
             for (actor _a: actors)
             {
                 if (coordinate(_a.col(),_a.row())==coordinate(x+charplaced.x,y+charplaced.y))
                 {
+                    attron(COLOR_PAIR(2));
                     mvwaddch(subwindow.sub,y,x,_a.symbol());
+                    attroff(COLOR_PAIR(2));
                 }
             }
         }
     }
-
-                    attroff(COLOR_PAIR(2));
     wrefresh(subwindow.sub);
 }
 
@@ -94,6 +86,9 @@ frame::frame(WINDOW* parent, int h, int w)
     sub=newwin(_h,_w,parent->_begx,parent->_begy);
     wborder(sub,0,0,0,0,0,0,0,0);
     wrefresh(sub);
+    start_color();
+    init_color(COLOR_PLAYER,0,200,500);
+    init_color(COLOR_DOG,1000,0,0);
 }
 
 void frame::draw(const char* thing)

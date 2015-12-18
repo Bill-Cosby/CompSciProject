@@ -97,7 +97,6 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
 
     if (canSee(test_map,goal))
     {
-        mvaddstr(26,26,"Caught you!");
         memory=goal;
         path = pathFinder(test_map,coordinate(col(),row()),goal,noGo);
     }
@@ -106,12 +105,10 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
     {
         if (memory.x!=-1 and memory.y!=-1)
         {
-            mvaddstr(26,26,"Searching...");
             path=pathFinder(test_map,coordinate(col(),row()),memory,noGo);
             memory=coordinate(-1,-1);
         }
         else if (coordinate(x,y) != post){
-            mvaddstr(26,26,"returning to post");
             path=pathFinder(test_map,coordinate(col(),row()),post,noGo);
         }
     }
@@ -131,6 +128,7 @@ void player::movement(std::vector<std::vector<tile> > map_, char ch)
 {
     if (ch=='m'){
         sprinting=!sprinting;
+        counter=0;
     }
     if (counter==speed-(speed/2*sprinting)){
         if (ch=='w' or ch=='8'){
@@ -186,7 +184,5 @@ void player::movement(std::vector<std::vector<tile> > map_, char ch)
             y=y;
             x=x;
         }
-        counter=0;
     }
-    refresh();
 }

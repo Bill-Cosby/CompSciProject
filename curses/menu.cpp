@@ -9,7 +9,7 @@ mainMenu::mainMenu(std::string title,bool _v, int _p)
     quit_game=false;
     buttonSelected=false;
     if (title=="Main Menu"){
-        listOfButtons.push_back(menu_button("","Numpad or WASD for movement \n enter or 5 for selection"));
+        listOfButtons.push_back(menu_button("","Numpad or WASD for movement \n enter or 5 for selection\n You are the @ and they are the G"));
         listOfButtons.push_back(menu_button("New Game","Start a new game"));
         listOfButtons.push_back(menu_button("Load Game", "Load a previous game **CURRENTLY SERVES NO PURPOSE**"));
         listOfButtons.push_back(menu_button("New World", "Generate a new world **CURRENTLY SERVES NO PURPOSE**"));
@@ -84,7 +84,6 @@ void mainMenu::mainMenuLoop(screen scr)
 
         listOfButtons[menuSelector].selected=true;
 
-
         for (menu_button _b : listOfButtons){
             wborder(scr.win,0,0,0,0,0,0,0,0);
             if (verticle==true){
@@ -106,11 +105,9 @@ void mainMenu::mainMenuLoop(screen scr)
 
                 if (_b.selected==true){
                     mvwaddstr(scr.win,_b.y-10,_b.x,_b.description.c_str());
-
                     attron(A_REVERSE);
                 }
             }
-
             mvwaddstr(scr.win,_b.y,_b.x,_b.name.c_str());
             attroff(A_REVERSE);
             wrefresh(scr.win);
@@ -118,7 +115,7 @@ void mainMenu::mainMenuLoop(screen scr)
         position=1;
         refresh();
         ch=wgetch(scr.win);
-
     }
-
+    wclear(scr.win);
+    wrefresh(scr.win);
 }

@@ -9,8 +9,8 @@
 
 
 
-#define COLOR_PLAYER 69
-#define COLOR_DOG 70
+#define COLOR_PLAYER 11
+#define COLOR_DOG 12
 
 
 
