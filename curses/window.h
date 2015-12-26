@@ -1,6 +1,6 @@
 #ifndef WINDOW_H_INCLUDED
 #define WINDOW_H_INCLUDED
-#include "actor.h"
+#include "StealthAI.h"
 #include "tile.h"
 #include <string>
 #include <stdio.h>
@@ -36,7 +36,7 @@ public:
     screen(int,int);
     void add(const char*);
 
-    void drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors);
+    void drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor*> *actors);
     void drawStats(int);
 
     int width(){return _w;}

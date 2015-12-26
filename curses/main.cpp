@@ -8,21 +8,21 @@ using namespace std;
 const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
                               {'#',' ',' ','#',' ',' ',' ','#',' ','#','#',' ',' ','#',' ',' ',' ','#',' ','#'},
                               {'#',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ','#',' ','#','#',' ',' ',' ',' ',' ',' ','#',' ','#'},
-                              {'#',' ',' ','#',' ',' ',' ','#',' ','#','#',' ',' ','#',' ',' ',' ','#',' ','#'},
-                              {'#',' ',' ','#',' ',' ',' ','#',' ','#','#',' ',' ','#',' ',' ',' ','#',' ','#'},
-                              {'#',' ','#','#','#','#','#','#',' ','#','#',' ','#','#','#','#','#','#',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ','#','#',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#','#','#','#',' ','#','#','#',' ','#','#','#','#','#',' ','#','#','#',' ','#'},
-                              {'#',' ',' ','#',' ',' ',' ','#',' ','#','#',' ',' ','#',' ',' ',' ','#',' ','#'},
-                              {'#',' ',' ','#',' ',' ',' ',' ',' ','#','#',' ',' ','#',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ','#',' ',' ',' ','#',' ','#','#',' ',' ','#',' ',' ',' ','#',' ','#'},
+                              {'#',' ',' ',' ',' ',' ',' ','#','#','#',' ',' ',' ',' ',' ',' ',' ','#',' ','#'},
+                              {'#',' ',' ','#',' ',' ',' ','#',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
+                              {'#',' ',' ','#',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
+                              {'#',' ','#','#','#','#','#','#',' ','#',' ',' ','#','#','#','#','#','#',' ','#'},
+                              {'#',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                              {'#',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                              {'#','#','#','#',' ','#','#','#',' ','#',' ','#','#','#',' ','#','#','#',' ','#'},
+                              {'#',' ',' ','#',' ',' ',' ','#',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
+                              {'#',' ',' ','#',' ',' ',' ',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ','#'},
+                              {'#',' ',' ','#',' ',' ',' ','#',' ','#',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
                               {'#',' ','#','#',' ',' ',' ','#',' ','#',' ',' ','#','#',' ',' ',' ','#',' ','#'},
                               {'#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ','#'},
                               {'#','#',' ','#','#','#','#','#',' ','#',' ','#',' ','#','#','#','#','#',' ','#'},
                               {'#',' ',' ','#',' ',' ',' ',' ',' ','#','#',' ',' ','#',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ','#',' ','#','#',' ',' ',' ',' ',' ',' ','#',' ','#'},
+                              {'#',' ',' ',' ',' ',' ',' ','#',' ',' ','#',' ',' ',' ',' ',' ',' ','#',' ','#'},
                               {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
                               {'#',' ',' ',' ',' ',' ',' ','#',' ','#','#',' ',' ',' ',' ',' ',' ','#',' ','#'}};
 
@@ -34,7 +34,7 @@ int main()
     char ch;
 
     mainMenu first_menu("Main Menu",false,100);
-    first_menu.mainMenuLoop(scr);
+    //first_menu.mainMenuLoop(scr);
     if(first_menu.quit_game==true){
         endwin();
         return 0;
@@ -44,14 +44,16 @@ int main()
 
 
 
-    player test;
+    monster test(4,'@');
+    test.pos(1,1);
     monster enemy(5,'G');
-    monster enemy2(5,'G');
+    coordinate temp;
     dungeon map_t;
 
 
     std::vector<std::vector<tile> > _map;
-    std::vector<actor> actors;
+    std::vector<monster> monsters;
+    std::vector<actor*> actors;
     //_map.resize(map_t.dungeon_grid.size());
     _map.resize(20);
     for (int y=0;y<20;y++){
@@ -66,11 +68,25 @@ int main()
         }
     }
 
-    test.pos(1,1);
-    enemy.pos(11,2);
-    enemy.setPost(1,11);
-    enemy2.pos(8,8);
-    enemy2.setPost(8,8);
+    std::default_random_engine ew(time(0));
+    std::uniform_int_distribution<int> numberOfEnemies(0,10);
+    std::uniform_int_distribution<int> enemyPos(1,17);
+
+    for (int i=0;i<numberOfEnemies(ew);i++){
+        while (true){
+            temp=coordinate(enemyPos(ew),enemyPos(ew));
+            if (_map[temp.y][temp.x].movementCost!=-1){
+                monsters.push_back(monster(5,'G'));
+                monsters[i].pos(temp.y,temp.x);
+                monsters[i].setPost(temp.x,temp.y);
+                break;
+            }
+
+        }
+
+    }
+
+
 
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
@@ -90,35 +106,28 @@ int main()
 //        }
 //    }
 
-    actors.push_back(test);
-    actors.push_back(enemy);
-    actors.push_back(enemy);
-    bool iwishiwashappy=false;
-    int chpos=0;
+    actors.push_back(&test);
+    for (int i=0;i<monsters.size();i++){
+        actors.push_back(&monsters[i]);
+    }
     while (first_menu.quit_game==false)
-    {        if (ch=='g'){
-            iwishiwashappy=true;
-        }
-        if (iwishiwashappy==true){
-            enemy.aiMovement(_map, coordinate(test.col(),test.row()),actors);
-            if (enemy.path.size()==0){
-                iwishiwashappy=false;
-            }
-        }
-        test.movement(_map, ch);
-        actors[0]=test;
-        coordinate eh(actors[0].col(),actors[0].row());
-        enemy.aiMovement(_map,coordinate(test.col(),test.row()),actors);
-        enemy2.aiMovement(_map,coordinate(test.col(),test.row()),actors);
-        actors[1]=enemy;
-        actors[2]=enemy2;
+    {
+
+        //actors[0]->movement(&_map, &ch);
         scr.drawStats(100);
-        if (test.counter==test.speed){
-            scr.drawGameworld(_map,actors);
+        if (test.getCounter()==test.getSpeed()){
+
+            scr.drawGameworld(_map,&actors);
             ch=wgetch(scr.subwindow.sub);
-            test.counter=0;
+            //test.counter=0;
         }
-        test.raiseCounter();
+        StealthAI(coordinate(18,17),&test,actors,_map);
+        actors[0]=&test;
+        coordinate eh(actors[0]->col(),actors[0]->row());
+        for (int i=1;i<actors.size();i++){
+            actors[i]->aiMovement(_map,coordinate(test.col(),test.row()),actors);
+        }
+        //test.raiseCounter();
     }
     endwin();
 }

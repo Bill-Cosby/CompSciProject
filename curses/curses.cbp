@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="StealthAI.cpp" />
+		<Unit filename="StealthAI.h" />
 		<Unit filename="aStar.cpp" />
 		<Unit filename="aStar.h" />
 		<Unit filename="actor.cpp" />

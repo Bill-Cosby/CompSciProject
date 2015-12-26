@@ -8,6 +8,7 @@
 #include "include/curses.h"
 #include "tile.h"
 #include <queue>
+#include <sstream>
 
 
 std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);

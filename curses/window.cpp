@@ -35,7 +35,7 @@ void screen::drawStats(int health){
     mvaddstr(10,60,str.c_str());
 }
 
-void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor> actors)
+void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<actor*> *actors)
 {
     touchwin(subwindow.sub);
     wclear(subwindow.sub);
@@ -45,16 +45,13 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
 
     coordinate startingposition;
     coordinate charplaced;
-    for (int i=0;i<actors.size();i++)
-    {
-        if (actors[i].controlled==true)
-        {
-            startingposition=coordinate(actors[i].col(),actors[i].row());
-        }
-    }
+    std::vector<actor*> temp=*actors;
+
+            startingposition=coordinate((temp[0])->col(),(temp[0])->row());
+
                     attron(COLOR_PAIR(2));
-    charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
-    //charplaced=coordinate(0,0);
+    //charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
+    charplaced=coordinate(0,0);
     wborder(win,0,0,0,0,0,0,0,0);
     wborder(subwindow.sub,0,0,0,0,0,0,0,0);
     for (int y=0;y<subwindow.height()-1;y++)
@@ -65,12 +62,12 @@ void screen::drawGameworld(std::vector<std::vector<tile> > _map, std::vector<act
             {
                 mvwaddch(subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x].defaultchar);
             }
-            for (actor _a: actors)
+            for (actor* _a: *actors)
             {
-                if (coordinate(_a.col(),_a.row())==coordinate(x+charplaced.x,y+charplaced.y))
+                if (coordinate(_a->col(),_a->row())==coordinate(x+charplaced.x,y+charplaced.y))
                 {
                     attron(COLOR_PAIR(2));
-                    mvwaddch(subwindow.sub,y,x,_a.symbol());
+                    mvwaddch(subwindow.sub,y,x,_a->symbol());
                     attroff(COLOR_PAIR(2));
                 }
             }

@@ -29,9 +29,12 @@ struct comparator {
 
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
+    erase();
     for (coordinate _c : noGo){
         if (_c!=goal){
+
            _map[_c.y][_c.x].movementCost=-1;
+           mvaddch(_c.y,_c.x,'#');
         }
     }
     std::priority_queue<tile, std::vector<tile>, comparator> openSet;
@@ -51,6 +54,10 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
     int timesthroughLoop=0;
 
     while (openSet.size()!=0){
+
+        //mvaddch(currentNode.position.y, currentNode.position.x, 'i');
+        //refresh();
+
         if (currentNode.position==goal){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){
@@ -74,11 +81,11 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > _map, coordin
                     continue;
                 }
                 if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
-                    if (_map[currentNode.position.y+y][currentNode.position.x+x].movementCost!=-1){
-                        _map[currentNode.position.y+y][currentNode.position.x+x].parent=currentNode.position;
-                        _map[currentNode.position.y+y][currentNode.position.x+x].position=coordinate(currentNode.position.x+x,currentNode.position.y+y);
-                        _map[currentNode.position.y+y][currentNode.position.x+x].hCost=getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
-                        _map[currentNode.position.y+y][currentNode.position.x+x].gCost=currentNode.gCost+10+(4*abs(y)-abs(x)+1);
+                    if (_map[currentNode.position.y+y][currentNode.position.x+x].movementCost != -1){
+                        _map[currentNode.position.y+y][currentNode.position.x+x].parent   = currentNode.position;
+                        _map[currentNode.position.y+y][currentNode.position.x+x].position = coordinate(currentNode.position.x+x,currentNode.position.y+y);
+                        _map[currentNode.position.y+y][currentNode.position.x+x].hCost    = getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
+                        _map[currentNode.position.y+y][currentNode.position.x+x].gCost    = currentNode.gCost+10+(4*abs(y)-abs(x)+1);
                         tempNeighborStorage.push_back(&_map[currentNode.position.y+y][currentNode.position.x+x]);
                     }
                 }
