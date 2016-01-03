@@ -1,18 +1,19 @@
 #ifndef WINDOW_H_INCLUDED
 #define WINDOW_H_INCLUDED
-#include "StealthAI.h"
 #include "tile.h"
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sstream>
+#include <vector>
+#include "include/curses.h"
 
 
 
 #define COLOR_PLAYER 11
 #define COLOR_DOG 12
 
-
+class actor;
 
 class frame{
     int _w,_h;
@@ -36,7 +37,6 @@ public:
     screen(int,int);
     void add(const char*);
 
-    void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors);
     void drawStats(int);
 
     int width(){return _w;}

@@ -15,7 +15,7 @@ public:
     tile(){isDoor=false;};
 
     virtual char drawTile(){return defaultchar;}
-    virtual bool openDoor(){};
+    virtual bool interactWithDoor(bool opening){};
 };
 
 class door : public tile
@@ -26,7 +26,7 @@ public:
     char closedSymbol;
     door(bool _o);
     virtual char drawTile(){if (open==true){return openSymbol;}else{return closedSymbol;}}
-    bool openDoor();
+    bool interactWithDoor(bool opening);
 };
 
 #endif // TILE_H_INCLUDED

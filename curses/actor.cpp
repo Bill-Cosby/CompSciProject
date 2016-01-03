@@ -1,6 +1,11 @@
 #include "actor.h"
 #include <cstdlib>
 
+    char numpadControls[14] = {'8','5','2','4','6','7','9','3','1','c','o','i',27,'@'};
+    char keyBrdControls[14] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@'};
+    char VIKEYSControls[14] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@'};
+    coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
+
 player::player()
 {
     _symbol='@';
@@ -158,108 +163,164 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *_map, char* ch)
+void player::movement(std::vector<std::vector<tile*> > *map_, char* ch, screen* scr)
 {
+    /*
+    0 = NORTH
+    1 = CENTER
+    2 = SOUTH
+    3 = EAST
+    4 = WEST
+    5 = NORTH-WEST
+    6 = NORTH-EAST
+    7 = SOUTH-EAST
+    8 = SOUTH-WEST
+    9 = CLOSE DOOR
+    10 = OPEN DOOR
+    11 = INVENTORY
+    12 = PAUSE (options, quit game)
+    13 = STATS
+    */
     bool moveThroughDoor=true;
-    std::vector<std::vector<tile*> > map_=*_map;
-    if (*ch=='m'){
-        sprinting=!sprinting;
-        counter=0;
-        *ch=0;
-    }
-    if (getCounter()==getSpeed()){
-        if (*ch=='w' or *ch=='8'){
-            if (map_[y-1][x]->movementCost!=-1){
-                if (map_[y-1][x]->isDoor==true){
-                    moveThroughDoor=map_[y-1][x]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    y--;
-                }
-            }
-        }
-        if (*ch=='s' or *ch=='2'){
-            if (map_[y+1][x]->movementCost!=-1){
-                if (map_[y+1][x]->isDoor==true){
-                    moveThroughDoor=map_[y+1][x]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    y++;
+    std::vector<std::vector<tile*> > _map=*map_;
+
+
+    for (int i=0;i<14;i++){
+
+        if (*ch==numpadControls[i] or *ch==keyBrdControls[i] or *ch==VIKEYSControls[i]){
+
+            if (i<9){
+
+
+                if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
+
+                    if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
+
+                        moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+
+                    }
+                    if (moveThroughDoor==true){
+
+                        pos(y+directions[i].y,x+directions[i].x);
+
+                    }
                 }
             }
-        }
-        if (*ch=='a' or *ch=='4'){
-            if (map_[y][x-1]->movementCost!=-1){
-                if (map_[y][x-1]->isDoor==true){
-                    moveThroughDoor=map_[y][x-1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x--;
-                }
-            }
-        }
-        if (*ch=='d' or *ch=='6'){
-            if (map_[y][x+1]->movementCost!=-1){
-                if (map_[y][x+1]->isDoor==true){
-                    moveThroughDoor=map_[y][x+1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x++;
+            if (i==9 or i==10){
+                bool opening=1-(-1*(i-10));
+                char closeDirection=wgetch(scr->subwindow.sub);
+
+                for (int i=0;i<9;i++){
+
+                    if (i==1){
+                        continue;
+                    }
+                    if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
+
+                        _map[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
+                    }
                 }
             }
-        }
-        if (*ch=='7')
-        {
-            if (map_[y-1][x-1]->movementCost!=-1){
-                if (map_[y-1][x-1]->isDoor==true){
-                    moveThroughDoor=map_[y-1][x-1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x--;
-                    y--;
-                }
-            }
-        }
-        if (*ch=='9')
-        {
-            if (map_[y-1][x+1]->movementCost!=-1){
-                if (map_[y-1][x+1]->isDoor==true){
-                    moveThroughDoor=map_[y-1][x+1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x++;
-                    y--;
-                }
-            }
-        }
-        if (*ch=='3')
-        {
-            if (map_[y+1][x+1]->movementCost!=-1){
-                if (map_[y+1][x+1]->isDoor==true){
-                    moveThroughDoor=map_[y+1][x+1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x++;
-                    y++;
-                }
-            }
-        }
-        if (*ch=='1')
-        {
-            if (map_[y+1][x-1]->movementCost!=-1){
-                if (map_[y+1][x-1]->isDoor==true){
-                    moveThroughDoor=map_[y+1][x-1]->openDoor();
-                }
-                if (moveThroughDoor==true){
-                    x--;
-                    y++;
-                }
-            }
-        }
-        if (*ch=='5')
-        {
-            y=y;
-            x=x;
         }
     }
+//    if (*ch=='m'){
+//        sprinting=!sprinting;
+//        counter=0;
+//        *ch=0;
+//    }
+//    if (getCounter()==getSpeed()){
+//        if (*ch=='w' or *ch=='8'){
+//            if (map_[y-1][x]->movementCost!=-1){
+//                if (map_[y-1][x]->isDoor==true){
+//                    moveThroughDoor=map_[y-1][x]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    y--;
+//                }
+//            }
+//        }
+//        if (*ch=='s' or *ch=='2'){
+//            if (map_[y+1][x]->movementCost!=-1){
+//                if (map_[y+1][x]->isDoor==true){
+//                    moveThroughDoor=map_[y+1][x]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    y++;
+//                }
+//            }
+//        }
+//        if (*ch=='a' or *ch=='4'){
+//            if (map_[y][x-1]->movementCost!=-1){
+//                if (map_[y][x-1]->isDoor==true){
+//                    moveThroughDoor=map_[y][x-1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x--;
+//                }
+//            }
+//        }
+//        if (*ch=='d' or *ch=='6'){
+//            if (map_[y][x+1]->movementCost!=-1){
+//                if (map_[y][x+1]->isDoor==true){
+//                    moveThroughDoor=map_[y][x+1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x++;
+//                }
+//            }
+//        }
+//        if (*ch=='7')
+//        {
+//            if (map_[y-1][x-1]->movementCost!=-1){
+//                if (map_[y-1][x-1]->isDoor==true){
+//                    moveThroughDoor=map_[y-1][x-1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x--;
+//                    y--;
+//                }
+//            }
+//        }
+//        if (*ch=='9')
+//        {
+//            if (map_[y-1][x+1]->movementCost!=-1){
+//                if (map_[y-1][x+1]->isDoor==true){
+//                    moveThroughDoor=map_[y-1][x+1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x++;
+//                    y--;
+//                }
+//            }
+//        }
+//        if (*ch=='3')
+//        {
+//            if (map_[y+1][x+1]->movementCost!=-1){
+//                if (map_[y+1][x+1]->isDoor==true){
+//                    moveThroughDoor=map_[y+1][x+1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x++;
+//                    y++;
+//                }
+//            }
+//        }
+//        if (*ch=='1')
+//        {
+//            if (map_[y+1][x-1]->movementCost!=-1){
+//                if (map_[y+1][x-1]->isDoor==true){
+//                    moveThroughDoor=map_[y+1][x-1]->openDoor();
+//                }
+//                if (moveThroughDoor==true){
+//                    x--;
+//                    y++;
+//                }
+//            }
+//        }
+//        if (*ch=='5')
+//        {
+//            y=y;
+//            x=x;
+//        }
+//    }
 }

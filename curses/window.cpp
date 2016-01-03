@@ -35,47 +35,6 @@ void screen::drawStats(int health){
     mvaddstr(10,60,str.c_str());
 }
 
-void screen::drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors)
-{
-    touchwin(subwindow.sub);
-    wclear(subwindow.sub);
-    init_pair(3,COLOR_PLAYER,COLOR_BLACK);
-    init_pair(2,COLOR_RED,COLOR_BLACK);
-
-
-    coordinate startingposition;
-    coordinate charplaced;
-    std::vector<actor*> temp=*actors;
-
-            startingposition=coordinate((temp[0])->col(),(temp[0])->row());
-
-                    attron(COLOR_PAIR(2));
-    charplaced=coordinate(startingposition.x-(subwindow.width()/2),startingposition.y-(subwindow.height()/2));
-    //charplaced=coordinate(0,0);
-    wborder(win,0,0,0,0,0,0,0,0);
-    wborder(subwindow.sub,0,0,0,0,0,0,0,0);
-    for (int y=1;y<subwindow.height()-1;y++)
-    {
-        for (int x=1;x<subwindow.width()-1;x++)
-        {
-            if (y+charplaced.y>=0 and y+charplaced.y<_map.size() and x+charplaced.x>=0 and x+charplaced.x<_map[0].size())
-            {
-                mvwaddch(subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
-            }
-            for (actor* _a: *actors)
-            {
-                if (coordinate(_a->col(),_a->row())==coordinate(x+charplaced.x,y+charplaced.y))
-                {
-                    attron(COLOR_PAIR(2));
-                    mvwaddch(subwindow.sub,y,x,_a->symbol());
-                    attroff(COLOR_PAIR(2));
-                }
-            }
-        }
-    }
-    wrefresh(subwindow.sub);
-}
-
 frame::frame(WINDOW* parent, int h, int w)
 {
     _h=h/2;

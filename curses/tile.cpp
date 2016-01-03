@@ -23,13 +23,20 @@ door::door(bool _o)
     isDoor=true;
 }
 
-bool door::openDoor()
+bool door::interactWithDoor(bool opening)
 {
     if (open==false){
-        open=true;
+        if (opening==true){
+            open=true;
+            return false;
+        }
         return false;
     }
     else{
+        if (opening==false){
+            open=false;
+            return true;
+        }
         return true;
     }
 }

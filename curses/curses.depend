@@ -1,6 +1,7 @@
 # depslib dependency file v1.0
-1451778961 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1451818227 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
+	"drawGame.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
@@ -56,26 +57,28 @@
 	<stack>
 	<fstream>
 
-1451777989 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1451818163 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
+	"window.h"
 
-1451779314 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1451815226 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 
-1451779753 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1451817677 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1451777889 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
-	"StealthAI.h"
+1451818075 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"tile.h"
 	<string>
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
+	<vector>
+	"include/curses.h"
 
-1451778796 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1451818075 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -201,19 +204,19 @@
 1449591366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1451512945 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+1451817706 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
 	<vector>
 	<string>
 	<SFML/Audio.hpp>
 	"include/curses.h"
-	"window.h"
+	"actor.h"
 
 1451512945 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
 1451512945 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
 
-1451779314 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+1451815226 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
@@ -234,4 +237,14 @@
 
 1451777148 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.h
 	<string>
+
+1451818075 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+	"window.h"
+	<iostream>
+
+1451818097 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+	"drawGame.h"
+
+1451818222 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
+	"actor.h"
 

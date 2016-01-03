@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "drawGame.h"
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
@@ -32,6 +33,7 @@ int main()
 
     screen scr(100,50);
     char ch;
+
 
     mainMenu first_menu("Main Menu",false,100);
     //first_menu.mainMenuLoop(scr);
@@ -128,9 +130,9 @@ actors[0]->pos(18,18);
         scr.drawStats(100);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
 
-            scr.drawGameworld(_map,&actors);
+            drawGameworld(_map,&actors,&scr);
             ch=wgetch(scr.subwindow.sub);
-            actors[0]->movement(&_map,&ch);
+            actors[0]->movement(&_map,&ch,&scr);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
@@ -138,6 +140,15 @@ actors[0]->pos(18,18);
             //actors[i]->aiMovement(_map,actors);
         }
         actors[0]->raiseCounter();
+    }
+
+    for (int i=0;i<actors.size();i++){
+        delete actors[i];
+    }
+    for (int i=0;i<_map.size();i++){
+        for (int j=0;j<_map[i].size();i++){
+            delete _map[i][j];
+        }
     }
 
     endwin();

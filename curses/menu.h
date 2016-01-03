@@ -2,7 +2,7 @@
 #include <string>
 #include <SFML/Audio.hpp>
 #include "include/curses.h"
-#include "window.h"
+#include "actor.h"
 
 class menu_button
 {
