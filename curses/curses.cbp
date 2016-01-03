@@ -43,6 +43,7 @@
 		<Unit filename="include/dungeon.cpp" />
 		<Unit filename="include/dungeon.h" />
 		<Unit filename="include/panel.h" />
+		<Unit filename="item.h" />
 		<Unit filename="lib/pdcurses.lib" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.cpp" />

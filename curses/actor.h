@@ -31,32 +31,35 @@ public:
 
     int getCounter(){return counter;}
     int getSpeed(){return speed-(.5*speed)*sprinting;}
+    int raiseCounter(){counter++;}
 
-    virtual void movement(std::vector<std::vector<tile> >*, char*){}
-    virtual void aiMovement(std::vector<std::vector<tile> >, coordinate, std::vector<actor*>){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map, char* ch){}
+    virtual void aiMovement(std::vector<std::vector<tile*> >, std::vector<actor*>){}
+    virtual void setPost(int x, int y){};
 };
 
-class player : public actor
+class player: public actor
 {
 public:
-    void movement(std::vector<std::vector<tile> >*, char*);
+    void movement(std::vector<std::vector<tile*> >* _map, char* ch);
     player();
-    int raiseCounter(){counter++;}
+
 };
 
-class monster : public actor
+class monster: public actor
 {
     coordinate post;
 public:
     coordinate memory;
     std::vector<coordinate> path;
     bool musttouch;
-    void aiMovement(std::vector<std::vector<tile> >, coordinate, std::vector<actor*>);
-    bool canSee(std::vector<std::vector<tile> >, coordinate);
+    void aiMovement(std::vector<std::vector<tile*> >,std::vector<actor*>);
+    void movement(std::vector<std::vector<tile*> >* _map, char* ch){}
+    bool canSee(std::vector<std::vector<tile*> >, coordinate);
     monster(int,char);
     void setPost(int x, int y){post=coordinate(x,y);}
-    void getPath(std::vector<std::vector<tile> > _map,coordinate goal, std::vector<coordinate> noGo){path=pathFinder(_map,coordinate(x,y),goal,noGo);}
-    void moveOnPath(std::vector<std::vector<tile> >);
+    void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
+    void moveOnPath(std::vector<std::vector<tile*> >);
 };
 
 #endif // ACTOR_H_INCLUDED

@@ -28,7 +28,7 @@ monster::monster(int _speed, char symbol)
     path.resize(0);
 }
 
-bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkSpot)
+bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
 {
     int x1=col();
     int y1=row();
@@ -58,7 +58,7 @@ bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkS
 
             error += delta_y;
             x1 += ix;
-            if (test_map[y1][x1].movementCost==-1){
+            if (test_map[y1][x1]->movementCost==-1){
                 return false;
             }
         }
@@ -79,7 +79,7 @@ bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkS
 
             error += delta_x;
             y1 += iy;
-            if (test_map[y1][x1].movementCost==-1){
+            if (test_map[y1][x1]->movementCost==-1){
                 return false;
             }
         }
@@ -87,20 +87,29 @@ bool monster::canSee(std::vector<std::vector<tile> > test_map, coordinate checkS
     return true;
 }
 
-void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate goal, std::vector<actor*> actors)
+void monster::aiMovement(std::vector<std::vector<tile*> > test_map, std::vector<actor*> actors)
 {
+    coordinate goal;
     counter++;
+    bool fuckDebugging=false;
     std::vector<coordinate> noGo;
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
+        if (_a->controlled==true and canSee(test_map,coordinate(_a->col(),_a->row()))){
+            goal = coordinate(_a->col(),_a->row());
+        }
     }
 
-    if (goal == coordinate(x,y))
+
+    if (abs(goal.x-x)+abs(goal.y-y)<=2)
     {
         path.clear();
-        return;
+        fuckDebugging=true;
     }
 
+    if (fuckDebugging==true){
+        fuckDebugging=false;
+    }
 
     if (canSee(test_map,goal))
     {
@@ -131,7 +140,7 @@ void monster::aiMovement(std::vector<std::vector<tile> > test_map, coordinate go
     return;
 }
 
-void monster::moveOnPath(std::vector<std::vector<tile> >_map)
+void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
 {
     if (path.size()!=0){
         coordinate temp=coordinate(x,y);
@@ -149,9 +158,10 @@ void monster::moveOnPath(std::vector<std::vector<tile> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile> > *_map, char* ch)
+void player::movement(std::vector<std::vector<tile*> > *_map, char* ch)
 {
-    std::vector<std::vector<tile> > map_=*_map;
+    bool moveThroughDoor=true;
+    std::vector<std::vector<tile*> > map_=*_map;
     if (*ch=='m'){
         sprinting=!sprinting;
         counter=0;
@@ -159,51 +169,91 @@ void player::movement(std::vector<std::vector<tile> > *_map, char* ch)
     }
     if (getCounter()==getSpeed()){
         if (*ch=='w' or *ch=='8'){
-            if (map_[y-1][x].movementCost!=-1){
-                y--;
+            if (map_[y-1][x]->movementCost!=-1){
+                if (map_[y-1][x]->isDoor==true){
+                    moveThroughDoor=map_[y-1][x]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    y--;
+                }
             }
         }
         if (*ch=='s' or *ch=='2'){
-            if (map_[y+1][x].movementCost!=-1){
-                y++;
+            if (map_[y+1][x]->movementCost!=-1){
+                if (map_[y+1][x]->isDoor==true){
+                    moveThroughDoor=map_[y+1][x]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    y++;
+                }
             }
         }
         if (*ch=='a' or *ch=='4'){
-            if (map_[y][x-1].movementCost!=-1){
-                x--;
+            if (map_[y][x-1]->movementCost!=-1){
+                if (map_[y][x-1]->isDoor==true){
+                    moveThroughDoor=map_[y][x-1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x--;
+                }
             }
         }
         if (*ch=='d' or *ch=='6'){
-            if (map_[y][x+1].movementCost!=-1){
-                x++;
+            if (map_[y][x+1]->movementCost!=-1){
+                if (map_[y][x+1]->isDoor==true){
+                    moveThroughDoor=map_[y][x+1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x++;
+                }
             }
         }
         if (*ch=='7')
         {
-            if (map_[y-1][x-1].movementCost!=-1){
-                x--;
-                y--;
+            if (map_[y-1][x-1]->movementCost!=-1){
+                if (map_[y-1][x-1]->isDoor==true){
+                    moveThroughDoor=map_[y-1][x-1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x--;
+                    y--;
+                }
             }
         }
         if (*ch=='9')
         {
-            if (map_[y-1][x+1].movementCost!=-1){
-                x++;
-                y--;
+            if (map_[y-1][x+1]->movementCost!=-1){
+                if (map_[y-1][x+1]->isDoor==true){
+                    moveThroughDoor=map_[y-1][x+1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x++;
+                    y--;
+                }
             }
         }
         if (*ch=='3')
         {
-            if (map_[y+1][x+1].movementCost!=-1){
-                x++;
-                y++;
+            if (map_[y+1][x+1]->movementCost!=-1){
+                if (map_[y+1][x+1]->isDoor==true){
+                    moveThroughDoor=map_[y+1][x+1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x++;
+                    y++;
+                }
             }
         }
         if (*ch=='1')
         {
-            if (map_[y+1][x-1].movementCost!=-1){
-                x--;
-                y++;
+            if (map_[y+1][x-1]->movementCost!=-1){
+                if (map_[y+1][x-1]->isDoor==true){
+                    moveThroughDoor=map_[y+1][x-1]->openDoor();
+                }
+                if (moveThroughDoor==true){
+                    x--;
+                    y++;
+                }
             }
         }
         if (*ch=='5')

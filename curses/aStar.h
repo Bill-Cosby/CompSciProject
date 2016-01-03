@@ -12,7 +12,7 @@
 
 
 std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile> > ,coordinate,coordinate, std::vector<coordinate>);
+std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > ,coordinate,coordinate, std::vector<coordinate>);
 bool vectorContains(std::vector<tile>,tile);
 
 #endif // ASTAR_H_INCLUDED
