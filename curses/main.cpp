@@ -132,10 +132,8 @@ actors[1]->pos(1,1);
 actors[0]->pos(18,18);
     while (first_menu.quit_game==false)
     {
-        //actors[0]->movement(&_map, &ch);
         scr.drawStats(100);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
-
             drawGameworld(_map,&actors,localItems,&scr);
             ch=wgetch(scr.subwindow.sub);
             actors[0]->movement(&_map,&localItems,&ch,&scr);
@@ -143,7 +141,7 @@ actors[0]->pos(18,18);
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
         for (int i=1;i<actors.size();i++){
-            //actors[i]->aiMovement(_map,actors);
+            actors[i]->aiMovement(&_map,actors);
         }
         actors[0]->raiseCounter();
     }

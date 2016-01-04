@@ -7,7 +7,6 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     symbol = _symbol;
     canEquip=true;
     canUse=false;
-    canWear=false;
     x = _x;
     y = _y;
     selected=false;

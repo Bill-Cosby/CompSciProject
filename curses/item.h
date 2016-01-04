@@ -10,7 +10,6 @@ public:
     bool selected;
     bool canEquip;
     bool canUse;
-    bool canWear;
     int x,y;//if item is on ground
     int value;
     char symbol;

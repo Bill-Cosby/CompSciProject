@@ -30,13 +30,8 @@ struct comparator {
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
     erase();
-    for (coordinate _c : noGo){
-        if (_c!=goal){
 
-           _map[_c.y][_c.x]->movementCost=-1;
-           mvaddch(_c.y,_c.x,'#');
-        }
-    }
+
     std::priority_queue<tile, std::vector<tile>, comparator> openSet;
     std::vector<tile> heapStorage;
 

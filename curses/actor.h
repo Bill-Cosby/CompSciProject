@@ -56,10 +56,11 @@ so:
 do not forget to "delete" every pointer at the end of the program.
 */
     virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr){}
-    virtual void aiMovement(std::vector<std::vector<tile*> >, std::vector<actor*>){}
-    virtual void setPost(int x, int y){};
+    virtual void aiMovement(std::vector<std::vector<tile*> >* _map, std::vector<actor*>){}
+    virtual void setPost(int x, int y){}
     virtual void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining){}
-    virtual void openInventory(screen* scr){}
+    virtual void openInventory(screen* scr,std::vector<item*> *localItems){}
+    virtual void moveOnPath(std::vector<std::vector<tile*> >){}
 };
 
 class player: public actor
@@ -67,7 +68,7 @@ class player: public actor
 public:
     void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr);
     void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
-    void openInventory(screen* scr);
+    void openInventory(screen* scr,std::vector<item*> *localItems);
     player();
 };
 
@@ -77,10 +78,10 @@ class monster: public actor
 public:
     coordinate memory;
     std::vector<coordinate> path;
-    bool musttouch;
-    void aiMovement(std::vector<std::vector<tile*> >,std::vector<actor*>);
-    bool canSee(std::vector<std::vector<tile*> >, coordinate);
     monster(int,char);
+    bool musttouch;
+    bool canSee(std::vector<std::vector<tile*> >, coordinate);
+    void aiMovement(std::vector<std::vector<tile*> >* _map,std::vector<actor*>);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);
