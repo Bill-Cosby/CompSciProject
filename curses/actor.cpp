@@ -203,13 +203,6 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
                         y+=directions[i].y;
                         x+=directions[i].x;
                     }
-                    std::cout << _map[y+directions[i].y][x+directions[i].x]->movementCost;
-                wrefresh(scr->win);
-                }
-                else{
-
-                    mvwaddch(scr->win,30,30,_map[y+directions[i].y][x+directions[i].x]->isDoor+'N');
-                    wrefresh(scr->win);
                 }
 
             }
