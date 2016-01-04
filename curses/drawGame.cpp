@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors, screen *scr)
+void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors,std::vector<item*> localItems, screen *scr)
 {
     touchwin(scr->subwindow.sub);
     wclear(scr->subwindow.sub);
@@ -13,7 +13,7 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
 
             startingposition=coordinate((temp[0])->col(),(temp[0])->row());
 
-                    attron(COLOR_PAIR(2));
+                    //attron(COLOR_PAIR(2));
     charplaced=coordinate(startingposition.x-(scr->subwindow.width()/2),startingposition.y-(scr->subwindow.height()/2));
     //charplaced=coordinate(0,0);
     wborder(scr->win,0,0,0,0,0,0,0,0);
@@ -25,6 +25,11 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
             if (y+charplaced.y>=0 and y+charplaced.y<_map.size() and x+charplaced.x>=0 and x+charplaced.x<_map[0].size())
             {
                 mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
+            }
+            for (item* _i : localItems){
+                if (coordinate(_i->x,_i->y)==coordinate(x+charplaced.x,y+charplaced.y)){
+                    mvwaddch(scr->subwindow.sub,y,x,_i->symbol);
+                }
             }
             for (actor* _a: *actors)
             {

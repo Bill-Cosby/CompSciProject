@@ -40,9 +40,14 @@ frame::frame(WINDOW* parent, int h, int w)
     _h=h/2;
     _w=w/2;
     sub=newwin(_h,_w,parent->_begx,parent->_begy);
+    examineWindow=newwin(_h,15,parent->_begy,parent->_begx+w-15);
+    inventoryWindow=newwin(_h+2,17,parent->_begy,parent->_begx);
+    equipmentWindow=newwin(_h+2,17,parent->_begy,parent->_begx+17);
+    itemDescriptionWindow=newwin(30,40,0,0);
+
+    wborder(examineWindow,0,0,0,0,0,0,0,0);
     wborder(sub,0,0,0,0,0,0,0,0);
     wrefresh(sub);
-    start_color();
     init_color(COLOR_PLAYER,0,200,500);
     init_color(COLOR_DOG,1000,0,0);
 }

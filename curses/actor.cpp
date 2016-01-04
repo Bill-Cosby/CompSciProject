@@ -1,9 +1,9 @@
 #include "actor.h"
 #include <cstdlib>
 
-    char numpadControls[14] = {'8','5','2','4','6','7','9','3','1','c','o','i',27,'@'};
-    char keyBrdControls[14] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@'};
-    char VIKEYSControls[14] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@'};
+    char numpadControls[16] = {'8','5','2','6','4','7','9','3','1','c','o','i',27,'@','e','5'};
+    char keyBrdControls[16] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@','e',10};
+    char VIKEYSControls[16] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@','e',10};
     coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
 
 player::player()
@@ -163,7 +163,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *map_, char* ch, screen* scr)
+void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, char* ch, screen* scr)
 {
     /*
     0 = NORTH
@@ -178,14 +178,19 @@ void player::movement(std::vector<std::vector<tile*> > *map_, char* ch, screen* 
     9 = CLOSE DOOR
     10 = OPEN DOOR
     11 = INVENTORY
-    12 = PAUSE (options, quit game)
+    12 = PAUSE(options, quit game)/EXIT MENU
     13 = STATS
+    14 = EXAMINE
+    15 = EXECUTE
     */
     bool moveThroughDoor=true;
+    char inventoryMovement;
+    char closeDirection;
+    char examineDirection;
     std::vector<std::vector<tile*> > _map=*map_;
 
 
-    for (int i=0;i<14;i++){
+    for (int i=0;i<16;i++){
 
         if (*ch==numpadControls[i] or *ch==keyBrdControls[i] or *ch==VIKEYSControls[i]){
 
@@ -208,7 +213,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_, char* ch, screen* 
             }
             if (i==9 or i==10){
                 bool opening=1-(-1*(i-10));
-                char closeDirection=wgetch(scr->subwindow.sub);
+                closeDirection=wgetch(scr->subwindow.sub);
 
                 for (int i=0;i<9;i++){
 
@@ -221,106 +226,199 @@ void player::movement(std::vector<std::vector<tile*> > *map_, char* ch, screen* 
                     }
                 }
             }
+            if (i == 14){
+                examineDirection = wgetch(scr->subwindow.sub);
+                for (int i=0;i<9;i++){
+                    if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
+                        examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
+                        return;
+                    }
+                }
+
+            }
+            if (i == 11){
+                openInventory(scr);
+            }
         }
     }
-//    if (*ch=='m'){
-//        sprinting=!sprinting;
-//        counter=0;
-//        *ch=0;
-//    }
-//    if (getCounter()==getSpeed()){
-//        if (*ch=='w' or *ch=='8'){
-//            if (map_[y-1][x]->movementCost!=-1){
-//                if (map_[y-1][x]->isDoor==true){
-//                    moveThroughDoor=map_[y-1][x]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    y--;
-//                }
-//            }
-//        }
-//        if (*ch=='s' or *ch=='2'){
-//            if (map_[y+1][x]->movementCost!=-1){
-//                if (map_[y+1][x]->isDoor==true){
-//                    moveThroughDoor=map_[y+1][x]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    y++;
-//                }
-//            }
-//        }
-//        if (*ch=='a' or *ch=='4'){
-//            if (map_[y][x-1]->movementCost!=-1){
-//                if (map_[y][x-1]->isDoor==true){
-//                    moveThroughDoor=map_[y][x-1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x--;
-//                }
-//            }
-//        }
-//        if (*ch=='d' or *ch=='6'){
-//            if (map_[y][x+1]->movementCost!=-1){
-//                if (map_[y][x+1]->isDoor==true){
-//                    moveThroughDoor=map_[y][x+1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x++;
-//                }
-//            }
-//        }
-//        if (*ch=='7')
-//        {
-//            if (map_[y-1][x-1]->movementCost!=-1){
-//                if (map_[y-1][x-1]->isDoor==true){
-//                    moveThroughDoor=map_[y-1][x-1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x--;
-//                    y--;
-//                }
-//            }
-//        }
-//        if (*ch=='9')
-//        {
-//            if (map_[y-1][x+1]->movementCost!=-1){
-//                if (map_[y-1][x+1]->isDoor==true){
-//                    moveThroughDoor=map_[y-1][x+1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x++;
-//                    y--;
-//                }
-//            }
-//        }
-//        if (*ch=='3')
-//        {
-//            if (map_[y+1][x+1]->movementCost!=-1){
-//                if (map_[y+1][x+1]->isDoor==true){
-//                    moveThroughDoor=map_[y+1][x+1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x++;
-//                    y++;
-//                }
-//            }
-//        }
-//        if (*ch=='1')
-//        {
-//            if (map_[y+1][x-1]->movementCost!=-1){
-//                if (map_[y+1][x-1]->isDoor==true){
-//                    moveThroughDoor=map_[y+1][x-1]->openDoor();
-//                }
-//                if (moveThroughDoor==true){
-//                    x--;
-//                    y++;
-//                }
-//            }
-//        }
-//        if (*ch=='5')
-//        {
-//            y=y;
-//            x=x;
-//        }
-//    }
+}
+
+void player::openInventory(screen* scr)
+{
+    bool activeWindow=0; //0 means inventory, not equipment
+    int itemSelected=0;
+    char ch=-1;
+    while (true){
+
+        wborder(scr->subwindow.inventoryWindow,0,0,0,0,0,0,0,0);
+        wborder(scr->subwindow.equipmentWindow,0,0,0,0,0,0,0,0);
+        if (activeWindow==0){
+            wattron(scr->subwindow.inventoryWindow,A_BLINK);
+        }
+        else{
+            wattron(scr->subwindow.equipmentWindow,A_BLINK);
+        }
+
+        mvwaddstr(scr->subwindow.inventoryWindow,0,3,"inventory");
+        mvwaddstr(scr->subwindow.equipmentWindow,0,3,"equipment");
+
+        wattroff(scr->subwindow.inventoryWindow,A_BLINK);
+        wattroff(scr->subwindow.equipmentWindow,A_BLINK);
+
+        for (int i=0;i<inventory.size();i++){
+            if (itemSelected==i and activeWindow==0){
+                wattron(scr->subwindow.inventoryWindow,A_REVERSE);
+            }
+            mvwaddstr(scr->subwindow.inventoryWindow,i+1,2,inventory[i]->name.c_str());
+            wattroff(scr->subwindow.inventoryWindow,A_REVERSE);
+        }
+
+        for (int i=0;i<equipment.size();i++){
+            if (itemSelected==i and activeWindow==1){
+                wattron(scr->subwindow.equipmentWindow,A_REVERSE);
+            }
+            mvwaddstr(scr->subwindow.equipmentWindow,i+1,2,equipment[i]->name.c_str());
+            wattroff(scr->subwindow.equipmentWindow,A_REVERSE);
+        }
+
+        wrefresh(scr->subwindow.equipmentWindow);
+        wrefresh(scr->subwindow.inventoryWindow);
+        if (activeWindow==0){
+            ch=wgetch(scr->subwindow.inventoryWindow);
+        }
+        else{
+            ch=wgetch(scr->subwindow.equipmentWindow);
+        }
+        for (int i=0;i<16;i++){
+            if (ch==numpadControls[i] or ch==keyBrdControls[i] or ch==VIKEYSControls[i]){
+                if (i==0){
+                    if (itemSelected-1>=0){
+                        itemSelected--;
+                    }
+                }
+                if (i==2){
+                    if (activeWindow==0){
+                        if (itemSelected+1<=inventory.size()){
+                            itemSelected++;
+                        }
+                    }
+                    else{
+                        if (itemSelected+1<=equipment.size()){
+                            itemSelected++;
+                        }
+                    }
+                }
+                if (i==3 or i==4){
+                    activeWindow= 1-activeWindow;
+                }
+
+                if (i==15){
+                    if (activeWindow==0){
+                        inventory[itemSelected]->selected=true;
+                    }
+                    while (true){
+                        touchwin(scr->subwindow.itemDescriptionWindow);
+                        wborder(scr->subwindow.itemDescriptionWindow,0,0,0,0,0,0,0,0);
+                        if (activeWindow==0){
+                            for (int i=0;i<inventory.size();i++){
+                                if (inventory[i]->selected==true){
+                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,0,10,inventory[i]->name.c_str());
+                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,1,1,inventory[i]->itemDescription().c_str());
+                                }
+                            }
+                        }
+                        wrefresh(scr->subwindow.itemDescriptionWindow);
+
+                    }
+                    if (activeWindow==0){
+                        inventory[itemSelected]->selected=false;
+                    }
+                }
+            }
+        }
+
+
+        erase();
+
+
+    }
+}
+
+void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coordinate spotExamining)
+{
+    touchwin(scr->subwindow.examineWindow);
+    wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
+    char ch;
+    int itemSelected=0;
+
+    while (true){
+        mvwaddstr(scr->subwindow.examineWindow,0,5,"items");
+        for (int i=0;i<scr->subwindow.height();i++){
+
+            if (i==itemsExamining->size()){
+                break;
+            }
+
+            for (int j=0;j<itemsExamining->size();j++){
+                if (coordinate(((*itemsExamining)[j]->x),(*itemsExamining)[j]->y)==spotExamining){
+                    if ((*itemsExamining)[i]->selected==false){
+                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
+                    }
+                    else{
+                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
+                    }
+                    if (i == itemSelected){
+                        wattron(scr->subwindow.examineWindow,A_REVERSE);
+                    }
+                    mvwaddstr(scr->subwindow.examineWindow,i+1,2,(*itemsExamining)[i]->name.c_str());
+                    wattroff(scr->subwindow.examineWindow,A_REVERSE);
+                }
+            }
+
+        }
+        wrefresh(scr->subwindow.examineWindow);
+        ch=wgetch(scr->subwindow.examineWindow);
+        for (int i=0;i<16;i++){
+            if (ch==numpadControls[i] or ch==VIKEYSControls[i] or ch==keyBrdControls[i]){
+                if (i==0){
+                   if (itemSelected-1>=0){
+                        itemSelected--;
+                    }
+                }
+                else if (i==2){
+                    if (itemSelected+1<(*itemsExamining).size()){
+                        itemSelected++;
+                    }
+                }
+                else if (i==3){
+                    (*itemsExamining)[itemSelected]->selected=true;
+                }
+                else if (i==4){
+                    (*itemsExamining)[itemSelected]->selected=false;
+                }
+                else if (i==15){
+                    bool unloadedItem;
+                    int wait=0;
+                    int temp=(*itemsExamining).size();
+                    while (true){
+                        unloadedItem=false;
+                        for (int j=0;j<(*itemsExamining).size();j++){
+                            if ((*itemsExamining)[j]->selected==true){
+                                (*itemsExamining)[j]->selected=false;
+                                inventory.push_back((*itemsExamining)[j]);
+                                (*itemsExamining).erase((*itemsExamining).begin()+j);
+                            }
+                            wait++;
+                        }
+                        if (wait==temp){
+                            break;
+                        }
+                    }
+                    werase(scr->subwindow.examineWindow);
+                    refresh();
+                    return;
+                }
+            }
+        }
+    }
 }

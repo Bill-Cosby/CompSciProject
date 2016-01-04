@@ -11,6 +11,8 @@ protected:
 
     int x,y;
 public:
+    std::vector<item*> inventory;
+    std::vector<item*> equipment;
 // WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
     bool sprinting;
 
@@ -53,15 +55,19 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map, char* ch, screen *scr){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr){}
     virtual void aiMovement(std::vector<std::vector<tile*> >, std::vector<actor*>){}
     virtual void setPost(int x, int y){};
+    virtual void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining){}
+    virtual void openInventory(screen* scr){}
 };
 
 class player: public actor
 {
 public:
-    void movement(std::vector<std::vector<tile*> >* _map, char* ch, screen *scr);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr);
+    void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
+    void openInventory(screen* scr);
     player();
 };
 
@@ -79,5 +85,6 @@ public:
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);
 };
+
 
 #endif // ACTOR_H_INCLUDED

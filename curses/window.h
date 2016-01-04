@@ -19,6 +19,10 @@ class frame{
     int _w,_h;
 public:
     WINDOW* sub;
+    WINDOW* inventoryWindow;
+    WINDOW* equipmentWindow;
+    WINDOW* examineWindow;
+    WINDOW* itemDescriptionWindow;
 
     frame(WINDOW* parent, int w, int h);
     frame(){};

@@ -44,6 +44,13 @@ int main()
 
     erase();
 
+    std::vector<item*> globalItems;
+    std::vector<item*> localItems;
+    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
+    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+    localItems.push_back(globalItems[0]);
+    localItems.push_back(globalItems[1]);
+
 
 
     coordinate temp;
@@ -125,14 +132,13 @@ actors[1]->pos(1,1);
 actors[0]->pos(18,18);
     while (first_menu.quit_game==false)
     {
-
         //actors[0]->movement(&_map, &ch);
         scr.drawStats(100);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
 
-            drawGameworld(_map,&actors,&scr);
+            drawGameworld(_map,&actors,localItems,&scr);
             ch=wgetch(scr.subwindow.sub);
-            actors[0]->movement(&_map,&ch,&scr);
+            actors[0]->movement(&_map,&localItems,&ch,&scr);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
@@ -149,6 +155,9 @@ actors[0]->pos(18,18);
         for (int j=0;j<_map[i].size();i++){
             delete _map[i][j];
         }
+    }
+    for (int i=0;i<globalItems.size();i++){
+        delete globalItems[i];
     }
 
     endwin();
