@@ -2,6 +2,8 @@
 #define ACTOR_H_INCLUDED
 #include "aStar.h"
 #include "window.h"
+#include <stdlib.h>
+#include <time.h>
 
 class actor
 {
@@ -11,6 +13,7 @@ protected:
 
     int x,y;
 public:
+    std::string name;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
 // WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
@@ -23,6 +26,7 @@ public:
 //  BASIC STATS OF EVERY CREATURE
     int health;
     int attack;
+    int accuracy;
     int defense;
     int counter;
     int speed;
@@ -46,6 +50,12 @@ public:
     int getSpeed(){return speed-(.5*speed)*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
     int raiseCounter(){counter++;}// raise the counter of a creature (only useful for the player at this moment, will be redundant once the player's counter is raised in the movement function !! remember to remove)
 
+
+//  METHODS FOR COMBAT
+    void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> >*_map);
+    void attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> >* _map);
+
+
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
 /*
 strictly for the polymorphic attributes of C++. These allow us to place
@@ -55,7 +65,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, char* ch, screen *scr){}
     virtual void aiMovement(std::vector<std::vector<tile*> >* _map, std::vector<actor*>){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining){}
@@ -66,7 +76,7 @@ do not forget to "delete" every pointer at the end of the program.
 class player: public actor
 {
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, char* ch, screen *scr);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, char* ch, screen *scr);
     void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
     void openInventory(screen* scr,std::vector<item*> *localItems);
     player();

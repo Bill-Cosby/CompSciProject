@@ -132,16 +132,20 @@ actors[1]->pos(1,1);
 actors[0]->pos(18,18);
     while (first_menu.quit_game==false)
     {
-        scr.drawStats(100);
+        scr.drawStats(actors[0]->health);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
             drawGameworld(_map,&actors,localItems,&scr);
             ch=wgetch(scr.subwindow.sub);
-            actors[0]->movement(&_map,&localItems,&ch,&scr);
+            drawGameworld(_map,&actors,localItems,&scr);
+            actors[0]->movement(&_map,&localItems,actors,&ch,&scr);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
         for (int i=1;i<actors.size();i++){
-            //actors[i]->aiMovement(&_map,actors);
+            if (actors[i]->health<=0){
+                actors.erase(actors.begin()+i);
+            }
+            actors[i]->aiMovement(&_map,actors);
         }
         actors[0]->raiseCounter();
     }

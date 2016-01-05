@@ -10,6 +10,9 @@ public:
     bool selected;
     bool canEquip;
     bool canUse;
+    int attack;
+    int defense;
+    int health;
     int x,y;//if item is on ground
     int value;
     char symbol;
@@ -19,7 +22,6 @@ public:
 class weapon : public item
 {
 protected:
-    int attack;
 public:
     weapon(int _attack, std::string _name, char _symbol, int _x, int _y);
     std::string itemDescription();
@@ -28,7 +30,6 @@ public:
 class clothing : public item
 {
 protected:
-    int defence;
 public:
     clothing(int _defence, std::string _name, char _symbol, int _x, int _y);
     std::string itemDescription();
@@ -37,7 +38,6 @@ public:
 class consumable : public item
 {
 protected:
-    int health;
 public:
     consumable(int _health, std::string _name, char _symbol, int _x, int _y);
     std::string itemDescription();

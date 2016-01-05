@@ -9,30 +9,83 @@ const short int numberOfControls = 16;
 
 player::player()
 {
-    _symbol='@';
-    sprinting=false;
-    controlled=true;
+    name="Stupid Guy";
     health=100;
     attack=10;
+    accuracy=100;
     defense=0;
     speed=4;
     counter=4;
+    _symbol='@';
+    sprinting=false;
+    controlled=true;
     sprinting=false;
 }
 
 monster::monster(int _speed, char symbol)
 {
-    counter=0;
+    name="Manstor";
     health=100;
     attack=10;
+    accuracy=100;
     defense=0;
     speed=_speed;
+    counter=0;
     _symbol=symbol;
     controlled=false;
     sprinting=false;
     memory=coordinate(-1,-1);
     post=coordinate(-1,-1);
     path.resize(0);
+}
+
+void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > *_map)
+{
+    coordinate dodgeDirection(x-enemyDodgingFrom->col(),y-enemyDodgingFrom->row());
+    bool dodged=false;
+    coordinate temp=coordinate(x,y);
+    if (y+dodgeDirection.y>=0 and y+dodgeDirection.y<(*_map).size() and (*_map)[y+dodgeDirection.y][x]->movementCost!=-1){
+        y+=dodgeDirection.y;
+        if (x+dodgeDirection.x>=0 and x+dodgeDirection.x<(*_map).size() and (*_map)[y][x+dodgeDirection.x]->movementCost!=-1){
+            x+=dodgeDirection.x;
+        }
+        dodged=true;
+    }
+        dodgeDirection.y*=-1;
+        dodgeDirection.x*=-1;
+    if(dodged==false and !(coordinate(x,y+dodgeDirection.y)==coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and y+dodgeDirection.y>=0 and y+dodgeDirection.y<(*_map).size() and (*_map)[y+dodgeDirection.y][x]->movementCost!=-1){
+        y+=dodgeDirection.y;
+    }
+    else if (dodged==false and !(coordinate(x+dodgeDirection.x,y)!=coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and x+dodgeDirection.x>=0 and x+dodgeDirection.x<(*_map).size() and (*_map)[y][x+dodgeDirection.x]->movementCost!=-1){
+        x+=dodgeDirection.x;
+    }
+    if (temp==coordinate(x,y)){
+        if (dodgeDirection.y==0 and (*_map)[y+1][x]->movementCost!=-1){
+            y+=1;
+        }
+        else if (dodgeDirection.y==0 and (*_map)[y--][x]->movementCost!=-1){
+            y+=-1;
+        }
+        else if (dodgeDirection.x==0 and (*_map)[y][x+1]->movementCost!=-1){
+            x+=1;
+        }
+        else if (dodgeDirection.x==0 and (*_map)[y][x--]->movementCost!=-1){
+            x+=-1;
+        }
+    }
+}
+
+void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > *_map)
+{
+    srand(time(NULL));
+    srand(rand()%time(NULL));
+    srand(rand()%rand()%time(NULL));
+    if (rand()%100<accuracy and enemyAttacking->name!=name){
+        enemyAttacking->health-=attack-enemyAttacking->defense;
+    }
+    else if (enemyAttacking->name!=name){
+        enemyAttacking->dodgeAttack(this,_map);
+    }
 }
 
 bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
@@ -98,17 +151,13 @@ void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector
 {
     coordinate goal(-1,-1);
     counter++;
-    bool fuckDebugging=false;
+    bool attacking=false;
     std::vector<coordinate> noGo;
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
         if (_a->controlled==true and canSee(*test_map,coordinate(_a->col(),_a->row()))){
             goal = coordinate(_a->col(),_a->row());
         }
-    }
-
-    if (fuckDebugging==true){
-        fuckDebugging=false;
     }
     if (canSee(*test_map,goal))
     {
@@ -131,9 +180,18 @@ void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector
     {
         if (path.size()>0)
         {
+            for (actor* _a : actors){
+                    std::cout << _a->col() << "," << _a->row() << "\t" << path[path.size()-1].x << "," << path[path.size()-1].y << "\t";
+                if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
+                    attackEnemy(_a, test_map);
+                    attacking=true;
+                }
+            }
+            if (attacking==false){
+                pos(path[path.size()-1].y,path[path.size()-1].x);
+                path.erase(path.begin()+path.size()-1);
+            }
 
-            pos(path[path.size()-1].y,path[path.size()-1].x);
-            path.erase(path.begin()+path.size()-1);
         }
         counter=0;
     }
@@ -158,7 +216,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, char* ch, screen* scr)
+void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, std::vector<actor*> actors, char* ch, screen* scr)
 {
     /*
     0 = NORTH
@@ -179,6 +237,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     15 = EXECUTE
     */
     bool moveThroughDoor=true;
+    bool attacking=false;
     char inventoryMovement;
     char closeDirection;
     char examineDirection;
@@ -196,12 +255,20 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
 
                 if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
 
-                    if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
-                        moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+                    for (actor* _a : actors){
+                        if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
+                            attacking=true;
+                            attackEnemy(_a,&_map);
+                        }
                     }
-                    if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
-                        y+=directions[i].y;
-                        x+=directions[i].x;
+                    if (attacking!=true){
+                        if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
+                            moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+                        }
+                        if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
+                            y+=directions[i].y;
+                            x+=directions[i].x;
+                        }
                     }
                 }
 
@@ -247,7 +314,7 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
     int buttonSelected=0;
     char ch=-1;
     while (inventoryOpen==true){
-
+//=============INVENTORY/EQUIPMENT MENU=========================
         wborder(scr->subwindow.inventoryWindow,0,0,0,0,0,0,0,0);
         wborder(scr->subwindow.equipmentWindow,0,0,0,0,0,0,0,0);
         if (activeWindow==0){
@@ -323,6 +390,7 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                         equipment[itemSelected]->selected=true;
                     }
                     while (examiningItem==true){
+//=====================EXAMINE ITEM MENU===========================================
                         touchwin(scr->subwindow.itemDescriptionWindow);
                         wborder(scr->subwindow.itemDescriptionWindow,0,0,0,0,0,0,0,0);
                         std::vector<std::string> listOfButtons;
@@ -380,11 +448,17 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                                         inventory[itemSelected]->selected=false;
                                         equipment.push_back(inventory[itemSelected]);
                                         inventory.erase(inventory.begin()+itemSelected);
+                                        health+=inventory[itemSelected]->health;
+                                        defense+=inventory[itemSelected]->defense;
+                                        attack+=inventory[itemSelected]->attack;
                                     }
                                     if (listOfButtons[buttonSelected]=="Unequip"){
                                         inventory[itemSelected]->selected=false;
                                         inventory.push_back(equipment[itemSelected]);
                                         equipment.erase(equipment.begin()+itemSelected);
+                                        health-=equipment[itemSelected]->health;
+                                        defense-=equipment[itemSelected]->defense;
+                                        attack-=equipment[itemSelected]->attack;
                                     }
                                     if (listOfButtons[buttonSelected]=="Use"){
                                         if (activeWindow==0){

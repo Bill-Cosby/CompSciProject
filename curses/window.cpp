@@ -33,6 +33,8 @@ void screen::drawStats(int health){
     ss << health;
     std::string str = ss.str();
     mvaddstr(10,60,str.c_str());
+    wrefresh(win);
+    wrefresh(subwindow.sub);
 }
 
 frame::frame(WINDOW* parent, int h, int w)
