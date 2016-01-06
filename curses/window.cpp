@@ -15,7 +15,8 @@ screen::screen(int w,int h)
     wborder(win,0,0,0,0,0,0,0,0);
     noecho();
     cbreak();
-    nodelay(win,false);
+    halfdelay(1);
+    //nodelay(win,false);
     start_color();
     init_color(COLOR_PLAYER,0,200,500);
     init_color(COLOR_DOG,1000,0,0);

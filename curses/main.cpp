@@ -3,6 +3,7 @@
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -135,9 +136,11 @@ actors[0]->pos(18,18);
         scr.drawStats(actors[0]->health);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
             drawGameworld(_map,&actors,localItems,&scr);
-            ch=wgetch(scr.subwindow.sub);
+            if ((ch=wgetch(scr.subwindow.sub))!=ERR){
+                actors[0]->movement(&_map,&localItems,actors,&ch,&scr);
+            }
+
             drawGameworld(_map,&actors,localItems,&scr);
-            actors[0]->movement(&_map,&localItems,actors,&ch,&scr);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
