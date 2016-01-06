@@ -181,7 +181,6 @@ void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector
         if (path.size()>0)
         {
             for (actor* _a : actors){
-                    std::cout << _a->col() << "," << _a->row() << "\t" << path[path.size()-1].x << "," << path[path.size()-1].y << "\t";
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
                     attackEnemy(_a, test_map);
                     attacking=true;
@@ -425,7 +424,6 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                         }
                         wrefresh(scr->subwindow.itemDescriptionWindow);
 
-                        std::cout << inventory.size() << std::endl;
                         ch=wgetch(scr->subwindow.itemDescriptionWindow);
                         werase(scr->subwindow.itemDescriptionWindow);
                         for (int j=0;j<numberOfControls;j++){
