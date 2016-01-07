@@ -33,6 +33,7 @@ int main()
 {
 
     screen scr(100,50);
+    //screen scr(150,100);
     char ch;
 
 
@@ -134,13 +135,12 @@ actors[0]->pos(18,18);
     while (first_menu.quit_game==false)
     {
         scr.drawStats(actors[0]->health);
+        drawGameworld(_map,&actors,localItems,&scr);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
-            drawGameworld(_map,&actors,localItems,&scr);
             if ((ch=wgetch(scr.subwindow.sub))!=ERR){
                 actors[0]->movement(&_map,&localItems,actors,&ch,&scr);
             }
 
-            drawGameworld(_map,&actors,localItems,&scr);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());

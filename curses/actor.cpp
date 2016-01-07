@@ -565,7 +565,9 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                             if ((*itemsExamining)[j]->selected==true){
                                 (*itemsExamining)[j]->selected=false;
                                 inventory.push_back((*itemsExamining)[j]);
+                                std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
                                 (*itemsExamining).erase((*itemsExamining).begin()+j);
+                                scr->addAnnouncement(temporary);
                             }
                             wait++;
                         }
@@ -574,7 +576,7 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                         }
                     }
                     werase(scr->subwindow.examineWindow);
-                    refresh();
+                    wrefresh(scr->subwindow.examineWindow);
                     return;
                 }
             }

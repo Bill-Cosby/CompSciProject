@@ -2,7 +2,6 @@
 void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors,std::vector<item*> localItems, screen *scr)
 {
     touchwin(scr->subwindow.sub);
-    wclear(scr->subwindow.sub);
     init_pair(3,COLOR_PLAYER,COLOR_BLACK);
     init_pair(2,COLOR_RED,COLOR_BLACK);
 
@@ -16,7 +15,7 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
                     //attron(COLOR_PAIR(2));
     charplaced=coordinate(startingposition.x-(scr->subwindow.width()/2),startingposition.y-(scr->subwindow.height()/2));
     //charplaced=coordinate(0,0);
-    wborder(scr->win,0,0,0,0,0,0,0,0);
+    werase(scr->subwindow.sub);
     wborder(scr->subwindow.sub,0,0,0,0,0,0,0,0);
     for (int y=1;y<scr->subwindow.height()-1;y++)
     {
@@ -43,5 +42,6 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
         }
     }
     wrefresh(scr->subwindow.sub);
+    scr->drawAnnouncements();
 }
 

@@ -13,7 +13,6 @@
 #define COLOR_PLAYER 11
 #define COLOR_DOG 12
 
-class actor;
 
 class frame{
     int _w,_h;
@@ -34,14 +33,20 @@ public:
 
 class screen{
     int _w,_h;
+    int announcementWindowHeight;
 public:
     WINDOW* win;
+    WINDOW* announcementWindow;
     frame subwindow;
+    std::vector<std::string> announcements;
+
 
     screen(int,int);
     void add(const char*);
 
     void drawStats(int);
+    void drawAnnouncements();
+    void addAnnouncement(std::string);
 
     int width(){return _w;}
     int height(){return _h;}
