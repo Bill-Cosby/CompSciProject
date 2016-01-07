@@ -47,10 +47,12 @@ void screen::drawAnnouncements()
     int temp=announcementWindowHeight-1;
     werase(announcementWindow);
     wborder(announcementWindow,0,0,0,0,0,0,0,0);
+    wattron(announcementWindow,A_UNDERLINE);
     for (int i=announcements.size()-1;i>=0;i--){
         temp--;
         mvwaddstr(announcementWindow,temp,1,announcements[i].c_str());;
     }
+    wattroff(announcementWindow,A_UNDERLINE);
     wrefresh(announcementWindow);
 }
 

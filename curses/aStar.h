@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <limits>
 #include <iostream>
-#include "include/curses.h"
+#include <curses.h>
 #include "tile.h"
 #include <queue>
 #include <sstream>
