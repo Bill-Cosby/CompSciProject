@@ -11,6 +11,7 @@ public:
     bool selected;
     bool canEquip;
     bool canUse;
+    int speed;
     int attack;
     int defense;
     int health;
@@ -50,7 +51,7 @@ class corpse : public item
 {
 public:
     std::vector<item*> equipment;
-    corpse(std::string _name, char _symbol,std::vector<item*> _equipment, int _x, int _y){name=_name;symbol=symbol;equipment=_equipment;x=_x;y=_y;}
+    corpse(std::string _name, char _symbol,std::vector<item*> _equipment, int _x, int _y){name=_name;symbol=_symbol;equipment=_equipment;x=_x;y=_y;}
 };
 
 #endif // ITEM_H_INCLUDED

@@ -17,8 +17,8 @@ screen::screen(int w,int h)
     announcementWindowHeight=h*.75;
     noecho();
     cbreak();
-    //halfdelay(2);
-    //nodelay(win,false);
+    halfdelay(2);
+    nodelay(win,false);
     start_color();
 
 }

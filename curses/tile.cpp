@@ -5,7 +5,6 @@ tile::tile(int hC, int cSF)
     hCost=hC;
     gCost=cSF;
     isDoor=false;
-    material=9;
 }
 
 tile::tile(coordinate pos, coordinate goal, int cSF)
@@ -14,15 +13,15 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     hCost=getDistance(position,goal);
     gCost=cSF;
     isDoor=false;
-    material=9;
 }
 
-door::door(bool _o)
+door::door(bool _o, short _material)
 {
     open=_o;
     openSymbol=']';
     closedSymbol=220;
     isDoor=true;
+    material=_material;
 }
 
 bool door::interactWithDoor(bool opening)

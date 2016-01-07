@@ -1,9 +1,9 @@
 #include "actor.h"
 #include <cstdlib>
 
-    char numpadControls[16] = {'8','5','2','6','4','7','9','3','1','c','o','i',27,'@','e','5'};
-    char keyBrdControls[16] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@','e',10};
-    char VIKEYSControls[16] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@','e',10};
+    char numpadControls[17] = {'8','5','2','6','4','7','9','3','1','c','o','i',27,'@','e','5','x'};
+    char keyBrdControls[17] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@','e',10,'x'};
+    char VIKEYSControls[17] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@','e',10,'x'};
     coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
 const short int numberOfControls = 16;
 
@@ -94,6 +94,7 @@ void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > 
     else if (enemyAttacking->name!=name){
         enemyAttacking->dodgeAttack(this,_map);
     }
+    customSpeed+=
 }
 
 bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
@@ -242,6 +243,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     13 = STATS
     14 = EXAMINE
     15 = EXECUTE
+    16 = LOOK
     */
     bool moveThroughDoor=true;
     bool attacking=false;
@@ -250,6 +252,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     char examineDirection;
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
+    customSpeed=speed;
     std::vector<std::vector<tile*> > _map=*map_;
 
 
@@ -308,6 +311,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
             if (i == 11){
                 openInventory(scr, localItems);
             }
+
         }
     }
 }

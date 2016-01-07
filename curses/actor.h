@@ -16,6 +16,7 @@ public:
     std::string name;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
+    item* wielded;
 // WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
     bool sprinting;
 
@@ -30,6 +31,7 @@ public:
     int defense;
     int counter;
     int speed;
+    int customSpeed;
 
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;

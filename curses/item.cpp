@@ -5,6 +5,7 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     attack=_attack;
     health=0;
     defense=0;
+    speed=5;
     name = _name;
     symbol = _symbol;
     canEquip=true;

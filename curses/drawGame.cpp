@@ -8,7 +8,7 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
     coordinate charplaced;
     std::vector<actor*> temp=*actors;
     init_color(wood,500,300,0);
-
+    init_color(stone,500,500,500);
             startingposition=coordinate((temp[0])->col(),(temp[0])->row());
 
                     //attron(COLOR_PAIR(2));
@@ -22,10 +22,7 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
         {
             if (y+charplaced.y>=0 and y+charplaced.y<_map.size() and x+charplaced.x>=0 and x+charplaced.x<_map[0].size())
             {
-                init_pair(1,wood,COLOR_BLACK);
-                wattron(scr->subwindow.sub,COLOR_PAIR(1));
                 mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
-                wattroff(scr->subwindow.sub,COLOR_PAIR(1));
             }
             for (item* _i : localItems){
                 if (coordinate(_i->x,_i->y)==coordinate(x+charplaced.x,y+charplaced.y)){
