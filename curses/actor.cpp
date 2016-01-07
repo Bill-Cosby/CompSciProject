@@ -39,6 +39,14 @@ monster::monster(int _speed, char symbol)
     path.resize(0);
 }
 
+void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
+{
+    std::string temp = name + "'s corpse";
+    globalItems->push_back(new corpse(temp,_symbol,equipment,col(),row()));
+    localItems->push_back((*globalItems)[globalItems->size()-1]);
+    delete this;
+}
+
 void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > *_map)
 {
     coordinate dodgeDirection(x-enemyDodgingFrom->col(),y-enemyDodgingFrom->row());
@@ -497,6 +505,9 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
             }
         }
     }
+    werase(scr->subwindow.equipmentWindow);
+    werase(scr->subwindow.inventoryWindow);
+    refresh();
 }
 
 void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coordinate spotExamining)
@@ -504,9 +515,10 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
     touchwin(scr->subwindow.examineWindow);
     wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
     char ch;
+    bool examiningGround=true;
     int itemSelected=0;
 
-    while (true){
+    while (examiningGround==true){
         mvwaddstr(scr->subwindow.examineWindow,0,5,"items");
         for (int i=0;i<scr->subwindow.height();i++){
 
@@ -551,6 +563,9 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                 else if (i==4){
                     (*itemsExamining)[itemSelected]->selected=false;
                 }
+                else if (i==12){
+                    examiningGround=false;
+                }
                 else if (i==15){
                     bool unloadedItem;
                     int wait=0;
@@ -571,6 +586,7 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                             break;
                         }
                     }
+                    clear();
                     werase(scr->subwindow.examineWindow);
                     wrefresh(scr->subwindow.examineWindow);
                     return;

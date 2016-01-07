@@ -19,7 +19,7 @@ public:
     short giveMaterial(){return material;}
 
     virtual char drawTile(){return defaultchar;}
-    virtual bool interactWithDoor(bool opening){};
+    virtual bool interactWithDoor(bool opening){}
     virtual bool isOpen(){}
 };
 
@@ -30,7 +30,7 @@ public:
     char openSymbol;
     char closedSymbol;
     door(bool _o);
-    virtual char drawTile(){if (open==true){return openSymbol;}else{return closedSymbol;}}
+    char drawTile(){if (open==true){return openSymbol;}return closedSymbol;}
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
 };

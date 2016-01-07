@@ -54,6 +54,7 @@ public:
 //  METHODS FOR COMBAT
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> >*_map);
     void attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> >* _map);
+    void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)

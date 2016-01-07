@@ -2,6 +2,7 @@
 #define ITEM_H_INCLUDED
 #include <string>
 #include <sstream>
+#include <vector>
 
 class item
 {
@@ -18,6 +19,7 @@ public:
     char symbol;
     virtual std::string itemDescription(){}
 };
+
 
 class weapon : public item
 {
@@ -42,6 +44,13 @@ public:
     consumable(int _health, std::string _name, char _symbol, int _x, int _y);
     std::string itemDescription();
 
+};
+
+class corpse : public item
+{
+public:
+    std::vector<item*> equipment;
+    corpse(std::string _name, char _symbol,std::vector<item*> _equipment, int _x, int _y){name=_name;symbol=symbol;equipment=_equipment;x=_x;y=_y;}
 };
 
 #endif // ITEM_H_INCLUDED

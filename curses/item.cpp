@@ -25,3 +25,5 @@ std::string weapon::itemDescription()
     description+="This " + name + " does " + str + " damage.";
     return description;
 }
+
+

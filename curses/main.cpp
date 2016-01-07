@@ -147,8 +147,11 @@ actors[0]->pos(18,18);
         coordinate eh(actors[0]->col(),actors[0]->row());
         for (int i=1;i<actors.size();i++){
             if (actors[i]->health<=0){
+                actors[i]->makeCorpse(&globalItems,&localItems);
                 actors.erase(actors.begin()+i);
+                continue;
             }
+            std::cout << localItems.size() << std::endl;
             actors[i]->aiMovement(&_map,actors);
         }
         actors[0]->raiseCounter();
