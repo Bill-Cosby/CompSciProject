@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1452142128 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452146472 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -64,15 +64,16 @@
 	<stdlib.h>
 	<time.h>
 
-1451993788 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1452146340 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
+	"materials.h"
 
-1452142128 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1452146125 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1452142181 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1452146420 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"tile.h"
 	<string>
 	<stdio.h>
@@ -81,11 +82,11 @@
 	<vector>
 	<curses.h>
 
-1452142429 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1452146525 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
-1452142268 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+1452145532 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -96,7 +97,7 @@
 	<queue>
 	<sstream>
 
-1451895294 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+1452145532 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -219,7 +220,7 @@
 
 1451512945 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
 
-1451992851 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+1452146323 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
@@ -246,7 +247,7 @@
 	"window.h"
 	<iostream>
 
-1452142128 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1452146585 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1451852774 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
@@ -254,4 +255,6 @@
 
 1452029571 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
 	"item.h"
+
+1452146472 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.h
 

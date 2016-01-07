@@ -118,7 +118,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_y;
             x1 += ix;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -139,7 +139,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_x;
             y1 += iy;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -496,10 +496,6 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                 }
             }
         }
-
-refresh();
-
-
     }
 }
 

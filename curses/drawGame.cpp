@@ -2,13 +2,12 @@
 void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *actors,std::vector<item*> localItems, screen *scr)
 {
     touchwin(scr->subwindow.sub);
-    init_pair(3,COLOR_PLAYER,COLOR_BLACK);
-    init_pair(2,COLOR_RED,COLOR_BLACK);
 
 
     coordinate startingposition;
     coordinate charplaced;
     std::vector<actor*> temp=*actors;
+    init_color(wood,500,300,0);
 
             startingposition=coordinate((temp[0])->col(),(temp[0])->row());
 
@@ -23,7 +22,10 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
         {
             if (y+charplaced.y>=0 and y+charplaced.y<_map.size() and x+charplaced.x>=0 and x+charplaced.x<_map[0].size())
             {
+                init_pair(1,wood,COLOR_BLACK);
+                wattron(scr->subwindow.sub,COLOR_PAIR(1));
                 mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
+                wattroff(scr->subwindow.sub,COLOR_PAIR(1));
             }
             for (item* _i : localItems){
                 if (coordinate(_i->x,_i->y)==coordinate(x+charplaced.x,y+charplaced.y)){
@@ -41,7 +43,8 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
             }
         }
     }
-    wrefresh(scr->subwindow.sub);
+    scr->drawStats((*actors)[0]->health);
     scr->drawAnnouncements();
+    scr->windowRefresh();
 }
 

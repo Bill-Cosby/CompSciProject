@@ -9,11 +9,6 @@
 #include <curses.h>
 
 
-
-#define COLOR_PLAYER 11
-#define COLOR_DOG 12
-
-
 class frame{
     int _w,_h;
 public:
@@ -47,6 +42,7 @@ public:
     void drawStats(int);
     void drawAnnouncements();
     void addAnnouncement(std::string);
+    void windowRefresh();
 
     int width(){return _w;}
     int height(){return _h;}

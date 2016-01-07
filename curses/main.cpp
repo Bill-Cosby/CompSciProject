@@ -75,10 +75,12 @@ int main()
             }
             else if (testarena[y][x]=='#'){
                 _map[y][x]=new tile('#',-1);
+                _map[y][x]->isDoor=false;
                 _map[y][x]->position=coordinate(x,y);
             }
             else{
-                _map[y][x]= new tile(' ',0);
+                _map[y][x]= new tile('_',0);
+                _map[y][x]->isDoor=false;
                 _map[y][x]->position=coordinate(x,y);
             }
         }
@@ -134,8 +136,7 @@ actors[1]->pos(1,1);
 actors[0]->pos(18,18);
     while (first_menu.quit_game==false)
     {
-        scr.drawStats(actors[0]->health);
-        drawGameworld(_map,&actors,localItems,&scr);
+                drawGameworld(_map,&actors,localItems,&scr);
         if (actors[0]->getCounter()==actors[0]->getSpeed()){
             if ((ch=wgetch(scr.subwindow.sub))!=ERR){
                 actors[0]->movement(&_map,&localItems,actors,&ch,&scr);

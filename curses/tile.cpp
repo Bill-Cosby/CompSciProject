@@ -5,6 +5,7 @@ tile::tile(int hC, int cSF)
     hCost=hC;
     gCost=cSF;
     isDoor=false;
+    material=9;
 }
 
 tile::tile(coordinate pos, coordinate goal, int cSF)
@@ -13,6 +14,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     hCost=getDistance(position,goal);
     gCost=cSF;
     isDoor=false;
+    material=9;
 }
 
 door::door(bool _o)

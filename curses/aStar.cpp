@@ -116,6 +116,11 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
         timesthroughLoop++;
+        if (canSee(_map,goal,currentNode.position)){
+            std::vector<coordinate> path;
+            path.push_back(currentNode.position);
+            return path;
+        }
     }
     std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
 }
@@ -168,4 +173,62 @@ int getDistance(coordinate nodeA, coordinate nodeB)
         return (14*distX + 10*(distY-distX));
     }
 
+}
+bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coordinate spotToSee)
+{
+    int x1=spotToSee.x;
+    int y1=spotToSee.y;
+    int delta_x(checkSpot.x - x1);
+    // if spotToSee.x == checkSpot.x, then it does not matter what we set here
+    signed char const ix((delta_x > 0) - (delta_x < 0));
+    delta_x = std::abs(delta_x) << 1;
+
+    int delta_y(checkSpot.y - y1);
+    // if spotToSee.y == checkSpot.y, then it does not matter what we set here
+    signed char const iy((delta_y > 0) - (delta_y < 0));
+    delta_y = std::abs(delta_y) << 1;
+
+    if (delta_x >= delta_y)
+    {
+        // error may go below zero
+        int error(delta_y - (delta_x >> 1));
+
+        while (x1 != checkSpot.x)
+        {
+            if ((error >= 0) && (error || (ix > 0)))
+            {
+                error -= delta_x;
+                y1 += iy;
+            }
+            // else do nothing
+
+            error += delta_y;
+            x1 += ix;
+            if (test_map[y1][x1]->movementCost==-1){
+                return false;
+            }
+        }
+    }
+    else
+    {
+        // error may go below zero
+        int error(delta_x - (delta_y >> 1));
+
+        while (y1 != checkSpot.y)
+        {
+            if ((error >= 0) && (error || (iy > 0)))
+            {
+                error -= delta_y;
+                x1 += ix;
+            }
+            // else do nothing
+
+            error += delta_x;
+            y1 += iy;
+            if (test_map[y1][x1]->movementCost==-1){
+                return false;
+            }
+        }
+    }
+    return true;
 }
