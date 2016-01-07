@@ -22,7 +22,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','[','#','[','#'},
+                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','[','#','#','#'},
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
                               {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
@@ -71,15 +71,15 @@ int main()
         _map[y].resize(20);
         for (int x=0;x<20;x++){
             if (testarena[y][x]=='['){
-                _map[y][x]= new door(0);
+                _map[y][x]= new door(0, wood);
             }
             else if (testarena[y][x]=='#'){
-                _map[y][x]=new tile('#',-1);
+                _map[y][x]=new tile('#',-1,stone);
                 _map[y][x]->isDoor=false;
                 _map[y][x]->position=coordinate(x,y);
             }
             else{
-                _map[y][x]= new tile('_',0);
+                _map[y][x]= new tile('_',0,stone);
                 _map[y][x]->isDoor=false;
                 _map[y][x]->position=coordinate(x,y);
             }
@@ -145,13 +145,15 @@ actors[0]->pos(18,18);
             actors[0]->counter=0;
         }
         coordinate eh(actors[0]->col(),actors[0]->row());
-        for (int i=1;i<actors.size();i++){
+        for (int i=0;i<actors.size();i++){
             if (actors[i]->health<=0){
                 actors[i]->makeCorpse(&globalItems,&localItems);
                 actors.erase(actors.begin()+i);
                 continue;
             }
-            std::cout << localItems.size() << std::endl;
+            if (actors[i]==0){
+                continue;
+            }
             actors[i]->aiMovement(&_map,actors);
         }
         actors[0]->raiseCounter();
