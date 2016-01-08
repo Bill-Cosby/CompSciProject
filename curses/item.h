@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include "materials.h"
 
 class item
 {
@@ -17,6 +18,7 @@ public:
     int health;
     int x,y;//if item is on ground
     int value;
+    int material;
     char symbol;
     virtual std::string itemDescription(){}
 };

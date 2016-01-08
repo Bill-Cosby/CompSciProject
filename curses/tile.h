@@ -8,6 +8,7 @@ class tile : public node
 {
 public:
     bool isDoor;
+    bool isContainer;
     char defaultchar;
     int movementCost;
     short material;
@@ -21,6 +22,7 @@ public:
     virtual char drawTile(){return defaultchar;}
     virtual bool interactWithDoor(bool opening){}
     virtual bool isOpen(){}
+    virtual void openContainer(){}
 };
 
 class door : public tile
@@ -36,5 +38,11 @@ public:
 };
 
 class container : public tile
+{
+    std::string name;
+public:
+    std::vector<item*> contains;
+    void openContainer();
+};
 
 #endif // TILE_H_INCLUDED

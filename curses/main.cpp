@@ -64,7 +64,6 @@ int main()
     std::vector<monster> monsters;
     std::vector<actor*> actors;
 
-
     //_map.resize(map_t.dungeon_grid.size());
     _map.resize(20);
     for (int y=0;y<20;y++){
@@ -79,7 +78,7 @@ int main()
                 _map[y][x]->position=coordinate(x,y);
             }
             else{
-                _map[y][x]= new tile('_',0,stone);
+                _map[y][x]= new tile(' ',0,stone);
                 _map[y][x]->isDoor=false;
                 _map[y][x]->position=coordinate(x,y);
             }

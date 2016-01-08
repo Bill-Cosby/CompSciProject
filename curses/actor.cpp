@@ -94,7 +94,6 @@ void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > 
     else if (enemyAttacking->name!=name){
         enemyAttacking->dodgeAttack(this,_map);
     }
-    customSpeed+=
 }
 
 bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
@@ -511,6 +510,7 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
     }
     werase(scr->subwindow.equipmentWindow);
     werase(scr->subwindow.inventoryWindow);
+    erase();
     refresh();
 }
 
@@ -518,34 +518,34 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
 {
     touchwin(scr->subwindow.examineWindow);
     wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
+    std::vector<item*> itemsYouFound;
     char ch;
     bool examiningGround=true;
+    bool unloadedItem=false;
+    for (int i=0;i<(*itemsExamining).size();i++){
+        if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
+            itemsYouFound.push_back((*itemsExamining)[i]);
+        }
+    }
     int itemSelected=0;
 
     while (examiningGround==true){
-        mvwaddstr(scr->subwindow.examineWindow,0,5,"items");
         for (int i=0;i<scr->subwindow.height();i++){
 
-            if (i==itemsExamining->size()){
+            if (i==itemsYouFound.size()){
                 break;
             }
-
-            for (int j=0;j<itemsExamining->size();j++){
-                if (coordinate(((*itemsExamining)[j]->x),(*itemsExamining)[j]->y)==spotExamining){
-                    if ((*itemsExamining)[i]->selected==false){
-                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
-                    }
-                    else{
-                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
-                    }
-                    if (i == itemSelected){
-                        wattron(scr->subwindow.examineWindow,A_REVERSE);
-                    }
-                    mvwaddstr(scr->subwindow.examineWindow,i+1,2,(*itemsExamining)[i]->name.c_str());
-                    wattroff(scr->subwindow.examineWindow,A_REVERSE);
-                }
+            if (itemsYouFound[i]->selected==false){
+                mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
             }
-
+            else{
+                mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
+            }
+            if (i == itemSelected){
+                wattron(scr->subwindow.examineWindow,A_REVERSE);
+            }
+            mvwaddstr(scr->subwindow.examineWindow,i+1,2,itemsYouFound[i]->name.c_str());
+            wattroff(scr->subwindow.examineWindow,A_REVERSE);
         }
         wrefresh(scr->subwindow.examineWindow);
         ch=wgetch(scr->subwindow.examineWindow);
@@ -557,31 +557,34 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                     }
                 }
                 else if (i==2){
-                    if (itemSelected+1<(*itemsExamining).size()){
+                    if (itemSelected+1<itemsYouFound.size()){
                         itemSelected++;
                     }
                 }
                 else if (i==3){
-                    (*itemsExamining)[itemSelected]->selected=true;
+                    itemsYouFound[itemSelected]->selected=true;
                 }
                 else if (i==4){
-                    (*itemsExamining)[itemSelected]->selected=false;
+                    itemsYouFound[itemSelected]->selected=false;
                 }
                 else if (i==12){
                     examiningGround=false;
                 }
                 else if (i==15){
-                    bool unloadedItem;
                     int wait=0;
-                    int temp=(*itemsExamining).size();
+                    int temp=itemsYouFound.size();
                     while (true){
                         unloadedItem=false;
-                        for (int j=0;j<(*itemsExamining).size();j++){
-                            if ((*itemsExamining)[j]->selected==true){
-                                (*itemsExamining)[j]->selected=false;
+                        for (int j=0;j<itemsYouFound.size();j++){
+                            if (itemsYouFound[j]->selected==true){
+                                itemsYouFound[j]->selected=false;
                                 inventory.push_back((*itemsExamining)[j]);
                                 std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
-                                (*itemsExamining).erase((*itemsExamining).begin()+j);
+                                for (int k = 0; k < (*itemsExamining).size(); k++){
+                                    if ((*itemsExamining)[k]==itemsYouFound[j]){
+                                        (*itemsExamining).erase((*itemsExamining).begin()+k);
+                                    }
+                                }
                                 scr->addAnnouncement(temporary);
                             }
                             wait++;
@@ -593,6 +596,8 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                     clear();
                     werase(scr->subwindow.examineWindow);
                     wrefresh(scr->subwindow.examineWindow);
+                    bool youAintRight=false;
+
                     return;
                 }
             }
