@@ -24,6 +24,7 @@ public:
     bool left;
     bool grasps;
     hand(int _weight, bool _left){weight=_weight;left=_left;}
+    hand(){}
     item* inHand;
 };
 
@@ -33,6 +34,7 @@ public:
     bool left;
     int damage;
     foot(int _weight, bool _left){weight=_weight;left=_left;}
+    foot(){}
     item* sock;
     item* FOOT_ARMOR;
 };
@@ -42,7 +44,8 @@ class arm : public bodyPart
 public:
     bool left;
     int damage;
-    arm(int _weight, bool _left){weight=_weight;left=_left;}
+    hand _hand;
+    arm(int _weight, bool _left){weight=_weight;left=_left;_hand=hand(1,left);}
     item* ARM_ARMOR;
 };
 
@@ -51,7 +54,8 @@ class leg : public bodyPart
 public:
     bool left;
     int damage;
-    leg(int _weight, bool _left){weight=_weight;left=_left;}
+    foot _foot;
+    leg(int _weight, bool _left){weight=_weight;left=_left;_foot=foot(1,left);}
     item* LEG_ARMOR;
 };
 

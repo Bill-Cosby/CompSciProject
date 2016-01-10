@@ -129,7 +129,10 @@ int main()
 //    for (int i=0;i<monsters.size();i++){
 //        actors.push_back(&monsters[i]);
 //    }
-actors.push_back(new player());
+actors.push_back(new player);
+actors[0]->pos(18,18);
+actors.push_back(new monster("human"));
+actors[1]->pos(1,1);
     while (first_menu.quit_game==false)
     {
         drawGameworld(_map,&actors,localItems,&scr);

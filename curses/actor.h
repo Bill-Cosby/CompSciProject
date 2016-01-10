@@ -39,11 +39,13 @@ public:
     int customSpeed;
     std::string skinColor;
 
+//  TAGS FOR AI
+    bool EVIL;
+
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;
     bool hidden;
 
-    bool hostile;
 
 // VECTORS FOR PATHFINDING
     std::vector<coordinate> noGo;//represents places you absolutely should not step

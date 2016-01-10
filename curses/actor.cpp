@@ -10,6 +10,7 @@ const short int numberOfControls = 16;
 player::player()
 {
     bool readingRightFile=true;
+    bool rightSpecies=true;
     bool typeFound=false;
     bool constructed=false;
     bool foundQuantity=false;
@@ -22,7 +23,11 @@ player::player()
         while ( !CREATURE_FILE.eof()  and readingRightFile==true){
             while ( getline(CREATURE_FILE , line) and readingRightFile==true){
                 std::string readLine;
-                if (line=="[SPECIES]"){
+                if (line=="[HUMAN]"){
+                    rightSpecies=true;
+                    continue;
+                }
+                else{
                     continue;
                 }
                 for (char _c : line){
@@ -95,14 +100,8 @@ player::player()
                                         if (constructionLine=="arm"){
                                             body.push_back(new arm(weight,i));
                                         }
-                                        if (constructionLine=="hand"){
-                                            body.push_back(new hand(weight,i));
-                                        }
                                         if (constructionLine=="leg"){
                                             body.push_back(new leg(weight,i));
-                                        }
-                                        if (constructionLine=="foot"){
-                                            body.push_back(new foot(weight,i));
                                         }
                                     }
                                     foundQuantity=false;
@@ -137,7 +136,125 @@ player::player()
 
 monster::monster(std::string species)
 {
-    name="Manstor";
+    bool readingRightFile=true;
+    bool rightSpecies=false;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    std::string line;
+    std::string type;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line=="[GOBLIN]"){
+                    rightSpecies=true;
+                    continue;
+                }
+                else if (rightSpecies==false){
+                    continue;
+                }
+
+                if (rightSpecies==true){
+
+                    for (char _c : line){
+                        if (_c=='-'){
+                            continue;
+                        }
+                        if (constructed==true){break;}
+                        if (_c=='[' or _c=='\t'){
+                            continue;
+                        }
+                        if (_c==']' and typeFound==false){
+                            type=readLine;
+                            readLine.clear();
+                            typeFound=true;
+                            continue;
+                        }
+                        readLine+=_c;
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                name=readLine;
+                                std::cout << name;
+                            }
+                        }
+                        if (type=="defaultSymbol"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                _symbol=readLine[0];
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                    }
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                            type.clear();
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     controlled=false;
     sprinting=false;
@@ -330,7 +447,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, std::vector<actor*> actors, screen* scr)
+void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, screen* scr)
 {
     /*
     0 = NORTH
@@ -360,7 +477,6 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed;
-    std::vector<std::vector<tile*> > _map=*map_;
     if (counter==customSpeed){
         ch=wgetch(scr->subwindow.sub);
         for (int i=0;i<numberOfControls;i++){
@@ -369,19 +485,19 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
 
                 if (i<9){
 
-                    if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
+                    if ((*_map)[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
 
                         for (actor* _a : actors){
                             if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
                                 attacking=true;
-                                attackEnemy(_a,&_map);
+                                attackEnemy(_a,_map);
                             }
                         }
                         if (attacking!=true){
-                            if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
-                                moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+                            if ((*_map)[y+directions[i].y][x+directions[i].x]->isDoor==true){
+                                moveThroughDoor=(*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
                             }
-                            if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
+                            if (moveThroughDoor==true or (*_map)[y+directions[i].y][x+directions[i].x]->isDoor==false){
                                 y+=directions[i].y;
                                 x+=directions[i].x;
                             }
@@ -400,7 +516,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
                         }
                         if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
 
-                            _map[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
+                            (*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
                         }
                     }
                 }

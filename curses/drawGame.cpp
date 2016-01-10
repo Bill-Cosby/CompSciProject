@@ -97,7 +97,7 @@ short backgroundValue;
                 }
                 else{
                     wattron(scr->subwindow.sub,COLOR_PAIR(colorToUse));
-                    mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
+                    mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->movementCost+'0');
                     wattroff(scr->subwindow.sub,COLOR_PAIR(colorToUse));
                 }
 
