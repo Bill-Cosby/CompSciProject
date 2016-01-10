@@ -9,8 +9,121 @@ const short int numberOfControls = 16;
 
 player::player()
 {
+    bool readingRightFile=true;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    std::string line;
+    std::string type;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line=="[SPECIES]"){
+                    continue;
+                }
+                for (char _c : line){
+                    if (_c=='-'){
+                        continue;
+                    }
+                    if (constructed==true){break;}
+                    if (_c=='[' or _c=='\t'){
+                        continue;
+                    }
+                    if (_c==']' and typeFound==false){
+                        type=readLine;
+                        readLine.clear();
+                        typeFound=true;
+                        continue;
+                    }
+                    readLine+=_c;
+                    if (typeFound==true){
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                name=readLine;
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="hand"){
+                                            body.push_back(new hand(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                        if (constructionLine=="foot"){
+                                            body.push_back(new foot(weight,i));
+                                        }
+                                    }
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                            type.clear();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    else{
+        std::cout << "error...";
+    }
     name="Stupid Guy";
-    health=100;
     attack=10;
     accuracy=100;
     defense=0;
@@ -22,16 +135,10 @@ player::player()
     sprinting=false;
 }
 
-monster::monster(int _speed, char symbol)
+monster::monster(std::string species)
 {
     name="Manstor";
-    health=100;
-    attack=10;
-    accuracy=100;
-    defense=0;
-    speed=_speed;
-    counter=0;
-    _symbol=symbol;
+
     controlled=false;
     sprinting=false;
     memory=coordinate(-1,-1);
@@ -89,7 +196,7 @@ void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > 
     srand(rand()%time(NULL));
     srand(rand()%rand()%time(NULL));
     if (rand()%100<accuracy and enemyAttacking->name!=name){
-        enemyAttacking->health-=attack-enemyAttacking->defense;
+        //enemyAttacking->health-=attack-enemyAttacking->defense;
     }
     else if (enemyAttacking->name!=name){
         enemyAttacking->dodgeAttack(this,_map);
@@ -155,7 +262,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
     return true;
 }
 
-void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector<actor*> actors)
+void monster::movement(std::vector<std::vector<tile*> > *test_map,std::vector<item*> *localItems, std::vector<actor*> actors,  screen* scr)
 {
     coordinate goal(-1,-1);
     counter++;
@@ -223,7 +330,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, std::vector<actor*> actors, char* ch, screen* scr)
+void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, std::vector<actor*> actors, screen* scr)
 {
     /*
     0 = NORTH
@@ -244,6 +351,7 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     15 = EXECUTE
     16 = LOOK
     */
+    char ch;
     bool moveThroughDoor=true;
     bool attacking=false;
     char inventoryMovement;
@@ -253,66 +361,68 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed;
     std::vector<std::vector<tile*> > _map=*map_;
+    if (counter==customSpeed){
+        ch=wgetch(scr->subwindow.sub);
+        for (int i=0;i<numberOfControls;i++){
 
+            if (ch==numpadControls[i] or ch==keyBrdControls[i] or ch==VIKEYSControls[i]){
 
-    for (int i=0;i<numberOfControls;i++){
+                if (i<9){
 
-        if (*ch==numpadControls[i] or *ch==keyBrdControls[i] or *ch==VIKEYSControls[i]){
+                    if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
 
-            if (i<9){
-
-
-                if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
-
-                    for (actor* _a : actors){
-                        if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
-                            attacking=true;
-                            attackEnemy(_a,&_map);
+                        for (actor* _a : actors){
+                            if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
+                                attacking=true;
+                                attackEnemy(_a,&_map);
+                            }
+                        }
+                        if (attacking!=true){
+                            if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
+                                moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+                            }
+                            if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
+                                y+=directions[i].y;
+                                x+=directions[i].x;
+                            }
                         }
                     }
-                    if (attacking!=true){
-                        if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
-                            moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+
+                }
+                if (i==9 or i==10){
+                    bool opening=1-(-1*(i-10));
+                    closeDirection=wgetch(scr->subwindow.sub);
+
+                    for (int i=0;i<9;i++){
+
+                        if (i==1){
+                            continue;
                         }
-                        if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
-                            y+=directions[i].y;
-                            x+=directions[i].x;
+                        if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
+
+                            _map[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
                         }
                     }
                 }
-
-            }
-            if (i==9 or i==10){
-                bool opening=1-(-1*(i-10));
-                closeDirection=wgetch(scr->subwindow.sub);
-
-                for (int i=0;i<9;i++){
-
-                    if (i==1){
-                        continue;
+                if (i == 14){
+                    examineDirection = wgetch(scr->subwindow.sub);
+                    for (int i=0;i<9;i++){
+                        if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
+                            examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
+                            return;
+                        }
                     }
-                    if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
 
-                        _map[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
-                    }
                 }
-            }
-            if (i == 14){
-                examineDirection = wgetch(scr->subwindow.sub);
-                for (int i=0;i<9;i++){
-                    if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
-                        examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
-                        return;
-                    }
+                if (i == 11){
+                    openInventory(scr, localItems);
                 }
 
             }
-            if (i == 11){
-                openInventory(scr, localItems);
-            }
-
         }
+        counter=0;
     }
+    counter++;
 }
 
 void player::openInventory(screen* scr, std::vector<item*> *localItems)
@@ -457,7 +567,6 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                                         inventory[itemSelected]->selected=false;
                                         equipment.push_back(inventory[itemSelected]);
                                         inventory.erase(inventory.begin()+itemSelected);
-                                        health+=inventory[itemSelected]->health;
                                         defense+=inventory[itemSelected]->defense;
                                         attack+=inventory[itemSelected]->attack;
                                     }
@@ -465,7 +574,6 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                                         inventory[itemSelected]->selected=false;
                                         inventory.push_back(equipment[itemSelected]);
                                         equipment.erase(equipment.begin()+itemSelected);
-                                        health-=equipment[itemSelected]->health;
                                         defense-=equipment[itemSelected]->defense;
                                         attack-=equipment[itemSelected]->attack;
                                     }

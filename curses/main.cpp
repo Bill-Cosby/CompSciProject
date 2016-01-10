@@ -129,48 +129,26 @@ int main()
 //    for (int i=0;i<monsters.size();i++){
 //        actors.push_back(&monsters[i]);
 //    }
-actors.push_back(new player);
-actors.push_back(new monster(5,'E'));
-actors[1]->pos(1,1);
-actors[0]->pos(18,18);
+actors.push_back(new player());
     while (first_menu.quit_game==false)
     {
-                drawGameworld(_map,&actors,localItems,&scr);
-        if (actors[0]->getCounter()==actors[0]->getSpeed()){
-            if ((ch=wgetch(scr.subwindow.sub))!=ERR){
-                actors[0]->movement(&_map,&localItems,actors,&ch,&scr);
-            }
-
-            actors[0]->counter=0;
-        }
-        coordinate eh(actors[0]->col(),actors[0]->row());
+        drawGameworld(_map,&actors,localItems,&scr);
         for (int i=0;i<actors.size();i++){
-            if (actors[i]->health<=0){
-                actors[i]->makeCorpse(&globalItems,&localItems);
-                actors.erase(actors.begin()+i);
-                continue;
-            }
-            if (actors[i]==0){
-                continue;
-            }
-            actors[i]->aiMovement(&_map,actors);
-        }
-        actors[0]->raiseCounter();
-    }
-
-    for (int i=0;i<actors.size();i++){
-        delete actors[i];
-    }
-    for (int i=0;i<_map.size();i++){
-        for (int j=0;j<_map[i].size();i++){
-            delete _map[i][j];
+            actors[i]->movement(&_map,&localItems,actors,&scr);
         }
     }
-    for (int i=0;i<globalItems.size();i++){
-        delete globalItems[i];
-    }
-
     endwin();
+        for (int i=0;i<actors.size();i++){
+            delete actors[i];
+        }
+        for (int i=0;i<_map.size();i++){
+            for (int j=0;j<_map[i].size();i++){
+                delete _map[i][j];
+            }
+        }
+        for (int i=0;i<globalItems.size();i++){
+            delete globalItems[i];
+        }
 
     return 0;
 }

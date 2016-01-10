@@ -4,6 +4,9 @@
 #include "window.h"
 #include <stdlib.h>
 #include <time.h>
+#include <cctype>
+#include <fstream>
+#include "bodyParts.h"
 
 class actor
 {
@@ -13,9 +16,12 @@ protected:
 
     int x,y;
 public:
+    std::string species;
+    std::string description;
     std::string name;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
+    std::vector<bodyPart*> body;
     item* wielded;
 // WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
     bool sprinting;
@@ -25,17 +31,19 @@ public:
     int col(){return x;}
 
 //  BASIC STATS OF EVERY CREATURE
-    int health;
     int attack;
     int accuracy;
     int defense;
     int counter;
     int speed;
     int customSpeed;
+    std::string skinColor;
 
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;
     bool hidden;
+
+    bool hostile;
 
 // VECTORS FOR PATHFINDING
     std::vector<coordinate> noGo;//represents places you absolutely should not step
@@ -50,7 +58,6 @@ public:
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position
     int getSpeed(){return speed-(.5*speed)*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
-    int raiseCounter(){counter++;}// raise the counter of a creature (only useful for the player at this moment, will be redundant once the player's counter is raised in the movement function !! remember to remove)
 
 
 //  METHODS FOR COMBAT
@@ -68,8 +75,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, char* ch, screen *scr){}
-    virtual void aiMovement(std::vector<std::vector<tile*> >* _map, std::vector<actor*>){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, screen *scr){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining){}
     virtual void openInventory(screen* scr,std::vector<item*> *localItems){}
@@ -79,7 +85,7 @@ do not forget to "delete" every pointer at the end of the program.
 class player: public actor
 {
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, char* ch, screen *scr);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, screen *scr);
     void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
     void openInventory(screen* scr,std::vector<item*> *localItems);
     player();
@@ -91,10 +97,10 @@ class monster: public actor
 public:
     coordinate memory;
     std::vector<coordinate> path;
-    monster(int,char);
+    monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void aiMovement(std::vector<std::vector<tile*> >* _map,std::vector<actor*>);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, screen *scr);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);

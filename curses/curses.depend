@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1452203985 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452422409 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -58,18 +58,21 @@
 	<stack>
 	<fstream>
 
-1452201119 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1452422892 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 	"window.h"
 	<stdlib.h>
 	<time.h>
+	<cctype>
+	<fstream>
+	"bodyParts.h"
 
 1452201709 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"materials.h"
 
-1452215387 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1452422900 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -258,7 +261,7 @@
 	"window.h"
 	<iostream>
 
-1452207360 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1452413811 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1452204034 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
@@ -290,4 +293,8 @@
 1452204482 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.cpp
 	"materials.h"
 	<iostream>
+
+1452421918 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.h
+	"item.h"
+	<string>
 

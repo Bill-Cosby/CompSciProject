@@ -105,7 +105,6 @@ short backgroundValue;
             }
         }
     }
-    scr->drawStats((*actors)[0]->health);
     scr->drawAnnouncements();
     scr->windowRefresh();
 }
