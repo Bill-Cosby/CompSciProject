@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
+#include "building.h"
 
 using namespace std;
 
@@ -45,7 +46,8 @@ int main()
     }
 
     erase();
-
+        building test;
+        test.buildStructure();
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(5,"Sword",'/',16,18));

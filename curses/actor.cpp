@@ -180,7 +180,6 @@ monster::monster(std::string species)
                                 readLine.erase(readLine.size()-1);
                                 typeFound=false;
                                 name=readLine;
-                                std::cout << name;
                             }
                         }
                         if (type=="defaultSymbol"){

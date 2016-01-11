@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1452458194 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452468588 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 	<SFML/Graphics.hpp>
+	"building.h"
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
 	"xcurses.h"
@@ -72,7 +73,7 @@
 	"node.h"
 	"materials.h"
 
-1452460102 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1452468902 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -297,4 +298,14 @@
 1452457142 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.h
 	"item.h"
 	<string>
+
+1452471718 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\building.cpp
+	"building.h"
+	<iostream>
+
+1452468821 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\building.h
+	<vector>
+	<fstream>
+	<string>
+	<cctype>
 
