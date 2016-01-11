@@ -7,6 +7,7 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     defense=0;
     speed=5;
     name = _name;
+    type = _name;
     symbol = _symbol;
     canEquip=true;
     canUse=false;
@@ -28,4 +29,7 @@ std::string weapon::itemDescription()
     return description;
 }
 
+void weapon::equip(bool equipping)
+{
 
+}

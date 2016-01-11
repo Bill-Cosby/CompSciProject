@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+#include <math.h>
 
 class building
 {

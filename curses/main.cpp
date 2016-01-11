@@ -48,6 +48,14 @@ int main()
     erase();
         building test;
         test.buildStructure();
+
+    for (int i=0;i<10;i++){
+        for (int j=0;j<10;j++){
+            std::cout << test.structure[i][j];
+        }
+        std::cout << std::endl;
+    }
+
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(5,"Sword",'/',16,18));

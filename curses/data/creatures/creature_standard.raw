@@ -11,7 +11,7 @@
 
 [GOBLIN]
 	[speciesName][goblin]
-	[defaultSymbol][g]
+	[defaultSymbol][G]
 	[description][A small cruel creature.]
 	[tags][EVIL]
 	[limbs][1 1 head:2 0 eye:1 0 neck:1 4 torso :2 1 arm:2 2 leg:]

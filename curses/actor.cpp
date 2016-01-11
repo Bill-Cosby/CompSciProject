@@ -265,7 +265,7 @@ monster::monster(std::string species)
 void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
 {
     std::string temp = name + "'s corpse";
-    globalItems->push_back(new corpse(temp,_symbol,equipment,col(),row()));
+    globalItems->push_back(new corpse(temp,equipment,_symbol,col(),row()));
     localItems->push_back((*globalItems)[globalItems->size()-1]);
     delete this;
 }
