@@ -18,3 +18,12 @@
 	[hair_colors][black:]
 	[eye_colors][grey:black:yellow:]
 [ENDSPECIES]
+
+[TOBY]
+	[speciesName][Toby]
+	[defaultSymbol][T]
+	[description][A small Smart creature.]
+	[limbs][1 1 head:2 0 eye:1 0 neck:1 4 torso :2 1 arm:2 2 leg:]
+	[hair_colors][black:]
+	[eye_colors][grey:black:yellow:]
+[ENDSPECIES]

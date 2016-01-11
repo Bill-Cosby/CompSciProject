@@ -33,3 +33,12 @@ void weapon::equip(bool equipping)
 {
 
 }
+
+corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, int _x, int _y)
+{
+    name=_name;
+    symbol=_symbol;
+    equipment=_equipment;
+    x=_x;
+    y=_y;
+}

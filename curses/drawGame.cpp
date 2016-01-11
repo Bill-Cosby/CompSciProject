@@ -5,7 +5,8 @@ void drawGameworld(std::vector<std::vector<tile*> > _map, std::vector<actor*> *a
     std::vector<color_type> color_types;
     color_types.push_back(color_type(500,300,0));
     color_types.push_back(color_type(500,500,500));
-    color_types.push_back(color_type(700,500,0));
+    color_types.push_back(color_type(900,550,0));
+    color_types.push_back(color_type(0,300,0));
 
     int colortypeCounter=1;
 
@@ -44,6 +45,7 @@ short backgroundValue;
         for (int x=1;x<scr->subwindow.width()-1;x++)
         {
             if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
+
                 for (actor* _a: *actors)
                 {
                     if (coordinate(_a->col(),_a->row())==coordinate(x+charplaced.x,y+charplaced.y))
@@ -64,6 +66,7 @@ short backgroundValue;
                     for (int i=0;i<NUMBER_OF_COLORS*NUMBER_OF_COLORS-1;i++){
                         pair_content(i,&foregroundValue,&backgroundValue);
                         if (backgroundValue == _map[y+charplaced.y][x+charplaced.x]->giveMaterial() and foregroundValue == COLOR_WHITE){
+                            std::cout << backgroundValue << std::endl;
                             colorToUse=i;
                             break;
                         }
@@ -79,14 +82,18 @@ short backgroundValue;
                     }
                 }
                 else{
-                    for (int i=0;i<NUMBER_OF_COLORS*NUMBER_OF_COLORS-1;i++){
+                    for (int i=0;i<NUMBER_OF_COLORS*NUMBER_OF_COLORS;i++){
                         pair_content(i,&foregroundValue,&backgroundValue);
                         if (backgroundValue == _map[y+charplaced.y][x+charplaced.x]->giveMaterial() and foregroundValue == COLOR_BLACK){
                             colorToUse=i;
                             break;
                         }
+                        if (_map[y+charplaced.y][x+charplaced.x]->movementCost!=-1){
+                            wattron(scr->subwindow.sub,A_BOLD);
+                        }
                     }
                 }
+                wattron(scr->subwindow.sub,COLOR_PAIR(colorToUse));
                 if (drawActor==true){
                         mvwaddch(scr->subwindow.sub,y,x,actorToDraw->symbol());
                         drawActor=false;
@@ -96,12 +103,10 @@ short backgroundValue;
                     drawItem=false;
                 }
                 else{
-                    wattron(scr->subwindow.sub,COLOR_PAIR(colorToUse));
                     mvwaddch(scr->subwindow.sub,y,x,_map[y+charplaced.y][x+charplaced.x]->drawTile());
-                    wattroff(scr->subwindow.sub,COLOR_PAIR(colorToUse));
                 }
-
-
+                wattroff(scr->subwindow.sub,COLOR_PAIR(colorToUse));
+                            wattroff(scr->subwindow.sub,A_BOLD);
             }
         }
     }

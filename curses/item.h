@@ -59,8 +59,9 @@ class corpse : public item
 {
 public:
     std::vector<item*> equipment;
-    corpse(std::string _name,std::vector<item*> _equipment, char _symbol, int _x, int _y){name=_name;symbol=_symbol;equipment=_equipment;x=_x;y=_y;}
-    void equip(bool equipping);
+    corpse(std::string _name, std::vector<item*> _equipment, char _symbol, int _x, int _y);
+    void equip(bool equipping){}
+    std::string itemDescription(){}
 };
 
 #endif // ITEM_H_INCLUDED

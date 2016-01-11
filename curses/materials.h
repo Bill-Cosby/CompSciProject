@@ -4,11 +4,12 @@
 #include <vector>
 #include <curses.h>
 
-#define NUMBER_OF_COLORS 11
+#define NUMBER_OF_COLORS 13
 
 #define wood 9
 #define stone 10
 #define iron 11
+#define grass 12
 
 
 class color_type

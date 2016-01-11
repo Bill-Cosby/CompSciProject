@@ -33,8 +33,8 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
-    screen scr(100,50);
-    //screen scr(150,100);
+    screen scr(100,40);
+
     char ch;
 
 
@@ -117,7 +117,8 @@ int main()
 
 
     //DUNGEON SETUP CODE
-
+actors.push_back(new player);
+//    _map.resize(map_t.dungeon_grid.size());
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
 //        _map[y].resize(map_t.dungeon_grid[0].size());
@@ -125,13 +126,12 @@ int main()
 //        {
 //            if (map_t.dungeon_grid[y][x]==1)
 //            {
-//                _map[y][x]=tile(' ',' ',0);
-//                test.pos(y,x);
-//                enemy.pos(y,x);
+//                _map[y][x]= new tile(' ',0,wood);
+//actors[0]->pos(y,x);
 //            }
 //            else
 //            {
-//                _map[y][x]=tile('#','#',-1);
+//                _map[y][x]= new tile('#',-1, stone);
 //            }
 //        }
 //    }
@@ -139,10 +139,6 @@ int main()
 //    for (int i=0;i<monsters.size();i++){
 //        actors.push_back(&monsters[i]);
 //    }
-actors.push_back(new player);
-actors[0]->pos(18,18);
-actors.push_back(new monster("human"));
-actors[1]->pos(1,1);
     while (first_menu.quit_game==false)
     {
         drawGameworld(_map,&actors,localItems,&scr);
