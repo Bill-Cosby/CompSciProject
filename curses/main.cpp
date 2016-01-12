@@ -34,7 +34,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
-    screen scr(100,40);
+    screen scr(150,80);
 
     char ch;
 
@@ -81,7 +81,7 @@ int main()
             _map[y][x] = test.structure[y][x];
         }
     }
-    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),8);
+    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
 
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
