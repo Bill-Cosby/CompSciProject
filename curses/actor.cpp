@@ -140,10 +140,10 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
     //not currently used until we find a better method
     std::vector<coordinate> noGo;
 
-    //IF you see the player, set them as goal. We will eventually make this expand to include just people you're hostile to. Remember the enemy.
+    //if you're evil and you see someone of a different species, they're your target
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
-        if (_a->controlled==true and canSee(*_map,coordinate(_a->col(),_a->row()))){
+        if (EVIL==true and species!=_a->species and canSee(*_map,coordinate(_a->col(),_a->row()))){
             goal = coordinate(_a->col(),_a->row());
             memory=goal;
         }
@@ -596,7 +596,7 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
     }
 }
 
-player::player()
+player::player(std::string speciesToLoad)
 {
     attack=10;
     accuracy=100;
@@ -623,7 +623,7 @@ player::player()
         while ( !CREATURE_FILE.eof()  and readingRightFile==true){
             while ( getline(CREATURE_FILE , line) and readingRightFile==true){
                 std::string readLine;
-                if (line=="[HUMAN]"){
+                if (line=="speciesToLoad"){
                     rightSpecies=true;
                 }
                 else if (rightSpecies==false){
@@ -651,7 +651,7 @@ player::player()
                         if (type=="speciesName"){
                             if (_c==']'){
                                 readLine.erase(readLine.size()-1);
-                                name=readLine;
+                                species=readLine;
                             }
                         }
                         if (type=="description"){
@@ -725,7 +725,7 @@ player::player()
     }
 }
 
-monster::monster(std::string species)
+monster::monster(std::string speciesToLoad)
 {
     bool readingRightFile=true;
     bool rightSpecies=false;
@@ -742,7 +742,7 @@ monster::monster(std::string species)
         while ( !CREATURE_FILE.eof()  and readingRightFile==true){
             while ( getline(CREATURE_FILE , line) and readingRightFile==true){
                 std::string readLine;
-                if (line=="[GOBLIN]"){
+                if (line==speciesToLoad){
                     rightSpecies=true;
                     continue;
                 }
@@ -767,11 +767,17 @@ monster::monster(std::string species)
                             continue;
                         }
                         readLine+=_c;
+                        if (type == "tags"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                if (readLine=="EVIL"){EVIL=true;}
+                            }
+                        }
                         if (type=="speciesName"){
                             if (_c==']'){
                                 readLine.erase(readLine.size()-1);
                                 typeFound=false;
-                                name=readLine;
+                                species=readLine;
                             }
                         }
                         if (type=="defaultSymbol"){
