@@ -9,14 +9,25 @@ const short int numberOfControls = 16;
 
 player::player()
 {
+    attack=10;
+    accuracy=100;
+    defense=0;
+    counter=4;
+    _symbol='@';
+    sprinting=false;
+    controlled=true;
+    sprinting=false;
+
+
+
     bool readingRightFile=true;
     bool rightSpecies=true;
     bool typeFound=false;
     bool constructed=false;
     bool foundQuantity=false;
     int weight;
-    std::string line;
     std::string type;
+    std::string line;
     std::string constructionLine;
     std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
     if (CREATURE_FILE.is_open()){
@@ -25,9 +36,8 @@ player::player()
                 std::string readLine;
                 if (line=="[HUMAN]"){
                     rightSpecies=true;
-                    continue;
                 }
-                else{
+                else if (rightSpecies==false){
                     continue;
                 }
                 for (char _c : line){
@@ -46,17 +56,18 @@ player::player()
                     }
                     readLine+=_c;
                     if (typeFound==true){
+                        if (type == "ENDSPECIES"){
+                            return;
+                        }
                         if (type=="speciesName"){
                             if (_c==']'){
                                 readLine.erase(readLine.size()-1);
-                                typeFound=false;
                                 name=readLine;
                             }
                         }
                         if (type=="description"){
                             if (_c==']'){
                                 readLine.erase(readLine.size()-1);
-                                typeFound=false;
                                 description=readLine;
                             }
                         }
@@ -104,6 +115,7 @@ player::player()
                                             body.push_back(new leg(weight,i));
                                         }
                                     }
+                                    totalWeight+=weight;
                                     foundQuantity=false;
                                     constructionLine.clear();
                                     continue;
@@ -112,26 +124,16 @@ player::player()
                                     constructionLine+=_l;
                                 }
                             }
-                            type.clear();
                         }
+                        typeFound=false;
+                        type.clear();
                     }
                 }
             }
         }
     }
     else{
-        std::cout << "error...";
     }
-    name="Stupid Guy";
-    attack=10;
-    accuracy=100;
-    defense=0;
-    speed=4;
-    counter=4;
-    _symbol='@';
-    sprinting=false;
-    controlled=true;
-    sprinting=false;
 }
 
 monster::monster(std::string species)
@@ -142,6 +144,7 @@ monster::monster(std::string species)
     bool constructed=false;
     bool foundQuantity=false;
     int weight;
+    attack=5;
     std::string line;
     std::string type;
     std::string constructionLine;
@@ -150,7 +153,7 @@ monster::monster(std::string species)
         while ( !CREATURE_FILE.eof()  and readingRightFile==true){
             while ( getline(CREATURE_FILE , line) and readingRightFile==true){
                 std::string readLine;
-                if (line=="[TOBY]"){
+                if (line=="[GOBLIN]"){
                     rightSpecies=true;
                     continue;
                 }
@@ -254,7 +257,6 @@ monster::monster(std::string species)
             }
         }
     }
-
     controlled=false;
     sprinting=false;
     memory=coordinate(-1,-1);
@@ -473,9 +475,10 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     char inventoryMovement;
     char closeDirection;
     char examineDirection;
+
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
-    customSpeed=speed;
+    customSpeed=speed();
     if (counter==customSpeed){
         ch=wgetch(scr->subwindow.sub);
         for (int i=0;i<numberOfControls;i++){
@@ -524,7 +527,6 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
                     for (int i=0;i<9;i++){
                         if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
                             examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
-                            return;
                         }
                     }
 
@@ -684,6 +686,15 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                                         inventory.erase(inventory.begin()+itemSelected);
                                         defense+=inventory[itemSelected]->defense;
                                         attack+=inventory[itemSelected]->attack;
+
+
+                                        for (bodyPart* _b : body){
+                                            if (_b->hasHand() == equipment[equipment.size()-1]->locationOnBody){
+                                                _b->equip(equipment[equipment.size()-1], true);
+                                                std::string temp = "You equipped a " +equipment[equipment.size()-1]->name + " in your " + _b->hasHand();
+                                                scr->addAnnouncement(temp);
+                                            }
+                                        }
                                     }
                                     if (listOfButtons[buttonSelected]=="Unequip"){
                                         inventory[itemSelected]->selected=false;

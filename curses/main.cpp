@@ -49,13 +49,6 @@ int main()
         building test;
         test.buildStructure();
 
-    for (int i=0;i<10;i++){
-        for (int j=0;j<10;j++){
-            std::cout << test.structure[i][j];
-        }
-        std::cout << std::endl;
-    }
-
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(5,"Sword",'/',16,18));
@@ -74,26 +67,39 @@ int main()
     std::vector<monster> monsters;
     std::vector<actor*> actors;
 
-    //_map.resize(map_t.dungeon_grid.size());
-    _map.resize(20);
-    for (int y=0;y<20;y++){
-        _map[y].resize(20);
-        for (int x=0;x<20;x++){
-            if (testarena[y][x]=='['){
-                _map[y][x]= new door(0, wood);
-            }
-            else if (testarena[y][x]=='#'){
-                _map[y][x]=new tile('#',-1,stone);
-                _map[y][x]->isDoor=false;
-                _map[y][x]->position=coordinate(x,y);
-            }
-            else{
-                _map[y][x]= new tile(' ',0,stone);
-                _map[y][x]->isDoor=false;
-                _map[y][x]->position=coordinate(x,y);
-            }
+    _map.resize(100);
+    for (int y=0;y<100;y++){
+        _map[y].resize(100);
+        for (int x=0;x<100;x++){
+            _map[y][x] = new tile((chtype)0x1D763,0,grass);
         }
     }
+
+    for (int y=0;y<test.height;y++){
+        for (int x=0;x<test.width;x++){
+            _map[y][x] = test.structure[y][x];
+        }
+    }
+
+//    _map.resize(20);
+//    for (int y=0;y<20;y++){
+//        _map[y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (testarena[y][x]=='['){
+//                _map[y][x]= new door(0, wood);
+//            }
+//            else if (testarena[y][x]=='#'){
+//                _map[y][x]=new tile('#',-1,stone);
+//                _map[y][x]->isDoor=false;
+//                _map[y][x]->position=coordinate(x,y);
+//            }
+//            else{
+//                _map[y][x]= new tile(' ',0,stone);
+//                _map[y][x]->isDoor=false;
+//                _map[y][x]->position=coordinate(x,y);
+//            }
+//        }
+//    }
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -117,7 +123,7 @@ int main()
 
 
     //DUNGEON SETUP CODE
-actors.push_back(new player);
+    //_map.resize(map_t.dungeon_grid.size());
 //    _map.resize(map_t.dungeon_grid.size());
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
@@ -139,6 +145,10 @@ actors.push_back(new player);
 //    for (int i=0;i<monsters.size();i++){
 //        actors.push_back(&monsters[i]);
 //    }
+
+
+actors.push_back(new player);
+
     while (first_menu.quit_game==false)
     {
         drawGameworld(_map,&actors,localItems,&scr);

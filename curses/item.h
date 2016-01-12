@@ -9,6 +9,7 @@ class item
 {
 public:
     std::string name;
+    std::string locationOnBody;
     bool selected;
     bool canEquip;
     bool canUse;

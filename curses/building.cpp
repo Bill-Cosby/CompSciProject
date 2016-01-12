@@ -4,7 +4,8 @@ void building::buildStructure()
 {
     std::string line;
     std::string constructionLine;
-    int height=0,width=0, yCounter=0,xCounter=0;
+    int yCounter=0,xCounter=0;
+    height=0,width=0;
     bool typeFound=false;
     bool finishedWithType=false;
     bool constructionBool = false;
@@ -50,7 +51,21 @@ void building::buildStructure()
                         }
                     }
                     if (constructionBool==true and _c!=']'){
-                        structure[yCounter][xCounter]=_c-'0';
+
+                        if (_c == '0')
+                        {
+                            structure[yCounter][xCounter] = new tile('=',0,wood);
+                        }
+
+                        else if (_c == '1')
+                        {
+                            structure[yCounter][xCounter] = new tile('#',-1,wood);
+                        }
+
+                        else if (_c == '2')
+                        {
+                            structure[yCounter][xCounter] = new door(false,wood);
+                        }
                         xCounter++;
                         if (xCounter==width){
                             yCounter++;

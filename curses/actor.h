@@ -32,10 +32,11 @@ public:
 
 //  BASIC STATS OF EVERY CREATURE
     int attack;
+    int totalWeight;
     int accuracy;
     int defense;
     int counter;
-    int speed;
+    int speed(){return totalWeight-attack;};
     int customSpeed;
     std::string skinColor;
 
@@ -59,7 +60,7 @@ public:
 
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position
-    int getSpeed(){return speed-(.5*speed)*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
+    int getSpeed(){return speed()-(.5*speed())*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
 
 
 //  METHODS FOR COMBAT

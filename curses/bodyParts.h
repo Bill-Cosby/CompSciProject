@@ -6,9 +6,11 @@
 class bodyPart
 {
 public:
+    std::string name;
     int weight;
     bool grasps;
-    virtual bool equip(item* itemToGrasp){}
+    virtual void equip(item* itemToGrasp, bool equipping){}
+    virtual std::string hasHand(){return "error";}
 };
 
 struct eye : public bodyPart
@@ -16,7 +18,7 @@ struct eye : public bodyPart
 public:
     bool left;
     int damage;
-    eye(int _weight, bool _left){weight=_weight;left=_left;grasps=false;}
+    eye(int _weight, bool _left){weight=_weight;left=_left;grasps=false;if (left==true){name = "left eye";}else{name = "right eye";}}
     std::string color;
 };
 
@@ -24,11 +26,11 @@ class hand : public bodyPart
 {
 public:
     bool left;
-    hand(int _weight, bool _left){weight=_weight;left=_left;grasps=true;}
+    hand(int _weight, bool _left){weight=_weight;left=_left;grasps=true;if (left==true){name = "left hand";}else{name = "right hand";}}
     hand(){}
     item* inHand;
     item* HAND_ARMOR;
-    bool equip(item* itemToGrasp){if (inHand==NULL){inHand= itemToGrasp;return true;}return false;}
+    void equip(item* itemToGrasp, bool equipping);
     bool wear(item* itemToWear){if (HAND_ARMOR==NULL){HAND_ARMOR= itemToWear;return true;}return false;}
 };
 
@@ -37,7 +39,7 @@ class foot : public bodyPart
 public:
     bool left;
     int damage;
-    foot(int _weight, bool _left){weight=_weight;left=_left;grasps=false;}
+    foot(int _weight, bool _left){weight=_weight;left=_left;grasps=false;if (left==true){name = "left foot";}else{name = "right foot";}}
     foot(){}
     item* sock;
     item* FOOT_ARMOR;
@@ -49,7 +51,8 @@ public:
     bool left;
     int damage;
     hand _hand;
-    arm(int _weight, bool _left){weight=_weight;left=_left;_hand=hand(1,left);grasps=false;}
+    arm(int _weight, bool _left){weight=_weight;left=_left;_hand=hand(1,left);grasps=false;if (left==true){name = "left arm";}else{name = "right arm";}}
+    std::string hasHand(){return _hand.name;}
     item* ARM_ARMOR;
 };
 
@@ -59,7 +62,7 @@ public:
     bool left;
     int damage;
     foot _foot;
-    leg(int _weight, bool _left){weight=_weight;left=_left;_foot=foot(1,left);grasps=false;}
+    leg(int _weight, bool _left){weight=_weight;left=_left;_foot=foot(1,left);grasps=false;if (left==true){name = "left leg";}else{name = "right leg";}}
     item* LEG_ARMOR;
 };
 

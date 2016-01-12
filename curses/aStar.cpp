@@ -118,7 +118,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
             return path;
         }
     }
-    std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
 }
 
 std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_map, coordinate goal, int costSoFar)

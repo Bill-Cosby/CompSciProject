@@ -37,6 +37,7 @@
 		<Unit filename="actor.cpp" />
 		<Unit filename="actor.h" />
 		<Unit filename="binarySearchStack.h" />
+		<Unit filename="bodyParts.cpp" />
 		<Unit filename="bodyParts.h" />
 		<Unit filename="building.cpp" />
 		<Unit filename="building.h" />

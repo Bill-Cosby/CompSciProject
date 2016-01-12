@@ -15,6 +15,7 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     y = _y;
     selected=false;
     material=iron;
+    locationOnBody = "right hand";
 }
 
 std::string weapon::itemDescription()

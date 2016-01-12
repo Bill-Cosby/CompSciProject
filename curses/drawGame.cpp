@@ -66,7 +66,6 @@ short backgroundValue;
                     for (int i=0;i<NUMBER_OF_COLORS*NUMBER_OF_COLORS-1;i++){
                         pair_content(i,&foregroundValue,&backgroundValue);
                         if (backgroundValue == _map[y+charplaced.y][x+charplaced.x]->giveMaterial() and foregroundValue == COLOR_WHITE){
-                            std::cout << backgroundValue << std::endl;
                             colorToUse=i;
                             break;
                         }
