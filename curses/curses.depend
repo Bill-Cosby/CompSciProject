@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1452565431 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452573666 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -7,6 +7,7 @@
 	<cstdlib>
 	<SFML/Graphics.hpp>
 	"building.h"
+	"generateCity.h"
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
 	"xcurses.h"
@@ -59,7 +60,7 @@
 	<stack>
 	<fstream>
 
-1452565430 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1452569674 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 	"window.h"
 	<stdlib.h>
@@ -73,7 +74,7 @@
 	"node.h"
 	"materials.h"
 
-1452564112 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1452569639 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -335,4 +336,9 @@
 
 1452565431 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.cpp
 	"bodyParts.h"
+
+1452574947 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
+	"tile.h"
+	<time.h>
+	<random>
 

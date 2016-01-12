@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include "building.h"
+#include "generateCity.h"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ int main()
     for (int y=0;y<100;y++){
         _map[y].resize(100);
         for (int x=0;x<100;x++){
-            _map[y][x] = new tile((chtype)0x1D763,0,grass);
+            _map[y][x] = new tile(',',0,grass);
         }
     }
 
@@ -80,6 +81,7 @@ int main()
             _map[y][x] = test.structure[y][x];
         }
     }
+    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),8);
 
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
@@ -147,7 +149,7 @@ int main()
 //    }
 
 
-actors.push_back(new player);
+actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
     {

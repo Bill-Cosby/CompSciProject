@@ -91,7 +91,7 @@ public:
     void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, screen *scr);
     void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
     void openInventory(screen* scr,std::vector<item*> *localItems);
-    player();
+    player(std::string speciesToLoad);
 };
 
 class monster: public actor
