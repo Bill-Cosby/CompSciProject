@@ -7,262 +7,7 @@
     coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
 const short int numberOfControls = 16;
 
-player::player()
-{
-    attack=10;
-    accuracy=100;
-    defense=0;
-    counter=4;
-    _symbol='@';
-    sprinting=false;
-    controlled=true;
-    sprinting=false;
 
-
-
-    bool readingRightFile=true;
-    bool rightSpecies=true;
-    bool typeFound=false;
-    bool constructed=false;
-    bool foundQuantity=false;
-    int weight;
-    std::string type;
-    std::string line;
-    std::string constructionLine;
-    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
-    if (CREATURE_FILE.is_open()){
-        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
-            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
-                std::string readLine;
-                if (line=="[HUMAN]"){
-                    rightSpecies=true;
-                }
-                else if (rightSpecies==false){
-                    continue;
-                }
-                for (char _c : line){
-                    if (_c=='-'){
-                        continue;
-                    }
-                    if (constructed==true){break;}
-                    if (_c=='[' or _c=='\t'){
-                        continue;
-                    }
-                    if (_c==']' and typeFound==false){
-                        type=readLine;
-                        readLine.clear();
-                        typeFound=true;
-                        continue;
-                    }
-                    readLine+=_c;
-                    if (typeFound==true){
-                        if (type == "ENDSPECIES"){
-                            return;
-                        }
-                        if (type=="speciesName"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                name=readLine;
-                            }
-                        }
-                        if (type=="description"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                description=readLine;
-                            }
-                        }
-                        if (type=="limbs"){
-                            int quantity;
-                            for (char _l : line){
-                                if (_l=='[' or _l == ' ' or _l == '\t'){
-                                    continue;
-                                }
-                                if (_l==']'){
-                                    if (constructionLine=="limbs"){
-                                        constructionLine.clear();
-                                        continue;
-                                    }
-                                    continue;
-                                }
-
-                                if (std::isdigit(_l)){
-                                    if (foundQuantity==false){
-                                        quantity=_l-'0';
-                                        foundQuantity=true;
-                                    }
-                                    else{
-                                        weight=_l-'0';
-                                    }
-                                }
-                                else if (_l==':'){
-                                    for (int i=0;i<quantity;i++){
-                                        if (constructionLine=="head"){
-                                            body.push_back(new head(weight));
-                                        }
-                                        if (constructionLine=="eye"){
-                                            body.push_back(new eye(weight,i));
-                                        }
-                                        if (constructionLine=="neck"){
-                                            body.push_back(new neck(weight));
-                                        }
-                                        if (constructionLine=="torso"){
-                                            body.push_back(new torso(weight));
-                                        }
-                                        if (constructionLine=="arm"){
-                                            body.push_back(new arm(weight,i));
-                                        }
-                                        if (constructionLine=="leg"){
-                                            body.push_back(new leg(weight,i));
-                                        }
-                                    }
-                                    totalWeight+=weight;
-                                    foundQuantity=false;
-                                    constructionLine.clear();
-                                    continue;
-                                }
-                                else{
-                                    constructionLine+=_l;
-                                }
-                            }
-                        }
-                        typeFound=false;
-                        type.clear();
-                    }
-                }
-            }
-        }
-    }
-    else{
-    }
-}
-
-monster::monster(std::string species)
-{
-    bool readingRightFile=true;
-    bool rightSpecies=false;
-    bool typeFound=false;
-    bool constructed=false;
-    bool foundQuantity=false;
-    int weight;
-    attack=5;
-    std::string line;
-    std::string type;
-    std::string constructionLine;
-    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
-    if (CREATURE_FILE.is_open()){
-        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
-            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
-                std::string readLine;
-                if (line=="[GOBLIN]"){
-                    rightSpecies=true;
-                    continue;
-                }
-                else if (rightSpecies==false){
-                    continue;
-                }
-
-                if (rightSpecies==true){
-
-                    for (char _c : line){
-                        if (_c=='-'){
-                            continue;
-                        }
-                        if (constructed==true){break;}
-                        if (_c=='[' or _c=='\t'){
-                            continue;
-                        }
-                        if (_c==']' and typeFound==false){
-                            type=readLine;
-                            readLine.clear();
-                            typeFound=true;
-                            continue;
-                        }
-                        readLine+=_c;
-                        if (type=="speciesName"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                name=readLine;
-                            }
-                        }
-                        if (type=="defaultSymbol"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                _symbol=readLine[0];
-                            }
-                        }
-                        if (type=="description"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                description=readLine;
-                            }
-                        }
-                        if (type=="limbs"){
-                            int quantity;
-                            for (char _l : line){
-                                if (_l=='[' or _l == ' ' or _l == '\t'){
-                                    continue;
-                                }
-                                if (_l==']'){
-                                    if (constructionLine=="limbs"){
-                                        constructionLine.clear();
-                                        continue;
-                                    }
-                                    continue;
-                                }
-                                if (std::isdigit(_l)){
-                                    if (foundQuantity==false){
-                                        quantity=_l-'0';
-                                        foundQuantity=true;
-                                    }
-                                    else{
-                                        weight=_l-'0';
-                                    }
-                                }
-                                else if (_l==':'){
-                                    for (int i=0;i<quantity;i++){
-                                        if (constructionLine=="head"){
-                                            body.push_back(new head(weight));
-                                        }
-                                        if (constructionLine=="eye"){
-                                            body.push_back(new eye(weight,i));
-                                        }
-                                        if (constructionLine=="neck"){
-                                            body.push_back(new neck(weight));
-                                        }
-                                        if (constructionLine=="torso"){
-                                            body.push_back(new torso(weight));
-                                        }
-                                        if (constructionLine=="arm"){
-                                            body.push_back(new arm(weight,i));
-                                        }
-                                        if (constructionLine=="leg"){
-                                            body.push_back(new leg(weight,i));
-                                        }
-                                    }
-                                    foundQuantity=false;
-                                    constructionLine.clear();
-                                    continue;
-                                }
-                                else{
-                                    constructionLine+=_l;
-                                }
-                            }
-                            type.clear();
-                        }
-                    }
-                }
-            }
-        }
-    }
-    controlled=false;
-    sprinting=false;
-    memory=coordinate(-1,-1);
-    post=coordinate(-1,-1);
-    path.resize(0);
-}
 
 void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
 {
@@ -321,7 +66,7 @@ void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > 
     }
 }
 
-bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
+bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 {
     int x1=col();
     int y1=row();
@@ -351,7 +96,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_y;
             x1 += ix;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -372,7 +117,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_x;
             y1 += iy;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -380,51 +125,73 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
     return true;
 }
 
-void monster::movement(std::vector<std::vector<tile*> > *test_map,std::vector<item*> *localItems, std::vector<actor*> actors,  screen* scr)
+void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  screen* scr)
 {
+
+    //initialize the goal to not be used
     coordinate goal(-1,-1);
+
+    //raise the monster's counter by 1
     counter++;
+
+    //we aren't initially attacking anything (stateless AI)
     bool attacking=false;
+
+    //not currently used until we find a better method
     std::vector<coordinate> noGo;
+
+    //IF you see the player, set them as goal. We will eventually make this expand to include just people you're hostile to. Remember the enemy.
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
-        if (_a->controlled==true and canSee(*test_map,coordinate(_a->col(),_a->row()))){
+        if (_a->controlled==true and canSee(*_map,coordinate(_a->col(),_a->row()))){
             goal = coordinate(_a->col(),_a->row());
+            memory=goal;
         }
-    }
-    if (canSee(*test_map,goal))
-    {
-        memory=goal;
-        path = pathFinder(*test_map,coordinate(col(),row()),goal,noGo);
     }
 
+    // if you can see your goal, make a path to it.
+    if (canSee(*_map,goal))
+    {
+        path = pathFinder(*_map,coordinate(col(),row()),goal,noGo);
+    }
+
+    //if there's no path:
     if (path.size()== 0)
     {
+
+        //if you have no memory:
         if (memory.x!=-1 and memory.y!=-1)
         {
-            path=pathFinder(*test_map,coordinate(col(),row()),memory,noGo);
+            path=pathFinder(*_map,coordinate(col(),row()),memory,noGo);
             memory=coordinate(-1,-1);
         }
+
+        //if your position isn't your post and you have a post
         else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
-            path=pathFinder(*test_map,coordinate(col(),row()),post,noGo);
+            path=pathFinder(*_map,coordinate(col(),row()),post,noGo);
         }
     }
+
+    //to actually commence AI movement and things:
     if (counter==5)
     {
+        //if you have a path:
         if (path.size()>0)
         {
+            //if an enemy is adjacent, attack them and set attacking to true.
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attackEnemy(_a, test_map);
+                    attackEnemy(_a, _map);
                     attacking=true;
                 }
             }
+            //if you aren't attacking anyone, move along your path.
             if (attacking==false){
-                pos(path[path.size()-1].y,path[path.size()-1].x);
-                path.erase(path.begin()+path.size()-1);
+                moveOnPath(_map);
             }
 
         }
+        //reset the counter to 0
         counter=0;
     }
     return;
@@ -433,17 +200,7 @@ void monster::movement(std::vector<std::vector<tile*> > *test_map,std::vector<it
 void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
 {
     if (path.size()!=0){
-        coordinate temp=coordinate(x,y);
         pos(path[path.size()-1].y,path[path.size()-1].x);
-        for (coordinate _c : badPosition){
-            if (canSee(_map,coordinate(_c)))
-            {
-                pos(temp.y,temp.x);
-                memory=coordinate(-1,-1);
-                //noGo.push_back(coordinate(path[path.size()-1].x,path[path.size()-1].y));
-                return;
-            }
-        }
         path.erase(path.begin()+path.size()-1);
     }
 }
@@ -837,4 +594,261 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
             }
         }
     }
+}
+
+player::player()
+{
+    attack=10;
+    accuracy=100;
+    defense=0;
+    counter=4;
+    _symbol='@';
+    sprinting=false;
+    controlled=true;
+    sprinting=false;
+
+
+
+    bool readingRightFile=true;
+    bool rightSpecies=true;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    std::string type;
+    std::string line;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line=="[HUMAN]"){
+                    rightSpecies=true;
+                }
+                else if (rightSpecies==false){
+                    continue;
+                }
+                for (char _c : line){
+                    if (_c=='-'){
+                        continue;
+                    }
+                    if (constructed==true){break;}
+                    if (_c=='[' or _c=='\t'){
+                        continue;
+                    }
+                    if (_c==']' and typeFound==false){
+                        type=readLine;
+                        readLine.clear();
+                        typeFound=true;
+                        continue;
+                    }
+                    readLine+=_c;
+                    if (typeFound==true){
+                        if (type == "ENDSPECIES"){
+                            return;
+                        }
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                name=readLine;
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                    }
+                                    totalWeight+=weight;
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                        }
+                        typeFound=false;
+                        type.clear();
+                    }
+                }
+            }
+        }
+    }
+    else{
+    }
+}
+
+monster::monster(std::string species)
+{
+    bool readingRightFile=true;
+    bool rightSpecies=false;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    attack=5;
+    std::string line;
+    std::string type;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line=="[GOBLIN]"){
+                    rightSpecies=true;
+                    continue;
+                }
+                else if (rightSpecies==false){
+                    continue;
+                }
+
+                if (rightSpecies==true){
+
+                    for (char _c : line){
+                        if (_c=='-'){
+                            continue;
+                        }
+                        if (constructed==true){break;}
+                        if (_c=='[' or _c=='\t'){
+                            continue;
+                        }
+                        if (_c==']' and typeFound==false){
+                            type=readLine;
+                            readLine.clear();
+                            typeFound=true;
+                            continue;
+                        }
+                        readLine+=_c;
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                name=readLine;
+                            }
+                        }
+                        if (type=="defaultSymbol"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                _symbol=readLine[0];
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                    }
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                            type.clear();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    controlled=false;
+    sprinting=false;
+    memory=coordinate(-1,-1);
+    post=coordinate(-1,-1);
+    path.resize(0);
 }
