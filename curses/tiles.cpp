@@ -39,8 +39,9 @@ void tiles::setPositions()
  {
      for(int b=0; b<width; b++)
      {
-        tileMap[a][b]->position.y=10*a/height;
-        tileMap[a][b]->position.x=10*b/width;
+//        tileMap[a][b]->position.y=10*a/height;
+//        tileMap[a][b]->position.x=10*b/width;
+          tileMap[a][b]->position=coordinate(a,b);
      }
  }
 }
@@ -60,7 +61,7 @@ void tiles::makeTileMap()
 {
 srand(time(NULL));
     module::Perlin preLandTerrain1;
-    //preLandTerrain1.SetFrequency(16);
+    preLandTerrain1.SetFrequency(1);
     preLandTerrain1.SetSeed(rand());
     module::ScaleBias landTerrain1;
     landTerrain1.SetSourceModule(0,preLandTerrain1);
@@ -69,6 +70,7 @@ srand(time(NULL));
     module::Perlin preLandTerrain2;
     preLandTerrain2.SetFrequency(2);
     preLandTerrain2.SetSeed(rand());
+
     module::ScaleBias landTerrain2;
     landTerrain2.SetSourceModule(0,preLandTerrain2);
     landTerrain2.SetScale(1.2);
@@ -76,9 +78,10 @@ srand(time(NULL));
 
     module::RidgedMulti preOceanTerrain;
     preOceanTerrain.SetFrequency(32);
+
     module::ScaleBias oceanTerrain;
     oceanTerrain.SetSourceModule(0,preOceanTerrain);
-    oceanTerrain.SetScale(0.1);
+    oceanTerrain.SetScale(1.2);
     oceanTerrain.SetBias(-0.2);
     //preTerrainType.SetFrequency();
 
@@ -87,16 +90,18 @@ srand(time(NULL));
     finalTerrain_.SetSourceModule(1,landTerrain1);
     finalTerrain_.SetControlModule(landTerrain2);
     //finalTerrain_.SetBounds(-100.0,-.7);
-    finalTerrain_.SetBounds(0,1);
+
+    finalTerrain_.SetBounds(0,1000);
 
     module::Select finalTerrain;
     finalTerrain.SetSourceModule(0,finalTerrain_);
     finalTerrain.SetSourceModule(1,landTerrain2);
     finalTerrain.SetControlModule(landTerrain2);
     //finalTerrain.SetBounds(-0.2,100);
-    finalTerrain.SetBounds(0,1);
+    finalTerrain.SetBounds(0,1000);
     finalTerrain.SetEdgeFalloff(0.5);
-    //generate map
+    //generate ma
+
 
     double temp_height;
     for(int a=0; a<height; a++)
@@ -110,8 +115,8 @@ srand(time(NULL));
     utils::NoiseMapBuilderPlane heightMapBuilder;
   heightMapBuilder.SetSourceModule(finalTerrain);
   heightMapBuilder.SetDestNoiseMap(heightMap);
-  heightMapBuilder.SetDestSize (1000, 1000);
-  heightMapBuilder.SetBounds (-5,5 , -5, 5);
+  heightMapBuilder.SetDestSize (100, 100);
+  heightMapBuilder.SetBounds (0,1 , 0, 1);
    heightMapBuilder.Build ();
     utils::RendererImage renderer;
   utils::Image image;

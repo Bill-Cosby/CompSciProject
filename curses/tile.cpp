@@ -43,39 +43,38 @@ bool door::interactWithDoor(bool opening)
 }
 void tile::find_material()
 {
-   if(elevation<=-1.0000)
+    if(elevation<=-1)
     {
         material=1;
-        defaultchar='1';
+        defaultchar='~';
     }
-   else if(elevation<=-0.1500)
-    {
-        material=2;
-        defaultchar='2';
+    else if(elevation<=-.25){
+        material = 1;
+        defaultchar='~';
     }
-   else if(elevation<=0.0000)
-    {
-        material=3;
-        defaultchar='3';
+    else if(elevation<=0){
+        material = wood;
+        defaultchar = '`';
     }
-   else if(elevation<=0.0625)
-    {
-        material=4;
-        defaultchar='4';
+    else if(elevation<=.0625){
+        material = wood;
+        defaultchar = ',';
     }
-   else if(elevation<=0.1250)
-    {
-        material=5;
-        defaultchar='5';
+    else if (elevation<=.125){
+        material = grass;
+        defaultchar = '"';
     }
-   else if(elevation<=0.7500)
-    {
-        material=6;
-        defaultchar='6';
+    else if (elevation <= .3750){
+        material = iron;
+        defaultchar = '.';
     }
-   else if(elevation<=1.200)
+    else if (elevation <= .75){
+        material = stone;
+        defaultchar = '*';
+    }
+    else
     {
-        material=7;
-        defaultchar='7';
+        material = COLOR_WHITE;
+        defaultchar = '-';
     }
 }
