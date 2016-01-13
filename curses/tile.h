@@ -11,6 +11,7 @@ public:
     bool isContainer;
     char defaultchar;
     int movementCost;
+    double elevation;
     short material;
     tile(char dc,int mc, short mat){defaultchar=dc;movementCost=mc;material=mat;}
     tile(coordinate,coordinate,int);
@@ -18,6 +19,7 @@ public:
     tile(){isDoor=false;};
 
     short giveMaterial(){return material;}
+    void find_material();
 
     virtual char drawTile(){return defaultchar;}
     virtual bool interactWithDoor(bool opening){}

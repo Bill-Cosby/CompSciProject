@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "building.h"
 #include "generateCity.h"
+#include "tiles.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
-    screen scr(150,80);
+    screen scr(100,50);
 
     char ch;
 
@@ -47,8 +48,6 @@ int main()
     }
 
     erase();
-        building test;
-        test.buildStructure();
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
@@ -57,7 +56,7 @@ int main()
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 
-
+    tiles test;
 
     coordinate temp;
     dungeon map_t;
@@ -69,19 +68,7 @@ int main()
     std::vector<actor*> actors;
 
     _map.resize(100);
-    for (int y=0;y<100;y++){
-        _map[y].resize(100);
-        for (int x=0;x<100;x++){
-            _map[y][x] = new tile(',',0,grass);
-        }
-    }
 
-    for (int y=0;y<test.height;y++){
-        for (int x=0;x<test.width;x++){
-            _map[y][x] = test.structure[y][x];
-        }
-    }
-    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
 
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
@@ -153,9 +140,9 @@ actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
     {
-        drawGameworld(_map,&actors,localItems,&scr);
+        drawGameworld(test.tileMap,&actors,localItems,&scr);
         for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&_map,&localItems,actors,&scr);
+            actors[i]->movement(&test.tileMap,&localItems,actors,&scr);
         }
     }
     endwin();
