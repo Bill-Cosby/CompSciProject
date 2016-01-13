@@ -140,7 +140,7 @@ actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
     {
-        drawGameworld(test.tileMap,&actors,localItems,&scr);
+        drawGameworld(&test.tileMap,&actors,localItems,&scr);
         for (int i=0;i<actors.size();i++){
             actors[i]->movement(&test.tileMap,&localItems,actors,&scr);
         }
