@@ -34,7 +34,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
-    screen scr(150,80);
+    screen scr(100,50);
 
     char ch;
 
