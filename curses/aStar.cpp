@@ -29,7 +29,6 @@ struct comparator {
 
 std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
-    erase();
 
 
     std::priority_queue<tile, std::vector<tile>, comparator> openSet;
@@ -49,9 +48,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
     int timesthroughLoop=0;
 
     while (openSet.size()!=0){
-
-        //mvaddch(currentNode.position.y, currentNode.position.x, 'i');
-        //refresh();
 
         if (currentNode.position==goal){
             std::vector<coordinate> path;
@@ -122,7 +118,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
             return path;
         }
     }
-    std::cout << currentNode.position.x << "," << currentNode.position.y << std::endl;
 }
 
 std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_map, coordinate goal, int costSoFar)

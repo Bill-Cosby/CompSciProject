@@ -17,14 +17,14 @@ screen::screen(int w,int h)
     announcementWindowHeight=h*.75;
     noecho();
     cbreak();
-    halfdelay(2);
-    nodelay(win,false);
+    //halfdelay(2);
+    //nodelay(win,false);
     start_color();
-
 }
 
 void screen::windowRefresh()
 {
+    clear();
     wrefresh(subwindow.sub);
     wrefresh(announcementWindow);
 }
@@ -49,7 +49,7 @@ void screen::drawAnnouncements()
     wborder(announcementWindow,0,0,0,0,0,0,0,0);
     for (int i=announcements.size()-1;i>=0;i--){
         temp--;
-        mvwaddstr(announcementWindow,temp,1,announcements[i].c_str());;
+        mvwaddstr(announcementWindow,temp,1,announcements[i].c_str());
     }
 }
 

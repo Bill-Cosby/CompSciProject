@@ -19,7 +19,7 @@ door::door(bool _o, short _material)
 {
     open=_o;
     openSymbol=']';
-    closedSymbol=220;
+    closedSymbol='Æ';
     isDoor=true;
     material=_material;
 }

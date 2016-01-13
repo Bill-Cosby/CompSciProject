@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1452194190 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452580031 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 	<SFML/Graphics.hpp>
+	"building.h"
+	"generateCity.h"
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
 	"xcurses.h"
@@ -48,32 +50,35 @@
 	<stdio.h>
 	<wchar.h>
 
-1452193048 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1452193048 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<fstream>
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 	"window.h"
 	<stdlib.h>
 	<time.h>
+	<cctype>
+	<fstream>
+	"bodyParts.h"
 
-1452195314 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"materials.h"
 
-1452193076 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"tile.h"
 	<string>
 	<stdio.h>
@@ -82,11 +87,11 @@
 	<vector>
 	<curses.h>
 
-1452193571 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -97,7 +102,7 @@
 	<queue>
 	<sstream>
 
-1452193076 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -108,15 +113,18 @@
 1445976608 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\heap.cpp
 	"heap.h"
 
-1452187729 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
+1452534578 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1452187092 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
+1452534482 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\actor.h
 	"aStar.h"
 	"window.h"
 	<stdlib.h>
 	<time.h>
+	<cctype>
+	<fstream>
+	"bodyParts.h"
 
 1220929818 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\include\curses.h
 	<stdarg.h>
@@ -135,14 +143,14 @@
 	<queue>
 	<sstream>
 
-1452187067 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
+1452529225 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"materials.h"
 
 1447087130 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\binarysearchstack.h
 
-1452183677 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
+1452534149 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -165,15 +173,16 @@
 	<vector>
 	<curses.h>
 
-1452187553 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
+1452532366 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 	<SFML/Graphics.hpp>
+	"building.h"
 
-1452184196 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
+1452529225 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
@@ -217,24 +226,24 @@
 1450459306 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
 	<vector>
 	<string>
 	<SFML/Audio.hpp>
 	<curses.h>
 	"actor.h"
 
-1452193048 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1452193048 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
 
-1452193946 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
 
-1452183677 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.cpp
+1452529225 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1451092669 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\stealthai.cpp
@@ -248,39 +257,88 @@
 1451778655 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\stealthai.cpp
 	"StealthAI.h"
 
-1452193682 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<vector>
+	"materials.h"
 
 1451818075 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 	"window.h"
 	<iostream>
 
-1452194338 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
 	"actor.h"
 
-1452193076 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
 	"item.h"
 
-1452193076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.h
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.h
+	<vector>
+	<curses.h>
 
-1452187783 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\item.h
+1452534554 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<vector>
+	"materials.h"
 
-1452183677 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\materials.h
+1452529225 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\materials.h
+	<vector>
+	<curses.h>
 
-1452187517 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\drawgame.cpp
+1452533089 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1452183677 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\drawgame.h
+1452529225 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\drawgame.h
 	"actor.h"
 
-1452187067 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\item.cpp
+1452529225 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\item.cpp
 	"item.h"
+
+1452204482 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.cpp
+	"materials.h"
+	<iostream>
+
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.h
+	"item.h"
+	<string>
+
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\building.cpp
+	"building.h"
+	<iostream>
+
+1452579552 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\building.h
+	<vector>
+	<fstream>
+	<string>
+	<cctype>
+	<math.h>
+	"tile.h"
+
+1452534432 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\bodyparts.h
+	"item.h"
+	<string>
+
+1452532878 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\building.cpp
+	"building.h"
+	<iostream>
+
+1452529660 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\building.h
+	<vector>
+	<fstream>
+	<string>
+	<cctype>
+	<math.h>
+
+1452579552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.cpp
+	"bodyParts.h"
+
+1452579964 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
+	"tile.h"
+	<time.h>
+	<random>
 

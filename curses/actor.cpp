@@ -3,46 +3,16 @@
 
     char numpadControls[17] = {'8','5','2','6','4','7','9','3','1','c','o','i',27,'@','e','5','x'};
     char keyBrdControls[17] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@','e',10,'x'};
-    char VIKEYSControls[17] = {'h','.','j','k','l','y','u','m','n','c','o','i',27,'@','e',10,'x'};
+    char VIKEYSControls[17] = {'h','.','j','l','k','y','u','m','n','c','o','i',27,'@','e',10,'x'};
     coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
 const short int numberOfControls = 16;
 
-player::player()
-{
-    name="Stupid Guy";
-    health=100;
-    attack=10;
-    accuracy=100;
-    defense=0;
-    speed=4;
-    counter=4;
-    _symbol='@';
-    sprinting=false;
-    controlled=true;
-    sprinting=false;
-}
 
-monster::monster(int _speed, char symbol)
-{
-    name="Manstor";
-    health=100;
-    attack=10;
-    accuracy=100;
-    defense=0;
-    speed=_speed;
-    counter=0;
-    _symbol=symbol;
-    controlled=false;
-    sprinting=false;
-    memory=coordinate(-1,-1);
-    post=coordinate(-1,-1);
-    path.resize(0);
-}
 
 void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
 {
     std::string temp = name + "'s corpse";
-    globalItems->push_back(new corpse(temp,_symbol,equipment,col(),row()));
+    globalItems->push_back(new corpse(temp,equipment,_symbol,col(),row()));
     localItems->push_back((*globalItems)[globalItems->size()-1]);
     delete this;
 }
@@ -89,15 +59,14 @@ void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > 
     srand(rand()%time(NULL));
     srand(rand()%rand()%time(NULL));
     if (rand()%100<accuracy and enemyAttacking->name!=name){
-        enemyAttacking->health-=attack-enemyAttacking->defense;
+        //enemyAttacking->health-=attack-enemyAttacking->defense;
     }
     else if (enemyAttacking->name!=name){
         enemyAttacking->dodgeAttack(this,_map);
     }
-    customSpeed+=
 }
 
-bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot)
+bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 {
     int x1=col();
     int y1=row();
@@ -127,7 +96,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_y;
             x1 += ix;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -148,7 +117,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
 
             error += delta_x;
             y1 += iy;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor==true and test_map[y1][x1]->isOpen()==false)){
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -156,51 +125,73 @@ bool monster::canSee(std::vector<std::vector<tile*> > test_map, coordinate check
     return true;
 }
 
-void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector<actor*> actors)
+void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  screen* scr)
 {
+
+    //initialize the goal to not be used
     coordinate goal(-1,-1);
+
+    //raise the monster's counter by 1
     counter++;
+
+    //we aren't initially attacking anything (stateless AI)
     bool attacking=false;
+
+    //not currently used until we find a better method
     std::vector<coordinate> noGo;
+
+    //if you're evil and you see someone of a different species, they're your target
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
-        if (_a->controlled==true and canSee(*test_map,coordinate(_a->col(),_a->row()))){
+        if (EVIL==true and species!=_a->species and canSee(*_map,coordinate(_a->col(),_a->row()))){
             goal = coordinate(_a->col(),_a->row());
+            memory=goal;
         }
-    }
-    if (canSee(*test_map,goal))
-    {
-        memory=goal;
-        path = pathFinder(*test_map,coordinate(col(),row()),goal,noGo);
     }
 
+    // if you can see your goal, make a path to it.
+    if (canSee(*_map,goal))
+    {
+        path = pathFinder(*_map,coordinate(col(),row()),goal,noGo);
+    }
+
+    //if there's no path:
     if (path.size()== 0)
     {
+
+        //if you have no memory:
         if (memory.x!=-1 and memory.y!=-1)
         {
-            path=pathFinder(*test_map,coordinate(col(),row()),memory,noGo);
+            path=pathFinder(*_map,coordinate(col(),row()),memory,noGo);
             memory=coordinate(-1,-1);
         }
+
+        //if your position isn't your post and you have a post
         else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
-            path=pathFinder(*test_map,coordinate(col(),row()),post,noGo);
+            path=pathFinder(*_map,coordinate(col(),row()),post,noGo);
         }
     }
+
+    //to actually commence AI movement and things:
     if (counter==5)
     {
+        //if you have a path:
         if (path.size()>0)
         {
+            //if an enemy is adjacent, attack them and set attacking to true.
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attackEnemy(_a, test_map);
+                    attackEnemy(_a, _map);
                     attacking=true;
                 }
             }
+            //if you aren't attacking anyone, move along your path.
             if (attacking==false){
-                pos(path[path.size()-1].y,path[path.size()-1].x);
-                path.erase(path.begin()+path.size()-1);
+                moveOnPath(*_map);
             }
 
         }
+        //reset the counter to 0
         counter=0;
     }
     return;
@@ -209,22 +200,12 @@ void monster::aiMovement(std::vector<std::vector<tile*> >* test_map, std::vector
 void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
 {
     if (path.size()!=0){
-        coordinate temp=coordinate(x,y);
         pos(path[path.size()-1].y,path[path.size()-1].x);
-        for (coordinate _c : badPosition){
-            if (canSee(_map,coordinate(_c)))
-            {
-                pos(temp.y,temp.x);
-                memory=coordinate(-1,-1);
-                //noGo.push_back(coordinate(path[path.size()-1].x,path[path.size()-1].y));
-                return;
-            }
-        }
         path.erase(path.begin()+path.size()-1);
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> *localItems, std::vector<actor*> actors, char* ch, screen* scr)
+void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, screen* scr)
 {
     /*
     0 = NORTH
@@ -245,75 +226,77 @@ void player::movement(std::vector<std::vector<tile*> > *map_,std::vector<item*> 
     15 = EXECUTE
     16 = LOOK
     */
+    char ch;
     bool moveThroughDoor=true;
     bool attacking=false;
     char inventoryMovement;
     char closeDirection;
     char examineDirection;
+
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
-    customSpeed=speed;
-    std::vector<std::vector<tile*> > _map=*map_;
+    customSpeed=speed();
+    if (counter==customSpeed){
+        ch=wgetch(scr->subwindow.sub);
+        for (int i=0;i<numberOfControls;i++){
 
+            if (ch==numpadControls[i] or ch==keyBrdControls[i] or ch==VIKEYSControls[i]){
 
-    for (int i=0;i<numberOfControls;i++){
+                if (i<9){
 
-        if (*ch==numpadControls[i] or *ch==keyBrdControls[i] or *ch==VIKEYSControls[i]){
+                    if ((*_map)[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
 
-            if (i<9){
-
-
-                if (_map[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
-
-                    for (actor* _a : actors){
-                        if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
-                            attacking=true;
-                            attackEnemy(_a,&_map);
+                        for (actor* _a : actors){
+                            if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
+                                attacking=true;
+                                attackEnemy(_a,_map);
+                            }
+                        }
+                        if (attacking!=true){
+                            if ((*_map)[y+directions[i].y][x+directions[i].x]->isDoor==true){
+                                moveThroughDoor=(*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+                            }
+                            if (moveThroughDoor==true or (*_map)[y+directions[i].y][x+directions[i].x]->isDoor==false){
+                                y+=directions[i].y;
+                                x+=directions[i].x;
+                            }
                         }
                     }
-                    if (attacking!=true){
-                        if (_map[y+directions[i].y][x+directions[i].x]->isDoor==true){
-                            moveThroughDoor=_map[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
+
+                }
+                if (i==9 or i==10){
+                    bool opening=1-(-1*(i-10));
+                    closeDirection=wgetch(scr->subwindow.sub);
+
+                    for (int i=0;i<9;i++){
+
+                        if (i==1){
+                            continue;
                         }
-                        if (moveThroughDoor==true or _map[y+directions[i].y][x+directions[i].x]->isDoor==false){
-                            y+=directions[i].y;
-                            x+=directions[i].x;
+                        if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
+
+                            (*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
                         }
                     }
                 }
-
-            }
-            if (i==9 or i==10){
-                bool opening=1-(-1*(i-10));
-                closeDirection=wgetch(scr->subwindow.sub);
-
-                for (int i=0;i<9;i++){
-
-                    if (i==1){
-                        continue;
+                if (i == 14){
+                    examineDirection = wgetch(scr->subwindow.sub);
+                    for (int i=0;i<9;i++){
+                        if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
+                            examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
+                        }
                     }
-                    if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
 
-                        _map[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
-                    }
                 }
-            }
-            if (i == 14){
-                examineDirection = wgetch(scr->subwindow.sub);
-                for (int i=0;i<9;i++){
-                    if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
-                        examineGround(scr, localItems, coordinate(directions[i].x+x,directions[i].y+y));
-                        return;
-                    }
+                if (i == 11){
+                    openInventory(scr, localItems);
                 }
 
             }
-            if (i == 11){
-                openInventory(scr, localItems);
-            }
-
         }
+        counter=0;
     }
+    counter++;
 }
 
 void player::openInventory(screen* scr, std::vector<item*> *localItems)
@@ -458,15 +441,22 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
                                         inventory[itemSelected]->selected=false;
                                         equipment.push_back(inventory[itemSelected]);
                                         inventory.erase(inventory.begin()+itemSelected);
-                                        health+=inventory[itemSelected]->health;
                                         defense+=inventory[itemSelected]->defense;
                                         attack+=inventory[itemSelected]->attack;
+
+
+                                        for (bodyPart* _b : body){
+                                            if (_b->hasHand() == equipment[equipment.size()-1]->locationOnBody){
+                                                _b->equip(equipment[equipment.size()-1], true);
+                                                std::string temp = "You equipped a " +equipment[equipment.size()-1]->name + " in your " + _b->hasHand();
+                                                scr->addAnnouncement(temp);
+                                            }
+                                        }
                                     }
                                     if (listOfButtons[buttonSelected]=="Unequip"){
                                         inventory[itemSelected]->selected=false;
                                         inventory.push_back(equipment[itemSelected]);
                                         equipment.erase(equipment.begin()+itemSelected);
-                                        health-=equipment[itemSelected]->health;
                                         defense-=equipment[itemSelected]->defense;
                                         attack-=equipment[itemSelected]->attack;
                                     }
@@ -511,6 +501,7 @@ void player::openInventory(screen* scr, std::vector<item*> *localItems)
     }
     werase(scr->subwindow.equipmentWindow);
     werase(scr->subwindow.inventoryWindow);
+    erase();
     refresh();
 }
 
@@ -518,34 +509,34 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
 {
     touchwin(scr->subwindow.examineWindow);
     wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
+    std::vector<item*> itemsYouFound;
     char ch;
     bool examiningGround=true;
+    bool unloadedItem=false;
+    for (int i=0;i<(*itemsExamining).size();i++){
+        if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
+            itemsYouFound.push_back((*itemsExamining)[i]);
+        }
+    }
     int itemSelected=0;
 
     while (examiningGround==true){
-        mvwaddstr(scr->subwindow.examineWindow,0,5,"items");
         for (int i=0;i<scr->subwindow.height();i++){
 
-            if (i==itemsExamining->size()){
+            if (i==itemsYouFound.size()){
                 break;
             }
-
-            for (int j=0;j<itemsExamining->size();j++){
-                if (coordinate(((*itemsExamining)[j]->x),(*itemsExamining)[j]->y)==spotExamining){
-                    if ((*itemsExamining)[i]->selected==false){
-                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
-                    }
-                    else{
-                        mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
-                    }
-                    if (i == itemSelected){
-                        wattron(scr->subwindow.examineWindow,A_REVERSE);
-                    }
-                    mvwaddstr(scr->subwindow.examineWindow,i+1,2,(*itemsExamining)[i]->name.c_str());
-                    wattroff(scr->subwindow.examineWindow,A_REVERSE);
-                }
+            if (itemsYouFound[i]->selected==false){
+                mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
             }
-
+            else{
+                mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
+            }
+            if (i == itemSelected){
+                wattron(scr->subwindow.examineWindow,A_REVERSE);
+            }
+            mvwaddstr(scr->subwindow.examineWindow,i+1,2,itemsYouFound[i]->name.c_str());
+            wattroff(scr->subwindow.examineWindow,A_REVERSE);
         }
         wrefresh(scr->subwindow.examineWindow);
         ch=wgetch(scr->subwindow.examineWindow);
@@ -557,31 +548,34 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                     }
                 }
                 else if (i==2){
-                    if (itemSelected+1<(*itemsExamining).size()){
+                    if (itemSelected+1<itemsYouFound.size()){
                         itemSelected++;
                     }
                 }
                 else if (i==3){
-                    (*itemsExamining)[itemSelected]->selected=true;
+                    itemsYouFound[itemSelected]->selected=true;
                 }
                 else if (i==4){
-                    (*itemsExamining)[itemSelected]->selected=false;
+                    itemsYouFound[itemSelected]->selected=false;
                 }
                 else if (i==12){
                     examiningGround=false;
                 }
                 else if (i==15){
-                    bool unloadedItem;
                     int wait=0;
-                    int temp=(*itemsExamining).size();
+                    int temp=itemsYouFound.size();
                     while (true){
                         unloadedItem=false;
-                        for (int j=0;j<(*itemsExamining).size();j++){
-                            if ((*itemsExamining)[j]->selected==true){
-                                (*itemsExamining)[j]->selected=false;
+                        for (int j=0;j<itemsYouFound.size();j++){
+                            if (itemsYouFound[j]->selected==true){
+                                itemsYouFound[j]->selected=false;
                                 inventory.push_back((*itemsExamining)[j]);
                                 std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
-                                (*itemsExamining).erase((*itemsExamining).begin()+j);
+                                for (int k = 0; k < (*itemsExamining).size(); k++){
+                                    if ((*itemsExamining)[k]==itemsYouFound[j]){
+                                        (*itemsExamining).erase((*itemsExamining).begin()+k);
+                                    }
+                                }
                                 scr->addAnnouncement(temporary);
                             }
                             wait++;
@@ -593,9 +587,274 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
                     clear();
                     werase(scr->subwindow.examineWindow);
                     wrefresh(scr->subwindow.examineWindow);
+                    bool youAintRight=false;
+
                     return;
                 }
             }
         }
     }
+}
+
+player::player(std::string speciesToLoad)
+{
+    attack=10;
+    accuracy=100;
+    defense=0;
+    counter=4;
+    _symbol='@';
+    sprinting=false;
+    controlled=true;
+    sprinting=false;
+
+
+
+    bool readingRightFile=true;
+    bool rightSpecies=true;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    std::string type;
+    std::string line;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line=="speciesToLoad"){
+                    rightSpecies=true;
+                }
+                else if (rightSpecies==false){
+                    continue;
+                }
+                for (char _c : line){
+                    if (_c=='-'){
+                        continue;
+                    }
+                    if (constructed==true){break;}
+                    if (_c=='[' or _c=='\t'){
+                        continue;
+                    }
+                    if (_c==']' and typeFound==false){
+                        type=readLine;
+                        readLine.clear();
+                        typeFound=true;
+                        continue;
+                    }
+                    readLine+=_c;
+                    if (typeFound==true){
+                        if (type == "ENDSPECIES"){
+                            return;
+                        }
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                species=readLine;
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                    }
+                                    totalWeight+=weight;
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                        }
+                        typeFound=false;
+                        type.clear();
+                    }
+                }
+            }
+        }
+    }
+    else{
+    }
+}
+
+monster::monster(std::string speciesToLoad)
+{
+    bool readingRightFile=true;
+    bool rightSpecies=false;
+    bool typeFound=false;
+    bool constructed=false;
+    bool foundQuantity=false;
+    int weight;
+    attack=5;
+    std::string line;
+    std::string type;
+    std::string constructionLine;
+    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+    if (CREATURE_FILE.is_open()){
+        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
+                std::string readLine;
+                if (line==speciesToLoad){
+                    rightSpecies=true;
+                    continue;
+                }
+                else if (rightSpecies==false){
+                    continue;
+                }
+
+                if (rightSpecies==true){
+
+                    for (char _c : line){
+                        if (_c=='-'){
+                            continue;
+                        }
+                        if (constructed==true){break;}
+                        if (_c=='[' or _c=='\t'){
+                            continue;
+                        }
+                        if (_c==']' and typeFound==false){
+                            type=readLine;
+                            readLine.clear();
+                            typeFound=true;
+                            continue;
+                        }
+                        readLine+=_c;
+                        if (type == "tags"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                if (readLine=="EVIL"){EVIL=true;}
+                            }
+                        }
+                        if (type=="speciesName"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                species=readLine;
+                            }
+                        }
+                        if (type=="defaultSymbol"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                _symbol=readLine[0];
+                            }
+                        }
+                        if (type=="description"){
+                            if (_c==']'){
+                                readLine.erase(readLine.size()-1);
+                                typeFound=false;
+                                description=readLine;
+                            }
+                        }
+                        if (type=="limbs"){
+                            int quantity;
+                            for (char _l : line){
+                                if (_l=='[' or _l == ' ' or _l == '\t'){
+                                    continue;
+                                }
+                                if (_l==']'){
+                                    if (constructionLine=="limbs"){
+                                        constructionLine.clear();
+                                        continue;
+                                    }
+                                    continue;
+                                }
+                                if (std::isdigit(_l)){
+                                    if (foundQuantity==false){
+                                        quantity=_l-'0';
+                                        foundQuantity=true;
+                                    }
+                                    else{
+                                        weight=_l-'0';
+                                    }
+                                }
+                                else if (_l==':'){
+                                    for (int i=0;i<quantity;i++){
+                                        if (constructionLine=="head"){
+                                            body.push_back(new head(weight));
+                                        }
+                                        if (constructionLine=="eye"){
+                                            body.push_back(new eye(weight,i));
+                                        }
+                                        if (constructionLine=="neck"){
+                                            body.push_back(new neck(weight));
+                                        }
+                                        if (constructionLine=="torso"){
+                                            body.push_back(new torso(weight));
+                                        }
+                                        if (constructionLine=="arm"){
+                                            body.push_back(new arm(weight,i));
+                                        }
+                                        if (constructionLine=="leg"){
+                                            body.push_back(new leg(weight,i));
+                                        }
+                                    }
+                                    foundQuantity=false;
+                                    constructionLine.clear();
+                                    continue;
+                                }
+                                else{
+                                    constructionLine+=_l;
+                                }
+                            }
+                            type.clear();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    controlled=false;
+    sprinting=false;
+    memory=coordinate(-1,-1);
+    post=coordinate(-1,-1);
+    path.resize(0);
 }

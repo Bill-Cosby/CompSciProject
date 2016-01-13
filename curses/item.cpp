@@ -7,12 +7,15 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     defense=0;
     speed=5;
     name = _name;
+    type = _name;
     symbol = _symbol;
     canEquip=true;
     canUse=false;
     x = _x;
     y = _y;
     selected=false;
+    material=iron;
+    locationOnBody = "right hand";
 }
 
 std::string weapon::itemDescription()
@@ -27,4 +30,16 @@ std::string weapon::itemDescription()
     return description;
 }
 
+void weapon::equip(bool equipping)
+{
 
+}
+
+corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, int _x, int _y)
+{
+    name=_name;
+    symbol=_symbol;
+    equipment=_equipment;
+    x=_x;
+    y=_y;
+}
