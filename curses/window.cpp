@@ -24,8 +24,9 @@ screen::screen(int w,int h)
 
 void screen::windowRefresh()
 {
-    clear();
+    werase(subwindow.examineWindow);
     wrefresh(subwindow.sub);
+    wrefresh(subwindow.examineWindow);
     wrefresh(announcementWindow);
 }
 

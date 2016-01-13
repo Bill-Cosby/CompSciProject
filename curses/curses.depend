@@ -342,3 +342,125 @@
 	<time.h>
 	<random>
 
+1452712963 source:c:\users\damion\desktop\compsciproject\curses\actor.cpp
+	"actor.h"
+	<cstdlib>
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\actor.h
+	"aStar.h"
+	"window.h"
+	<stdlib.h>
+	<time.h>
+	<cctype>
+	<fstream>
+	"bodyParts.h"
+
+1452710189 c:\users\damion\desktop\compsciproject\curses\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	<curses.h>
+	"tile.h"
+	<queue>
+	<sstream>
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\tile.h
+	"item.h"
+	"node.h"
+	"materials.h"
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\item.h
+	<string>
+	<sstream>
+	<vector>
+	"materials.h"
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\materials.h
+	<vector>
+	<curses.h>
+
+1452710191 c:\users\damion\desktop\compsciproject\curses\node.h
+
+1452710191 c:\users\damion\desktop\compsciproject\curses\window.h
+	"tile.h"
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	<curses.h>
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\bodyparts.h
+	"item.h"
+	<string>
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\bodyparts.cpp
+	"bodyParts.h"
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\building.cpp
+	"building.h"
+	<iostream>
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\building.h
+	<vector>
+	<fstream>
+	<string>
+	<cctype>
+	<math.h>
+	"tile.h"
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\drawgame.cpp
+	"drawGame.h"
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\drawgame.h
+	"actor.h"
+
+1452710190 source:c:\users\damion\desktop\compsciproject\curses\include\dungeon.cpp
+	"dungeon.h"
+
+1452710190 c:\users\damion\desktop\compsciproject\curses\include\dungeon.h
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<fstream>
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\item.cpp
+	"item.h"
+
+1452713383 source:c:\users\damion\desktop\compsciproject\curses\main.cpp
+	"menu.h"
+	"drawGame.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+	"building.h"
+	"generateCity.h"
+
+1452710378 c:\users\damion\desktop\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	<curses.h>
+	"actor.h"
+
+1452710203 c:\users\damion\desktop\compsciproject\curses\generatecity.h
+	"tile.h"
+	<time.h>
+	<random>
+
+1452710396 source:c:\users\damion\desktop\compsciproject\curses\menu.cpp
+	"menu.h"
+
+1452710203 source:c:\users\damion\desktop\compsciproject\curses\tile.cpp
+	"tile.h"
+
+1452710799 source:c:\users\damion\desktop\compsciproject\curses\window.cpp
+	"window.h"
+	<iostream>
+

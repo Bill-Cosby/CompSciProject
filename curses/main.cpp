@@ -3,7 +3,7 @@
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
 #include "building.h"
 #include "generateCity.h"
 
@@ -34,21 +34,21 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
-    screen scr(150,80);
+    screen scr(100,50);
 
     char ch;
 
 
     mainMenu first_menu("Main Menu",false,100);
-    //first_menu.mainMenuLoop(scr);
-    if(first_menu.quit_game==true){
-        endwin();
-        return 0;
-    }
+//    first_menu.mainMenuLoop(scr);
+//    if(first_menu.quit_game==true){
+//        endwin();
+//        return 0;
+//    }
 
     erase();
-        building test;
-        test.buildStructure();
+    building test;
+    test.buildStructure();
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
@@ -65,8 +65,9 @@ int main()
 
 
     std::vector<std::vector<tile* > > _map;
-    std::vector<monster> monsters;
     std::vector<actor*> actors;
+    actors.push_back(new player("[HUMAN]"));
+
 
     _map.resize(100);
     for (int y=0;y<100;y++){
@@ -76,12 +77,12 @@ int main()
         }
     }
 
-    for (int y=0;y<test.height;y++){
-        for (int x=0;x<test.width;x++){
-            _map[y][x] = test.structure[y][x];
-        }
-    }
-    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
+//    for (int y=0;y<test.height;y++){
+//        for (int x=0;x<test.width;x++){
+//            _map[y][x] = test.structure[y][x];
+//        }
+  //  }
+//    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
 
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
@@ -105,51 +106,47 @@ int main()
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
-    std::uniform_int_distribution<int> enemyPos(1,17);
+    std::uniform_int_distribution<int> enemyPos(1, map_t.dungeon_grid.size());
 
     //RANDOM GUARDS CODE
 
-//    for (int i=0;i<numberOfEnemies(ew);i++){
-//        while (true){
-//            temp=coordinate(enemyPos(ew),enemyPos(ew));
-//            if (_map[temp.y][temp.x].movementCost!=-1){
-//                monsters.push_back(monster(5,'G'));
-//                monsters[i].pos(temp.y,temp.x);
-//                monsters[i].setPost(temp.x,temp.y);
-//                break;
-//            }
-//
-//        }
-//
-//    }
 
 
     //DUNGEON SETUP CODE
-    //_map.resize(map_t.dungeon_grid.size());
-//    _map.resize(map_t.dungeon_grid.size());
-//    for (int y=0;y<map_t.dungeon_grid.size();y++)
-//    {
-//        _map[y].resize(map_t.dungeon_grid[0].size());
-//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-//        {
-//            if (map_t.dungeon_grid[y][x]==1)
-//            {
-//                _map[y][x]= new tile(' ',0,wood);
-//actors[0]->pos(y,x);
-//            }
-//            else
-//            {
-//                _map[y][x]= new tile('#',-1, stone);
-//            }
-//        }
-//    }
+    _map.resize(map_t.dungeon_grid.size());
+    _map.resize(map_t.dungeon_grid.size());
+    for (int y=0;y<map_t.dungeon_grid.size();y++)
+    {
+        _map[y].resize(map_t.dungeon_grid[0].size());
+        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+        {
+            if (map_t.dungeon_grid[y][x]==1)
+            {
+                _map[y][x]= new tile(' ',0,wood);
+actors[0]->pos(y,x);
+            }
+            else
+            {
+                _map[y][x]= new tile('#',-1, stone);
+            }
+        }
+    }
+      for (int i=0;i<numberOfEnemies(ew);i++){
+        while (true){
+            temp=coordinate(enemyPos(ew),enemyPos(ew));
+            if (_map[temp.y][temp.x]->movementCost!=-1){
+                actors.push_back(new monster("[GOBLIN]"));
+                actors[actors.size()-1]->pos(temp.y,temp.x);
+                break;
+            }
+
+        }
+
+    }
 
 //    for (int i=0;i<monsters.size();i++){
 //        actors.push_back(&monsters[i]);
 //    }
-
-
-actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
     {

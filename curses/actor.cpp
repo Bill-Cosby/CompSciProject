@@ -608,43 +608,59 @@ player::player(std::string speciesToLoad)
     sprinting=false;
 
 
-
+/// bools for stopping things, self explanatory in name of bool
     bool readingRightFile=true;
     bool rightSpecies=true;
     bool typeFound=false;
     bool constructed=false;
     bool foundQuantity=false;
+/// weight of creature, sum of all limbs
     int weight;
-    std::string type;
-    std::string line;
-    std::string constructionLine;
+/// strings to store data from file
+    std::string type;/// data type to load (speciesName, bodyParts, tags)
+    std::string line;///  line loaded from file (get_line())
+    std::string constructionLine;/// stores the limbs of all creatures
+/// load file
     std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
+/// if loaded file correctly
     if (CREATURE_FILE.is_open()){
+///     while you arent at the end of the file and reading the correct file
         while ( !CREATURE_FILE.eof()  and readingRightFile==true){
+///         while you aren't at the end of your line
             while ( getline(CREATURE_FILE , line) and readingRightFile==true){
                 std::string readLine;
-                if (line=="speciesToLoad"){
+                /// if you're loading the right species
+                if (line==speciesToLoad){
                     rightSpecies=true;
                 }
+                /// keep looking through species
                 else if (rightSpecies==false){
                     continue;
                 }
+                /// look through the line
                 for (char _c : line){
+                    /// if line is a comment
                     if (_c=='-'){
                         continue;
                     }
+                    /// if done making body, quit
                     if (constructed==true){break;}
+                    /// if unnecessary character, continue
                     if (_c=='[' or _c=='\t'){
                         continue;
                     }
+                    /// end character, save type found
                     if (_c==']' and typeFound==false){
                         type=readLine;
                         readLine.clear();
                         typeFound=true;
                         continue;
                     }
+                    /// add characters to readline
                     readLine+=_c;
+                    /// if you found a type
                     if (typeFound==true){
+                        /// if type is something we need
                         if (type == "ENDSPECIES"){
                             return;
                         }
@@ -661,11 +677,15 @@ player::player(std::string speciesToLoad)
                             }
                         }
                         if (type=="limbs"){
+                            /// number of limbs we find
                             int quantity;
+                            /// need to be a different for loop for limbs
                             for (char _l : line){
+                                /// skip unnecessary characters
                                 if (_l=='[' or _l == ' ' or _l == '\t'){
                                     continue;
                                 }
+                                /// save type found
                                 if (_l==']'){
                                     if (constructionLine=="limbs"){
                                         constructionLine.clear();
@@ -673,18 +693,22 @@ player::player(std::string speciesToLoad)
                                     }
                                     continue;
                                 }
-
+                                /// if you found a digit:
                                 if (std::isdigit(_l)){
+                                    /// if you found the quantity of a number:
                                     if (foundQuantity==false){
                                         quantity=_l-'0';
                                         foundQuantity=true;
                                     }
+                                    /// otherwise, you found the weight
                                     else{
                                         weight=_l-'0';
                                     }
                                 }
+                                /// the "array  escape character is a :"
                                 else if (_l==':'){
                                     for (int i=0;i<quantity;i++){
+                                        /// types of limbs
                                         if (constructionLine=="head"){
                                             body.push_back(new head(weight));
                                         }
@@ -704,12 +728,17 @@ player::player(std::string speciesToLoad)
                                             body.push_back(new leg(weight,i));
                                         }
                                     }
+                                    /// add limb weight to total weight
                                     totalWeight+=weight;
+                                    /// reset found quantity switch
                                     foundQuantity=false;
+                                    /// dump construction line
                                     constructionLine.clear();
+                                    /// NEXT LINE!
                                     continue;
                                 }
                                 else{
+                                    /// add characters to the construction line
                                     constructionLine+=_l;
                                 }
                             }
