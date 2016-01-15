@@ -3,7 +3,7 @@
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
 #include "building.h"
 #include "generateCity.h"
 
