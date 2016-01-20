@@ -2,7 +2,7 @@
 #define TILES_H_INCLUDED
 #include <vector>
 #include "tile.h"
-#include <noise.h>
+#include <noise/noise.h>
 #include "noiseutils.h"
 
 class tiles

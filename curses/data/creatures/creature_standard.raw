@@ -1,5 +1,5 @@
 [HUMAN]
-	[speciesName][human]
+	[SPECIESNAME][human]
 	[defaultSymbol][H]
 	[description][An average, intelligent creature.]
 	[tags]]
@@ -10,7 +10,7 @@
 [ENDSPECIES]
 
 [GOBLIN]
-	[speciesName][goblin]
+	[SPECIESNAME][goblin]
 	[defaultSymbol][g]
 	[description][A small cruel creature.]
 	[tags][EVIL]

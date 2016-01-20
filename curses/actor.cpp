@@ -608,7 +608,7 @@ player::player(std::string speciesToLoad)
     sprinting=false;
 
     std::string fileName = "data/creatures/creature_standard.raw";
-    std::string thingy="human.strength";
+    std::string thingy="human.speciesName";
 
     int whatever = RSL::getData(fileName,thingy);
 
