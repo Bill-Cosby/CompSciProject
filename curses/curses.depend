@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1452726403 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1452728580 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -61,21 +61,21 @@
 	<stack>
 	<fstream>
 
-1452720104 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1453248390 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"aStar.h"
 	"window.h"
 	<stdlib.h>
 	<time.h>
 	<cctype>
-	<fstream>
 	"bodyParts.h"
+	"RSL.h"
 
 1452723076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"materials.h"
 
-1452720104 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1453249381 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -239,7 +239,7 @@
 
 1452720105 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
 
-1452727522 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
+1452728580 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1450282606 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\node.h
@@ -268,10 +268,10 @@
 	"window.h"
 	<iostream>
 
-1452726424 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1452728580 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1452726443 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
+1452728580 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
 	"actor.h"
 
 1452720105 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
@@ -349,7 +349,7 @@
 	<noise.h>
 	"noiseutils.h"
 
-1452728415 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.cpp
+1453071090 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.cpp
 	<iostream>
 	"tiles.h"
 	<stdlib.h>
@@ -673,4 +673,12 @@
 	"vectortable.h"
 
 1452723076 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\noise\vectortable.h
+
+1453250488 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\rsl.h
+	<string>
+	<fstream>
+	<iostream>
+
+1453250232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\rsl.cpp
+	"RSL.h"
 

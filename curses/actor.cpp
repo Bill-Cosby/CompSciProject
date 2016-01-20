@@ -607,7 +607,10 @@ player::player(std::string speciesToLoad)
     controlled=true;
     sprinting=false;
 
+    std::string fileName = "data/creatures/creature_standard.raw";
+    std::string thingy="human.strength";
 
+    int whatever = RSL::getData(fileName,thingy);
 
     bool readingRightFile=true;
     bool rightSpecies=true;
