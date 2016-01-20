@@ -29,7 +29,7 @@ std::string GET_FORMATTED_TYPE(std::string *typeToFix)
 {
     std::string dataType;
     dataType+="[";
-    for (char& _c : *typeToFix){
+    for (char _c : *typeToFix){
         if (_c!='.'){
             dataType+=toupper(_c);
         }
@@ -37,7 +37,7 @@ std::string GET_FORMATTED_TYPE(std::string *typeToFix)
             dataType+=']';
             return dataType;
         }
-        delete &_c;
+
     }
 }
 
