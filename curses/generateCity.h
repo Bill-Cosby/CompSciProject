@@ -7,7 +7,7 @@ makeCity();
 drawCity();
 }
 
-void city::drawCity()
+void city::makeCity()
  {
       for(int a=0; a<roads.size(); a++)
       {
@@ -15,7 +15,7 @@ void city::drawCity()
       }
   }
 
-void city::makeCity()
+void city::createCity()
 {
 divideBox(3);
 drawGameWorld();
@@ -117,12 +117,28 @@ coordinate * Point1;
 coordinate * Point2;
 int size;
 bool vertical;
-drawRoad();
+makeRoad();
 };
 
-drawRoad()
+makeRoad()
 {
-
+ if(vertical==true)
+ {
+  for(int a=0; a<=Point2->y-Point1->y; a++)
+  {
+   tileMap(Point1->x,Point2->y+a)
+  }
+  }
+  
+  if(vertical==false)
+ {
+  for(int a=0; a<Point2->x-Point1->; a++)
+  {
+   changeat(Point1->x+a,Point2->y);
+  }
+  }
+ 
+ 
 }
 
 
