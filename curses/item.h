@@ -23,6 +23,7 @@ public:
     char symbol;
     virtual void equip(bool equipping){}
     virtual std::string itemDescription(){}
+    virtual void use(){}
 };
 
 

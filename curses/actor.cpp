@@ -602,15 +602,18 @@ player::player(std::string speciesToLoad)
     accuracy=100;
     defense=0;
     counter=4;
-    _symbol='@';
     sprinting=false;
     controlled=true;
     sprinting=false;
 
     std::string fileName = "data/creatures/creature_standard.raw";
-    std::string thingy="human.speciesName";
 
-    int whatever = RSL::getData(fileName,thingy);
+    species = RSL::getData(fileName,"human.speciesName");
+    _symbol = RSL::getData(fileName,"human.defaultsymbol")[0];
+    description = RSL::getData(fileName, "human.description");
+
+    std::cout << species << std::endl;
+    std::cout << description;
 
     bool readingRightFile=true;
     bool rightSpecies=true;
@@ -650,12 +653,6 @@ player::player(std::string speciesToLoad)
                     if (typeFound==true){
                         if (type == "ENDSPECIES"){
                             return;
-                        }
-                        if (type=="speciesName"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                species=readLine;
-                            }
                         }
                         if (type=="description"){
                             if (_c==']'){

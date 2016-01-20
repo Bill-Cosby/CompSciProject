@@ -2,14 +2,14 @@
 
 namespace RSL
 {
-int getData(std::string fileName, std::string dataToGet)
+std::string getData(std::string fileName, std::string dataToGet)
 {
-    bool foundDatatype;
-    bool foundDataMember;
+    bool foundDatatype = false;
+    bool foundDataMember = false;
 
 
-    std::string dataType = GET_FORMATTED_TYPE(&dataToGet);
-    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet);
+    std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
 
     std::string line;
     std::ifstream loadFile(fileName);
@@ -19,20 +19,33 @@ int getData(std::string fileName, std::string dataToGet)
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
                 for (char _c : line){
+
                     if (_c == '\t'){
                         continue;
                     }
-                    if (foundDataMember==false){
-                        LINE_READING+=_c;
+
+                    if (foundDataMember == true and _c == ';'){
+                        return LINE_READING;
+                    }
+
+                    LINE_READING+=_c;
+
+                    if (foundDatatype==false){
                         if (_c == ']'){
+
                             if (LINE_READING == dataType){
                                 foundDatatype = true;
+                                LINE_READING.clear();
                             }
-                            if (foundDatatype == true){
-                                std::cout << LINE_READING << std::endl;
-                                if (LINE_READING ==  dataMember){
-                                    foundDataMember = true;
-                                }
+                        }
+                    }
+
+                    if (foundDatatype==true){
+                        if (_c == ']'){
+
+                            if (LINE_READING == dataMember){
+                                foundDataMember=true;
+                                LINE_READING.clear();
                             }
                         }
                     }

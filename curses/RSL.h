@@ -6,7 +6,7 @@
 
 namespace RSL
 {
-    int getData(std::string fileName, std::string dataToRecieve);
+    std::string getData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
 }
 

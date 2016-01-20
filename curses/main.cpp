@@ -56,10 +56,8 @@ int main()
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 
-    tiles test;
 
     coordinate temp;
-    dungeon map_t;
 
 
 
@@ -67,28 +65,27 @@ int main()
     std::vector<monster> monsters;
     std::vector<actor*> actors;
 
-    _map.resize(100);
 
 
-//    _map.resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (testarena[y][x]=='['){
-//                _map[y][x]= new door(0, wood);
-//            }
-//            else if (testarena[y][x]=='#'){
-//                _map[y][x]=new tile('#',-1,stone);
-//                _map[y][x]->isDoor=false;
-//                _map[y][x]->position=coordinate(x,y);
-//            }
-//            else{
-//                _map[y][x]= new tile(' ',0,stone);
-//                _map[y][x]->isDoor=false;
-//                _map[y][x]->position=coordinate(x,y);
-//            }
-//        }
-//    }
+    _map.resize(20);
+    for (int y=0;y<20;y++){
+        _map[y].resize(20);
+        for (int x=0;x<20;x++){
+            if (testarena[y][x]=='['){
+                _map[y][x]= new door(0, wood);
+            }
+            else if (testarena[y][x]=='#'){
+                _map[y][x]=new tile('#',-1,stone);
+                _map[y][x]->isDoor=false;
+                _map[y][x]->position=coordinate(x,y);
+            }
+            else{
+                _map[y][x]= new tile(' ',0,stone);
+                _map[y][x]->isDoor=false;
+                _map[y][x]->position=coordinate(x,y);
+            }
+        }
+    }
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -140,9 +137,9 @@ actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
     {
-        drawGameworld(&test.tileMap,&actors,localItems,&scr);
+        drawGameworld(&_map,&actors,localItems,&scr);
         for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&test.tileMap,&localItems,actors,&scr);
+            actors[i]->movement(&_map,&localItems,actors,&scr);
         }
     }
     endwin();
