@@ -19,16 +19,23 @@ public:
     std::string species;
     std::string description;
     std::string name;
+    std::string hairColor;
+    std::string eyeColor;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
     std::vector<bodyPart*> body;
     item* wielded;
-// WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
+//  AFFECTS SPEED
+    int coolDown;
     bool sprinting;
+    bool onGround;
 
 //  RETURN COORDINATES
     int row(){return y;}
     int col(){return x;}
+
+//  AMOUNT OF A LIMB FOR SPEED CALCULATION
+    int numberOfLegs;
 
 //  BASIC STATS OF EVERY CREATURE
     int attack;
@@ -36,7 +43,7 @@ public:
     int accuracy;
     int defense;
     int counter;
-    int speed(){return totalWeight-attack;};
+    int speed(){if (onGround == true){return numberOfLegs*((attack/3)+coolDown)/3;}return numberOfLegs*((attack/3)+coolDown);};
     int customSpeed;
     std::string skinColor;
 

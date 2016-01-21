@@ -62,7 +62,6 @@ int main()
 
 
     std::vector<std::vector<tile* > > _map;
-    std::vector<monster> monsters;
     std::vector<actor*> actors;
 
 
@@ -133,7 +132,10 @@ int main()
 //    }
 
 
-actors.push_back(new player("[HUMAN]"));
+actors.push_back(new player("human"));
+actors.push_back(new monster("goblin"));
+actors[0]->pos(2,2);
+actors[1]->pos(1,1);
 
     while (first_menu.quit_game==false)
     {
@@ -142,6 +144,8 @@ actors.push_back(new player("[HUMAN]"));
             actors[i]->movement(&_map,&localItems,actors,&scr);
         }
     }
+
+
     endwin();
         for (int i=0;i<actors.size();i++){
             delete actors[i];

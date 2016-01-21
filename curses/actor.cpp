@@ -182,6 +182,7 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
                     attackEnemy(_a, _map);
+                    scr->addAnnouncement(species + " attacks " + _a->species);
                     attacking=true;
                 }
             }
@@ -598,260 +599,68 @@ void player::examineGround(screen* scr, std::vector<item*> *itemsExamining,coord
 
 player::player(std::string speciesToLoad)
 {
-    attack=10;
+    coolDown=0;
+    numberOfLegs=0;
+    totalWeight=0;
     accuracy=100;
     defense=0;
-    counter=4;
+    counter=0;
+    onGround = false;
     sprinting=false;
     controlled=true;
     sprinting=false;
 
     std::string fileName = "data/creatures/creature_standard.raw";
 
-    species = RSL::getData(fileName,"human.speciesName");
-    _symbol = RSL::getData(fileName,"human.defaultsymbol")[0];
-    description = RSL::getData(fileName, "human.description");
+    species = RSL::getStringData(fileName,speciesToLoad+".speciesName");
+    _symbol = RSL::getStringData(fileName,speciesToLoad+".defaultsymbol")[0];
+    description = RSL::getStringData(fileName, speciesToLoad+".description");
+    attack = RSL::getIntData(fileName, speciesToLoad+".strength");
+    body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
+    eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
-    std::cout << species << std::endl;
-    std::cout << description;
-
-    bool readingRightFile=true;
-    bool rightSpecies=true;
-    bool typeFound=false;
-    bool constructed=false;
-    bool foundQuantity=false;
-    int weight;
-    std::string type;
-    std::string line;
-    std::string constructionLine;
-    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
-    if (CREATURE_FILE.is_open()){
-        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
-            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
-                std::string readLine;
-                if (line=="speciesToLoad"){
-                    rightSpecies=true;
-                }
-                else if (rightSpecies==false){
-                    continue;
-                }
-                for (char _c : line){
-                    if (_c=='-'){
-                        continue;
-                    }
-                    if (constructed==true){break;}
-                    if (_c=='[' or _c=='\t'){
-                        continue;
-                    }
-                    if (_c==']' and typeFound==false){
-                        type=readLine;
-                        readLine.clear();
-                        typeFound=true;
-                        continue;
-                    }
-                    readLine+=_c;
-                    if (typeFound==true){
-                        if (type == "ENDSPECIES"){
-                            return;
-                        }
-                        if (type=="description"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                description=readLine;
-                            }
-                        }
-                        if (type=="limbs"){
-                            int quantity;
-                            for (char _l : line){
-                                if (_l=='[' or _l == ' ' or _l == '\t'){
-                                    continue;
-                                }
-                                if (_l==']'){
-                                    if (constructionLine=="limbs"){
-                                        constructionLine.clear();
-                                        continue;
-                                    }
-                                    continue;
-                                }
-
-                                if (std::isdigit(_l)){
-                                    if (foundQuantity==false){
-                                        quantity=_l-'0';
-                                        foundQuantity=true;
-                                    }
-                                    else{
-                                        weight=_l-'0';
-                                    }
-                                }
-                                else if (_l==':'){
-                                    for (int i=0;i<quantity;i++){
-                                        if (constructionLine=="head"){
-                                            body.push_back(new head(weight));
-                                        }
-                                        if (constructionLine=="eye"){
-                                            body.push_back(new eye(weight,i));
-                                        }
-                                        if (constructionLine=="neck"){
-                                            body.push_back(new neck(weight));
-                                        }
-                                        if (constructionLine=="torso"){
-                                            body.push_back(new torso(weight));
-                                        }
-                                        if (constructionLine=="arm"){
-                                            body.push_back(new arm(weight,i));
-                                        }
-                                        if (constructionLine=="leg"){
-                                            body.push_back(new leg(weight,i));
-                                        }
-                                    }
-                                    totalWeight+=weight;
-                                    foundQuantity=false;
-                                    constructionLine.clear();
-                                    continue;
-                                }
-                                else{
-                                    constructionLine+=_l;
-                                }
-                            }
-                        }
-                        typeFound=false;
-                        type.clear();
-                    }
-                }
-            }
-        }
+    for (bodyPart* _b : body){
+        totalWeight+=_b->weight;
     }
-    else{
-    }
+
+    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
+    std::cout << description << std::endl;
+
 }
 
 monster::monster(std::string speciesToLoad)
 {
-    bool readingRightFile=true;
-    bool rightSpecies=false;
-    bool typeFound=false;
-    bool constructed=false;
-    bool foundQuantity=false;
-    int weight;
-    attack=5;
-    std::string line;
-    std::string type;
-    std::string constructionLine;
-    std::ifstream CREATURE_FILE("data/creatures/creature_standard.raw");
-    if (CREATURE_FILE.is_open()){
-        while ( !CREATURE_FILE.eof()  and readingRightFile==true){
-            while ( getline(CREATURE_FILE , line) and readingRightFile==true){
-                std::string readLine;
-                if (line==speciesToLoad){
-                    rightSpecies=true;
-                    continue;
-                }
-                else if (rightSpecies==false){
-                    continue;
-                }
+    coolDown=0;
+    numberOfLegs=0;
+    totalWeight=0;
+    accuracy=100;
+    defense=0;
+    counter=0;
+    onGround = false;
+    sprinting=false;
+    controlled=true;
+    sprinting=false;
 
-                if (rightSpecies==true){
+    std::string fileName = "data/creatures/creature_standard.raw";
 
-                    for (char _c : line){
-                        if (_c=='-'){
-                            continue;
-                        }
-                        if (constructed==true){break;}
-                        if (_c=='[' or _c=='\t'){
-                            continue;
-                        }
-                        if (_c==']' and typeFound==false){
-                            type=readLine;
-                            readLine.clear();
-                            typeFound=true;
-                            continue;
-                        }
-                        readLine+=_c;
-                        if (type == "tags"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                if (readLine=="EVIL"){EVIL=true;}
-                            }
-                        }
-                        if (type=="speciesName"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                species=readLine;
-                            }
-                        }
-                        if (type=="defaultSymbol"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                _symbol=readLine[0];
-                            }
-                        }
-                        if (type=="description"){
-                            if (_c==']'){
-                                readLine.erase(readLine.size()-1);
-                                typeFound=false;
-                                description=readLine;
-                            }
-                        }
-                        if (type=="limbs"){
-                            int quantity;
-                            for (char _l : line){
-                                if (_l=='[' or _l == ' ' or _l == '\t'){
-                                    continue;
-                                }
-                                if (_l==']'){
-                                    if (constructionLine=="limbs"){
-                                        constructionLine.clear();
-                                        continue;
-                                    }
-                                    continue;
-                                }
-                                if (std::isdigit(_l)){
-                                    if (foundQuantity==false){
-                                        quantity=_l-'0';
-                                        foundQuantity=true;
-                                    }
-                                    else{
-                                        weight=_l-'0';
-                                    }
-                                }
-                                else if (_l==':'){
-                                    for (int i=0;i<quantity;i++){
-                                        if (constructionLine=="head"){
-                                            body.push_back(new head(weight));
-                                        }
-                                        if (constructionLine=="eye"){
-                                            body.push_back(new eye(weight,i));
-                                        }
-                                        if (constructionLine=="neck"){
-                                            body.push_back(new neck(weight));
-                                        }
-                                        if (constructionLine=="torso"){
-                                            body.push_back(new torso(weight));
-                                        }
-                                        if (constructionLine=="arm"){
-                                            body.push_back(new arm(weight,i));
-                                        }
-                                        if (constructionLine=="leg"){
-                                            body.push_back(new leg(weight,i));
-                                        }
-                                    }
-                                    foundQuantity=false;
-                                    constructionLine.clear();
-                                    continue;
-                                }
-                                else{
-                                    constructionLine+=_l;
-                                }
-                            }
-                            type.clear();
-                        }
-                    }
-                }
-            }
+    species = RSL::getStringData(fileName,speciesToLoad+".speciesName");
+    _symbol = RSL::getStringData(fileName,speciesToLoad+".defaultsymbol")[0];
+    description = RSL::getStringData(fileName, speciesToLoad+".description");
+    attack = RSL::getIntData(fileName, speciesToLoad+".strength");
+    body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
+    eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
+
+    for (bodyPart* _b : body){
+        if (_b->hasFoot() == true){
+            numberOfLegs++;
         }
+        totalWeight+=_b->weight;
     }
+
+    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
+    std::cout << description << std::endl;
     controlled=false;
     sprinting=false;
     memory=coordinate(-1,-1);
