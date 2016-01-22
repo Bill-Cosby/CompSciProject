@@ -7,11 +7,15 @@
 #include <sstream>
 #include <vector>
 #include <curses.h>
+#include <SFML/Graphics.hpp>
 
 
 class frame{
     int _w,_h;
 public:
+
+
+
     WINDOW* sub;
     WINDOW* inventoryWindow;
     WINDOW* equipmentWindow;
@@ -30,6 +34,8 @@ class screen{
     int _w,_h;
     int announcementWindowHeight;
 public:
+
+
     WINDOW* win;
     WINDOW* announcementWindow;
     frame subwindow;

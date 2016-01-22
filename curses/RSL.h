@@ -6,6 +6,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Graphics.hpp>
 #include "bodyParts.h"
 
 namespace RSL
@@ -14,6 +15,7 @@ namespace RSL
     int getIntData(std::string fileName, std::string dataToRecieve);
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
     std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToRecieve);
+    sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
 }
 

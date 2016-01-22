@@ -16,6 +16,8 @@ protected:
 
     int x,y;
 public:
+    sf::Texture texture;
+    sf::Sprite sprite;
     std::string species;
     std::string description;
     std::string name;
@@ -39,11 +41,12 @@ public:
 
 //  BASIC STATS OF EVERY CREATURE
     int attack;
+    int dexterity;
     int totalWeight;
     int accuracy;
     int defense;
     int counter;
-    int speed(){if (onGround == true){return numberOfLegs*((attack/3)+coolDown)/3;}return numberOfLegs*((attack/3)+coolDown);};
+    int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int customSpeed;
     std::string skinColor;
 

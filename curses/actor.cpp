@@ -194,6 +194,8 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
         }
         //reset the counter to 0
         counter=0;
+
+        sprite.setPosition(x*16,y*16);
     }
     return;
 }
@@ -296,6 +298,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
             }
         }
         counter=0;
+        sprite.setPosition(x*16,y*16);
     }
     counter++;
 }
@@ -613,12 +616,17 @@ player::player(std::string speciesToLoad)
     std::string fileName = "data/creatures/creature_standard.raw";
 
     species = RSL::getStringData(fileName,speciesToLoad+".speciesName");
+    texture = RSL::getTextureData(fileName,speciesToLoad+".texture");
     _symbol = RSL::getStringData(fileName,speciesToLoad+".defaultsymbol")[0];
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
+    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
     body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
+
+    sprite.setTexture(texture);
+
 
     for (bodyPart* _b : body){
         totalWeight+=_b->weight;
@@ -646,11 +654,15 @@ monster::monster(std::string speciesToLoad)
 
     species = RSL::getStringData(fileName,speciesToLoad+".speciesName");
     _symbol = RSL::getStringData(fileName,speciesToLoad+".defaultsymbol")[0];
+    texture = RSL::getTextureData(fileName, speciesToLoad+".texture");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
+    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
     body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
+
+    sprite.setTexture(texture);
 
     for (bodyPart* _b : body){
         if (_b->hasFoot() == true){

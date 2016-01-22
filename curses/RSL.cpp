@@ -42,7 +42,7 @@ std::string getStringData(std::string fileName, std::string dataToGet)
                     }
 
                     if (foundDataMember == true and _c == ';'){
-                        if (colorContainer.size()>1){
+                        if (colorContainer.size()!=0){
                             return colorContainer[rand()%colorContainer.size()];
                         }
                         return LINE_READING;
@@ -190,6 +190,94 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
 
                     if (foundDataMember == true and _c == ';'){
                         return body;
+                    }
+
+                    LINE_READING+=_c;
+
+                    if (foundDatatype==false){
+                        if (_c == ']'){
+
+                            if (LINE_READING == dataType){
+                                foundDatatype = true;
+                                LINE_READING.clear();
+                            }
+                        }
+                    }
+
+                    if (foundDatatype==true and foundDataMember == false){
+                        if (_c == ']'){
+
+                            if (LINE_READING == dataMember){
+                                foundDataMember=true;
+                                LINE_READING.clear();
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+sf::Texture getTextureData(std::string fileName, std::string dataToGet)
+{
+    bool foundDatatype = false;
+    bool foundDataMember = false;
+    bool foundQuantity = false;
+    bool foundTexture = false;
+    std::vector<int> intRectangle;
+
+    sf::Texture whatever;
+
+    std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+                    if (foundDataMember == true){
+                        if (_c == ',' and foundTexture == false){
+
+                            fileName = "data/textures/" + LINE_READING;
+
+
+                            LINE_READING.clear();
+                            foundTexture = true;
+
+                            continue;
+                        }
+                        if (foundTexture == true and _c == ':'){
+
+                            std::stringstream ss;
+                            ss << LINE_READING;
+
+                            int temp;
+                            ss >> temp;
+
+
+                            intRectangle.push_back(temp);
+
+                            LINE_READING.clear();
+                            continue;
+                        }
+                    }
+
+                    if (foundDataMember == true and _c == ';'){
+                        sf::Texture temp;
+                        temp.loadFromFile(fileName,sf::IntRect(intRectangle[1],intRectangle[0],16,16));
+
+
+                        return temp;
                     }
 
                     LINE_READING+=_c;

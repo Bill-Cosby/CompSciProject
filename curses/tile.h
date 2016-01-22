@@ -3,10 +3,17 @@
 #include "item.h"
 #include "node.h"
 #include "materials.h"
+#include <SFML/Graphics.hpp>
 
 class tile : public node
 {
 public:
+
+    int width, height;
+
+    sf::Texture texture;
+    sf::Sprite sprite;
+
     bool isDoor;
     bool isContainer;
     char defaultchar;

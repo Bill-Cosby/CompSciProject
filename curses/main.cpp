@@ -35,6 +35,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
 
+    sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     screen scr(100,50);
 
     char ch;
@@ -137,12 +138,21 @@ actors.push_back(new monster("goblin"));
 actors[0]->pos(2,2);
 actors[1]->pos(1,1);
 
-    while (first_menu.quit_game==false)
+    while (window.isOpen())
     {
+        sf::Event event;
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed){
+                window.close();
+            }
+        }
         drawGameworld(&_map,&actors,localItems,&scr);
         for (int i=0;i<actors.size();i++){
             actors[i]->movement(&_map,&localItems,actors,&scr);
         }
+        window.clear();
+        window.draw(actors[0]->sprite);
+        window.display();
     }
 
 
