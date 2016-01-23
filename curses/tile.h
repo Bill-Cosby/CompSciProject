@@ -39,11 +39,9 @@ class door : public tile
 {
 public:
     bool open;
-    sf::Texture openSymbol;
     sf::Texture closedSymbol;
-    sf::Sprite sprite;
     door(bool _o, short);
-    sf::Sprite drawTile(){if (open==true){sprite.setTexture(openSymbol);}else{sprite.setTexture(closedSymbol);}return sprite;}
+    sf::Sprite drawTile(){if (open==true){sprite.setTexture(texture);}else{sprite.setTexture(closedSymbol);}return sprite;}
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
 };

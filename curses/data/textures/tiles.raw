@@ -9,12 +9,12 @@
 	[TEXTURE]tiles.png,0:17:;
 [END]
 [START]
-[WALL]
+[DOOR]
 	[NAME]door;
 	[TEXTURE]tiles.png,0:33:;
 [END]
 [START]
-[WALL]
+[OPENDOOR]
 	[NAME]opendoor;
 	[TEXTURE]tiles.png,0:48:;
 [END]

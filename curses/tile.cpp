@@ -18,8 +18,8 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
 door::door(bool _o, short __material)
 {
     open=_o;
-//    openSymbol=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
-//    closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
+    texture=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
+    closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
     isDoor=true;
     _material=__material;
 }
