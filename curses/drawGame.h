@@ -3,6 +3,6 @@
 #include "actor.h"
 #include <SFML/Graphics.hpp>
 
-void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *actors, std::vector<item*> localItems, screen *scr);
+void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *actors, std::vector<item*> localItems, sf::RenderWindow &window);
 
 #endif // DRAWGAME_H_INCLUDED

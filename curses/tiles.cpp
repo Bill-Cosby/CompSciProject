@@ -13,7 +13,6 @@ tiles::tiles()
     fillMap();
     setPositions();
     makeTileMap();
-    setColors();
 
 
 }
@@ -27,7 +26,7 @@ void tiles::fillMap()
 
         for(int b=0; b<width; b++)
         {
-            tileMap[a][b]= new tile('P',0, grass);
+            //tileMap[a][b]= new tile('P',0, grass);
         }
     }
     //fills tileMap with blanks
@@ -46,16 +45,7 @@ void tiles::setPositions()
  }
 }
 
-void tiles::setColors()
-{
-     for(int a=0; a<height; a++)
- {
-     for(int b=0; b<width; b++)
-     {
-        tileMap[a][b]->find_material();
-     }
- }
-}
+
 
 void tiles::makeTileMap()
 {

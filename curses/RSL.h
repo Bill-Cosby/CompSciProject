@@ -15,6 +15,7 @@ namespace RSL
     int getIntData(std::string fileName, std::string dataToRecieve);
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
     std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToRecieve);
+    std::vector<material> unloadMaterials(std::string fileName);
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
 }

@@ -52,20 +52,20 @@ void building::buildStructure()
                     }
                     if (constructionBool==true and _c!=']'){
 
-                        if (_c == '0')
-                        {
-                            structure[yCounter][xCounter] = new tile('=',0,wood);
-                        }
-
-                        else if (_c == '1')
-                        {
-                            structure[yCounter][xCounter] = new tile('#',-1,wood);
-                        }
-
-                        else if (_c == '2')
-                        {
-                            structure[yCounter][xCounter] = new door(false,wood);
-                        }
+//                        if (_c == '0')
+//                        {
+//                            structure[yCounter][xCounter] = new tile('=',0,wood);
+//                        }
+//
+//                        else if (_c == '1')
+//                        {
+//                            structure[yCounter][xCounter] = new tile('#',-1,wood);
+//                        }
+//
+//                        else if (_c == '2')
+//                        {
+//                            structure[yCounter][xCounter] = new door(false,wood);
+//                        }
                         xCounter++;
                         if (xCounter==width){
                             yCounter++;

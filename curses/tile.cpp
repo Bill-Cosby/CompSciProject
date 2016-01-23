@@ -15,13 +15,26 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     isDoor=false;
 }
 
-door::door(bool _o, short _material)
+door::door(bool _o, short __material)
 {
     open=_o;
-    openSymbol=']';
-    closedSymbol='Æ';
+//    openSymbol=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
+//    closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
     isDoor=true;
-    material=_material;
+    _material=__material;
+}
+
+tile::tile(char dc, int mv, short mat)
+{
+    if (dc == '1'){
+        texture = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
+    }
+    else
+    {
+        texture = RSL::getTextureData("data/textures/tiles.raw","floor.texture");
+    }
+    sprite.setTexture(texture);
+    sprite.setColor(sf::Color(255,255,255,255));
 }
 
 bool door::interactWithDoor(bool opening)
@@ -41,40 +54,4 @@ bool door::interactWithDoor(bool opening)
         return true;
     }
 }
-void tile::find_material()
-{
-    if(elevation<=-1)
-    {
-        material=1;
-        defaultchar='~';
-    }
-    else if(elevation<=-.25){
-        material = 1;
-        defaultchar='~';
-    }
-    else if(elevation<=0){
-        material = wood;
-        defaultchar = '`';
-    }
-    else if(elevation<=.0625){
-        material = wood;
-        defaultchar = ',';
-    }
-    else if (elevation<=.125){
-        material = grass;
-        defaultchar = '"';
-    }
-    else if (elevation <= .3750){
-        material = iron;
-        defaultchar = '.';
-    }
-    else if (elevation <= .75){
-        material = stone;
-        defaultchar = '*';
-    }
-    else
-    {
-        material = COLOR_WHITE;
-        defaultchar = '-';
-    }
-}
+

@@ -236,10 +236,12 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
     std::string line;
     std::ifstream loadFile(fileName);
 
+
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
+
                 for (char _c : line){
 
                     if (_c == '\t' or _c == '{' or _c == '}'){
@@ -247,7 +249,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
                     }
                     if (foundDataMember == true){
                         if (_c == ',' and foundTexture == false){
-
                             fileName = "data/textures/" + LINE_READING;
 
 
@@ -265,6 +266,7 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
                             ss >> temp;
 
 
+
                             intRectangle.push_back(temp);
 
                             LINE_READING.clear();
@@ -275,7 +277,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
                     if (foundDataMember == true and _c == ';'){
                         sf::Texture temp;
                         temp.loadFromFile(fileName,sf::IntRect(intRectangle[1],intRectangle[0],16,16));
-
 
                         return temp;
                     }
@@ -306,6 +307,69 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
             }
         }
     }
+}
+
+std::vector<material> unloadMaterials(std::string fileName)
+{
+
+    bool foundDatatype = false;
+    bool foundDataMember = false;
+    std::vector<int> intRectangle;
+
+    std::vector<material> materials;
+
+    std::string dataMember;
+
+    sf::Texture whatever;
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+
+                if (line == "[START]"){
+                    foundDatatype = true;
+                    materials.resize(materials.size()+1);
+                    continue;
+                }
+
+                if (line == "[END]"){
+                    foundDatatype = false;
+                }
+
+                if (foundDatatype == true){
+                    for (char _c : line){
+                            if (_c == '\t'){
+                                continue;
+                            }
+
+                        if (LINE_READING == "[NAME]" or LINE_READING == "[TEXTURE]"){
+                            foundDataMember = true;
+                            dataMember = LINE_READING;
+                            LINE_READING.clear();
+                        }
+
+                        if (foundDataMember == true){
+                            if (_c == ';' or _c == ','){
+                                if (dataMember == "[NAME]"){ materials[materials.size()-1].name = LINE_READING;}
+                                if (dataMember == "[TEXTURE]"){ materials[materials.size()-1].texture = RSL::getTextureData(fileName, materials[materials.size()-1].name + ".texture");}
+
+                                dataMember.clear();
+                                LINE_READING.clear();
+
+                            }
+                        }
+                        LINE_READING += _c;
+                    }
+                }
+            }
+        }
+    }
+    return materials;
 }
 
 std::string GET_FORMATTED_TYPE(std::string *typeToFix)
