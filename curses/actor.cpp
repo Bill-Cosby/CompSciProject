@@ -125,7 +125,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot
     return true;
 }
 
-void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window)
+void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease)
 {
 
     //initialize the goal to not be used
@@ -207,7 +207,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window)
+void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease)
 {
     /*
     0 = NORTH
@@ -228,7 +228,8 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     15 = EXECUTE
     16 = LOOK
     */
-    char ch;
+    int ch;
+    coordinate temp = coordinate(x,y);
     bool moveThroughDoor=true;
     bool attacking=false;
     char inventoryMovement;
@@ -240,7 +241,30 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter==customSpeed){
+    if (counter>=customSpeed and keyrelease == true){
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+
+
+
+            if ((*_map)[temp.y][temp.x]->movementCost!=-1){
+                if ((*_map)[temp.y][temp.x]->isDoor){
+                    moveThroughDoor = (*_map)[temp.y][temp.x]->interactWithDoor(true);
+                }
+                if (moveThroughDoor == true){
+                    pos(temp.y,temp.x);
+                }
+            }
+
+
+
 
 
 

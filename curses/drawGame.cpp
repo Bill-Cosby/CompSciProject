@@ -39,7 +39,7 @@ short backgroundValue;
                         }
                     }
                 }
-                window.draw((*_map)[y][x]->drawTile());
+                (*_map)[y][x]->drawTile(window);
             }
         }
     }

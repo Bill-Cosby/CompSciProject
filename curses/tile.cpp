@@ -18,10 +18,24 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
 door::door(bool _o, short __material)
 {
     open=_o;
-    texture=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
+    texture = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
+    openSymbol=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
     closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
     isDoor=true;
     _material=__material;
+}
+
+void door::drawTile(sf::RenderWindow &window)
+{
+    if (isOpen()){
+        sprite.setTexture(texture);
+        window.draw(sprite);
+        sprite.setTexture(openSymbol);
+    }
+    else{
+        sprite.setTexture(closedSymbol);
+    }
+    window.draw(sprite);
 }
 
 tile::tile(char dc, int mv, short mat)
@@ -33,6 +47,7 @@ tile::tile(char dc, int mv, short mat)
     {
         texture = RSL::getTextureData("data/textures/tiles.raw","floor.texture");
     }
+    movementCost = mv;
     sprite.setTexture(texture);
     sprite.setColor(sf::Color(255,255,255,255));
 }

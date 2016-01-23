@@ -25,7 +25,7 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
-                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','1','1','1','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','1','1','1','1'},
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
                               {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
@@ -35,6 +35,8 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
+
+    bool keyrelease=true;
 
 
 
@@ -65,7 +67,6 @@ int main()
     std::vector<std::vector<tile* > > _map;
     std::vector<actor*> actors;
 
-    std::vector<tile*> secondaryStructures;
 
 
 
@@ -73,7 +74,10 @@ int main()
     for (int y=0;y<20;y++){
         _map[y].resize(20);
         for (int x=0;x<20;x++){
-            if (testarena[y][x]=='1'){
+            if (testarena[y][x]=='2'){
+                _map[y][x]=new door(1,wood);
+            }
+            else if (testarena[y][x]=='1'){
                 _map[y][x]=new tile('0',-1,stone);
                 _map[y][x]->isDoor=false;
             }
@@ -86,7 +90,6 @@ int main()
         }
     }
 
-    secondaryStructures.push_back(new door(0,wood));
 
 
     std::default_random_engine ew(time(0));
@@ -142,14 +145,18 @@ actors[0]->pos(2,2);
     while (window.isOpen())
     {
         sf::Event event;
+
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
                 window.close();
             }
+            if (event.type == sf::Event::KeyReleased){
+                keyrelease = true;
+            }
         }
         drawGameworld(&_map,&actors,localItems,window);
         for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&_map,&localItems,actors,window);
+            actors[i]->movement(&_map,&localItems,actors,window,keyrelease);
         }
         if (event.type == sf::Event::KeyPressed){
             int temp = event.key.code;

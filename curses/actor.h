@@ -88,7 +88,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
@@ -97,8 +97,9 @@ do not forget to "delete" every pointer at the end of the program.
 
 class player: public actor
 {
+    bool keyIsPressed;
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease);
     void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining);
     void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems);
     player(std::string speciesToLoad);
@@ -113,7 +114,7 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);

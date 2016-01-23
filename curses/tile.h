@@ -29,7 +29,7 @@ public:
     short giveMaterial(){return _material;}
     void find_material();
 
-    virtual sf::Sprite drawTile(){return sprite;}
+    virtual void drawTile(sf::RenderWindow &window){window.draw(sprite);}
     virtual bool interactWithDoor(bool opening){}
     virtual bool isOpen(){}
     virtual void openContainer(){}
@@ -40,8 +40,9 @@ class door : public tile
 public:
     bool open;
     sf::Texture closedSymbol;
+    sf::Texture openSymbol;
     door(bool _o, short);
-    sf::Sprite drawTile(){if (open==true){sprite.setTexture(texture);}else{sprite.setTexture(closedSymbol);}return sprite;}
+    void drawTile(sf::RenderWindow &window);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
 };
