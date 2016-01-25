@@ -43,7 +43,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
     bool keyrelease = true;
 
-    item* itemLookingAt;
+    item* itemLookingAt = NULL;
 
     sf::Event event;
 
@@ -92,14 +92,16 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
                 menuText.setStyle(sf::Text::Regular);
             }
 
+        if (itemLookingAt != NULL){
+            titleText.setString(itemLookingAt->name);
+            titleText.setPosition(descriptionWindow.getPosition().x+4, 4);
+            window.draw(titleText);
+            menuText.setString(itemLookingAt->itemDescription());
+            menuText.setPosition(descriptionWindow.getPosition().x+4,24);
+            window.draw(menuText);
+        }
 
-        titleText.setString(itemLookingAt->name);
-        titleText.setPosition(descriptionWindow.getPosition().x+4, 4);
-        window.draw(titleText);
 
-        menuText.setString(itemLookingAt->itemDescription());
-        menuText.setPosition(descriptionWindow.getPosition().x+4,24);
-        window.draw(menuText);
 
         if (examiningItem == true and buttonSelected == 0){
             menuText.setStyle(sf::Text::Underlined);

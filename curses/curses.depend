@@ -77,7 +77,7 @@
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1453680638 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1453707232 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -273,7 +273,7 @@
 	"window.h"
 	<iostream>
 
-1453680165 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1453707190 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1453500812 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h

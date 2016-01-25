@@ -336,7 +336,6 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
 
 player::player(std::string speciesToLoad)
 {
-    std::cout << "In the player constructor?";
     coolDown=0;
     numberOfLegs=0;
     totalWeight=0;
