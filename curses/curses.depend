@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1453676696 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1453706999 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -280,7 +280,7 @@
 	"actor.h"
 	<SFML/Graphics.hpp>
 
-1453706759 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
+1453707158 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
 	"item.h"
 
 1453706582 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.h

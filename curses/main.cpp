@@ -138,10 +138,10 @@ int main()
 //    }
 
 
-actors.push_back(new player("human"));
-actors.push_back(new monster("goblin"));
-actors[0]->pos(17,17);
-actors[1]->pos(1,1);
+    actors.push_back(new player("human"));
+    actors.push_back(new monster("goblin"));
+    actors[0]->pos(17,17);
+    actors[1]->pos(1,1);
 
     while (window.isOpen())
     {

@@ -28,13 +28,12 @@ short backgroundValue;
         for (int x=0;x<25;x++)
         {
             if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<(*_map)[0].size() and y+charplaced.y<(*_map).size()){
-
+                for (item* _i : localItems){
+                    window.draw(_i->sprite);
+                }
                 for (actor* _a: *actors)
                 {
                     window.draw(_a->sprite);
-                }
-                for (item* _i : localItems){
-                    window.draw(_i->sprite);
                 }
                 (*_map)[y][x]->drawTile(window);
             }
