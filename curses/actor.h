@@ -67,7 +67,7 @@ public:
     char symbol(){return _symbol;}
 
 //  SET THE POSITION OF THE CREATURE
-    void pos(int _y,int _x){x=_x;y=_y;}
+    void pos(int _y,int _x){x=_x;y=_y;sprite.setPosition(x*16,y*16);}
 
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position

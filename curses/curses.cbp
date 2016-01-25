@@ -38,6 +38,7 @@
 		<Unit filename="aStar.h" />
 		<Unit filename="actor.cpp" />
 		<Unit filename="actor.h" />
+		<Unit filename="actorMenus.cpp" />
 		<Unit filename="binarySearchStack.h" />
 		<Unit filename="bodyParts.cpp" />
 		<Unit filename="bodyParts.h" />

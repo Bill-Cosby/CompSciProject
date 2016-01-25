@@ -122,7 +122,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
         menuText.setStyle(sf::Text::Regular);
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyrelease == true and examiningItem == false){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyrelease == true and examiningItem == false){
             if (activeWindow == 0){
                 if (itemSelected+1 >= inventory.size()) itemSelected = 0;
                 else itemSelected++;
@@ -133,7 +133,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
             }
             keyrelease = false;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyrelease == true and examiningItem == false){
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyrelease == true and examiningItem == false){
             if (activeWindow == 0){
                 if (itemSelected-1 < 0) itemSelected = inventory.size()-1;
                 else itemSelected--;
@@ -164,8 +164,13 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
                     activeWindow = 1 - activeWindow;
                 }
                 if (buttonSelected == 1){
+
                     itemLookingAt->x = x;
                     itemLookingAt->y = y;
+
+                    itemLookingAt->sprite.setPosition(x*16,y*16);
+                    itemLookingAt->selected = false;
+
                     localItems->push_back(itemLookingAt);
                     if (activeWindow == 0)inventory.erase(inventory.begin()+itemSelected);
                     if (activeWindow == 1)equipment.erase(equipment.begin()+itemSelected);
@@ -183,6 +188,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemLookingAt = NULL;
             }
             else{
                 buttonSelected = 1 - buttonSelected;
@@ -192,6 +198,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemLookingAt = NULL;
             }
             else{
                 buttonSelected = 1 - buttonSelected;
@@ -213,6 +220,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
 void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining,coordinate spotExamining)
 {
+    sf::Event event;
 
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
@@ -244,6 +252,7 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
     char ch;
     bool examiningGround=true;
     bool unloadedItem=false;
+    bool keyrelease = true;
     for (int i=0;i<(*itemsExamining).size();i++){
         if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
             itemsYouFound.push_back((*itemsExamining)[i]);
@@ -277,6 +286,50 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
             }
         }
         window.display();
+
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::KeyReleased){
+                keyrelease = true;
+            }
+        }
+        if (itemsYouFound.size()>=0){
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyrelease == true){itemExamining--;keyrelease = false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyrelease == true){itemExamining++;keyrelease = false;}
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyrelease == true){itemsYouFound[itemExamining]->selected = true;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyrelease == true){itemsYouFound[itemExamining]->selected = false;}
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyrelease == true){
+                int wait=0;
+                int temp=itemsYouFound.size();
+                while (true){
+                    unloadedItem=false;
+                    for (int j=0;j<itemsYouFound.size();j++){
+                        if (itemsYouFound[j]->selected==true){
+                            itemsYouFound[j]->selected=false;
+                            inventory.push_back((*itemsExamining)[j]);
+                            std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
+                            for (int k = 0; k < (*itemsExamining).size(); k++){
+                                if ((*itemsExamining)[k]==itemsYouFound[j]){
+                                    (*itemsExamining).erase((*itemsExamining).begin()+k);
+                                }
+                            }
+                        }
+                        wait++;
+                    }
+                    if (wait==temp){
+                        break;
+                    }
+                }
+                return;
+            }
+            if (itemExamining==itemsYouFound.size())itemExamining=0;
+            if (itemExamining==-1)itemExamining = itemsYouFound.size()-1;
+        }
+
+
+
+
     }
 
 
@@ -334,29 +387,7 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
 //                else if (i==12){
 //                    examiningGround=false;
 //                }
-//                else if (i==15){
-//                    int wait=0;
-//                    int temp=itemsYouFound.size();
-//                    while (true){
-//                        unloadedItem=false;
-//                        for (int j=0;j<itemsYouFound.size();j++){
-//                            if (itemsYouFound[j]->selected==true){
-//                                itemsYouFound[j]->selected=false;
-//                                inventory.push_back((*itemsExamining)[j]);
-//                                std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
-//                                for (int k = 0; k < (*itemsExamining).size(); k++){
-//                                    if ((*itemsExamining)[k]==itemsYouFound[j]){
-//                                        (*itemsExamining).erase((*itemsExamining).begin()+k);
-//                                    }
-//                                }
-//                                scr->addAnnouncement(temporary);
-//                            }
-//                            wait++;
-//                        }
-//                        if (wait==temp){
-//                            break;
-//                        }
-//                    }
+
 //                    clear();
 //                    werase(scr->subwindow.examineWindow);
 //                    wrefresh(scr->subwindow.examineWindow);
