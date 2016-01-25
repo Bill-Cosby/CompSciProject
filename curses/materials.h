@@ -2,7 +2,6 @@
 #define MATERIALS_H_INCLUDED
 
 #include <vector>
-#include <curses.h>
 
 #define NUMBER_OF_COLORS 13
 

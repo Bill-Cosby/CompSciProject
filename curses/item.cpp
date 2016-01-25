@@ -15,7 +15,7 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     selected=false;
     material=iron;
     locationOnBody = "right hand";
-    //texture = RSL::getTextureData("data/items/weapon_types.raw","sword.texture");
+    //texture = RSL::getTextureData("data\items\weapon_types.raw","sword.texture");
 
     sprite.setTexture(texture);
 }

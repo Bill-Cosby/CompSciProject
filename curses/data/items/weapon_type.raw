@@ -1,4 +1,5 @@
 [SWORD]
 	[NAME]sword;
 	[STRENGTH]{5:10:15:};
+	[TEXTURE]data/textures/weapons,0:0:;
 [END]

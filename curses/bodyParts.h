@@ -1,7 +1,8 @@
 #ifndef BODYPARTS_H_INCLUDED
 #define BODYPARTS_H_INCLUDED
-#include "item.h"
 #include <string>
+
+class item;
 
 class bodyPart
 {
