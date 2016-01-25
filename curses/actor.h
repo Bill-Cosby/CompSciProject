@@ -4,9 +4,9 @@
 #include "window.h"
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Graphics.hpp>
 #include <cctype>
 #include "bodyParts.h"
-#include "RSL.h"
 
 class actor
 {
@@ -46,7 +46,8 @@ public:
     int accuracy;
     int defense;
     int counter;
-    int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
+    //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
+    int speed(){return 5;}
     int customSpeed;
     std::string skinColor;
 

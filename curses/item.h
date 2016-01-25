@@ -2,8 +2,14 @@
 #define ITEM_H_INCLUDED
 #include <string>
 #include <sstream>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include "materials.h"
+
+#ifndef RSL_H_INCLUDED
+#include "RSL.h"
+#define RSL_H_INCLUDED
+#endif // RSL_H_INCLUDED
 
 class item
 {
@@ -11,7 +17,7 @@ public:
     std::string name;
     std::string locationOnBody;
     bool selected;
-    bool canEquip;
+    bool equipped;
     bool canUse;
     int speed;
     int attack;
@@ -20,7 +26,8 @@ public:
     int x,y;//if item is on ground
     int value;
     int material;
-    char symbol;
+    sf::Texture texture;
+    sf::Sprite sprite;
     virtual void equip(bool equipping){}
     virtual std::string itemDescription(){}
     virtual void use(){}

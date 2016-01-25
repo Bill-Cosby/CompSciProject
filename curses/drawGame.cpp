@@ -21,6 +21,8 @@ short backgroundValue;
     actor* actorToDraw;
     item* itemToDraw;
 
+    window.clear();
+
     for (int y=0;y<25;y++)
     {
         for (int x=0;x<25;x++)
@@ -31,13 +33,8 @@ short backgroundValue;
                 {
                     window.draw(_a->sprite);
                 }
-                if (drawActor==false){
-                    for (item* _i : localItems){
-                        if (coordinate(_i->x,_i->y)==coordinate(x+charplaced.x,y+charplaced.y)){
-                            itemToDraw=_i;
-                            drawItem=true;
-                        }
-                    }
+                for (item* _i : localItems){
+                    window.draw(_i->sprite);
                 }
                 (*_map)[y][x]->drawTile(window);
             }

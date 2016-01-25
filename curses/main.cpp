@@ -75,7 +75,7 @@ int main()
         _map[y].resize(20);
         for (int x=0;x<20;x++){
             if (testarena[y][x]=='2'){
-                _map[y][x]=new door(1,wood);
+                _map[y][x]=new door(0,wood);
             }
             else if (testarena[y][x]=='1'){
                 _map[y][x]=new tile('0',-1,stone);
@@ -139,8 +139,9 @@ int main()
 
 
 actors.push_back(new player("human"));
-//actors.push_back(new monster("goblin"));
-actors[0]->pos(2,2);
+actors.push_back(new monster("goblin"));
+actors[0]->pos(17,17);
+actors[1]->pos(1,1);
 
     while (window.isOpen())
     {

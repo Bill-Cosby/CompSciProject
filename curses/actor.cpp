@@ -155,26 +155,26 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
         path = pathFinder(*_map,coordinate(col(),row()),goal,noGo);
     }
 
-    //if there's no path:
-    if (path.size()== 0)
-    {
 
-        //if you have no memory:
-        if (memory.x!=-1 and memory.y!=-1)
-        {
-            path=pathFinder(*_map,coordinate(col(),row()),memory,noGo);
-            memory=coordinate(-1,-1);
-        }
-
-        //if your position isn't your post and you have a post
-        else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
-            path=pathFinder(*_map,coordinate(col(),row()),post,noGo);
-        }
-    }
 
     //to actually commence AI movement and things:
-    if (counter==5)
-    {
+    if (counter==5){//if there's no path:
+
+        if (path.size()== 0)
+        {
+
+            //if you have no memory:
+            if (memory.x!=-1 and memory.y!=-1)
+            {
+                path=pathFinder(*_map,coordinate(col(),row()),memory,noGo);
+                memory=coordinate(-1,-1);
+            }
+
+            //if your position isn't your post and you have a post
+            else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
+                path=pathFinder(*_map,coordinate(col(),row()),post,noGo);
+            }
+        }
         //if you have a path:
         if (path.size()>0)
         {
@@ -241,7 +241,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter>=customSpeed and keyrelease == true){
+    while (counter>=customSpeed and keyrelease == true){
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
@@ -253,15 +253,17 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
 
 
-
             if ((*_map)[temp.y][temp.x]->movementCost!=-1){
                 if ((*_map)[temp.y][temp.x]->isDoor){
                     moveThroughDoor = (*_map)[temp.y][temp.x]->interactWithDoor(true);
                 }
                 if (moveThroughDoor == true){
                     pos(temp.y,temp.x);
+                    counter=0;
                 }
             }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems);}
 
 
 
@@ -324,306 +326,13 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
 
             }
         }
-        counter=0;
+
         sprite.setPosition(x*16,y*16);
     }
     counter++;
 }
 
-void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localItems)
-{
-//    bool activeWindow=0; //0 means inventory, not equipment
-//    bool examiningItem=true;
-//    bool inventoryOpen=true;
-//    int itemSelected=0;
-//    int buttonSelected=0;
-//    char ch=-1;
-//    while (inventoryOpen==true){
-////=============INVENTORY/EQUIPMENT MENU=========================
-//        if (activeWindow==0){
-//            wattron(scr->subwindow.inventoryWindow,A_BLINK);
-//        }
-//        else{
-//            wattron(scr->subwindow.equipmentWindow,A_BLINK);
-//        }
-//
-//        mvwaddstr(scr->subwindow.inventoryWindow,0,3,"inventory");
-//        mvwaddstr(scr->subwindow.equipmentWindow,0,3,"equipment");
-//
-//        wattroff(scr->subwindow.inventoryWindow,A_BLINK);
-//        wattroff(scr->subwindow.equipmentWindow,A_BLINK);
-//
-//        for (int i=0;i<inventory.size();i++){
-//            if (itemSelected==i and activeWindow==0){
-//                wattron(scr->subwindow.inventoryWindow,A_REVERSE);
-//            }
-//            mvwaddstr(scr->subwindow.inventoryWindow,i+1,2,inventory[i]->name.c_str());
-//            wattroff(scr->subwindow.inventoryWindow,A_REVERSE);
-//        }
-//
-//        for (int i=0;i<equipment.size();i++){
-//            if (itemSelected==i and activeWindow==1){
-//                wattron(scr->subwindow.equipmentWindow,A_REVERSE);
-//            }
-//            mvwaddstr(scr->subwindow.equipmentWindow,i+1,2,equipment[i]->name.c_str());
-//            wattroff(scr->subwindow.equipmentWindow,A_REVERSE);
-//        }
-//
-//        wrefresh(scr->subwindow.equipmentWindow);
-//        wrefresh(scr->subwindow.inventoryWindow);
-//        if (activeWindow==0){
-//            ch=wgetch(scr->subwindow.inventoryWindow);
-//        }
-//        else{
-//            ch=wgetch(scr->subwindow.equipmentWindow);
-//        }
-//        for (int i=0;i<numberOfControls;i++){
-//            if (ch==numpadControls[i] or ch==keyBrdControls[i] or ch==VIKEYSControls[i]){
-//                if (i==0){
-//                    if (itemSelected-1>=0){
-//                        itemSelected--;
-//                    }
-//                }
-//                if (i==2){
-//                    if (activeWindow==0){
-//                        if (itemSelected+1<=inventory.size()){
-//                            itemSelected++;
-//                        }
-//                    }
-//                    else{
-//                        if (itemSelected+1<=equipment.size()){
-//                            itemSelected++;
-//                        }
-//                    }
-//                }
-//                if (i==3 or i==4){
-//                    activeWindow= 1-activeWindow;
-//                }
-//
-//                if (i == 12){
-//                    inventoryOpen=false;
-//                }
-//
-//                if (i==1 or i==15){
-//                    examiningItem=true;
-//                    if (activeWindow==0){
-//                        inventory[itemSelected]->selected=true;
-//                    }
-//                    else{
-//                        equipment[itemSelected]->selected=true;
-//                    }
-//                    while (examiningItem==true){
-////=====================EXAMINE ITEM MENU===========================================
-//                        touchwin(scr->subwindow.itemDescriptionWindow);
-//                        wborder(scr->subwindow.itemDescriptionWindow,0,0,0,0,0,0,0,0);
-//                        std::vector<std::string> listOfButtons;
-//                        if (activeWindow==0){
-//                            for (int j=0;j<inventory.size();j++){
-//                                if (inventory[j]->selected==true){
-//                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,0,10,inventory[j]->name.c_str());
-//                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,1,1,inventory[j]->itemDescription().c_str());
-//                                    listOfButtons.push_back("Equip");
-//                                    listOfButtons.push_back("Use");
-//                                    listOfButtons.push_back("Drop");
-//                                }
-//                            }
-//                        }
-//                        else{
-//                            for (int j=0;j<equipment.size();j++){
-//                                if (equipment[j]->selected==true){
-//                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,0,10,equipment[j]->name.c_str());
-//                                    mvwaddstr(scr->subwindow.itemDescriptionWindow,1,1,equipment[j]->itemDescription().c_str());
-//                                    listOfButtons.push_back("Unequip");
-//                                    listOfButtons.push_back("Use");
-//                                    listOfButtons.push_back("Drop");
-//                                }
-//                            }
-//                        }
-//                        for (int j=0;j<listOfButtons.size();j++){
-//                            if (j==buttonSelected){
-//                                wattron(scr->subwindow.itemDescriptionWindow, A_REVERSE);
-//                            }
-//                            mvwaddstr(scr->subwindow.itemDescriptionWindow,j+5,30,listOfButtons[j].c_str());
-//                            wattroff(scr->subwindow.itemDescriptionWindow, A_REVERSE);
-//                        }
-//                        wrefresh(scr->subwindow.itemDescriptionWindow);
-//
-//                        ch=wgetch(scr->subwindow.itemDescriptionWindow);
-//                        werase(scr->subwindow.itemDescriptionWindow);
-//                        for (int j=0;j<numberOfControls;j++){
-//                            if (ch==numpadControls[j] or ch==keyBrdControls[j] or ch==VIKEYSControls[j]){
-//                                if (j==12){
-//                                    examiningItem=false;
-//                                }
-//                                if (j==0){
-//                                    if (buttonSelected-1>=0){
-//                                        buttonSelected--;
-//                                    }
-//                                }
-//                                if (j==2){
-//                                    if (buttonSelected+1<=listOfButtons.size()){
-//                                        buttonSelected++;
-//                                    }
-//                                }
-//                                if (j==1){
-//                                    if (listOfButtons[buttonSelected]=="Equip"){
-//                                        inventory[itemSelected]->selected=false;
-//                                        equipment.push_back(inventory[itemSelected]);
-//                                        inventory.erase(inventory.begin()+itemSelected);
-//                                        defense+=inventory[itemSelected]->defense;
-//                                        attack+=inventory[itemSelected]->attack;
-//
-//
-//                                        for (bodyPart* _b : body){
-//                                            if (_b->hasHand() == equipment[equipment.size()-1]->locationOnBody){
-//                                                _b->equip(equipment[equipment.size()-1], true);
-//                                                std::string temp = "You equipped a " +equipment[equipment.size()-1]->name + " in your " + _b->hasHand();
-//                                                scr->addAnnouncement(temp);
-//                                            }
-//                                        }
-//                                    }
-//                                    if (listOfButtons[buttonSelected]=="Unequip"){
-//                                        inventory[itemSelected]->selected=false;
-//                                        inventory.push_back(equipment[itemSelected]);
-//                                        equipment.erase(equipment.begin()+itemSelected);
-//                                        defense-=equipment[itemSelected]->defense;
-//                                        attack-=equipment[itemSelected]->attack;
-//                                    }
-//                                    if (listOfButtons[buttonSelected]=="Use"){
-//                                        if (activeWindow==0){
-//                                            //inventory[itemSelected]->use();
-//                                        }
-//                                        if (activeWindow==1){
-//                                            //equipment[itemSelected]->use();
-//                                        }
-//                                    }
-//                                    if (listOfButtons[buttonSelected]=="Drop"){
-//                                        if (activeWindow==0){
-//                                                inventory[itemSelected]->x=x;
-//                                                inventory[itemSelected]->y=y;
-//                                            localItems->push_back(inventory[itemSelected]);
-//                                            inventory.erase(inventory.begin()+itemSelected);
-//                                        }
-//                                        if (activeWindow==1){
-//                                                equipment[itemSelected]->x=x;
-//                                                equipment[itemSelected]->y=y;
-//                                            localItems->push_back(equipment[itemSelected]);
-//                                            equipment.erase(equipment.begin()+itemSelected);
-//                                        }
-//                                    }
-//                                    examiningItem=false;
-//                                    ch=-1;
-//                                }
-//                                wrefresh(scr->subwindow.itemDescriptionWindow);
-//                            }
-//                        }
-//
-//                    }
-//                    werase(scr->subwindow.equipmentWindow);
-//                    werase(scr->subwindow.inventoryWindow);
-//                    if (activeWindow==0){
-//                        inventory[itemSelected]->selected=false;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    werase(scr->subwindow.equipmentWindow);
-//    werase(scr->subwindow.inventoryWindow);
-//    erase();
-//    refresh();
-}
 
-void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining,coordinate spotExamining)
-{
-//    touchwin(scr->subwindow.examineWindow);
-//    wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
-//    std::vector<item*> itemsYouFound;
-//    char ch;
-//    bool examiningGround=true;
-//    bool unloadedItem=false;
-//    for (int i=0;i<(*itemsExamining).size();i++){
-//        if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
-//            itemsYouFound.push_back((*itemsExamining)[i]);
-//        }
-//    }
-//    int itemSelected=0;
-//
-//    while (examiningGround==true){
-//        for (int i=0;i<scr->subwindow.height();i++){
-//
-//            if (i==itemsYouFound.size()){
-//                break;
-//            }
-//            if (itemsYouFound[i]->selected==false){
-//                mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
-//            }
-//            else{
-//                mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
-//            }
-//            if (i == itemSelected){
-//                wattron(scr->subwindow.examineWindow,A_REVERSE);
-//            }
-//            mvwaddstr(scr->subwindow.examineWindow,i+1,2,itemsYouFound[i]->name.c_str());
-//            wattroff(scr->subwindow.examineWindow,A_REVERSE);
-//        }
-//        wrefresh(scr->subwindow.examineWindow);
-//        ch=wgetch(scr->subwindow.examineWindow);
-//        for (int i=0;i<numberOfControls;i++){
-//            if (ch==numpadControls[i] or ch==VIKEYSControls[i] or ch==keyBrdControls[i]){
-//                if (i==0){
-//                   if (itemSelected-1>=0){
-//                        itemSelected--;
-//                    }
-//                }
-//                else if (i==2){
-//                    if (itemSelected+1<itemsYouFound.size()){
-//                        itemSelected++;
-//                    }
-//                }
-//                else if (i==3){
-//                    itemsYouFound[itemSelected]->selected=true;
-//                }
-//                else if (i==4){
-//                    itemsYouFound[itemSelected]->selected=false;
-//                }
-//                else if (i==12){
-//                    examiningGround=false;
-//                }
-//                else if (i==15){
-//                    int wait=0;
-//                    int temp=itemsYouFound.size();
-//                    while (true){
-//                        unloadedItem=false;
-//                        for (int j=0;j<itemsYouFound.size();j++){
-//                            if (itemsYouFound[j]->selected==true){
-//                                itemsYouFound[j]->selected=false;
-//                                inventory.push_back((*itemsExamining)[j]);
-//                                std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
-//                                for (int k = 0; k < (*itemsExamining).size(); k++){
-//                                    if ((*itemsExamining)[k]==itemsYouFound[j]){
-//                                        (*itemsExamining).erase((*itemsExamining).begin()+k);
-//                                    }
-//                                }
-//                                scr->addAnnouncement(temporary);
-//                            }
-//                            wait++;
-//                        }
-//                        if (wait==temp){
-//                            break;
-//                        }
-//                    }
-//                    clear();
-//                    werase(scr->subwindow.examineWindow);
-//                    wrefresh(scr->subwindow.examineWindow);
-//                    bool youAintRight=false;
-//
-//                    return;
-//                }
-//            }
-//        }
-//    }
-}
 
 player::player(std::string speciesToLoad)
 {

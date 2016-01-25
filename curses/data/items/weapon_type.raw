@@ -1,0 +1,4 @@
+[SWORD]
+	[NAME]sword;
+	[STRENGTH]{5:10:15:};
+[END]
