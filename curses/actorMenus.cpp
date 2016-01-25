@@ -224,11 +224,14 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
     sf::RectangleShape itemList;
     sf::RectangleShape descriptionWindow;
 
-    itemList.setSize(sf::Vector2f(100,window.getSize().y/2));
-    descriptionWindow.setSize(sf::Vector2f(100,window.getSize().y/2-1));
+    itemList.setSize(sf::Vector2f(300,window.getSize().y/2));
+    descriptionWindow.setSize(sf::Vector2f(300,window.getSize().y/2-1));
 
-    itemList.setPosition(window.getSize().x-100,1);
-    descriptionWindow.setPosition(window.getSize().x-100,window.getSize().y/2+1);
+    itemList.setPosition(window.getSize().x-300,1);
+    descriptionWindow.setPosition(window.getSize().x-300,window.getSize().y/2+1);
+
+    itemList.setFillColor(sf::Color::Black);
+    descriptionWindow.setFillColor(sf::Color::Black);
 
     itemList.setOutlineThickness(3);
     descriptionWindow.setOutlineThickness(3);
@@ -248,12 +251,15 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
     }
 
     while (true){
+        window.clear();
+        window.draw(itemList);
+        window.draw(descriptionWindow);
         for (int i=0;i<itemsYouFound.size();i++){
             if (itemsYouFound.size()>itemList.getSize().y){
                 break;
             }
             else{
-                menuItem.setPosition(itemList.getPosition().x+4,18+(12*i));
+                menuItem.setPosition(itemList.getPosition().x+4,18+(20*i));
                 if (itemsYouFound[i]->selected == false){
                     menuItem.setString("-");
                 }
@@ -261,13 +267,16 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
                     menuItem.setString("+");
                 }
                 window.draw(menuItem);
+                menuItem.setPosition(itemList.getPosition().x+20,18+(20*i));
                 if (i == itemExamining){
                     menuItem.setStyle(sf::Text::Underlined);
                 }
-                menuItem.setString(itemsYouFound[itemExamining]->name);
+                menuItem.setString(itemsYouFound[i]->name);
                 window.draw(menuItem);
+                menuItem.setStyle(sf::Text::Regular);
             }
         }
+        window.display();
     }
 
 

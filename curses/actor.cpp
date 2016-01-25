@@ -232,9 +232,11 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     coordinate temp = coordinate(x,y);
     bool moveThroughDoor=true;
     bool attacking=false;
+    bool pressedKey = false;
     char inventoryMovement;
     char closeDirection;
     char examineDirection;
+    std::vector<item*> itemsExamining;
 
     sf::Event event;
 
@@ -243,17 +245,63 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
     customSpeed=speed();
     while (counter>=customSpeed and keyrelease == true){
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
-
-
-            if ((*_map)[temp.y][temp.x]->movementCost!=-1){
+            while (pressedKey == false){
+                while (window.pollEvent(event)){
+                    if (event.type == sf::Event::KeyPressed){
+                        pressedKey = true;
+                    }
+                }
+            }
+            pressedKey = false;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems);}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
+                while (pressedKey == false){
+                    while (window.pollEvent(event)){
+                        if (event.type == sf::Event::KeyPressed){
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            pressedKey = true;
+                        }
+                    }
+                }
+                (*_map)[temp.y][temp.x]->interactWithDoor(false);
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+                while (pressedKey == false){
+                    while (window.pollEvent(event)){
+                        if (event.type == sf::Event::KeyPressed){
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            pressedKey = true;
+                        }
+                    }
+                }
+                std::cout << "Here\n";
+//                for (item* _i : localItems){
+//                    if (coordinate(_i->x,_i->y) == temp){itemsExamining.push_back(_i);}
+//                }
+                examineGround(window,localItems,temp);
+            }
+            else if ((*_map)[temp.y][temp.x]->movementCost!=-1){
                 if ((*_map)[temp.y][temp.x]->isDoor){
                     moveThroughDoor = (*_map)[temp.y][temp.x]->interactWithDoor(true);
                 }
@@ -263,69 +311,6 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
                 }
             }
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems);}
-
-
-
-
-
-
-        for (int i=0;i<numberOfControls;i++){
-
-            if (ch==numpadControls[i] or ch==keyBrdControls[i] or ch==VIKEYSControls[i]){
-
-                if (i<9){
-
-                    if ((*_map)[y+directions[i].y][x+directions[i].x]->movementCost!=-1){
-
-                        for (actor* _a : actors){
-                            if (coordinate(_a->col(),_a->row())==coordinate(x+directions[i].x,y+directions[i].y)){
-                                attacking=true;
-                                attackEnemy(_a,_map);
-                            }
-                        }
-                        if (attacking!=true){
-                            if ((*_map)[y+directions[i].y][x+directions[i].x]->isDoor==true){
-                                moveThroughDoor=(*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(true);
-                            }
-                            if (moveThroughDoor==true or (*_map)[y+directions[i].y][x+directions[i].x]->isDoor==false){
-                                y+=directions[i].y;
-                                x+=directions[i].x;
-                            }
-                        }
-                    }
-
-                }
-                if (i==9 or i==10){
-                    bool opening=1-(-1*(i-10));
-                    closeDirection=ch;
-
-                    for (int i=0;i<9;i++){
-
-                        if (i==1){
-                            continue;
-                        }
-                        if (closeDirection==numpadControls[i] or closeDirection==keyBrdControls[i] or closeDirection==VIKEYSControls[i]){
-
-                            (*_map)[y+directions[i].y][x+directions[i].x]->interactWithDoor(opening);
-                        }
-                    }
-                }
-                if (i == 14){
-                    examineDirection = ch;
-                    for (int i=0;i<9;i++){
-                        if (examineDirection==numpadControls[i] or examineDirection==keyBrdControls[i] or examineDirection==VIKEYSControls[i]){
-                            examineGround(window, localItems, coordinate(directions[i].x+x,directions[i].y+y));
-                        }
-                    }
-
-                }
-                if (i == 11){
-                    openInventory(window, localItems);
-                }
-
-            }
-        }
 
         sprite.setPosition(x*16,y*16);
     }

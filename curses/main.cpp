@@ -155,14 +155,10 @@ int main()
                 keyrelease = true;
             }
         }
-        drawGameworld(&_map,&actors,localItems,window);
         for (int i=0;i<actors.size();i++){
             actors[i]->movement(&_map,&localItems,actors,window,keyrelease);
         }
-        if (event.type == sf::Event::KeyPressed){
-            int temp = event.key.code;
-            std::cout << temp;
-        }
+        drawGameworld(&_map,&actors,localItems,window);
     }
 
         for (int i=0;i<actors.size();i++){
