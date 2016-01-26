@@ -1,6 +1,6 @@
 #include <vector>
 #include <string>
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <curses.h>
 #include "actor.h"
 
@@ -19,8 +19,8 @@ public:
 class custom_menu
 {
 protected:
-    sf::SoundBuffer buffer;
-    sf::Sound sound;
+//    sf::SoundBuffer buffer;
+//    sf::Sound sound;
 public:
     std::vector<menu_button> listOfButtons;
     bool verticle;
