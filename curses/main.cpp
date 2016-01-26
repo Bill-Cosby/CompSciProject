@@ -7,6 +7,7 @@
 #include "building.h"
 #include "generateCity.h"
 
+
 using namespace std;
 
 const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -33,6 +34,8 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 
 int main()
 {
+    city myCity;
+    myCity.generateCity();
 
     screen scr(150,80);
 
@@ -81,7 +84,7 @@ int main()
             _map[y][x] = test.structure[y][x];
         }
     }
-    generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
+    //generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
 
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
@@ -148,7 +151,7 @@ int main()
 //        actors.push_back(&monsters[i]);
 //    }
 
-
+/*
 actors.push_back(new player("[HUMAN]"));
 
     while (first_menu.quit_game==false)
@@ -170,6 +173,8 @@ actors.push_back(new player("[HUMAN]"));
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
-
+        */
+        drawGameworld(myCity.tileMap,&actors,&localItems,&scr);
+myCity.deleteTileMap50();
     return 0;
 }

@@ -11,6 +11,9 @@ public:
     bool isContainer;
     char defaultchar;
     int movementCost;
+    int color;
+    void findColor();
+    double elevation;
     short material;
     tile(char dc,int mc, short mat){defaultchar=dc;movementCost=mc;material=mat;}
     tile(coordinate,coordinate,int);

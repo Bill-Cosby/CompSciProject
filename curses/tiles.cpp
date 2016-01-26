@@ -53,7 +53,7 @@ void tiles::setColors
  {
      for(int b=0; b<mapp.width; b++)
      {
-        mapp.tileMap[a][b].find_color();
+        mapp.tileMap[a][b].findColor();
      }
  }
 }
