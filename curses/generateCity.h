@@ -132,7 +132,9 @@ makeRoad()
  {
   for(int a=0; a<=Point2->y-Point1->y; a++)
   {
-   tileMap(Point1->x,Point2->y+a)
+   tileMap[Point1->x][Point2->y+a]->defaultChar=''';
+   tileMap[Point1->x][Point2->y+a]->movementCost=10;
+   tileMap[Point1->x][Point2->y+a]->material=stone;
   }
   }
   
@@ -140,38 +142,14 @@ makeRoad()
  {
   for(int a=0; a<Point2->x-Point1->; a++)
   {
-   changeat(Point1->x+a,Point2->y);
+   
+   tileMap[Point1->x+a][Point2->y]->defaultChar=''';
+   tileMap[Point1->x+a][Point2->y]->movementCost=10;
+   tileMap[Point1->x+a][Point2->y]->material=stone;
   }
   }
  
  
-}
-
-
-
-
-
-
-
-
-void city:makeRoad()
-{
-    bool vertical;
-    if(uniform_real_distribution<double> coinToss(0,1)<.5)
-    {
-        vertical=true;
-    }
-    else
-    {
-        vertical=false;
-    }
-    if(vertical==true)
-    {uniform_real_distribution<double> (boxx.left, boxx.right);
-    }
-    else
-        {
-
-        }
 }
 
 
