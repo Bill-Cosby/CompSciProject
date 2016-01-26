@@ -1,27 +1,34 @@
 #include "drawGame.h"
-void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *actors,std::vector<item*> localItems, sf::RenderWindow & window)
+void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *actors,std::vector<item*> localItems, sf::RenderWindow & window, announcements & announcementList)
 {
+    sf::RectangleShape announcementBorder;
+
+    announcementBorder.setFillColor(sf::Color::Black);
+    announcementBorder.setOutlineThickness(3);
+    announcementBorder.setOutlineColor(sf::Color::White);
+    announcementBorder.setPosition(window.getSize().x*.60,window.getSize().y*.25);
+    announcementBorder.setSize(sf::Vector2f(window.getSize().x*.40,window.getSize().y*.75));
 
     int colortypeCounter=1;
 
     coordinate startingposition;
     coordinate charplaced;
     std::vector<actor*> temp=*actors;
-//    init_color(wood,500,300,0);
-//    init_color(stone,500,500,500);
 short foregroundValue;
 short backgroundValue;
     int colorToUse=1;
-            startingposition=coordinate((temp[0])->col(),(temp[0])->row());
 
-                    //attron(COLOR_PAIR(2));
-    //charplaced=coordinate(0,0);
+    startingposition=coordinate((temp[0])->col(),(temp[0])->row());
+
+
     bool drawActor=false;
     bool drawItem=false;
     actor* actorToDraw;
     item* itemToDraw;
 
     window.clear();
+
+    window.draw(announcementBorder);
 
     for (int y=0;y<25;y++)
     {
@@ -39,6 +46,24 @@ short backgroundValue;
             }
         }
     }
+    announcementList.drawAnnouncements(window);
     window.display();
+}
+
+void announcements::drawAnnouncements(sf::RenderWindow & window)
+{
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text menuText;
+    menuText.setCharacterSize(8);
+    menuText.setFont(font);
+
+    int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
+    for (std::string _s : announcementList){
+        menuText.setString(_s);
+        menuText.setPosition(x,y);
+        window.draw(menuText);
+        y-=15;
+    }
 }
 

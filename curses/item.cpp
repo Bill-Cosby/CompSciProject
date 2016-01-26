@@ -9,12 +9,13 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     name = _name;
     type = _name;
     equipped = false;
+    canEquip = true;
+    canWear = false;
     canUse=false;
     x = _x;
     y = _y;
     selected=false;
     material=iron;
-    locationOnBody = "right hand";
     texture = RSL::getTextureData("data/items/weapon_type.raw",name+".texture");
 
     sprite.setTexture(texture);

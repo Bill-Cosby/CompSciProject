@@ -8,6 +8,14 @@
 #include <cctype>
 #include "bodyParts.h"
 
+class announcements
+{
+    std::vector<std::string> announcementList;
+public:
+    void addAnnouncement(std::string _a ){announcementList.push_back( _a );}
+    void drawAnnouncements(sf::RenderWindow & window);
+};
+
 class actor
 {
 protected:
@@ -89,9 +97,9 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
     virtual void setPost(int x, int y){}
-    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining){}
+    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
     virtual void moveOnPath(std::vector<std::vector<tile*> >){}
 };
@@ -100,8 +108,8 @@ class player: public actor
 {
     bool keyIsPressed;
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease);
-    void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
+    void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList);
     void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems);
     player(std::string speciesToLoad);
 };
@@ -115,7 +123,7 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);

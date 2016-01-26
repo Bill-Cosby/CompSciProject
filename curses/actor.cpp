@@ -125,7 +125,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot
     return true;
 }
 
-void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease)
+void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
 {
 
     //initialize the goal to not be used
@@ -207,7 +207,7 @@ void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease)
+void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
 {
     /*
     0 = NORTH
@@ -299,7 +299,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
 //                for (item* _i : localItems){
 //                    if (coordinate(_i->x,_i->y) == temp){itemsExamining.push_back(_i);}
 //                }
-                examineGround(window,localItems,temp);
+                examineGround(window,localItems,temp, announcementList);
             }
             else if ((*_map)[temp.y][temp.x]->movementCost!=-1){
                 if ((*_map)[temp.y][temp.x]->isDoor){

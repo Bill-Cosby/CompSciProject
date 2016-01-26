@@ -38,6 +38,8 @@ int main()
 
     window.setFramerateLimit(60);
 
+    announcements announcementList;
+
     bool keyrelease=true;
 
 
@@ -156,9 +158,9 @@ int main()
             }
         }
         for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&_map,&localItems,actors,window,keyrelease);
+            actors[i]->movement(&_map,&localItems,actors,window,keyrelease, announcementList);
         }
-        drawGameworld(&_map,&actors,localItems,window);
+        drawGameworld(&_map,&actors,localItems,window, announcementList);
     }
 
         for (int i=0;i<actors.size();i++){

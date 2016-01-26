@@ -18,6 +18,8 @@ public:
     std::string locationOnBody;
     bool selected;
     bool equipped;
+    bool canEquip;
+    bool canWear;
     bool canUse;
     int speed;
     int attack;

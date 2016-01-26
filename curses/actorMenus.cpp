@@ -2,6 +2,7 @@
 
 void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localItems)
 {
+    std::vector<bodyPart*> bodyPartsToEquipIn;
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
 
@@ -49,8 +50,6 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
     int itemSelected = 0;
     int buttonSelected = 0;
-
-    std::cout << "Here\n";
 
     while (true){
 
@@ -156,7 +155,16 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
                         itemSelected = inventory.size()-1;
                     }
                     else{
-                            itemLookingAt->equipped = true;
+                        itemLookingAt->equipped = true;
+
+                        for (bodyPart* _b : body){
+                            if (itemLookingAt -> canWield == true){
+                                if (_b->canGrasp == true){
+                                    _b->equip(itemLookingAt, true);
+                                }
+                            }
+                        }
+
                         equipment.push_back(itemLookingAt);
                         inventory.erase(inventory.begin()+itemSelected);
                         itemSelected = equipment.size()-1;
@@ -218,7 +226,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
     window.clear();
 }
 
-void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining,coordinate spotExamining)
+void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining,coordinate spotExamining, announcements & announcementList)
 {
     sf::Event event;
 
@@ -309,6 +317,8 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
                             itemsYouFound[j]->selected=false;
                             inventory.push_back((*itemsExamining)[j]);
                             std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
+
+                            announcementList.addAnnouncement(temporary);
                             for (int k = 0; k < (*itemsExamining).size(); k++){
                                 if ((*itemsExamining)[k]==itemsYouFound[j]){
                                     (*itemsExamining).erase((*itemsExamining).begin()+k);
@@ -331,72 +341,5 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
 
 
     }
-
-
-//    touchwin(scr->subwindow.examineWindow);
-//    wborder(scr->subwindow.examineWindow,0,0,0,0,0,0,0,0);
-//    std::vector<item*> itemsYouFound;
-//    char ch;
-//    bool examiningGround=true;
-//    bool unloadedItem=false;
-//    for (int i=0;i<(*itemsExamining).size();i++){
-//        if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
-//            itemsYouFound.push_back((*itemsExamining)[i]);
-//        }
-//    }
-//    int itemSelected=0;
-//
-//    while (examiningGround==true){
-//        for (int i=0;i<scr->subwindow.height();i++){
-//
-//            if (i==itemsYouFound.size()){
-//                break;
-//            }
-//            if (itemsYouFound[i]->selected==false){
-//                mvwaddch(scr->subwindow.examineWindow,i+1,1,'-');
-//            }
-//            else{
-//                mvwaddch(scr->subwindow.examineWindow,i+1,1,'+');
-//            }
-//            if (i == itemSelected){
-//                wattron(scr->subwindow.examineWindow,A_REVERSE);
-//            }
-//            mvwaddstr(scr->subwindow.examineWindow,i+1,2,itemsYouFound[i]->name.c_str());
-//            wattroff(scr->subwindow.examineWindow,A_REVERSE);
-//        }
-//        wrefresh(scr->subwindow.examineWindow);
-//        ch=wgetch(scr->subwindow.examineWindow);
-//        for (int i=0;i<numberOfControls;i++){
-//            if (ch==numpadControls[i] or ch==VIKEYSControls[i] or ch==keyBrdControls[i]){
-//                if (i==0){
-//                   if (itemSelected-1>=0){
-//                        itemSelected--;
-//                    }
-//                }
-//                else if (i==2){
-//                    if (itemSelected+1<itemsYouFound.size()){
-//                        itemSelected++;
-//                    }
-//                }
-//                else if (i==3){
-//                    itemsYouFound[itemSelected]->selected=true;
-//                }
-//                else if (i==4){
-//                    itemsYouFound[itemSelected]->selected=false;
-//                }
-//                else if (i==12){
-//                    examiningGround=false;
-//                }
-
-//                    clear();
-//                    werase(scr->subwindow.examineWindow);
-//                    wrefresh(scr->subwindow.examineWindow);
-//                    bool youAintRight=false;
-//
-//                    return;
-//                }
-//            }
-//        }
-//    }
 }
 
