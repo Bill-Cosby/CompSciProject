@@ -2,9 +2,10 @@
 #define MATERIALS_H_INCLUDED
 
 #include <vector>
-#include <curses.h>
 
 #define NUMBER_OF_COLORS 13
+
+#include <SFML/Graphics.hpp>
 
 #define wood 9
 #define stone 10
@@ -12,11 +13,11 @@
 #define grass 12
 
 
-class color_type
+class material
 {
     public:
-    int r,g,b;
-    color_type(int _r, int _g, int _b){r=_r;g=_g;b=_b;}
+    sf::Texture texture;
+    std::string name;
 };
 
 void declareColors();

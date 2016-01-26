@@ -1,20 +1,24 @@
-[HUMAN]
-	[speciesName][human]
-	[defaultSymbol][H]
-	[description][An average, intelligent creature.]
-	[tags]]
-	-- template:(quantity of body part) (weight of body part less than 10) (name of body part): <-always end in ':'
-	[limbs][1 2 head:2 0 eye:1 1 neck:1 9 torso :2 3 arm :2 4 leg:]
-	[hair_colors][brown:black:blonde:grey:]
-	[eye_colors][blue:green:grey:black:brown:hazel:yellow:]
+[HUMAN];
+	[NAME]human;
+	[TEXTURE]creature_standard.png,0:0:;
+	[DESCRIPTION]An average, intelligent creature.;
+	[TAGS];
+	-- template:(quantity of body part) (weight of body part less than 10) (name of body part):
+	[LIMBS]{1,11,head:2,0,eye:1,4,neck:1,100,torso:2,8,arm:2,26,leg:};
+	[HAIRCOLOR]{brown:black:blonde:grey:};
+	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
+	[STRENGTH]50;
+	[DEXTERITY]25;
 [ENDSPECIES]
 
-[GOBLIN]
-	[speciesName][goblin]
-	[defaultSymbol][g]
-	[description][A small cruel creature.]
-	[tags][EVIL]
-	[limbs][1 1 head:2 0 eye:1 0 neck:1 4 torso :2 1 arm:2 2 leg:]
-	[hair_colors][black:]
-	[eye_colors][grey:black:yellow:]
+[GOBLIN];
+	[NAME]goblin;
+	[TEXTURE]creature_standard.png,0:17:;
+	[DESCRIPTION]A small cruel creature.;
+	[TAGS]EVIL;
+	[LIMBS]{1,5,head:2,0,eye:1,2,neck:1,55,torso:2,4,arm:2,12,leg:};
+	[HAIRCOLOR]{black:};
+	[EYECOLOR]{grey:black:yellow:};
+	[STRENGTH]5;
+	[DEXTERITY]25;
 [ENDSPECIES]

@@ -4,9 +4,17 @@
 #include "window.h"
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Graphics.hpp>
 #include <cctype>
-#include <fstream>
 #include "bodyParts.h"
+
+class announcements
+{
+    std::vector<std::string> announcementList;
+public:
+    void addAnnouncement(std::string _a ){announcementList.push_back( _a );}
+    void drawAnnouncements(sf::RenderWindow & window);
+};
 
 class actor
 {
@@ -16,27 +24,38 @@ protected:
 
     int x,y;
 public:
+    sf::Texture texture;
+    sf::Sprite sprite;
     std::string species;
     std::string description;
     std::string name;
+    std::string hairColor;
+    std::string eyeColor;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
     std::vector<bodyPart*> body;
     item* wielded;
-// WHETHER OR NOT TO DOUBLE MOVEMENT SPEED
+//  AFFECTS SPEED
+    int coolDown;
     bool sprinting;
+    bool onGround;
 
 //  RETURN COORDINATES
     int row(){return y;}
     int col(){return x;}
 
+//  AMOUNT OF A LIMB FOR SPEED CALCULATION
+    int numberOfLegs;
+
 //  BASIC STATS OF EVERY CREATURE
     int attack;
+    int dexterity;
     int totalWeight;
     int accuracy;
     int defense;
     int counter;
-    int speed(){return totalWeight-attack;};
+    //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
+    int speed(){return 5;}
     int customSpeed;
     std::string skinColor;
 
@@ -56,7 +75,7 @@ public:
     char symbol(){return _symbol;}
 
 //  SET THE POSITION OF THE CREATURE
-    void pos(int _y,int _x){x=_x;y=_y;}
+    void pos(int _y,int _x){x=_x;y=_y;sprite.setPosition(x*16,y*16);}
 
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position
@@ -78,19 +97,20 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, screen *scr){}
+    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
     virtual void setPost(int x, int y){}
-    virtual void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining){}
-    virtual void openInventory(screen* scr,std::vector<item*> *localItems){}
+    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
+    virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
     virtual void moveOnPath(std::vector<std::vector<tile*> >){}
 };
 
 class player: public actor
 {
+    bool keyIsPressed;
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, screen *scr);
-    void examineGround(screen* scr, std::vector<item*> *itemsExamining, coordinate spotExamining);
-    void openInventory(screen* scr,std::vector<item*> *localItems);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
+    void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList);
+    void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems);
     player(std::string speciesToLoad);
 };
 
@@ -103,7 +123,7 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, screen *scr);
+    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath(std::vector<std::vector<tile*> >);
