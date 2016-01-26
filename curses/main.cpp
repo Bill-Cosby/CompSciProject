@@ -141,14 +141,14 @@ int main()
 //        actors.push_back(&monsters[i]);
 //    }
 
-
     actors.push_back(new player("human"));
+    actors.push_back(new monster("goblin"));
+    actors[1]->pos(1,1);
     actors[0]->pos(17,17);
+    sf::Event event;
 
     while (window.isOpen())
     {
-        sf::Event event;
-
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
                 window.close();
@@ -163,17 +163,17 @@ int main()
         drawGameworld(&_map,&actors,localItems,window, announcementList);
     }
 
-        for (int i=0;i<actors.size();i++){
-            delete actors[i];
+    for (int i=0;i<actors.size();i++){
+        delete actors[i];
+    }
+    for (int i=0;i<_map.size();i++){
+        for (int j=0;j<_map[i].size();i++){
+            delete _map[i][j];
         }
-        for (int i=0;i<_map.size();i++){
-            for (int j=0;j<_map[i].size();i++){
-                delete _map[i][j];
-            }
-        }
-        for (int i=0;i<globalItems.size();i++){
-            delete globalItems[i];
-        }
+    }
+    for (int i=0;i<globalItems.size();i++){
+        delete globalItems[i];
+    }
 
     return 0;
 }
