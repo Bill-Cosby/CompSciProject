@@ -39,6 +39,7 @@
 		<Unit filename="actor.cpp" />
 		<Unit filename="actor.h" />
 		<Unit filename="actorMenus.cpp" />
+		<Unit filename="behaviorTree.h" />
 		<Unit filename="binarySearchStack.h" />
 		<Unit filename="bodyParts.cpp" />
 		<Unit filename="bodyParts.h" />
@@ -51,6 +52,7 @@
 		<Unit filename="include/dungeon.cpp" />
 		<Unit filename="include/dungeon.h" />
 		<Unit filename="include/panel.h" />
+		<Unit filename="interactionsWithWorld.cpp" />
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="lib/pdcurses.lib" />

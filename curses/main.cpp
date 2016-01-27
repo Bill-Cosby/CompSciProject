@@ -7,6 +7,7 @@
 #include "building.h"
 #include "generateCity.h"
 #include "tiles.h"
+#include "behaviorTree.h"
 
 using namespace std;
 
@@ -34,6 +35,8 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+    Selector root = new Selector, selector1 = new Selector;
+
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
     window.setFramerateLimit(60);
@@ -143,6 +146,8 @@ int main()
 
 
     actors.push_back(new player("human"));
+    actors.push_back(new monster("goblin"));
+    actors[1]->pos(1,1);
     actors[0]->pos(17,17);
 
     while (window.isOpen())

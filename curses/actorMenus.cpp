@@ -159,7 +159,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
                         for (bodyPart* _b : body){
                             if (itemLookingAt -> canWield == true){
-                                if (_b->canGrasp == true){
+                                if (_b->grasps == true){
                                     _b->equip(itemLookingAt, true);
                                 }
                             }

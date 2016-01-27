@@ -20,6 +20,8 @@ public:
     bool equipped;
     bool canEquip;
     bool canWear;
+    bool canWield;
+    bool canGrasp;
     bool canUse;
     int speed;
     int attack;

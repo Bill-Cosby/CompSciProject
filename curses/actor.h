@@ -1,12 +1,12 @@
 #ifndef ACTOR_H_INCLUDED
 #define ACTOR_H_INCLUDED
-#include "aStar.h"
 #include "window.h"
 #include <stdlib.h>
 #include <time.h>
 #include <SFML/Graphics.hpp>
 #include <cctype>
 #include "bodyParts.h"
+#include "aStar.h"
 
 class announcements
 {
@@ -18,7 +18,10 @@ public:
 
 class actor
 {
+    std::vector<coordinate> path;
 protected:
+    coordinate goal;
+
     char _symbol;
 
 
@@ -77,6 +80,7 @@ public:
 //  SET THE POSITION OF THE CREATURE
     void pos(int _y,int _x){x=_x;y=_y;sprite.setPosition(x*16,y*16);}
 
+
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position
     int getSpeed(){return speed()-(.5*speed())*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
@@ -86,6 +90,12 @@ public:
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> >*_map);
     void attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> >* _map);
     void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
+
+//  METHODS FOR INTERACTING WITH THE WORLD
+    bool findPath(std::vector<std::vector<tile*> > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo);}
+    int findDistance(coordinate goal){return abs(goal.x-x)+abs(goal.y-y);}
+    bool openDoor(std::vector<std::vector<tile*> > &_map);
+    coordinate findTile(std::vector<std::vector<tile*> > &_map);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
@@ -119,7 +129,6 @@ class monster: public actor
     coordinate post;
 public:
     coordinate memory;
-    std::vector<coordinate> path;
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
