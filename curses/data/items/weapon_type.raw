@@ -1,0 +1,9 @@
+[SWORD]
+	[NAME]sword;
+	[STRENGTH]{5:10:15:};
+	[TEXTURE]weapons.png,0:0:;
+[END]
+[AXE]
+	[NAME]axe;
+	[STRENGTH]{5:10:15:};
+	[TEXTURE]weapons.png,0:17:;

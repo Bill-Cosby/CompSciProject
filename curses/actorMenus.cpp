@@ -157,6 +157,14 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
                     else{
                         itemLookingAt->equipped = true;
 
+                        for (bodyPart* _b : body){
+                            if (itemLookingAt -> canWield == true){
+                                if (_b->canGrasp == true){
+                                    _b->equip(itemLookingAt, true);
+                                }
+                            }
+                        }
+
                         equipment.push_back(itemLookingAt);
                         inventory.erase(inventory.begin()+itemSelected);
                         itemSelected = equipment.size()-1;

@@ -2,8 +2,8 @@
 
 mainMenu::mainMenu(std::string title,bool _v, int _p)
 {
-//    buffer.loadFromFile("zipclick.flac");
-//    sound.setBuffer(buffer);
+    buffer.loadFromFile("zipclick.flac");
+    sound.setBuffer(buffer);
     verticle = _v;
     percentOfScreen=_p;
     quit_game=false;
@@ -47,7 +47,7 @@ void mainMenu::mainMenuLoop(screen scr)
             if (menuSelector+1<listOfButtons.size()){
                     listOfButtons[menuSelector].selected=false;
                     menuSelector++;
-//                    sound.play();
+                    sound.play();
                 }
                 ch=='0';
         }
@@ -56,7 +56,7 @@ void mainMenu::mainMenuLoop(screen scr)
             if (menuSelector-1>=0){
                 listOfButtons[menuSelector].selected=false;
                 menuSelector--;
-//                sound.play();
+                sound.play();
             }
             ch=='0';
         }

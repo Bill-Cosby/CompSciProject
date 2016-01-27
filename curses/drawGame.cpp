@@ -9,10 +9,14 @@ void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *
     announcementBorder.setPosition(window.getSize().x*.60,window.getSize().y*.25);
     announcementBorder.setSize(sf::Vector2f(window.getSize().x*.40,window.getSize().y*.75));
 
+    int colortypeCounter=1;
+
     coordinate startingposition;
     coordinate charplaced;
-
     std::vector<actor*> temp=*actors;
+short foregroundValue;
+short backgroundValue;
+    int colorToUse=1;
 
     startingposition=coordinate((temp[0])->col(),(temp[0])->row());
 
