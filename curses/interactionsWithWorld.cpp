@@ -3,13 +3,50 @@
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
     coordinate doorCoord = findTile(_map,true,false);
-    if (findDistance(doorCoord)<=1.5){
+    if (findDistance(doorCoord)<=2){
         _map[doorCoord.y][doorCoord.x]->interactWithDoor(true);
         return true;
     }
     else{
         return false;
     }
+}
+
+bool actor::equipItem(item* itemEquipping)
+{
+    if (itemEquipping->canEquip){
+        for (bodyPart * _b : body){
+            if (_b->hasHand() == true){
+                _b->equip(itemEquipping, true);
+                equipment.push_back(itemEquipping);
+                std::cout << "EQUIPPED!!!\n";
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems)
+{
+    int positionInVector = 0;
+    for (item* _i : localItems){
+        if (findDistance(coordinate(_i->x,_i->y)) < 30){
+            if (findDistance(coordinate(_i->x,_i->y)) <= 2){
+                if (equipItem(_i)) localItems.erase(localItems.begin()+positionInVector);
+                path.clear();
+                memory = coordinate(-1,-1);
+            }
+            if (canSee(_map,coordinate(x,y),coordinate(_i->x,_i->y))){
+                if (_i->attack+attack > attack or _i->defense+defense > defense){
+                    goal = coordinate(_i->x,_i->y);
+                    return true;
+                }
+            }
+        }
+        positionInVector++;
+    }
+    return false;
 }
 
 coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
@@ -24,7 +61,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
 
     for (int i = 0;i < openSet.size(); i++){
         temp = *openSet[i];
-        if (openSet.size() > 10000){
+        if (openSet.size() > 1000){
             return coordinate(-1,-1);
         }
         tileWorks = true;
@@ -50,6 +87,8 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
                 delete openSet[i];
             }
             if (!(canSee(_map,memory,*openSet[i]))){
+                goal = temp;
+                findPath(_map);
                 return temp;
             }
         }

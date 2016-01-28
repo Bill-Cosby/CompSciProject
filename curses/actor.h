@@ -19,14 +19,14 @@ public:
 class actor
 {
 protected:
-    coordinate goal;
-    coordinate memory;
 
     char _symbol;
 
 
     int x,y;
 public:
+    coordinate memory;
+    coordinate goal;
     std::vector<coordinate> path;
     sf::Texture texture;
     sf::Sprite sprite;
@@ -70,6 +70,9 @@ public:
     bool controlled;
     bool hidden;
 
+//  INVENTORY INTERACTION
+    bool equipItem(item* itemEquipping);
+
 
 // VECTORS FOR PATHFINDING
     std::vector<coordinate> noGo;//represents places you absolutely should not step
@@ -94,9 +97,10 @@ public:
 
 //  METHODS FOR INTERACTING WITH THE WORLD
     bool findPath(std::vector<std::vector<tile*> > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}
-    int findDistance(coordinate goal){return abs(goal.x-x)+abs(goal.y-y);}
+    double findDistance(coordinate goal){return abs(goal.x-x)+abs(goal.y-y);}
     bool openDoor(std::vector<std::vector<tile*> > &_map);
     coordinate findTile(std::vector<std::vector<tile*> > &_map, bool findDoor, bool findHiddenTile);
+    bool findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)

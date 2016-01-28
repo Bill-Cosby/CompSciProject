@@ -40,17 +40,20 @@ int main()
     Sequence * Sequence1 = new Sequence;
     Selector * Selector1 = new Selector;
 
+    Selector1->addChild(new findPathNode);
+
     Selector1->addChild(new moveOnPathNode);
+
+
+    Sequence1->addChild(new findDoorNode);
+    Sequence1->addChild(new openDoorNode);
+
+    Selector1->addChild(new lookForItemNode);
 
     Selector1->addChild(Sequence1);
 
-    Selector1->addChild(new findPathNode);
-
-    Sequence1->addChild(new openDoorNode);
-    Sequence1->addChild(new findDoorNode);
-
-
     root->addChild(Selector1);
+
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
@@ -77,7 +80,7 @@ int main()
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(5,"Sword",'/',16,18));
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+    globalItems.push_back(new weapon(10,"Axe",'P',1,18));
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 
@@ -181,7 +184,8 @@ int main()
         }
         actors[0]->movement(&_map,&localItems,actors,window,keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
-            root->run(actors[i],_map);
+            std::cout << "_______________________________________\n";
+            root->run(actors[i],_map,localItems);
         }
         drawGameworld(&_map,&actors,localItems,window, announcementList);
     }

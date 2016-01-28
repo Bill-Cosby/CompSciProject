@@ -393,6 +393,7 @@ monster::monster(std::string speciesToLoad)
     std::cout << description << std::endl;
     controlled=false;
     sprinting=false;
+    goal = coordinate(-1,-1);
     memory=coordinate(-1,-1);
     post=coordinate(-1,-1);
     path.resize(0);

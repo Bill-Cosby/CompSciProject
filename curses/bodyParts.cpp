@@ -10,5 +10,8 @@ void hand::equip(item* itemToGrasp, bool equipping)
         if (inHand == itemToGrasp){
             inHand=NULL;
         }
+        else{
+            inHand == itemToGrasp;
+        }
     }
 }

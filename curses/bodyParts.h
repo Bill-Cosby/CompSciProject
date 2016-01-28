@@ -11,7 +11,7 @@ public:
     int weight;
     bool grasps;
     virtual void equip(item* itemToGrasp, bool equipping){}
-    virtual std::string hasHand(){return "error";}
+    virtual bool hasHand(){return false;}
     virtual bool hasFoot(){return false;}
 };
 
@@ -54,7 +54,8 @@ public:
     int damage;
     hand _hand;
     arm(int _weight, bool _left){weight=_weight;left=_left;_hand=hand(1,left);grasps=false;if (left==true){name = "left arm";}else{name = "right arm";}}
-    std::string hasHand(){return _hand.name;}
+    bool hasHand(){return true;}
+    void equip(item* itemToGrasp, bool equipping){_hand.equip(itemToGrasp,equipping);}
     item* ARM_ARMOR;
 };
 
