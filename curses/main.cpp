@@ -35,7 +35,7 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 int main()
 {
     city myCity;
-    myCity.generateCity();
+
 
     screen scr(150,80);
 
@@ -174,7 +174,7 @@ actors.push_back(new player("[HUMAN]"));
             delete globalItems[i];
         }
         */
-        drawGameworld(myCity.tileMap,&actors,&localItems,&scr);
+myCity.generateCity(&Actors);
 myCity.deleteTileMap50();
     return 0;
 }

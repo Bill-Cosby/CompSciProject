@@ -7,17 +7,19 @@
 
 class road
 {
+    public:
 coordinate * Point1;
 coordinate * Point2;
 int size;
 bool vertical;
-void makeRoad();
+
 };
 
 
 class box
 {
-box(){blank.resize(2);};
+public:
+
 box * subBox1;
 box * subBox2;
 double right;
@@ -25,19 +27,23 @@ double left;
 double bottom;
 double top;
 std::vector<coordinate *> blank;
-void divideBox();
+
+box(){blank.resize(2);}
+void divideBox(int);
 };
 
 class city: public box
 {
-int tileMap[50][50];
+std::vector<std::vector<tile*> > tileMap;
 std::vector <road *> roads;
+
 void deleteTileMap50();
 void setTileMap();
 city(){left=0; bottom=0; right=50; top=50; setTileMap();}
-generateCity();
-makeCity();
-drawCity();
+void generateCity(vector<actor *> *);
+void makeCity();
+void drawCity();
+void makeRoad(road*);
 };
 
 

@@ -1,34 +1,37 @@
 #include "generateCity.h"
-void road::makeRoad()
+#include <vector>
+
+void city::makeRoad(road* myRoad)
 {
- if(vertical==true)
+ if(myRoad->vertical==true)
  {
-  for(int a=0; a<=Point2->y-Point1->y; a++)
+  for(int a=0; a<=myRoad->Point2->y-myRoad->Point1->y; a++)
   {
-   tileMap[Point1->y+a][Point2->x]->defaultChar='/';
-   tileMap[Point2->y+a][Point1->x]->movementCost=10;
-   tileMap[Point2->y+a][Point1->x]->material=stone;
+   tileMap[myRoad->Point1->y+a][myRoad->Point2->x]=new tile('/',10,stone);
   }
-  }
+ }
 
-  if(vertical==false)
- {
-  for(int a=0; a<Point2->x-Point1->; a++)
+  if(myRoad->vertical==false)
   {
+  for(int a=0; a<myRoad->Point2->x-myRoad->Point1->x; a++)
+   {
+   tileMap[myRoad->Point2->y][myRoad->Point1->x+a]=new tile('/',10,stone);
 
-   tileMap[Point2->y][Point1->x+a]->defaultChar='/';
-   tileMap[Point2->y][Point1->x+a]->movementCost=10;
-   tileMap[Point2->y][Point1->x+a]->material=stone;
-  }
+   }
   }
 
 
 }
-void city::setTileMap();
+
+void city::setTileMap()
 {
-  for(int a=0 a<50; a++)
+    std::vector<tile*> blank1;
+    blank1.resize(50);
+    tileMap.resize(50);
+  for(int a=0; a<50; a++)
     {
-        for(b=0; b<50; b++)
+        tileMap[a]=blank1;
+        for(int b=0; b<50; b++)
         {
             tileMap[a][b]=new tile('/',10,grass);
         }
@@ -41,7 +44,7 @@ void city::deleteTileMap50()
 {
     for(int a=0; a<50; a++)
     {
-        for(b=0; b<50; b++)
+        for(int b=0; b<50; b++)
         {
             delete tileMap[a][b];
         }
@@ -54,14 +57,14 @@ void city::makeCity()
  {
       for(int a=0; a<roads.size(); a++)
       {
-          road[a]->makeRoad();
+         makeRoad(roads[a]);
       }
 }
 
 void city::generateCity()
 {
-divideBox(3);
-drawGameWorld();
+divideBox(3); //recursive box dividing and road drawing
+drawGameworld(tileMap,&actors,&localItems,&scr);
 }
 
 
