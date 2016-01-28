@@ -174,7 +174,7 @@ actors.push_back(new player("[HUMAN]"));
             delete globalItems[i];
         }
         */
-myCity.generateCity(&Actors);
+myCity.generateCity(&Actors,&localItems);
 myCity.deleteTileMap50();
     return 0;
 }

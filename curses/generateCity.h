@@ -37,10 +37,10 @@ class city: public box
 std::vector<std::vector<tile*> > tileMap;
 std::vector <road *> roads;
 
-void deleteTileMap50();
-void setTileMap();
 city(){left=0; bottom=0; right=50; top=50; setTileMap();}
-void generateCity(vector<actor *> *);
+void setTileMap();
+void deleteTileMap50();
+void generateCity(vector<actor *> *,vector<item*> *, screen*);
 void makeCity();
 void drawCity();
 void makeRoad(road*);
