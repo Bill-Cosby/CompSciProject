@@ -35,7 +35,22 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
-    Selector root = new Selector, selector1 = new Selector;
+    Selector * root = new Selector;
+
+    Sequence * Sequence1 = new Sequence;
+    Selector * Selector1 = new Selector;
+
+    Selector1->addChild(new moveOnPathNode);
+
+    Selector1->addChild(Sequence1);
+
+    Selector1->addChild(new findPathNode);
+
+    Sequence1->addChild(new openDoorNode);
+    Sequence1->addChild(new findDoorNode);
+
+
+    root->addChild(Selector1);
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
@@ -94,7 +109,9 @@ int main()
             }
             _map[y][x]->position=coordinate(x,y);
             _map[y][x]->sprite.setPosition(x*16,y*16);
+            std::cout << _map[y][x]->isDoor;
         }
+        std::cout << endl;
     }
 
 
@@ -162,8 +179,9 @@ int main()
                 keyrelease = true;
             }
         }
-        for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&_map,&localItems,actors,window,keyrelease, announcementList);
+        actors[0]->movement(&_map,&localItems,actors,window,keyrelease, announcementList);
+        for (int i=1;i<actors.size();i++){
+            root->run(actors[i],_map);
         }
         drawGameworld(&_map,&actors,localItems,window, announcementList);
     }

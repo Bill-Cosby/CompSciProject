@@ -187,7 +187,7 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
             }
             //if you aren't attacking anyone, move along your path.
             if (attacking==false){
-                moveOnPath(*_map);
+                moveOnPath();
             }
 
         }
@@ -199,7 +199,7 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
     return;
 }
 
-void monster::moveOnPath(std::vector<std::vector<tile*> >_map)
+void monster::moveOnPath()
 {
     if (path.size()!=0){
         pos(path[path.size()-1].y,path[path.size()-1].x);

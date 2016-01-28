@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1453829477 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1454002909 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -9,6 +9,7 @@
 	"building.h"
 	"generateCity.h"
 	"tiles.h"
+	"behaviorTree.h"
 
 1444240516 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\curses.h
 	"xcurses.h"
@@ -61,14 +62,14 @@
 	<stack>
 	<fstream>
 
-1453829558 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
-	"aStar.h"
+1454002645 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
 	<SFML/Graphics.hpp>
 	<cctype>
 	"bodyParts.h"
+	"aStar.h"
 
 1453825665 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
@@ -77,7 +78,7 @@
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1453829565 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1454002629 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
@@ -261,7 +262,7 @@
 1451778655 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\stealthai.cpp
 	"StealthAI.h"
 
-1453825665 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.h
+1453998503 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -273,14 +274,14 @@
 	"window.h"
 	<iostream>
 
-1453829312 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1453829861 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1453829454 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
 	"actor.h"
 	<SFML/Graphics.hpp>
 
-1453825665 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
+1453830552 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
 	"item.h"
 
 1453825665 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\materials.h
@@ -1117,7 +1118,7 @@
 	<time.h>
 	<random>
 
-1453829558 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actormenus.cpp
+1453998503 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
 1453925665 source:c:\compsciproject\curses\actormenus.cpp
@@ -1126,4 +1127,11 @@
 1453927316 c:\compsciproject\curses\behaviortree.h
 	<list>
 	"aStar.h"
+
+1454002070 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\interactionswithworld.cpp
+	"actor.h"
+
+1454002877 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\behaviortree.h
+	<list>
+	"actor.h"
 

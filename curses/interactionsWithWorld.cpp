@@ -22,13 +22,14 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
 
     bool tileWorks;
 
-    for (coordinate _o : openSet){
-        if (openSet.size() > 50){
+    for (int i = 0;i < openSet.size(); i++){
+        temp = *openSet[i];
+        if (openSet.size() > 10000){
             return coordinate(-1,-1);
         }
         tileWorks = true;
         for (coordinate _c : closedSet){
-            if (_c == _o){
+            if (_c == *openSet[i]){
                 tileWorks = false;
                 break;
             }
@@ -37,33 +38,33 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             continue;
         }
         if (isDoor == true){
-            temp = *_o;
-            for (coordinate_o : openSet){
-                delete _o;
-            }
-            if (_map[_o.y][_o.x]->isDoor == true){
+            temp = *openSet[i];
+            if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true){
+                goal = temp;
                 return temp;
             }
         }
         if (hiddenFromEnemy == true){
-            temp = *_o;
-            for (coordinate_o : openSet){
-                delete _o;
+            temp = *openSet[i];
+            for (coordinate* _o : openSet){
+                delete openSet[i];
             }
-            if (!(canSee(_map,memory,_o))){
+            if (!(canSee(_map,memory,*openSet[i]))){
                 return temp;
             }
         }
-        closedSet.push_back(*_o);
+        closedSet.push_back(*openSet[i]);
         for (int i=-1;i<2;i++){
             for (int j=-1;j<2;j++){
                 if (abs(i) == abs(j)){
                     continue;
                 }
-                openSet.push_back(new coordinate(_o+i,o+j));
+                if (temp.x+i>0 and temp.x+i < _map.size() and temp.y+j > 0 and temp.y+j < _map.size()){
+                    openSet.push_back(new coordinate(temp.x+i,temp.y+j));
+                }
             }
         }
-        delete _o;
+        delete openSet[i];
     }
     return coordinate(-1,-1);
 }
