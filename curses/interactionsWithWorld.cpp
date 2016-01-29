@@ -2,7 +2,7 @@
 
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    if (findDistance(goal)<=2){
+    if (findDistance(goal) <= 1.4){
         _map[goal.y][goal.x]->interactWithDoor(true);
         return true;
     }
@@ -31,7 +31,7 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
     int positionInVector = 0;
     for (item* _i : localItems){
         if (findDistance(coordinate(_i->x,_i->y)) < 30){
-            if (findDistance(coordinate(_i->x,_i->y)) <= 2){
+            if (findDistance(coordinate(_i->x,_i->y)) <= 1){
                 if (equipItem(_i)) localItems.erase(localItems.begin()+positionInVector);
                 path.clear();
                 memory = coordinate(-1,-1);

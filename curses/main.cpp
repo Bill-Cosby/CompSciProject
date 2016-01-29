@@ -43,16 +43,17 @@ int main()
 
     Selector1->addChild(new moveOnPathNode);
 
+    Selector1->addChild(new findDoorNode);
+
     Selector1->addChild(new lookForItemNode);
 
-    Selector1->addChild(new findDoorNode);
 
     root->addChild(Selector1);
 
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(10);
 
     announcements announcementList;
 

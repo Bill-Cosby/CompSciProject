@@ -91,14 +91,6 @@ public:
     {
         std::cout << "Do I have a path?\n";
         if (testingCharacter->path.size()>0){
-                std::cout << testingCharacter->path[0].x << "," << testingCharacter->path[0].y << std::endl;
-            if (_map[testingCharacter->path[0].y][testingCharacter->path[0].x]->isDoor){
-                std::cout << "Adjacent to a door...\n";
-                if(_map[testingCharacter->path[0].y][testingCharacter->path[0].x]->isOpen()){
-                    _map[testingCharacter->path[0].y][testingCharacter->path[0].x]->interactWithDoor(true);
-                }
-                return false;
-            }
             std::cout << "Moving On Path...\n";
             testingCharacter->moveOnPath();
             return true;
@@ -116,7 +108,7 @@ public:
         std::cout << "Looking for a door...\n";
         if (testingCharacter->findTile(_map,true,false)!= coordinate(-1,-1)){
             std::cout << "Found a door...\n";
-            if (testingCharacter->findDistance(testingCharacter->goal)<=2){
+            if (testingCharacter->findDistance(testingCharacter->goal)<=1.4){
                 testingCharacter->openDoor(_map);
             }
 

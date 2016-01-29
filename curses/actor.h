@@ -97,7 +97,7 @@ public:
 
 //  METHODS FOR INTERACTING WITH THE WORLD
     bool findPath(std::vector<std::vector<tile*> > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}
-    double findDistance(coordinate goal){return abs(goal.x-x)+abs(goal.y-y);}
+    double findDistance(coordinate goal){return sqrt(pow((x-goal.x),2) + pow((y-goal.y),2));}
     bool openDoor(std::vector<std::vector<tile*> > &_map);
     coordinate findTile(std::vector<std::vector<tile*> > &_map, bool findDoor, bool findHiddenTile);
     bool findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems);
