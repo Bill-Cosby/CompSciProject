@@ -2,7 +2,8 @@
 
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    if (findDistance(goal) <= 1.4){
+    std::cout << findDistance(goal) << std::endl;
+    if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
         _map[goal.y][goal.x]->interactWithDoor(true);
         return true;
     }
@@ -11,15 +12,24 @@ bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
     }
 }
 
-bool actor::equipItem(item* itemEquipping)
+bool actor::equipItem(std::vector<item*> & localItems)
 {
-    if (itemEquipping->canEquip){
-        for (bodyPart * _b : body){
-            if (_b->hasHand() == true){
-                _b->equip(itemEquipping, true);
-                equipment.push_back(itemEquipping);
-                std::cout << "EQUIPPED!!!\n";
-                return true;
+    if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
+        if (itemToPickUp->canEquip){
+            for (bodyPart * _b : body){
+                if (_b->hasHand() == true){
+                    _b->equip(itemToPickUp, true);
+
+                    equipment.push_back(itemToPickUp);
+
+                    for (int i = 0; i < localItems.size(); i++){
+                        if (localItems[i] == itemToPickUp){
+                            localItems.erase(localItems.begin() + i);
+                        }
+                    }
+
+                    return true;
+                }
             }
         }
     }
@@ -31,18 +41,14 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
     int positionInVector = 0;
     for (item* _i : localItems){
         if (findDistance(coordinate(_i->x,_i->y)) < 30){
-            if (findDistance(coordinate(_i->x,_i->y)) <= 1){
-                if (equipItem(_i)) localItems.erase(localItems.begin()+positionInVector);
-                path.clear();
-                memory = coordinate(-1,-1);
-            }
-            if (canSee(_map,coordinate(x,y),coordinate(_i->x,_i->y))){
-                std::cout << "Here\n";
-                if (_i->attack+attack > attack or _i->defense+defense > defense){
+            if (canSee(_map,coordinate(_i->x,_i->y),coordinate(x,y))){
+
+                if (_i->attack+attack > totalAttack() or _i->defense+defense > defense){
                     goal = coordinate(_i->x,_i->y);
-                    findPath(_map);
+                    itemToPickUp = _i;
                     return true;
                 }
+
             }
         }
         positionInVector++;
@@ -79,7 +85,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             temp = *openSet[i];
             if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true){
                 goal = temp;
-                findPath(_map);
                 return temp;
             }
         }
@@ -90,7 +95,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             }
             if (!(canSee(_map,memory,*openSet[i]))){
                 goal = temp;
-                findPath(_map);
                 return temp;
             }
         }
@@ -108,4 +112,22 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
         delete openSet[i];
     }
     return coordinate(-1,-1);
+}
+
+bool actor::decideIfCanAttack(std::vector<actor*> actors)
+{
+    int totalDanger = 0;
+    int lowestAttack = 10000;
+    for (actor* _a : actors){
+        if (findDistance(coordinate(_a->col(),_a->row()))<=15)){
+            totalDanger += _a->totalAttack()-totalAttack();
+            if (_a->totalAttack() < lowestAttack){
+                actorAttacking = _a;
+            }
+        }
+    }
+    if (totalDanger > 3){
+        return false;
+    }
+    return true;
 }

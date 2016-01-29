@@ -3,6 +3,7 @@
 #include "window.h"
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <SFML/Graphics.hpp>
 #include <cctype>
 #include "bodyParts.h"
@@ -27,6 +28,9 @@ protected:
 public:
     coordinate memory;
     coordinate goal;
+
+    item* itemToPickUp;
+
     std::vector<coordinate> path;
     sf::Texture texture;
     sf::Sprite sprite;
@@ -58,6 +62,8 @@ public:
     int accuracy;
     int defense;
     int counter;
+
+    int totalAttack(){int temp;for (item* _i : equipment){temp += _i->attack;} return temp;}
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return 5;}
     int customSpeed;
@@ -70,8 +76,11 @@ public:
     bool controlled;
     bool hidden;
 
+//  ENEMY TO FIGHT
+    actor* actorAttacking;
+
 //  INVENTORY INTERACTION
-    bool equipItem(item* itemEquipping);
+    bool equipItem(std::vector<item*> &localItems);
 
 
 // VECTORS FOR PATHFINDING
@@ -97,10 +106,12 @@ public:
 
 //  METHODS FOR INTERACTING WITH THE WORLD
     bool findPath(std::vector<std::vector<tile*> > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}
-    double findDistance(coordinate goal){return sqrt(pow((x-goal.x),2) + pow((y-goal.y),2));}
+    double findDistance(coordinate goal){return floor(sqrt(pow((x-goal.x),2) + pow((y-goal.y),2)) / .1) * .1;}
     bool openDoor(std::vector<std::vector<tile*> > &_map);
     coordinate findTile(std::vector<std::vector<tile*> > &_map, bool findDoor, bool findHiddenTile);
     bool findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems);
+
+    bool decideIfCanAttack(std::vector<actor*> actors);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)

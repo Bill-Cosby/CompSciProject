@@ -48,8 +48,8 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
     int timesthroughLoop=0;
 
     while (openSet.size()!=0){
-            std::cout << sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) << std::endl;
-        if (sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) <= 1.4){
+
+        if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){
 
@@ -112,6 +112,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
         timesthroughLoop++;
+
         if (canSee(_map,goal,currentNode.position)){
             std::vector<coordinate> path;
             path.push_back(currentNode.position);
@@ -200,10 +201,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
             error += delta_y;
             x1 += ix;
             if (coordinate(x1,y1) == checkSpot)return true;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor == true)){
-                if (test_map[y1][x1]->isOpen() == true){
-                    continue;
-                }
+            if (test_map[y1][x1]->movementCost==-1){
+                return false;
+            }
+            if (test_map[y1][x1]->isDoor){
+                if (test_map[y1][x1]->isOpen())continue;
                 return false;
             }
         }
@@ -225,10 +227,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
             error += delta_x;
             y1 += iy;
             if (coordinate(x1,y1) == checkSpot)return true;
-            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor == true)){
-                if (test_map[y1][x1]->isOpen() == true){
-                    continue;
-                }
+            if (test_map[y1][x1]->movementCost==-1){
+                return false;
+            }
+            if (test_map[y1][x1]->isDoor){
+                if (test_map[y1][x1]->isOpen())continue;
                 return false;
             }
         }

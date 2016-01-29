@@ -1,7 +1,6 @@
 #include <vector>
 #include <string>
 #include <SFML/Audio.hpp>
-#include <curses.h>
 #include "actor.h"
 
 class menu_button
@@ -34,5 +33,4 @@ class mainMenu : custom_menu
 public:
     bool quit_game;
     mainMenu(std::string,bool, int);
-    void mainMenuLoop(screen scr);
 };

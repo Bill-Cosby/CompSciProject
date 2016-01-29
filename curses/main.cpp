@@ -38,14 +38,27 @@ int main()
     Selector * root = new Selector;
 
     Sequence * Sequence1 = new Sequence;
+    Sequence * Sequence2 = new Sequence;
     Selector * Selector1 = new Selector;
 
 
+    Sequence1->addChild(new findDoorNode);
+    Sequence1->addChild(new openDoorNode);
+
+    Sequence2->addChild(new lookForItemNode);
+    Sequence2->addChild(new pickUpItemNode);
+
+//===========================================
+
+    Selector1->addChild(Sequence1);
+
+    Selector1->addChild(Sequence2);
+
     Selector1->addChild(new moveOnPathNode);
 
-    Selector1->addChild(new findDoorNode);
+    Selector1->addChild(new findPathNode);
 
-    Selector1->addChild(new lookForItemNode);
+
 
 
     root->addChild(Selector1);
@@ -64,19 +77,11 @@ int main()
     char ch;
 
 
-    mainMenu first_menu("Main Menu",false,100);
-    //first_menu.mainMenuLoop(scr);
-    if(first_menu.quit_game==true){
-        endwin();
-        return 0;
-    }
-
-    erase();
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
     globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 
@@ -178,7 +183,7 @@ int main()
                 keyrelease = true;
             }
         }
-        actors[0]->movement(&_map,&localItems,actors,window,keyrelease, announcementList);
+        actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
             std::cout << "_______________________________________\n";
             root->run(actors[i],_map,localItems);
