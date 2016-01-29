@@ -2,9 +2,8 @@
 
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    coordinate doorCoord = findTile(_map,true,false);
-    if (findDistance(doorCoord)<=2){
-        _map[doorCoord.y][doorCoord.x]->interactWithDoor(true);
+    if (findDistance(goal)<=2){
+        _map[goal.y][goal.x]->interactWithDoor(true);
         return true;
     }
     else{
@@ -38,8 +37,10 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
                 memory = coordinate(-1,-1);
             }
             if (canSee(_map,coordinate(x,y),coordinate(_i->x,_i->y))){
+                std::cout << "Here\n";
                 if (_i->attack+attack > attack or _i->defense+defense > defense){
                     goal = coordinate(_i->x,_i->y);
+                    findPath(_map);
                     return true;
                 }
             }
@@ -61,7 +62,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
 
     for (int i = 0;i < openSet.size(); i++){
         temp = *openSet[i];
-        if (openSet.size() > 1000){
+        if (openSet.size() > 10000){
             return coordinate(-1,-1);
         }
         tileWorks = true;
@@ -78,6 +79,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             temp = *openSet[i];
             if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true){
                 goal = temp;
+                findPath(_map);
                 return temp;
             }
         }

@@ -199,7 +199,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
 
             error += delta_y;
             x1 += ix;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (coordinate(x1,y1) == checkSpot)return true;
+            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor == true)){
+                if (test_map[y1][x1]->isOpen() == true){
+                    continue;
+                }
                 return false;
             }
         }
@@ -220,7 +224,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
 
             error += delta_x;
             y1 += iy;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (coordinate(x1,y1) == checkSpot)return true;
+            if (test_map[y1][x1]->movementCost==-1 or (test_map[y1][x1]->isDoor == true)){
+                if (test_map[y1][x1]->isOpen() == true){
+                    continue;
+                }
                 return false;
             }
         }

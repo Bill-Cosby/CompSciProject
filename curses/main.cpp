@@ -40,17 +40,12 @@ int main()
     Sequence * Sequence1 = new Sequence;
     Selector * Selector1 = new Selector;
 
-    Selector1->addChild(new findPathNode);
 
     Selector1->addChild(new moveOnPathNode);
 
-
-    Sequence1->addChild(new findDoorNode);
-    Sequence1->addChild(new openDoorNode);
-
     Selector1->addChild(new lookForItemNode);
 
-    Selector1->addChild(Sequence1);
+    Selector1->addChild(new findDoorNode);
 
     root->addChild(Selector1);
 
@@ -80,7 +75,7 @@ int main()
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(5,"Sword",'/',16,18));
-    globalItems.push_back(new weapon(10,"Axe",'P',1,18));
+    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 
