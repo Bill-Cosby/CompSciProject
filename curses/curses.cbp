@@ -142,6 +142,8 @@
 		<Unit filename="noise/vectortable.h" />
 		<Unit filename="noiseutils.cpp" />
 		<Unit filename="noiseutils.h" />
+		<Unit filename="shadowcasting.cpp" />
+		<Unit filename="shadowcasting.h" />
 		<Unit filename="tile.cpp" />
 		<Unit filename="tile.h" />
 		<Unit filename="tiles.cpp" />

@@ -17,6 +17,7 @@ public:
 
     bool isDoor;
     bool isContainer;
+    bool visible;
     char defaultchar;
     int movementCost;
     double elevation;

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1454025668 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1454144907 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -62,52 +62,49 @@
 	<stack>
 	<fstream>
 
-1454023117 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
+1454143542 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
+	<math.h>
 	<SFML/Graphics.hpp>
 	<cctype>
 	"bodyParts.h"
 	"aStar.h"
 
-1453541995 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
+1454143135 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"RSL.h"
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1454023117 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
+1454143996 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1453494527 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
+1454141689 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.h
 	"tile.h"
 	<string>
 	<stdio.h>
 	<stdlib.h>
 	<sstream>
 	<vector>
-	<curses.h>
 	<SFML/Graphics.hpp>
 
-1453494527 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
-	"window.h"
-	<iostream>
+1454141689 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\window.cpp
 
-1452720104 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
+1454141689 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
 	<limits>
 	<iostream>
-	<curses.h>
 	"tile.h"
 	<queue>
 	<sstream>
 
-1454027408 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
+1454141689 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -231,14 +228,13 @@
 1450459306 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1452720105 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
+1454141689 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.h
 	<vector>
 	<string>
 	<SFML/Audio.hpp>
-	<curses.h>
 	"actor.h"
 
-1452720105 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
+1454141689 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\menu.cpp
 	"menu.h"
 
 1452720105 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\node.h
@@ -274,11 +270,12 @@
 	"window.h"
 	<iostream>
 
-1453937802 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1454144804 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1453937802 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
+1454144896 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
 	"actor.h"
+	"shadowcasting.h"
 	<SFML/Graphics.hpp>
 
 1453937802 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\item.cpp
@@ -1125,13 +1122,23 @@
 	<list>
 	"actor.h"
 
-1454025680 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\interactionswithworld.cpp
+1454144224 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
 
-1454026920 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\behaviortree.h
+1454143420 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\behaviortree.h
 	<list>
 	"actor.h"
 
 1454102798 source:c:\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
+
+1454145058 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.h
+	"tile.h"
+	<vector>
+	<math.h>
+	<cmath>
+	<SFML/Graphics.hpp>
+
+1454145709 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.cpp
+	"shadowcasting.h"
 

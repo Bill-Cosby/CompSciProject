@@ -119,15 +119,23 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors)
     int totalDanger = 0;
     int lowestAttack = 10000;
     for (actor* _a : actors){
-        if (findDistance(coordinate(_a->col(),_a->row()))<=15)){
+        if (_a == this)continue;
+        if (findDistance(coordinate(_a->col(),_a->row()))<=15){
+
             totalDanger += _a->totalAttack()-totalAttack();
+            std::cout << _a->totalAttack();
             if (_a->totalAttack() < lowestAttack){
                 actorAttacking = _a;
             }
         }
     }
-    if (totalDanger > 3){
+    if (totalDanger > totalAttack()){
         return false;
     }
+    if (actorAttacking != NULL){
+        goal = coordinate(actorAttacking->col(), actorAttacking->row());
+    }
+    else return false;
+
     return true;
 }

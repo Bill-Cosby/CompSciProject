@@ -39,8 +39,8 @@ int main()
 
     Sequence * Sequence1 = new Sequence;
     Sequence * Sequence2 = new Sequence;
+    Sequence * Sequence3 = new Sequence;
     Selector * Selector1 = new Selector;
-
 
     Sequence1->addChild(new findDoorNode);
     Sequence1->addChild(new openDoorNode);
@@ -48,7 +48,12 @@ int main()
     Sequence2->addChild(new lookForItemNode);
     Sequence2->addChild(new pickUpItemNode);
 
+    Sequence3->addChild(new decideIfCanAttackNode);
+    Sequence3->addChild(new attackNode);
+
 //===========================================
+
+    Selector1->addChild(Sequence3);
 
     Selector1->addChild(Sequence1);
 
@@ -186,9 +191,9 @@ int main()
         actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
             std::cout << "_______________________________________\n";
-            root->run(actors[i],_map,localItems);
+            root->run(actors[i],_map,localItems,actors);
         }
-        drawGameworld(&_map,&actors,localItems,window, announcementList);
+        drawGameworld(_map,actors,localItems,window, announcementList);
     }
 
         for (int i=0;i<actors.size();i++){

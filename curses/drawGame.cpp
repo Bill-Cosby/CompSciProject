@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *actors,std::vector<item*> localItems, sf::RenderWindow & window, announcements & announcementList)
+void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> localItems, sf::RenderWindow & window, announcements & announcementList)
 {
     sf::RectangleShape announcementBorder;
 
@@ -13,12 +13,11 @@ void drawGameworld(std::vector<std::vector<tile*> > *_map, std::vector<actor*> *
 
     coordinate startingposition;
     coordinate charplaced;
-    std::vector<actor*> temp=*actors;
 short foregroundValue;
 short backgroundValue;
     int colorToUse=1;
 
-    startingposition=coordinate((temp[0])->col(),(temp[0])->row());
+    startingposition=coordinate((actors[0])->col(),(actors[0])->row());
 
 
     bool drawActor=false;
@@ -34,15 +33,16 @@ short backgroundValue;
     {
         for (int x=0;x<25;x++)
         {
-            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<(*_map)[0].size() and y+charplaced.y<(*_map).size()){
+            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
                 for (item* _i : localItems){
                     window.draw(_i->sprite);
                 }
-                for (actor* _a: *actors)
+                for (actor* _a: actors)
                 {
                     window.draw(_a->sprite);
                 }
-                (*_map)[y][x]->drawTile(window);
+                do_fov(_map,actors[0]->col(),actors[0]->row(),10,window);
+                //(*_map)[y][x]->drawTile(window);
             }
         }
     }

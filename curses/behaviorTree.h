@@ -34,7 +34,7 @@ public:
     {
         for (Node* child : getChildren()){
             std::cout << "selecting child...\n";
-            if (child->run(testingCharacter, _map, localItems)){
+            if (child->run(testingCharacter, _map, localItems, actors)){
                 return true;
             }
         }
@@ -49,7 +49,7 @@ public:
     {
         std::cout << "Running through sequence...\n";
         for (Node* child : getChildren()){
-            if (!(child->run(testingCharacter,_map, localItems))){
+            if (!(child->run(testingCharacter,_map, localItems, actors))){
                 return false;
             }
         }
@@ -152,7 +152,7 @@ public:
 class pickUpItemNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> actors) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
         std::cout << "Trying to pick up items...\n";
         if (testingCharacter->equipItem(localItems)){
@@ -184,7 +184,7 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
         std::cout << "Take that!\n";
-        testingCharacter->attackEnemy(actorAttacking);
+        testingCharacter->attackEnemy(_map);
     }
 };
 

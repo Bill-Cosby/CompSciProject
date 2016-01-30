@@ -17,52 +17,52 @@ void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *loc
     delete this;
 }
 
-void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > *_map)
+void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map)
 {
     coordinate dodgeDirection(x-enemyDodgingFrom->col(),y-enemyDodgingFrom->row());
     bool dodged=false;
     coordinate temp=coordinate(x,y);
-    if (y+dodgeDirection.y>=0 and y+dodgeDirection.y<(*_map).size() and (*_map)[y+dodgeDirection.y][x]->movementCost!=-1){
+    if (y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map.size() and _map[y+dodgeDirection.y][x]->movementCost!=-1){
         y+=dodgeDirection.y;
-        if (x+dodgeDirection.x>=0 and x+dodgeDirection.x<(*_map).size() and (*_map)[y][x+dodgeDirection.x]->movementCost!=-1){
+        if (x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map.size() and _map[y][x+dodgeDirection.x]->movementCost!=-1){
             x+=dodgeDirection.x;
         }
         dodged=true;
     }
         dodgeDirection.y*=-1;
         dodgeDirection.x*=-1;
-    if(dodged==false and !(coordinate(x,y+dodgeDirection.y)==coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and y+dodgeDirection.y>=0 and y+dodgeDirection.y<(*_map).size() and (*_map)[y+dodgeDirection.y][x]->movementCost!=-1){
+    if(dodged==false and !(coordinate(x,y+dodgeDirection.y)==coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map.size() and _map[y+dodgeDirection.y][x]->movementCost!=-1){
         y+=dodgeDirection.y;
     }
-    else if (dodged==false and !(coordinate(x+dodgeDirection.x,y)!=coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and x+dodgeDirection.x>=0 and x+dodgeDirection.x<(*_map).size() and (*_map)[y][x+dodgeDirection.x]->movementCost!=-1){
+    else if (dodged==false and !(coordinate(x+dodgeDirection.x,y)!=coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map.size() and _map[y][x+dodgeDirection.x]->movementCost!=-1){
         x+=dodgeDirection.x;
     }
     if (temp==coordinate(x,y)){
-        if (dodgeDirection.y==0 and (*_map)[y+1][x]->movementCost!=-1){
+        if (dodgeDirection.y==0 and _map[y+1][x]->movementCost!=-1){
             y+=1;
         }
-        else if (dodgeDirection.y==0 and (*_map)[y--][x]->movementCost!=-1){
+        else if (dodgeDirection.y==0 and _map[y--][x]->movementCost!=-1){
             y+=-1;
         }
-        else if (dodgeDirection.x==0 and (*_map)[y][x+1]->movementCost!=-1){
+        else if (dodgeDirection.x==0 and _map[y][x+1]->movementCost!=-1){
             x+=1;
         }
-        else if (dodgeDirection.x==0 and (*_map)[y][x--]->movementCost!=-1){
+        else if (dodgeDirection.x==0 and _map[y][x--]->movementCost!=-1){
             x+=-1;
         }
     }
 }
 
-void actor::attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> > *_map)
+void actor::attackEnemy(std::vector<std::vector<tile*> > &_map)
 {
     srand(time(NULL));
     srand(rand()%time(NULL));
     srand(rand()%rand()%time(NULL));
-    if (rand()%100<accuracy and enemyAttacking->name!=name){
-        //enemyAttacking->health-=attack-enemyAttacking->defense;
+    if (rand()%100<accuracy and actorAttacking->name!=name){
+        //actorAttacking->health-=attack-actorAttacking->defense;
     }
-    else if (enemyAttacking->name!=name){
-        enemyAttacking->dodgeAttack(this,_map);
+    else if (actorAttacking->name!=name){
+        actorAttacking->dodgeAttack(this,_map);
     }
 }
 
@@ -125,7 +125,7 @@ bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot
     return true;
 }
 
-void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+void monster::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
 {
 
     //initialize the goal to not be used
@@ -143,16 +143,16 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
     //if you're evil and you see someone of a different species, they're your target
     for (actor* _a : actors){
         noGo.push_back(coordinate(_a->col(),_a->row()));
-        if (EVIL==true and species!=_a->species and canSee(*_map,coordinate(_a->col(),_a->row()))){
+        if (EVIL==true and species!=_a->species and canSee(_map,coordinate(_a->col(),_a->row()))){
             goal = coordinate(_a->col(),_a->row());
             memory=goal;
         }
     }
 
     // if you can see your goal, make a path to it.
-    if (canSee(*_map,goal))
+    if (canSee(_map,goal))
     {
-        path = pathFinder(*_map,coordinate(col(),row()),goal,noGo);
+        path = pathFinder(_map,coordinate(col(),row()),goal,noGo);
     }
 
 
@@ -166,13 +166,13 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
             //if you have no memory:
             if (memory.x!=-1 and memory.y!=-1)
             {
-                path=pathFinder(*_map,coordinate(col(),row()),memory,noGo);
+                path=pathFinder(_map,coordinate(col(),row()),memory,noGo);
                 memory=coordinate(-1,-1);
             }
 
             //if your position isn't your post and you have a post
             else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
-                path=pathFinder(*_map,coordinate(col(),row()),post,noGo);
+                path=pathFinder(_map,coordinate(col(),row()),post,noGo);
             }
         }
         //if you have a path:
@@ -181,7 +181,7 @@ void monster::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*>
             //if an enemy is adjacent, attack them and set attacking to true.
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attackEnemy(_a, _map);
+                    attackEnemy(_map);
                     attacking=true;
                 }
             }
@@ -368,6 +368,8 @@ monster::monster(std::string speciesToLoad)
     sprinting=false;
     controlled=true;
     sprinting=false;
+
+    actorAttacking = NULL;
 
     std::string fileName = "data/creatures/creature_standard.raw";
 

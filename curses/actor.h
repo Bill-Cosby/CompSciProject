@@ -100,8 +100,8 @@ public:
 
 
 //  METHODS FOR COMBAT
-    void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> >*_map);
-    void attackEnemy(actor* enemyAttacking, std::vector<std::vector<tile*> >* _map);
+    void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map);
+    void attackEnemy(std::vector<std::vector<tile*> > &_map);
     void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
@@ -148,7 +148,7 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
+    void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath();
