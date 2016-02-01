@@ -8,14 +8,19 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
     speed=5;
     name = _name;
     type = _name;
-    symbol = _symbol;
-    canEquip=true;
+    equipped = false;
+    canEquip = true;
+    canWear = false;
     canUse=false;
     x = _x;
     y = _y;
     selected=false;
     material=iron;
-    locationOnBody = "right hand";
+    texture = RSL::getTextureData("data/items/weapon_type.raw",name+".texture");
+
+    sprite.setTexture(texture);
+
+    sprite.setPosition(x*16,y*16);
 }
 
 std::string weapon::itemDescription()
@@ -38,7 +43,6 @@ void weapon::equip(bool equipping)
 corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, int _x, int _y)
 {
     name=_name;
-    symbol=_symbol;
     equipment=_equipment;
     x=_x;
     y=_y;

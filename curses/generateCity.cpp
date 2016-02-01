@@ -1,6 +1,14 @@
 #include "generateCity.h"
 #include <vector>
+#include "drawGame.h"
+#include <random>
 
+
+void city::generateCity( std:: vector<actor*> & actors,std::vector<item*> & localItems, sf::RenderWindow & window, announcements & Announcements)
+{
+divideBox(3); //recursive box dividing and road drawing
+drawGameworld(tileMap,actors,localItems, window, Announcements);
+}
 
 
 void city::setTileMap()
@@ -41,25 +49,22 @@ void city::makeCity()
       }
 }
 
-void city::generateCity( std:: vector<actor*> * actors,std::vector<item*> * localItems, screen * scr)
-{
-divideBox(3); //recursive box dividing and road drawing
-drawGameworld(tileMap,actors,localItems,scr);
-}
 
 
 void box::divideBox(int level)
 {
   if(level!=0)
   {
-
-    if(uniform_int_distribution(0,1)==0) //if line vertical
+std::default_random_engine generator;
+std::uniform_int_distribution<int> halfChance(0,1);
+    if(halfChance(generator)==0) //if line vertical
     {
-        width=right-left;
-        uniform_real_distribution<double>(left+width/10, right+width/10) splitPoint;
+
+        std:: uniform_real_distribution<double> findSplitPoint(left, right);
+        double splitPoint=findSplitPoint(generator);
         coordinate lowPoint(bottom, splitPoint);
         coordinate highPoint(top, splitPoint);
-       tempRoad=new road;
+        tempRoad=new road;
         tempRoad->vertical=true;
         tempRoad->Point1=&leftPoint;
         tempRoad->Point2=&rightPoint;

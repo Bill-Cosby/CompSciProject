@@ -4,6 +4,7 @@
 #include <time.h>
 #include <random>
 #include <vector>
+#include "actor.h"
 
 class road
 {
@@ -40,7 +41,7 @@ std::vector <road *> roads;
 city(){left=0; bottom=0; right=50; top=50; setTileMap();}
 void setTileMap();
 void deleteTileMap50();
-void generateCity(vector<actor *> *,vector<item*> *, screen*);
+void generateCity(std::vector<actor *> &,std::vector<item*> &, sf::RenderWindow&, announcements&);
 void makeCity();
 void drawCity();
 void makeRoad(road*);

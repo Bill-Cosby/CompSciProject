@@ -1,7 +1,6 @@
 #include <vector>
 #include <string>
-//#include <SFML/Audio.hpp>
-#include <curses.h>
+#include <SFML/Audio.hpp>
 #include "actor.h"
 
 class menu_button
@@ -19,8 +18,8 @@ public:
 class custom_menu
 {
 protected:
-//    sf::SoundBuffer buffer;
-//    sf::Sound sound;
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
 public:
     std::vector<menu_button> listOfButtons;
     bool verticle;
@@ -34,5 +33,4 @@ class mainMenu : custom_menu
 public:
     bool quit_game;
     mainMenu(std::string,bool, int);
-    void mainMenuLoop(screen scr);
 };

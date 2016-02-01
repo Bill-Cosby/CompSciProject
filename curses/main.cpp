@@ -3,9 +3,10 @@
 #include "include/dungeon.h"
 #include <string>
 #include <cstdlib>
-//#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "building.h"
 #include "generateCity.h"
+#include "actor.h"
 
 
 using namespace std;
@@ -34,7 +35,9 @@ const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','
 
 int main()
 {
+    sf::RenderWindow window;
     city myCity;
+    announcements no_announcements;
 
 
     screen scr(150,80);
@@ -42,16 +45,10 @@ int main()
     char ch;
 
 
-    mainMenu first_menu("Main Menu",false,100);
-    //first_menu.mainMenuLoop(scr);
-    if(first_menu.quit_game==true){
-        endwin();
-        return 0;
-    }
 
-    erase();
-        building test;
-        test.buildStructure();
+
+    //    building test;
+    //    test.buildStructure();
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
@@ -174,7 +171,7 @@ actors.push_back(new player("[HUMAN]"));
             delete globalItems[i];
         }
         */
-myCity.generateCity(&Actors,&localItems);
+myCity.generateCity(&Actors,&localItems,&window,&no_announcements);
 myCity.deleteTileMap50();
     return 0;
 }
