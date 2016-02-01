@@ -71,7 +71,7 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
-    window.setFramerateLimit(10);
+    //window.setFramerateLimit(60);
 
     announcements announcementList;
 
@@ -172,8 +172,8 @@ int main()
 
 
     actors.push_back(new player("human"));
-    actors.push_back(new monster("goblin"));
-    actors[1]->pos(1,1);
+   // actors.push_back(new monster("goblin"));
+   // actors[1]->pos(1,1);
     actors[0]->pos(17,17);
 
     while (window.isOpen())

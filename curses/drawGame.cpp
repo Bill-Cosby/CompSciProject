@@ -29,6 +29,9 @@ short backgroundValue;
 
     window.draw(announcementBorder);
 
+    do_fov(_map,actors[0]->col(),actors[0]->row(),15,window);
+    //do_fov(_map,5,5,5,window);
+
     for (int y=0;y<25;y++)
     {
         for (int x=0;x<25;x++)
@@ -41,7 +44,6 @@ short backgroundValue;
                 {
                     window.draw(_a->sprite);
                 }
-                do_fov(_map,actors[0]->col(),actors[0]->row(),10,window);
                 //(*_map)[y][x]->drawTile(window);
             }
         }
