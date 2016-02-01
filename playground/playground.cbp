@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="playground" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/playground" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/playground" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/RSL.h" />
+		<Unit filename="include/aStar.h" />
+		<Unit filename="include/actor.h" />
+		<Unit filename="include/behaviorTree.h" />
+		<Unit filename="include/bodyParts.h" />
+		<Unit filename="include/creationMenu.h" />
+		<Unit filename="include/drawGame.h" />
+		<Unit filename="include/interactionsWithWorld.h" />
+		<Unit filename="include/item.h" />
+		<Unit filename="include/materials.h" />
+		<Unit filename="include/menu.h" />
+		<Unit filename="include/node.h" />
+		<Unit filename="include/noiseutils.h" />
+		<Unit filename="include/shadowcasting.h" />
+		<Unit filename="include/tile.h" />
+		<Unit filename="include/tiles.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/RSL.cpp" />
+		<Unit filename="src/aStar.cpp" />
+		<Unit filename="src/actor.cpp" />
+		<Unit filename="src/actorMenus.cpp" />
+		<Unit filename="src/bodyParts.cpp" />
+		<Unit filename="src/drawGame.cpp" />
+		<Unit filename="src/interactionsWithWorld.cpp" />
+		<Unit filename="src/item.cpp" />
+		<Unit filename="src/materials.cpp" />
+		<Unit filename="src/shadowcasting.cpp" />
+		<Unit filename="src/tile.cpp" />
+		<Unit filename="src/tiles.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
