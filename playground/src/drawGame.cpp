@@ -1,24 +1,27 @@
 #include "../include/drawGame.h"
-void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> localItems, sf::RenderWindow & window, announcements & announcementList)
+void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> localItems, sf::RenderWindow & window, announcements & announcementList, coordinate &temp)
 {
-    sf::RectangleShape announcementBorder;
+    sf::RectangleShape spawnPos;
 
-    announcementBorder.setFillColor(sf::Color::Black);
-    announcementBorder.setOutlineThickness(3);
-    announcementBorder.setOutlineColor(sf::Color::White);
-    announcementBorder.setPosition(window.getSize().x*.60,window.getSize().y*.25);
-    announcementBorder.setSize(sf::Vector2f(window.getSize().x*.40,window.getSize().y*.75));
+    spawnPos.setFillColor(sf::Color::Transparent);
+    spawnPos.setOutlineColor(sf::Color::Red);
+    spawnPos.setOutlineThickness(2);
+    spawnPos.setPosition(temp.x*16,temp.y*16);
+    spawnPos.setSize(sf::Vector2f(14,14));
 
     int colortypeCounter=1;
 
     coordinate startingposition;
     coordinate charplaced;
-short foregroundValue;
-short backgroundValue;
+    short foregroundValue;
+    short backgroundValue;
     int colorToUse=1;
 
     //startingposition=coordinate((actors[0])->col(),(actors[0])->row());
-    startingposition = coordinate(0,0);
+    startingposition = coordinate(temp.x-10,temp.y-10);
+
+    if (startingposition.x < 0)startingposition.x = 0;
+    if (startingposition.y < 0)startingposition.y = 0;
 
 
     bool drawActor=false;
@@ -26,31 +29,49 @@ short backgroundValue;
     actor* actorToDraw;
     item* itemToDraw;
 
-    window.clear();
 
-    window.draw(announcementBorder);
+    window.clear();
 
     //do_fov(_map,actors[0]->col(),actors[0]->row(),15,window);
     //do_fov(_map,5,5,5,window);
+    sf::FloatRect screenRect(sf::Vector2f(window.getView().getCenter().x - (window.getView().getSize().x)/2, window.getView().getCenter().y - (window.getView().getSize().y)/2) , window.getView().getSize());
 
-    for (int y=0;y<25;y++)
+    window.clear(sf::Color::Black);
+    int tilesDrawn = 0;
+    for(int y = 0; y < _map.size(); y++)
     {
-        for (int x=0;x<25;x++)
+      for(int x = 0; x < _map[0].size(); x++)
+      {
+        _map[y][x]->sprite.setPosition(x * 16, y * 16);
+        sf::FloatRect collider(_map[y][x]->sprite.getGlobalBounds().left, _map[y][x]->sprite.getGlobalBounds().top, 16, 16);
+
+        if(screenRect.intersects(collider))
         {
-            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
-                for (item* _i : localItems){
-                    window.draw(_i->sprite);
-                }
-                for (actor* _a: actors)
-                {
-                    window.draw(_a->sprite);
-                }
-                _map[y][x]->drawTile(window);
-            }
+          window.draw(_map[y][x]->sprite);
+          tilesDrawn++;
         }
+      }
     }
-    announcementList.drawAnnouncements(window);
-    window.display();
+
+window.draw(spawnPos);
+//    for (int y=0;y<_map.size();y++)
+//    {
+//        for (int x=0;x<_map.size();x++)
+//        {
+//            if (x >=0 and y >=0 and x<_map[0].size() and y<_map.size()){
+//                for (item* _i : localItems){
+//                    window.draw(_i->sprite);
+//                }
+//                for (actor* _a: actors)
+//                {
+//                    window.draw(_a->sprite);
+//                }
+//                _map[y][x]->drawTile(window);
+//            }
+//            if (coordinate(x,y) == temp){
+//            }
+//        }
+//    }
 }
 
 void announcements::drawAnnouncements(sf::RenderWindow & window)

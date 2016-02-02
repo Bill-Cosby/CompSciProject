@@ -148,3 +148,146 @@
 	<SFML/Graphics.hpp>
 	"RSL.h"
 
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\actor.cpp
+	"../include/actor.h"
+	<cstdlib>
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\actor.h
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+	<cctype>
+	"bodyParts.h"
+	"aStar.h"
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\bodyparts.h
+	<string>
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	"tile.h"
+	<queue>
+	<sstream>
+
+1454384979 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\tile.h
+	"item.h"
+	"node.h"
+	"RSL.h"
+	"materials.h"
+	<SFML/Graphics.hpp>
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\item.h
+	<string>
+	<sstream>
+	<SFML/Graphics.hpp>
+	<vector>
+	"materials.h"
+	"RSL.h"
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\materials.h
+	<vector>
+	<SFML/Graphics.hpp>
+
+1454384418 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\rsl.h
+	"bodyParts.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	<vector>
+	<stdlib.h>
+	<time.h>
+	<SFML/Graphics.hpp>
+	"materials.h"
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\node.h
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\actormenus.cpp
+	"../include/actor.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\astar.cpp
+	"../include/aStar.h"
+	<unordered_set>
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\bodyparts.cpp
+	"../include/bodyParts.h"
+
+1454388819 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\drawgame.cpp
+	"../include/drawGame.h"
+
+1454383466 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\drawgame.h
+	"actor.h"
+	"shadowcasting.h"
+	<SFML/Graphics.hpp>
+
+1454382574 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\shadowcasting.h
+	"tile.h"
+	<vector>
+	<math.h>
+	<cmath>
+	<SFML/Graphics.hpp>
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\interactionswithworld.cpp
+	"../include/actor.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\item.cpp
+	"../include/item.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\materials.cpp
+	"../include/materials.h"
+	<iostream>
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\rsl.cpp
+	"../include/RSL.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\shadowcasting.cpp
+	"../include/shadowcasting.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\tile.cpp
+	"../include/tile.h"
+
+1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\tiles.cpp
+	<iostream>
+	"../include/tiles.h"
+	<stdlib.h>
+	<time.h>
+	<vector>
+
+1454382574 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\tiles.h
+	<vector>
+	"tile.h"
+	<noise/noise.h>
+	"noiseutils.h"
+
+1454382574 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\noiseutils.h
+	<stdlib.h>
+	<string.h>
+	<string>
+	<noise/noise.h>
+
+1454389258 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\main.cpp
+	<iostream>
+	"include\drawGame.h"
+	"include\tiles.h"
+	"include\behaviorTree.h"
+	"include\creationMenu.h"
+
+1454382573 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\behaviortree.h
+	<list>
+	"actor.h"
+
+1454386838 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\creationmenu.h
+	<SFML/Graphics.hpp>
+	"RSL.h"
+	"setTile.h"
+
+1454385127 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\settile.h
+	<vector>
+	"tile.h"
+	"materials.h"
+

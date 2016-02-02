@@ -45,6 +45,7 @@
 		<Unit filename="include/menu.h" />
 		<Unit filename="include/node.h" />
 		<Unit filename="include/noiseutils.h" />
+		<Unit filename="include/setTile.h" />
 		<Unit filename="include/shadowcasting.h" />
 		<Unit filename="include/tile.h" />
 		<Unit filename="include/tiles.h" />
