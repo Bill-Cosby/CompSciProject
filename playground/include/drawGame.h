@@ -4,7 +4,7 @@
 #include "shadowcasting.h"
 #include <SFML/Graphics.hpp>
 
-void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors, std::vector<item*> localItems, sf::RenderWindow &window, announcements & announcementList, coordinate &temp);
+void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors, std::vector<item*> localItems, sf::RenderWindow &window, announcements & announcementList, coordinate &temp, bool &keyrelease, bool &creativeMode);
 
 
 

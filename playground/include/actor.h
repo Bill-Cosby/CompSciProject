@@ -122,10 +122,10 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
+    virtual void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> &localItems,std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
     virtual void setPost(int x, int y){}
-    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
-    virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
+    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList){}
+    virtual void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems){}
     virtual void moveOnPath(){}
 };
 

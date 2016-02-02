@@ -10,8 +10,10 @@ using namespace std;
 int main()
 {
     sf::View view(sf::FloatRect(0,0,800,600));
-    view.setViewport(sf::FloatRect(0.0f,0.0f,.5f,.5f));
+
     announcements announcementList;
+
+    bool creativeMode = false;
 
     std::vector<std::vector<tile*> > _map;
     std::vector<item*> localItems;
@@ -22,6 +24,7 @@ int main()
             _map[y][x] = new tile('1',0,grass);
             _map[y][x]->position=coordinate(x,y);
             _map[y][x]->sprite.setPosition(x*16,y*16);
+            _map[y][x]->isDoor = false;
         }
     }
 
@@ -55,11 +58,23 @@ int main()
                 keyrelease = true;
             }
         }
-        view.setCenter(temp.x*16,temp.y*16);
-        window.setView(view);
-        drawGameworld(_map,actors,localItems,window,announcementList, temp);
-        window.setView(window.getDefaultView());
-        drawCreationMenu(window, lists, keyrelease, temp, actors,_map,localItems);
 
+        if (temp.x*16 - view.getSize().x/2 > 0)view.setCenter(temp.x*16,view.getCenter().y);
+        if (temp.y*16 - view.getSize().y/2 > 0)view.setCenter(view.getCenter().x, temp.y*16);
+        if (!creativeMode)view.setViewport(sf::FloatRect(0.0f,0.0f,1.0f,1.0f));
+        else view.setViewport(sf::FloatRect(0.0f,0.0f,.5f,.5f));
+        window.setView(view);
+
+        for (actor* _a : actors){
+            if (_a->controlled)_a->movement(_map,localItems,actors,window,keyrelease,announcementList);
+        }
+
+        drawGameworld(_map,actors,localItems,window,announcementList, temp, keyrelease, creativeMode);
+
+        if (creativeMode){
+            window.setView(window.getDefaultView());
+            drawCreationMenu(window, lists, keyrelease, temp, actors,_map,localItems, creativeMode);
+        }
+        window.display();
     }
 }

@@ -1,17 +1,17 @@
 # depslib dependency file v1.0
-1454362576 source:c:\compsciproject\playground\main.cpp
+1454447042 source:c:\compsciproject\playground\main.cpp
 	<iostream>
 	"include\drawGame.h"
 	"include\tiles.h"
 	"include\behaviorTree.h"
 	"include\creationMenu.h"
 
-1454357145 c:\compsciproject\playground\include\drawgame.h
+1454444243 c:\compsciproject\playground\include\drawgame.h
 	"actor.h"
 	"shadowcasting.h"
 	<SFML/Graphics.hpp>
 
-1454358068 c:\compsciproject\playground\include\actor.h
+1454448162 c:\compsciproject\playground\include\actor.h
 	<stdlib.h>
 	<time.h>
 	<math.h>
@@ -20,10 +20,10 @@
 	"bodyParts.h"
 	"aStar.h"
 
-1454014227 c:\compsciproject\playground\include\bodyparts.h
+1454443448 c:\compsciproject\playground\include\bodyparts.h
 	<string>
 
-1454357145 c:\compsciproject\playground\include\astar.h
+1454443448 c:\compsciproject\playground\include\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -33,14 +33,14 @@
 	<queue>
 	<sstream>
 
-1454357145 c:\compsciproject\playground\include\tile.h
+1454443448 c:\compsciproject\playground\include\tile.h
 	"item.h"
 	"node.h"
 	"RSL.h"
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1454011618 c:\compsciproject\playground\include\item.h
+1454443448 c:\compsciproject\playground\include\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -48,11 +48,11 @@
 	"materials.h"
 	"RSL.h"
 
-1454011618 c:\compsciproject\playground\include\materials.h
+1454443448 c:\compsciproject\playground\include\materials.h
 	<vector>
 	<SFML/Graphics.hpp>
 
-1454360160 c:\compsciproject\playground\include\rsl.h
+1454443448 c:\compsciproject\playground\include\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -64,68 +64,70 @@
 	<SFML/Graphics.hpp>
 	"materials.h"
 
-1454011612 c:\compsciproject\playground\include\node.h
+1454443448 c:\compsciproject\playground\include\node.h
 
-1454357145 c:\compsciproject\playground\include\shadowcasting.h
+1454447617 c:\compsciproject\playground\include\shadowcasting.h
 	"tile.h"
 	<vector>
 	<math.h>
 	<cmath>
 	<SFML/Graphics.hpp>
+	"actor.h"
+	"item.h"
 
-1454011618 c:\compsciproject\playground\include\tiles.h
+1454443448 c:\compsciproject\playground\include\tiles.h
 	<vector>
 	"tile.h"
 	<noise/noise.h>
 	"noiseutils.h"
 
-1454011612 c:\compsciproject\playground\include\noiseutils.h
+1454443448 c:\compsciproject\playground\include\noiseutils.h
 	<stdlib.h>
 	<string.h>
 	<string>
 	<noise/noise.h>
 
-1454357145 c:\compsciproject\playground\include\behaviortree.h
+1454443448 c:\compsciproject\playground\include\behaviortree.h
 	<list>
 	"actor.h"
 
-1454358076 source:c:\compsciproject\playground\src\actor.cpp
+1454443448 source:c:\compsciproject\playground\src\actor.cpp
 	"../include/actor.h"
 	<cstdlib>
 
-1454358086 source:c:\compsciproject\playground\src\actormenus.cpp
+1454443448 source:c:\compsciproject\playground\src\actormenus.cpp
 	"../include/actor.h"
 
-1454358093 source:c:\compsciproject\playground\src\astar.cpp
+1454443448 source:c:\compsciproject\playground\src\astar.cpp
 	"../include/aStar.h"
 	<unordered_set>
 
-1454358101 source:c:\compsciproject\playground\src\bodyparts.cpp
+1454443448 source:c:\compsciproject\playground\src\bodyparts.cpp
 	"../include/bodyParts.h"
 
-1454362630 source:c:\compsciproject\playground\src\drawgame.cpp
+1454448428 source:c:\compsciproject\playground\src\drawgame.cpp
 	"../include/drawGame.h"
 
-1454358116 source:c:\compsciproject\playground\src\interactionswithworld.cpp
+1454443448 source:c:\compsciproject\playground\src\interactionswithworld.cpp
 	"../include/actor.h"
 
-1454358124 source:c:\compsciproject\playground\src\item.cpp
+1454443448 source:c:\compsciproject\playground\src\item.cpp
 	"../include/item.h"
 
-1454358129 source:c:\compsciproject\playground\src\materials.cpp
+1454443448 source:c:\compsciproject\playground\src\materials.cpp
 	"../include/materials.h"
 	<iostream>
 
-1454361156 source:c:\compsciproject\playground\src\rsl.cpp
+1454443448 source:c:\compsciproject\playground\src\rsl.cpp
 	"../include/RSL.h"
 
-1454358157 source:c:\compsciproject\playground\src\shadowcasting.cpp
+1454447693 source:c:\compsciproject\playground\src\shadowcasting.cpp
 	"../include/shadowcasting.h"
 
-1454358162 source:c:\compsciproject\playground\src\tile.cpp
+1454443448 source:c:\compsciproject\playground\src\tile.cpp
 	"../include/tile.h"
 
-1454358305 source:c:\compsciproject\playground\src\tiles.cpp
+1454443448 source:c:\compsciproject\playground\src\tiles.cpp
 	<iostream>
 	"../include/tiles.h"
 	<stdlib.h>
@@ -144,9 +146,10 @@
 	<string>
 	<noise/noise.h>
 
-1454362341 c:\compsciproject\playground\include\creationmenu.h
+1454445471 c:\compsciproject\playground\include\creationmenu.h
 	<SFML/Graphics.hpp>
 	"RSL.h"
+	"setTile.h"
 
 1454382574 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\src\actor.cpp
 	"../include/actor.h"
@@ -287,6 +290,11 @@
 	"setTile.h"
 
 1454385127 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\playground\include\settile.h
+	<vector>
+	"tile.h"
+	"materials.h"
+
+1454443448 c:\compsciproject\playground\include\settile.h
 	<vector>
 	"tile.h"
 	"materials.h"

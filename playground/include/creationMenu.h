@@ -8,7 +8,7 @@
 int buttonSelected = 0;
 int listSelected = 0;
 
-void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::string> > &lists, bool & keyrelease, coordinate &spawnPoint, std::vector<actor*> &actors, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems)
+void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::string> > &lists, bool & keyrelease, coordinate &spawnPoint, std::vector<actor*> &actors, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, bool & creativeMode)
 {
     std::string titles[3] = {"actors","tiles","items"};
 
@@ -33,25 +33,29 @@ void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::st
             if (listSelected == 0){
                 actors.push_back(new monster(lists[0][buttonSelected]));
                 actors[actors.size()-1]->pos(spawnPoint.y,spawnPoint.x);
+                actors[actors.size()-1]->sprite.setPosition(spawnPoint.x*16,spawnPoint.y*16);
             }
             if (listSelected == 1){
                 if (spawnPoint.y>_map.size()-1)_map.resize(spawnPoint.y);
                 if (spawnPoint.x>_map[0].size()-1){
                     for (int i = 0;i<_map.size()-1;i++){
                         _map[i].resize((unsigned int)spawnPoint.x);
-                        std::cout << i << std::endl;
                     }
-                    std::cout << "Here\n";
                 }
-                std::cout << "Here2\n";
                 _map[spawnPoint.y][spawnPoint.x] = NULL;
-                std::cout << "Here3\n";
                 setTile(_map,lists[1][buttonSelected],spawnPoint);
-                std::cout << "Here4\n";
             }
             keyrelease = false;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){spawnPoint.x++;keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+            creativeMode = false;
+            keyrelease = false;
+            for (actor* _a : actors){
+                if (coordinate(_a->col(),_a->row()) == spawnPoint){_a->controlled = true;return;}
+            }
+
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){spawnPoint.x++;keyrelease=false;}
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){spawnPoint.x--;keyrelease=false;}
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){spawnPoint.y--;keyrelease=false;}
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){spawnPoint.y++;keyrelease=false;}
@@ -86,7 +90,6 @@ void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::st
         text.setStyle(sf::Text::Regular);
     }
 
-    window.display();
 }
 
 #endif // CREATIONMENU_H_INCLUDED
