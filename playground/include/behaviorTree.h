@@ -6,12 +6,11 @@
 
 class Node
 {
-protected:
-    sf::RectangleShape rect;
 public:
+    sf::RectangleShape rect;
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors){}
     virtual void draw(sf::RenderWindow &window){}
-    Node(){rect.setSize(sf::Vector2f(75,40));rect.setFillColor(sf::Color::Green);}
+    Node(int x, int y){rect.setSize(sf::Vector2f(75,40));rect.setFillColor(sf::Color::Green);rect.setPosition(x,y);}
 };
 
 class compositNode : public Node
@@ -31,7 +30,7 @@ private:
     const std::string name = "Decorator";
 public:
     const Node* getChild() const {return child;}
-    void setChild (Node* _child){child = _child;}
+    void addChild (Node* _child){child = _child;}
     virtual void draw(sf::RenderWindow &window){}
 };
 

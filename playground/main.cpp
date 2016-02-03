@@ -13,7 +13,7 @@ int main()
 
     announcements announcementList;
 
-    Selector baseNode;
+    Selector baseNode(0,0);
 
     bool creativeMode = false;
 
@@ -41,7 +41,7 @@ int main()
     lists.push_back(tilelist);
     lists.push_back(itemlist);
     sf::RenderWindow window(sf::VideoMode(800,600), "tests");
-
+    window.setFramerateLimit(50);
     bool keyrelease = true;
 
     char ch;
