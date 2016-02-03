@@ -13,7 +13,7 @@ int main()
 
     announcements announcementList;
 
-    Selector baseNode(0,0);
+    Selector baseNode;
 
     bool creativeMode = false;
 
