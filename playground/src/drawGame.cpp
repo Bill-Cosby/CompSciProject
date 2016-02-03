@@ -57,55 +57,72 @@ void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &
             }
             return;
         }
-        if (actorToDraw != NULL){
+    }
+    if (actorToDraw != NULL and keyrelease){
+        temp = coordinate(actorToDraw->col(),actorToDraw->row());
+        while (event.type != sf::Event::KeyPressed){
+            window.pollEvent(event);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+                creativeMode = true;
+                keyrelease = false;
+                for (actor* _a : actors){
+                    if (_a->controlled)_a->controlled = false;
+                }
+                return;
+            }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){actorToDraw->openInventory(window,localItems);}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
                 while (pressedKey == false){
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;pressedKey = true;}
-
-
-
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;pressedKey = true;}
                 }
-                    _map[temp.y][temp.x]->interactWithDoor(false);
+                _map[temp.y][temp.x]->interactWithDoor(false);
             }
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
                 while (pressedKey == false){
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;pressedKey = true;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;pressedKey = true;}
-                            pressedKey = true;
-
-
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;pressedKey = true;}
+                    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;pressedKey = true;}
+                    pressedKey = true;
                 }
-    //                for (item* _i : localItems){
+    //              for (item* _i : localItems){
     //                    if (coordinate(_i->x,_i->y) == temp){itemsExamining.push_back(_i);}
     //                }
-                    actorToDraw->examineGround(window,localItems,temp, announcementList);
+                actorToDraw->examineGround(window,localItems,temp, announcementList);
             }
             else if (_map[temp.y][temp.x]->movementCost!=-1){
                 if (_map[temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[temp.y][temp.x]->interactWithDoor(true);
                 }
                 if (moveThroughDoor == true){
+
                     actorToDraw->pos(temp.y,temp.x);
+                    std::cout << "Here\n";
                 }
             }
         }
-
-
     }
+
+
 
     //do_fov(_map,actors[0]->col(),actors[0]->row(),15,window);
     //do_fov(_map,5,5,5,window);

@@ -4,9 +4,43 @@
 #include <SFML/Graphics.hpp>
 #include "RSL.h"
 #include "setTile.h"
+#include "behaviorTree.h"
 
 int buttonSelected = 0;
 int listSelected = 0;
+
+void aiCreationMenu(sf::RenderWindow &window, Selector& baseNode)
+{
+    bool onButton = false;
+    int distancex=0,distancey=0;
+    std::vector<sf::RectangleShape> nodes;
+    sf::Event event;
+    sf::View view(sf::FloatRect(0,0,800,600));
+    while (true){
+        window.setView(view);
+        window.clear();
+        int tempx = sf::Mouse::getPosition().x, tempy = sf::Mouse::getPosition().y;
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed){
+                window.close();
+                return;
+            }
+            if (event.type == sf::Event::MouseMoved and sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                distancex = sf::Mouse::getPosition().x - tempx;
+                distancey = sf::Mouse::getPosition().y - tempy;
+
+            }
+        }
+        view.move(distancex,distancey);
+
+        std::cout << view.getCenter().x << view.getCenter().y << std::endl;
+
+
+        baseNode.draw(window);
+        window.display();
+
+    }
+}
 
 void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::string> > &lists, bool & keyrelease, coordinate &spawnPoint, std::vector<actor*> &actors, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, bool & creativeMode)
 {
@@ -24,7 +58,7 @@ void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::st
     text.setFont(font);
     text.setCharacterSize(10);
 
-    if (keyrelease == true){
+    while (keyrelease == true){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Period)){listSelected++;keyrelease = false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Comma)){listSelected--;keyrelease = false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add)){buttonSelected++;keyrelease = false;}

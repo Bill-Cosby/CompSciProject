@@ -1,12 +1,17 @@
 #ifndef BEHAVIORTREE_H_INCLUDED
 #define BEHAVIORTREE_H_INCLUDED
 #include <list>
+#include <SFML/Graphics.hpp>
 #include "actor.h"
 
 class Node
 {
+protected:
+    sf::RectangleShape rect;
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors){}
+    virtual void draw(sf::RenderWindow &window){}
+    Node(){rect.setSize(sf::Vector2f(75,40));rect.setFillColor(sf::Color::Green);}
 };
 
 class compositNode : public Node
@@ -16,19 +21,23 @@ protected:
 public:
     const std::list<Node*>& getChildren() const {return children;}
     void addChild (Node* child){children.emplace_back(child);}
+
 };
 
 class Decorator : public Node
 {
 private:
     Node* child;
+    const std::string name = "Decorator";
 public:
     const Node* getChild() const {return child;}
     void setChild (Node* _child){child = _child;}
+    virtual void draw(sf::RenderWindow &window){}
 };
 
 class Selector : public compositNode
 {
+    const std::string name = "Selector";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -40,10 +49,18 @@ public:
         }
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        for (Node* child : getChildren()){
+            child->draw(window);
+        }
+        window.draw(rect);
+    }
 };
 
 class Sequence : public compositNode
 {
+    const std::string name = "Sequence";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -56,11 +73,19 @@ public:
         std::cout << "Sequence successful...\n";
         return true;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        for (Node* child : getChildren()){
+            child->draw(window);
+        }
+        window.draw(rect);
+    }
 };
 
 
 class findPathNode : public Node
 {
+    const std::string name = "Find path node";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -82,10 +107,15 @@ public:
         std::cout << "Failed to find a path...\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class moveOnPathNode : public Node
 {
+    const std::string name = "Move on path";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -98,10 +128,15 @@ public:
         std::cout << "It seems I don't\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class findDoorNode : public Node
 {
+    const std::string name = "Find door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -117,10 +152,15 @@ public:
         std::cout << "Failed to find a door...\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class openDoorNode : public Node
 {
+    const std::string name = "Open door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -132,10 +172,15 @@ public:
         std::cout << "Failed to open door...\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class lookForItemNode : public Node
 {
+    const std::string name = "look for item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -147,10 +192,15 @@ public:
         std::cout << "Didn't see any items\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class pickUpItemNode : public Node
 {
+    const std::string name = "Pick up item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -161,10 +211,15 @@ public:
         }
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class decideIfCanAttackNode : public Node
 {
+    const std::string name = "attack decision";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -176,15 +231,24 @@ public:
         std::cout << "No I don't think so...\n";
         return false;
     }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
+    }
 };
 
 class attackNode : public Node
 {
+    const std::string name = "attack";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
         std::cout << "Take that!\n";
         testingCharacter->attackEnemy(_map);
+    }
+    virtual void draw(sf::RenderWindow &window)
+    {
+        window.draw(rect);
     }
 };
 

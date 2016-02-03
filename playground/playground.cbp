@@ -35,6 +35,7 @@
 		<Unit filename="include/RSL.h" />
 		<Unit filename="include/aStar.h" />
 		<Unit filename="include/actor.h" />
+		<Unit filename="include/behaviorTree.cpp" />
 		<Unit filename="include/behaviorTree.h" />
 		<Unit filename="include/bodyParts.h" />
 		<Unit filename="include/creationMenu.h" />

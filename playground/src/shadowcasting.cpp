@@ -5,7 +5,6 @@ void cast_light(std::vector<std::vector<tile*> > &_map, unsigned int x, unsigned
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, std::vector<actor*> &actors, std::vector<item*> &localItems)
 {
     if (start_slope < end_slope)return;
-    std::cout << "Here\n";
 
     float next_start_slope = start_slope;
 

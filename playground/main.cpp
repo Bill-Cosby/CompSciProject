@@ -13,6 +13,8 @@ int main()
 
     announcements announcementList;
 
+    Selector baseNode;
+
     bool creativeMode = false;
 
     std::vector<std::vector<tile*> > _map;
@@ -46,6 +48,8 @@ int main()
 
 
     coordinate temp;
+
+    aiCreationMenu(window,baseNode);
 
     while (window.isOpen()){
         sf::Event event;
