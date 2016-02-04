@@ -16,7 +16,7 @@ public:
     virtual void addChild(Node* child){}
 };
 
-class compositNode : public Node
+class compositeNode : public Node
 {
 protected:
     std::list<Node*> children;
@@ -78,7 +78,7 @@ public:
     virtual void draw(sf::RenderWindow &window){}
 };
 
-class Selector : public compositNode
+class Selector : public compositeNode
 {
     const std::string name = "Selector";
 public:
@@ -94,7 +94,7 @@ public:
     }
 };
 
-class Sequence : public compositNode
+class Sequence : public compositeNode
 {
     const std::string name = "Sequence";
 public:

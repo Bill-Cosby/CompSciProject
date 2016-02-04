@@ -16,7 +16,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
     int counter = 0;
     bool onButton = false;
     float distancex=0,distancey=0;
-    std::vector<compositNode> nodes;
+    std::vector<compositeNode> nodes;
     nodes.push_back(baseNode);
     sf::FloatRect collision;
     sf::Event event;
@@ -50,7 +50,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 
 
 
-//        for (compositNode _R : nodes){
+//        for (compositeNode _R : nodes){
 //            if (_R.rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x+offset.x, sf::Mouse::getPosition(window).y+offset.y))){
 //                buttonSelected = &_R;
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and buttonSelected != NULL){
