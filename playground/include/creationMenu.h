@@ -9,15 +9,15 @@
 int buttonSelected = 0;
 int listSelected = 0;
 
-void aiCreationMenu(sf::RenderWindow &window, Selector& baseNode)
+void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 {
     std::string nodeNames[11] = {"Decorator","Selector","Sequence","Find Path", "Move on path", "Find door", "Open Door", "look for item", "Pick Up Item", "Decide if can attack", "attack"};
-    sf::Vector2f offset;
+    sf::Vector2f offset = sf::Vector2f(0,0);
     int counter = 0;
     bool onButton = false;
     float distancex=0,distancey=0;
-    std::vector<Node*> nodes;
-    nodes.push_back(&baseNode);
+    std::vector<compositNode> nodes;
+    nodes.push_back(baseNode);
     sf::FloatRect collision;
     sf::Event event;
     sf::View view(sf::FloatRect(0,0,800,600));
@@ -26,7 +26,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector& baseNode)
     while (true){
         window.setView(view);
         window.clear();
-        if (counter == 3){
+        if (counter == 3 and onButton == false){
             tempx = sf::Mouse::getPosition(window).x, tempy = sf::Mouse::getPosition(window).y;
             counter=0;
         }
@@ -37,67 +37,79 @@ void aiCreationMenu(sf::RenderWindow &window, Selector& baseNode)
                 return;
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and event.type == sf::Event::MouseMoved){
-                distancex = (-(tempx-sf::Mouse::getPosition(window).x));
-                distancey = (-(tempy-sf::Mouse::getPosition(window).y));
+                distancex = ((tempx-sf::Mouse::getPosition(window).x));
+                distancey = ((tempy-sf::Mouse::getPosition(window).y));
             }
             if (event.type == sf::Event::MouseButtonReleased){
                 onButton = false;
                 buttonSelected = NULL;
+                std::cout << "Here\n";
             }
         }
         sf::Vector2f mousepos = (sf::Vector2f)sf::Mouse::getPosition(window);
-        for (Node* _R : nodes){
-            if (_R->rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x+offset.x, sf::Mouse::getPosition(window).y+offset.y))){
-                buttonSelected = _R;
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                    onButton = true;
+
+
+
+//        for (compositNode _R : nodes){
+//            if (_R.rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x+offset.x, sf::Mouse::getPosition(window).y+offset.y))){
+//                buttonSelected = &_R;
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and buttonSelected != NULL){
+                onButton = true;
+            }
+            else{
+                onButton = false;
+            }
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+                int nodeAdding = 0;
+                for (int i = 0;i<11;i++){
+                    std::cout << i << ": " << nodeNames[i] << std::endl;
                 }
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-                    int nodeAdding = 0;
-                    for (int i = 0;i<11;i++){
-                        std::cout << i << ": " << nodeNames[i] << std::endl;
-                    }
-                    std::cin >> nodeAdding;
+                std::cin >> nodeAdding;
                     switch (nodeAdding){
-                        case 0: buttonSelected->addChild(new Decorator(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 1: buttonSelected->addChild(new Selector(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 2: buttonSelected->addChild(new Sequence(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 3: buttonSelected->addChild(new findPathNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 4: buttonSelected->addChild(new moveOnPathNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 5: buttonSelected->addChild(new findDoorNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 6: buttonSelected->addChild(new openDoorNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 7:buttonSelected->addChild(new lookForItemNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 8:buttonSelected->addChild(new pickUpItemNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 9:buttonSelected->addChild(new decideIfCanAttackNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        case 10:buttonSelected->addChild(new attackNode(buttonSelected->rect.getPosition().x, buttonSelected->rect.getPosition().y+100));
-                                break;
-                        default:
-                            std::cout << "Not a node\n";
-                    }
+                    case 0: buttonSelected->addChild(new Decorator);
+                            break;
+                    case 1: buttonSelected->addChild(new Selector);
+                            break;
+                    case 2: buttonSelected->addChild(new Sequence);
+                            break;
+                    case 3: buttonSelected->addChild(new findPathNode);
+                            break;
+                    case 4: buttonSelected->addChild(new moveOnPathNode);
+                            break;
+                    case 5: buttonSelected->addChild(new findDoorNode);
+                            break;
+                    case 6: buttonSelected->addChild(new openDoorNode);
+                            break;
+                    case 7:buttonSelected->addChild(new lookForItemNode);
+                            break;
+                    case 8:buttonSelected->addChild(new pickUpItemNode);
+                            break;
+                        case 9:buttonSelected->addChild(new decideIfCanAttackNode);
+                            break;
+                        case 10:buttonSelected->addChild(new attackNode);
+                            break;
+                    default:
+                        std::cout << "Not a node\n";
                 }
             }
-        }
+//        }
+        offset.x+=distancex;
+        offset.y+=distancey;
         if (!onButton){
             view.move(distancex,distancey);
-            offset.x+=distancex;
-            offset.y+=distancey;
-            distancex = 0;
-            distancey = 0;
         }
         else{
-            buttonSelected->rect.setPosition(mousepos);
+            if (buttonSelected!= NULL){
+                buttonSelected->rect.setPosition(mousepos);
+                buttonSelected->linkedFrom.setPosition(sf::Vector2f(mousepos.x+45,mousepos.y-5));
+                buttonSelected->linkedTo.setPosition(sf::Vector2f(mousepos.x+45,mousepos.y+75));
+            }
         }
+        buttonSelected = baseNode.Selected(sf::Vector2f(mousepos.x, mousepos.y));
 
+
+        distancex = 0;
+        distancey = 0;
         baseNode.draw(window);
         window.display();
 

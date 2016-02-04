@@ -13,7 +13,14 @@ int main()
 
     announcements announcementList;
 
-    Selector baseNode(0,0);
+    Selector baseNode;
+    baseNode.rect.setPosition(0,0);
+    baseNode.rect.setSize(sf::Vector2f(100,80));
+    baseNode.rect.setFillColor(sf::Color::Green);
+    baseNode.linkedTo.setPosition(45,75);
+    baseNode.linkedTo.setFillColor(sf::Color::Blue);
+    baseNode.linkedTo.setRadius(5);
+
 
     bool creativeMode = false;
 
