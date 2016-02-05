@@ -116,7 +116,6 @@ void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &
                 if (moveThroughDoor == true){
 
                     actorToDraw->pos(temp.y,temp.x);
-                    std::cout << "Here\n";
                 }
             }
         }
@@ -143,7 +142,7 @@ void drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &
 
                 if(screenRect.intersects(collider))
                 {
-                    window.draw(_map[y][x]->sprite);
+                    _map[y][x]->drawTile(window);
                 }
                 for (actor * _a : actors){
                     collider = sf::FloatRect(_a->sprite.getGlobalBounds().left, _a->sprite.getGlobalBounds().top,16.0f,16.0f);

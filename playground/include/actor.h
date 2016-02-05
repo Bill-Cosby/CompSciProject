@@ -42,6 +42,7 @@ public:
     std::vector<item*> equipment;
     std::vector<bodyPart*> body;
     item* wielded;
+
 //  AFFECTS SPEED
     int coolDown;
     bool sprinting;
@@ -61,8 +62,8 @@ public:
     int accuracy;
     int defense;
     int counter;
+    int totalAttack(){int temp;for (item* _i : equipment){temp += _i->attack;}return temp;}
 
-    int totalAttack(){int temp;for (item* _i : equipment){temp += _i->attack;} return temp;}
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return 5;}
     int customSpeed;

@@ -396,9 +396,12 @@ class decideIfCanAttackNode : public compositeNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
+        std::cout << "Do I want to fight him?\n";
         if (testingCharacter->decideIfCanAttack(actors)){
+                std::cout << "Yes\n";
             return true;
         }
+        std::cout << "No\n";
         return false;
     }
     decideIfCanAttackNode(int parentx, int parenty, std::string _name){

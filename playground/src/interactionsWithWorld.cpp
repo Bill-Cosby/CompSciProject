@@ -122,8 +122,7 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors)
         if (_a == this)continue;
         if (findDistance(coordinate(_a->col(),_a->row()))<=15){
 
-            totalDanger += _a->totalAttack()-totalAttack();
-            std::cout << _a->totalAttack();
+            totalDanger += _a->totalAttack();
             if (_a->totalAttack() < lowestAttack){
                 actorAttacking = _a;
             }

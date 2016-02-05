@@ -21,6 +21,18 @@ int main()
     baseNode.linkedTo.setFillColor(sf::Color::Blue);
     baseNode.linkedTo.setRadius(5);
 
+    Sequence sequence1(0,0,"FUCK");
+    sequence1.addChild(new decideIfCanAttackNode(0,0,"Decide if can attack"));
+    sequence1.addChild(new attackNode(0,0,"dfdf"));
+
+    Selector selector1(0,0,"FUCK");
+    selector1.addChild(new moveOnPathNode(0,0,"MOVE"));
+    selector1.addChild(new findPathNode(0,0,"SHIT"));
+
+    baseNode.addChild(&sequence1);
+    baseNode.addChild(&selector1);
+
+
 
     bool creativeMode = false;
 
@@ -74,12 +86,6 @@ int main()
         else view.setViewport(sf::FloatRect(0.0f,0.0f,.5f,.5f));
         window.setView(view);
 
-        for (actor* _a : actors){
-            if (_a->controlled)_a->movement(_map,localItems,actors,window,keyrelease,announcementList);
-            else baseNode.run(_a,_map,localItems,actors);
-        }
-
-
 
         drawGameworld(_map,actors,localItems,window,announcementList, temp, keyrelease, creativeMode);
 
@@ -87,6 +93,17 @@ int main()
             window.setView(window.getDefaultView());
             drawCreationMenu(window, lists, keyrelease, temp, actors,_map,localItems, creativeMode, baseNode);
         }
+        else{
+            for (actor* _a : actors){
+                if (_a->controlled)_a->movement(_map,localItems,actors,window,keyrelease,announcementList);
+                else baseNode.run(_a,_map,localItems,actors);
+            }
+        }
+
+
+
+
+
         window.display();
     }
 }

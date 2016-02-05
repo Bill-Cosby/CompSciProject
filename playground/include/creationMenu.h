@@ -11,7 +11,7 @@ int listSelected = 0;
 
 void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 {
-    std::string nodeNames[11] = {"Decorator","Selector","Sequence","Find Path", "Move on path", "Find door", "Open Door", "look for item", "Pick Up Item", "Decide if can attack", "attack"};
+    std::string nodeNames[12] = {"Decorator","Selector","Sequence","Find Path", "Move on path", "Find door", "Open Door", "look for item", "Pick Up Item", "Decide if can attack", "attack","delete"};
     sf::Vector2f offset = sf::Vector2f(0,0);
     int counter = 0;
     bool onButton = false;
@@ -43,7 +43,6 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
             if (event.type == sf::Event::MouseButtonReleased){
                 onButton = false;
                 buttonSelected = NULL;
-                std::cout << "Here\n";
             }
         }
         sf::Vector2f mousepos = (sf::Vector2f)sf::Mouse::getPosition(window);
@@ -53,14 +52,14 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 //        for (compositeNode _R : nodes){
 //            if (_R.rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x+offset.x, sf::Mouse::getPosition(window).y+offset.y))){
 //                buttonSelected = &_R;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))return;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))return;
 
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and buttonSelected != NULL){
                 onButton = true;
             }
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right) and buttonSelected != NULL){
                 int nodeAdding = 0;
-                for (int i = 0;i<11;i++){
+                for (int i = 0;i<12;i++){
                     std::cout << i << ": " << nodeNames[i] << std::endl;
                 }
                 std::cin >> nodeAdding;
@@ -88,13 +87,14 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
                             break;
                         case 10:buttonSelected->addChild(new attackNode(parentx,parenty,"attack"));
                             break;
+                        case 11: delete(buttonSelected);
+                                 break;
                     default:
                         std::cout << "Not a node\n";
                 }
             }
 //        }
 
-            std::cout << distancex << "," << distancey << std::endl;
 
         if (onButton){
             if (buttonSelected!= NULL){
