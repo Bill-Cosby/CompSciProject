@@ -10,7 +10,7 @@ public:
     sf::RectangleShape rect;
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors){}
     virtual void draw(sf::RenderWindow &window){}
-    Node(){rect.setSize(sf::Vector2f(75,40));rect.setFillColor(sf::Color::Green);}
+    Node(int x, int y){rect.setSize(sf::Vector2f(75,40));rect.setFillColor(sf::Color::Green);rect.setPosition(x,y);}
 };
 
 class compositNode : public Node
@@ -19,7 +19,7 @@ protected:
     std::list<Node*> children;
 public:
     const std::list<Node*>& getChildren() const {return children;}
-    compositNode addChild (Node* child){child->rect.setPosition(rect.getPosition().x,rect.getPosition().y+100);children.emplace_back(child);}
+    void addChild (Node* child){children.emplace_back(child);}
 
 };
 
@@ -27,6 +27,7 @@ class Decorator : public Node
 {
 private:
     Node* child;
+    const std::string name = "Decorator";
 public:
     const Node* getChild() const {return child;}
     void addChild (Node* _child){child = _child;}
@@ -35,6 +36,7 @@ public:
 
 class Selector : public compositNode
 {
+    const std::string name = "Selector";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -57,6 +59,7 @@ public:
 
 class Sequence : public compositNode
 {
+    const std::string name = "Sequence";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -81,6 +84,7 @@ public:
 
 class findPathNode : public Node
 {
+    const std::string name = "Find path node";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -110,6 +114,7 @@ public:
 
 class moveOnPathNode : public Node
 {
+    const std::string name = "Move on path";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -130,6 +135,7 @@ public:
 
 class findDoorNode : public Node
 {
+    const std::string name = "Find door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -153,6 +159,7 @@ public:
 
 class openDoorNode : public Node
 {
+    const std::string name = "Open door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -172,6 +179,7 @@ public:
 
 class lookForItemNode : public Node
 {
+    const std::string name = "look for item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -191,6 +199,7 @@ public:
 
 class pickUpItemNode : public Node
 {
+    const std::string name = "Pick up item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -209,6 +218,7 @@ public:
 
 class decideIfCanAttackNode : public Node
 {
+    const std::string name = "attack decision";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -228,6 +238,7 @@ public:
 
 class attackNode : public Node
 {
+    const std::string name = "attack";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
