@@ -7,6 +7,9 @@
 class Node
 {
 public:
+    std::string name;
+    sf::Font font;
+    sf::Text text;
     sf::CircleShape linkedFrom;
     sf::CircleShape linkedTo;
     sf::RectangleShape rect;
@@ -14,6 +17,25 @@ public:
     virtual void draw(sf::RenderWindow &window){}
     virtual Node* Selected(sf::Vector2f mousePos){}
     virtual void addChild(Node* child){}
+    Node(){}
+    Node(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
 class compositeNode : public Node
@@ -21,27 +43,22 @@ class compositeNode : public Node
 protected:
     std::list<Node*> children;
 public:
+
     const std::list<Node*>& getChildren() const {return children;}
+
+    compositeNode(){}
+
     void addChild (Node* child){
-        child->rect.setPosition(rect.getPosition().x,rect.getPosition().y+100);
-        child->rect.setSize(sf::Vector2f(100,80));
-        child->rect.setFillColor(sf::Color::Green);children.emplace_back(child);
-        child->linkedFrom.setPosition(child->rect.getPosition().x+45, child->rect.getPosition().y-5);
-        child->linkedTo.setPosition(child->rect.getPosition().x+45,child->rect.getPosition().y+75);
-
-        child->linkedFrom.setRadius(5);
-        child->linkedTo.setRadius(5);
-
-
-        child->linkedFrom.setFillColor(sf::Color::Blue);
-        child->linkedTo.setFillColor(sf::Color::Blue);
+        children.emplace_back(child);
     }
+
     virtual void draw(sf::RenderWindow &window)
     {
-
+        text.setPosition(rect.getPosition().x+10,rect.getPosition().y+34);
         window.draw(rect);
         window.draw(linkedFrom);
         window.draw(linkedTo);
+        window.draw(text);
         for (Node* child : getChildren()){
             sf::Vertex line[2] = {sf::Vertex(sf::Vector2f(linkedTo.getPosition().x+5,linkedTo.getPosition().y+5)),sf::Vector2f(child->linkedFrom.getPosition().x+5,child->linkedFrom.getPosition().y+5)};
 
@@ -50,7 +67,6 @@ public:
         }
     }
     Node* Selected(sf::Vector2f mousePos){
-        std::cout << rect.getPosition().x << "," << rect.getPosition().y << ":" << mousePos.x << "," << mousePos.y << std::endl;
         if (rect.getGlobalBounds().contains(mousePos))
         {
             return this;
@@ -67,20 +83,36 @@ public:
     }
 };
 
-class Decorator : public Node
+class Decorator : public compositeNode
 {
 private:
     Node* child;
-    const std::string name = "Decorator";
 public:
     const Node* getChild() const {return child;}
     void addChild (Node* _child){child = _child;}
     virtual void draw(sf::RenderWindow &window){}
+    Decorator(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
 class Selector : public compositeNode
 {
-    const std::string name = "Selector";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -92,11 +124,28 @@ public:
         }
         return false;
     }
+    Selector(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
 class Sequence : public compositeNode
 {
-    const std::string name = "Sequence";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -109,12 +158,29 @@ public:
         std::cout << "Sequence successful...\n";
         return true;
     }
+    Sequence(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
 
-class findPathNode : public Node
+class findPathNode : public compositeNode
 {
-    const std::string name = "Find path node";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -136,11 +202,28 @@ public:
         std::cout << "Failed to find a path...\n";
         return false;
     }
+    findPathNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class moveOnPathNode : public Node
+class moveOnPathNode : public compositeNode
 {
-    const std::string name = "Move on path";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -153,11 +236,28 @@ public:
         std::cout << "It seems I don't\n";
         return false;
     }
+    moveOnPathNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class findDoorNode : public Node
+class findDoorNode : public compositeNode
 {
-    const std::string name = "Find door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -173,11 +273,28 @@ public:
         std::cout << "Failed to find a door...\n";
         return false;
     }
+    findDoorNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class openDoorNode : public Node
+class openDoorNode : public compositeNode
 {
-    const std::string name = "Open door";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -189,11 +306,28 @@ public:
         std::cout << "Failed to open door...\n";
         return false;
     }
+    openDoorNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class lookForItemNode : public Node
+class lookForItemNode : public compositeNode
 {
-    const std::string name = "look for item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors) override
     {
@@ -205,11 +339,28 @@ public:
         std::cout << "Didn't see any items\n";
         return false;
     }
+    lookForItemNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class pickUpItemNode : public Node
+class pickUpItemNode : public compositeNode
 {
-    const std::string name = "Pick up item";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -220,11 +371,28 @@ public:
         }
         return false;
     }
+    pickUpItemNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class decideIfCanAttackNode : public Node
+class decideIfCanAttackNode : public compositeNode
 {
-    const std::string name = "attack decision";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
@@ -233,16 +401,51 @@ public:
         }
         return false;
     }
+    decideIfCanAttackNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
+    }
 };
 
-class attackNode : public Node
+class attackNode : public compositeNode
 {
-    const std::string name = "attack";
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors) override
     {
         testingCharacter->attackEnemy(_map);
         return true;
+    }
+    attackNode(int parentx, int parenty, std::string _name){
+        name = _name;
+        font.loadFromFile("data/PressStart2p-Regular.ttf");
+        text.setFont(font);
+        text.setCharacterSize(8);
+        text.setString(name.c_str());
+        rect.setPosition(parentx+rect.getPosition().x,parenty+rect.getPosition().y+100);
+        rect.setSize(sf::Vector2f(100,80));
+        rect.setFillColor(sf::Color::Green);
+        linkedFrom.setPosition(rect.getPosition().x+45, rect.getPosition().y-5);
+        linkedTo.setPosition(rect.getPosition().x+45,rect.getPosition().y+75);
+
+        linkedFrom.setRadius(5);
+        linkedTo.setRadius(5);
+
+        linkedFrom.setFillColor(sf::Color::Blue);
+        linkedTo.setFillColor(sf::Color::Blue);
     }
 };
 

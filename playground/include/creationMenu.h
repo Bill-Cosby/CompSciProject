@@ -26,7 +26,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
     while (true){
         window.setView(view);
         window.clear();
-        if (counter == 3 and onButton == false){
+        if (counter == 2){
             tempx = sf::Mouse::getPosition(window).x, tempy = sf::Mouse::getPosition(window).y;
             counter=0;
         }
@@ -53,59 +53,62 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 //        for (compositeNode _R : nodes){
 //            if (_R.rect.getGlobalBounds().contains(sf::Vector2f(sf::Mouse::getPosition(window).x+offset.x, sf::Mouse::getPosition(window).y+offset.y))){
 //                buttonSelected = &_R;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))return;
+
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and buttonSelected != NULL){
                 onButton = true;
             }
-            else{
-                onButton = false;
-            }
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Right) and buttonSelected != NULL){
                 int nodeAdding = 0;
                 for (int i = 0;i<11;i++){
                     std::cout << i << ": " << nodeNames[i] << std::endl;
                 }
                 std::cin >> nodeAdding;
+                int parentx = buttonSelected->rect.getPosition().x, parenty = buttonSelected->rect.getPosition().y;
                     switch (nodeAdding){
-                    case 0: buttonSelected->addChild(new Decorator);
+                    case 0: buttonSelected->addChild(new Decorator(parentx,parenty,"Decorator"));
                             break;
-                    case 1: buttonSelected->addChild(new Selector);
+                    case 1: buttonSelected->addChild(new Selector(parentx,parenty,"Selector"));
                             break;
-                    case 2: buttonSelected->addChild(new Sequence);
+                    case 2: buttonSelected->addChild(new Sequence(parentx,parenty,"Sequence"));
                             break;
-                    case 3: buttonSelected->addChild(new findPathNode);
+                    case 3: buttonSelected->addChild(new findPathNode(parentx,parenty,"Find path"));
                             break;
-                    case 4: buttonSelected->addChild(new moveOnPathNode);
+                    case 4: buttonSelected->addChild(new moveOnPathNode(parentx,parenty,"Move on path"));
                             break;
-                    case 5: buttonSelected->addChild(new findDoorNode);
+                    case 5: buttonSelected->addChild(new findDoorNode(parentx,parenty,"Find door"));
                             break;
-                    case 6: buttonSelected->addChild(new openDoorNode);
+                    case 6: buttonSelected->addChild(new openDoorNode(parentx,parenty,"Open Door"));
                             break;
-                    case 7:buttonSelected->addChild(new lookForItemNode);
+                    case 7:buttonSelected->addChild(new lookForItemNode(parentx,parenty,"Look for item"));
                             break;
-                    case 8:buttonSelected->addChild(new pickUpItemNode);
+                    case 8:buttonSelected->addChild(new pickUpItemNode(parentx,parenty,"Pick up item"));
                             break;
-                        case 9:buttonSelected->addChild(new decideIfCanAttackNode);
+                        case 9:buttonSelected->addChild(new decideIfCanAttackNode(parentx,parenty,"Attack decision"));
                             break;
-                        case 10:buttonSelected->addChild(new attackNode);
+                        case 10:buttonSelected->addChild(new attackNode(parentx,parenty,"attack"));
                             break;
                     default:
                         std::cout << "Not a node\n";
                 }
             }
 //        }
-        offset.x+=distancex;
-        offset.y+=distancey;
-        if (!onButton){
-            view.move(distancex,distancey);
-        }
-        else{
+
+            std::cout << distancex << "," << distancey << std::endl;
+
+        if (onButton){
             if (buttonSelected!= NULL){
-                buttonSelected->rect.setPosition(mousepos);
-                buttonSelected->linkedFrom.setPosition(sf::Vector2f(mousepos.x+45,mousepos.y-5));
-                buttonSelected->linkedTo.setPosition(sf::Vector2f(mousepos.x+45,mousepos.y+75));
+                buttonSelected->rect.move(-distancex,-distancey);
+                buttonSelected->linkedFrom.move(-distancex,-distancey);
+                buttonSelected->linkedTo.move(-distancex,-distancey);
             }
         }
-        buttonSelected = baseNode.Selected(sf::Vector2f(mousepos.x, mousepos.y));
+        else{
+            view.move(distancex,distancey);
+            offset.x+=distancex;
+            offset.y+=distancey;
+        }
+        buttonSelected = baseNode.Selected(sf::Vector2f(mousepos.x+offset.x, mousepos.y+offset.y));
 
 
         distancex = 0;
@@ -116,7 +119,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
     }
 }
 
-void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::string> > &lists, bool & keyrelease, coordinate &spawnPoint, std::vector<actor*> &actors, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, bool & creativeMode)
+void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::string> > &lists, bool & keyrelease, coordinate &spawnPoint, std::vector<actor*> &actors, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, bool & creativeMode, Selector &baseNode)
 {
     std::string titles[3] = {"actors","tiles","items"};
 
@@ -171,6 +174,8 @@ void drawCreationMenu(sf::RenderWindow & window, std::vector<std::vector<std::st
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){spawnPoint.y++;spawnPoint.x--;keyrelease=false;}
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){spawnPoint.y--;spawnPoint.x--;keyrelease=false;}
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){spawnPoint.y--;spawnPoint.x++;keyrelease=false;}
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){aiCreationMenu(window,baseNode);keyrelease = false;}
     }
 
     if (listSelected < 0)listSelected = 2;

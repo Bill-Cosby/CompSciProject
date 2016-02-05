@@ -13,7 +13,7 @@ int main()
 
     announcements announcementList;
 
-    Selector baseNode;
+    Selector baseNode(0,0,"base node");
     baseNode.rect.setPosition(0,0);
     baseNode.rect.setSize(sf::Vector2f(100,80));
     baseNode.rect.setFillColor(sf::Color::Green);
@@ -56,8 +56,6 @@ int main()
 
     coordinate temp;
 
-    aiCreationMenu(window,baseNode);
-
     while (window.isOpen()){
         sf::Event event;
 
@@ -78,13 +76,16 @@ int main()
 
         for (actor* _a : actors){
             if (_a->controlled)_a->movement(_map,localItems,actors,window,keyrelease,announcementList);
+            else baseNode.run(_a,_map,localItems,actors);
         }
+
+
 
         drawGameworld(_map,actors,localItems,window,announcementList, temp, keyrelease, creativeMode);
 
         if (creativeMode){
             window.setView(window.getDefaultView());
-            drawCreationMenu(window, lists, keyrelease, temp, actors,_map,localItems, creativeMode);
+            drawCreationMenu(window, lists, keyrelease, temp, actors,_map,localItems, creativeMode, baseNode);
         }
         window.display();
     }
