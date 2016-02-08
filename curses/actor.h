@@ -8,6 +8,7 @@
 #include <cctype>
 #include "bodyParts.h"
 #include "aStar.h"
+#include <random>
 
 class announcements
 {
@@ -63,7 +64,14 @@ public:
     int defense;
     int counter;
 
-    int totalAttack(){int temp;for (item* _i : equipment){temp += _i->attack;} return temp;}
+    int totalAttack(){
+        int temp = attack;
+        for (item* _i : equipment){
+            temp += _i->attack;
+            std::cout << temp << std::endl;
+        }
+        return temp;
+    }
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return 5;}
     int customSpeed;
@@ -101,7 +109,7 @@ public:
 
 //  METHODS FOR COMBAT
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map);
-    void attackEnemy(std::vector<std::vector<tile*> > &_map);
+    void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList);
     void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD

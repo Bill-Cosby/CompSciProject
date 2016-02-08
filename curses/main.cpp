@@ -36,37 +36,36 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 int main()
 {
     Selector * root = new Selector;
+    //Defining the tree
 
-    Sequence * Sequence1 = new Sequence;
-    Sequence * Sequence2 = new Sequence;
-    Sequence * Sequence3 = new Sequence;
-    Selector * Selector1 = new Selector;
+    Sequence * doorSequence = new Sequence;
 
-    Sequence1->addChild(new findDoorNode);
-    Sequence1->addChild(new openDoorNode);
+            doorSequence->addChild(new findDoorNode);
+            doorSequence->addChild(new openDoorNode);
 
-    Sequence2->addChild(new lookForItemNode);
-    Sequence2->addChild(new pickUpItemNode);
+    Sequence * itemSequence = new Sequence;
 
-    Sequence3->addChild(new decideIfCanAttackNode);
-    Sequence3->addChild(new attackNode);
+            itemSequence->addChild(new lookForItemNode);
+            itemSequence->addChild(new pickUpItemNode);
 
-//===========================================
+    Sequence * attackSequence = new Sequence;
 
-    Selector1->addChild(Sequence3);
+            attackSequence->addChild(new decideIfCanAttackNode);
+            attackSequence->addChild(new attackNode);
 
-    Selector1->addChild(Sequence1);
+    Selector * movement = new Selector;
 
-    Selector1->addChild(Sequence2);
-
-    Selector1->addChild(new moveOnPathNode);
-
-    Selector1->addChild(new findPathNode);
+            movement->addChild(new moveOnPathNode);
+            movement->addChild(new findPathNode);
 
 
 
 
-    root->addChild(Selector1);
+
+    root->addChild(attackSequence);
+    root->addChild(itemSequence);
+    root->addChild(doorSequence);
+    root->addChild(movement);
 
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
@@ -172,8 +171,8 @@ int main()
 
 
     actors.push_back(new player("human"));
-   // actors.push_back(new monster("goblin"));
-   // actors[1]->pos(1,1);
+    actors.push_back(new monster("goblin"));
+    actors[1]->pos(1,1);
     actors[0]->pos(17,17);
 
     while (window.isOpen())
@@ -191,7 +190,7 @@ int main()
         actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
             std::cout << "_______________________________________\n";
-            root->run(actors[i],_map,localItems,actors);
+            root->run(actors[i],_map,localItems,actors,announcementList);
         }
         drawGameworld(_map,actors,localItems,window, announcementList);
     }

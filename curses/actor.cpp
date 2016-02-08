@@ -53,17 +53,30 @@ void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> 
     }
 }
 
-void actor::attackEnemy(std::vector<std::vector<tile*> > &_map)
+void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList)
 {
     srand(time(NULL));
     srand(rand()%time(NULL));
     srand(rand()%rand()%time(NULL));
-    if (rand()%100<accuracy and actorAttacking->name!=name){
-        //actorAttacking->health-=attack-actorAttacking->defense;
+    std::default_random_engine generator(rand()%time(NULL));
+    std::uniform_int_distribution<int> probability(1,accuracy);
+    int highestDamage = 0;
+    int highestProbability = 0;
+    bodyPart * bodyPartToHit;
+
+    for (bodyPart * _b : actorAttacking->body){
+        if ( ((_b->weight*(accuracy*.10))/10)*(.10*(rand()%accuracy)) > highestProbability  )  highestProbability = ((_b->weight*(accuracy*.10))/10)*(.10*(probability(generator)));
+        if (_b->armor != NULL){
+            if (_b->armor->defense + _b->weight - totalAttack() > highestDamage)highestDamage = _b->armor->defense + _b->weight - totalAttack();
+        }
+        else{
+            if (_b->weight - totalAttack() > highestDamage)highestDamage = _b->weight - totalAttack();
+        }
+        std::cout << highestProbability / highestDamage << std::endl;
+        srand(rand()%time(NULL));
+        srand(rand()%rand()%time(NULL));
     }
-    else if (actorAttacking->name!=name){
-        actorAttacking->dodgeAttack(this,_map);
-    }
+
 }
 
 bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
@@ -181,7 +194,7 @@ void monster::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*>
             //if an enemy is adjacent, attack them and set attacking to true.
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attackEnemy(_map);
+                    attackEnemy(_map, announcementList);
                     attacking=true;
                 }
             }

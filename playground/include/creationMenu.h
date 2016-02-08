@@ -88,6 +88,8 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
                         case 10:buttonSelected->addChild(new attackNode(parentx,parenty,"attack"));
                             break;
                         case 11: delete(buttonSelected);
+                                 buttonSelected = NULL;
+                                 onButton = false;
                                  break;
                     default:
                         std::cout << "Not a node\n";
@@ -98,6 +100,7 @@ void aiCreationMenu(sf::RenderWindow &window, Selector &baseNode)
 
         if (onButton){
             if (buttonSelected!= NULL){
+                std::cout << buttonSelected->name;
                 buttonSelected->rect.move(-distancex,-distancey);
                 buttonSelected->linkedFrom.move(-distancex,-distancey);
                 buttonSelected->linkedTo.move(-distancex,-distancey);
