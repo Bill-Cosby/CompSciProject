@@ -59,8 +59,7 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
     srand(rand()%time(NULL));
     int highestDamage= 9999999;
     double temp;
-    bodyPart * bodyPartToHit;
-    std::cout << actorAttacking->body.size() << std::endl;
+    bodyPart * bodyPartToHit = NULL;
     for (int i = 0;i<actorAttacking->body.size();i++){
         if (rand()%totalWeight < actorAttacking->body[i]->weight)
         {
@@ -74,6 +73,7 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
             else{
                 if ( actorAttacking->body[i]->weight - totalAttack() < highestDamage){
                     bodyPartToHit = actorAttacking->body[i];
+                    std::cout << actorAttacking->body[i]->name << std::endl;
 
                     temp = (rand()%totalAttack()+1);
                     highestDamage = actorAttacking->body[i]->weight - temp;
@@ -81,13 +81,20 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
             }
         }
     }
-    for (int i = 0;i<actorAttacking->body.size();i++){
-        if (body[i]->name==bodyPartToHit->name){
-            actorAttacking->body.erase(actorAttacking->body.begin()+i);
+            std::cout << "Here1\n";
+    if (bodyPartToHit != NULL){
+        bodyPartToHit->damage = highestDamage;
+        std::cout << bodyPartToHit->name << std::endl;
+        localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row()));\
+        for (int i = 0;i<actorAttacking->body.size();i++){
+            if (actorAttacking->body[i]->name==bodyPartToHit->name){
+                actorAttacking->body.erase(actorAttacking->body.begin()+i);
+
+                std::cout << "Her3e\n";
+            }
         }
     }
-    bodyPartToHit->damage = highestDamage;
-    localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row()));
+
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 

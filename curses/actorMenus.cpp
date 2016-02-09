@@ -314,8 +314,9 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
                     for (int j=0;j<itemsYouFound.size();j++){
                         if (itemsYouFound[j]->selected==true){
                             itemsYouFound[j]->selected=false;
-                            inventory.push_back((*itemsExamining)[j]);
-                            std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
+                            inventory.push_back(itemsYouFound[j]);
+                            std::cout << itemsYouFound[j]->name << std::endl;
+                            std::string temporary = "You picked up " + itemsYouFound[j]->name;
 
                             announcementList.addAnnouncement(temporary);
                             for (int k = 0; k < (*itemsExamining).size(); k++){

@@ -55,4 +55,10 @@ limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y)
     vanity = _vanity;
     x = _x;
     y = _y;
+    equipped = false;
+    canEquip = true;
+    canWear = false;
+    canUse=false;
+
+    selected=false;
 }

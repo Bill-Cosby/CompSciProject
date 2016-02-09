@@ -120,7 +120,6 @@ public:
     bool openDoor(std::vector<std::vector<tile*> > &_map);
     coordinate findTile(std::vector<std::vector<tile*> > &_map, bool findDoor, bool findHiddenTile);
     bool findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems);
-
     bool decideIfCanAttack(std::vector<actor*> actors);
 
 

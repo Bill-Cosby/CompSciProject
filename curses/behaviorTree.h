@@ -67,12 +67,14 @@ public:
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
         }
+
         if (testingCharacter->path.size()>0)std::cout << testingCharacter->path[0].x << "," << testingCharacter->path[0].y << ":" << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
 
         if (testingCharacter->path.size() > 0 and testingCharacter->memory==testingCharacter->goal){
             std::cout << "Continuing on current path...\n";
             return false;
         }
+
         std::cout << "Finding path...\n";
         if (testingCharacter->findPath(_map)){
             std::cout << "Found a path...\n";
