@@ -185,7 +185,7 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         std::cout << "Take that!\n";
-        testingCharacter->attackEnemy(_map, announcementList);
+        testingCharacter->attackEnemy(_map, announcementList, localItems);
     }
 };
 

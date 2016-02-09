@@ -189,8 +189,15 @@ int main()
         }
         actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
-            std::cout << "_______________________________________\n";
-            root->run(actors[i],_map,localItems,actors,announcementList);
+            if (actors[i]->counter >= actors[i]->speed()){
+                std::cout << "_______________________________________\n";
+                root->run(actors[i],_map,localItems,actors,announcementList);
+                actors[i]->resetCounter();
+                std::cout << "bodySize:" << actors[0]->body.size() << std::endl;
+            }
+            else{
+                actors[i]->increaseCounter();
+            }
         }
         drawGameworld(_map,actors,localItems,window, announcementList);
     }

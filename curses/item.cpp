@@ -47,3 +47,12 @@ corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, i
     x=_x;
     y=_y;
 }
+
+limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y)
+{
+    name = _name;
+    armor = _armor;
+    vanity = _vanity;
+    x = _x;
+    y = _y;
+}

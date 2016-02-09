@@ -73,7 +73,7 @@ public:
         return temp;
     }
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
-    int speed(){return 5;}
+    int speed(){return dexterity;}
     int customSpeed;
     std::string skinColor;
 
@@ -105,11 +105,13 @@ public:
 //  METHODS FOR INTERACTING WITH COUNTERS
     int getCounter(){return counter;}// obviously returns counter position
     int getSpeed(){return speed()-(.5*speed())*sprinting;}//returns maximum speed of a creature (if counter == speed, execute turn)
+    void increaseCounter(){counter++;}
+    void resetCounter(){counter=0;}
 
 
 //  METHODS FOR COMBAT
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map);
-    void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList);
+    void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems);
     void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
@@ -144,7 +146,7 @@ class player: public actor
 public:
     void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList);
-    void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems);
+    void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems, bool & keyrelease);
     player(std::string speciesToLoad);
 };
 
