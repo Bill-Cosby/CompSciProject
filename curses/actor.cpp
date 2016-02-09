@@ -58,21 +58,23 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
     srand(time(NULL));
     srand(rand()%time(NULL));
     srand(rand()%rand()%time(NULL));
-    std::default_random_engine generator(rand()%time(NULL));
-    std::uniform_int_distribution<int> probability(1,accuracy);
     int highestDamage = 0;
     int highestProbability = 0;
+    int temp;
     bodyPart * bodyPartToHit;
 
     for (bodyPart * _b : actorAttacking->body){
-        if ( ((_b->weight*(accuracy*.10))/10)*(.10*(rand()%accuracy)) > highestProbability  )  highestProbability = ((_b->weight*(accuracy*.10))/10)*(.10*(probability(generator)));
+    std::default_random_engine generator(rand()%time(NULL));
+    std::uniform_int_distribution<int> probability(1,accuracy);
+        temp = ((_b->weight*(accuracy*.10))/10)*(.10*(probability(generator)));
+        std::cout << temp << std::endl;
+        if ( temp > highestProbability  )  highestProbability = temp;
         if (_b->armor != NULL){
             if (_b->armor->defense + _b->weight - totalAttack() > highestDamage)highestDamage = _b->armor->defense + _b->weight - totalAttack();
         }
         else{
             if (_b->weight - totalAttack() > highestDamage)highestDamage = _b->weight - totalAttack();
         }
-        std::cout << highestProbability / highestDamage << std::endl;
         srand(rand()%time(NULL));
         srand(rand()%rand()%time(NULL));
     }
