@@ -48,8 +48,9 @@ corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, i
     y=_y;
 }
 
-limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y)
+limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite)
 {
+    sprite = _sprite;
     name = _name;
     armor = _armor;
     vanity = _vanity;

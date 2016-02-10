@@ -84,7 +84,7 @@ public:
     item* vanity;
     void equip(bool equipping){}
     std::string itemDescription(){}
-    limb(std::string _name, item * _armor, item * _vanity, int _x, int _y);
+    limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite);
 };
 
 #endif // ITEM_H_INCLUDED
