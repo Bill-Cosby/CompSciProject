@@ -1,0 +1,14 @@
+[HUMANTORSO]
+	[TEXTURE]creature_standard.png,0:96:;
+[HUMANHEAD]
+	[TEXTURE]creature_standard.png,0:16:;
+[HUMANARM]
+	[TEXTURE]creature_standard.png,0:80:;
+[HUMANLEG]
+	[TEXTURE]creature_standard.png,0:64:;
+[HUMANHAND]
+	[TEXTURE]creature_standard.png,0:48:;
+[HUMANFOOT]
+	[TEXTURE]creature_standard.png,0:32:;
+[HUMANEYE]
+	[TEXTURE]creature_standard.png,0:32:;
