@@ -368,7 +368,6 @@ player::player(std::string speciesToLoad)
     std::string fileName = "data/creatures/creature_standard.raw";
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
-    texture = RSL::getTextureData(fileName,speciesToLoad+".texture");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
@@ -432,4 +431,11 @@ monster::monster(std::string speciesToLoad)
     memory=coordinate(-1,-1);
     post=coordinate(-1,-1);
     path.resize(0);
+}
+
+void actor::drawActor(sf::RenderWindow& window)
+{
+    for (bodyPart * _b : body){
+        window.draw(_b->sprite);
+    }
 }

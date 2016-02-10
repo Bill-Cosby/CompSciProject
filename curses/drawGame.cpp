@@ -42,7 +42,7 @@ short backgroundValue;
                 }
                 for (actor* _a: actors)
                 {
-                    window.draw(_a->sprite);
+                    _a->drawActor(window);
                 }
                 //(*_map)[y][x]->drawTile(window);
             }

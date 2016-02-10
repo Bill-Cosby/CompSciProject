@@ -99,7 +99,13 @@ public:
     char symbol(){return _symbol;}
 
 //  SET THE POSITION OF THE CREATURE
-    void pos(int _y,int _x){x=_x;y=_y;sprite.setPosition(x*16,y*16);}
+    void pos(int _y,int _x){
+        x=_x;
+        y=_y;
+        for(bodyPart * _b : body){_b->sprite.setPosition(_x*16,_y*16);}
+    }
+
+    void drawActor(sf::RenderWindow &window);
 
 
 //  METHODS FOR INTERACTING WITH COUNTERS

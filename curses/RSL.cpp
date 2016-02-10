@@ -155,7 +155,6 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
                 for (char _c : line){
-
                     if (_c == '\t' or _c == '{' or _c == '}'){
                         continue;
                     }
@@ -176,18 +175,17 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
                         }
                         else if(_c == ':'){
                             for (int i=0;i<quantity;i++){
-                                if (LINE_READING == "head"){body.push_back(new head(weight));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye(weight, i));}
-                                else if (LINE_READING == "neck"){body.push_back(new neck(weight));}
-                                else if (LINE_READING=="torso"){body.push_back(new torso(weight));}
-                                else if (LINE_READING =="arm"){body.push_back(new arm(weight, i));}
-                                else if (LINE_READING =="leg"){body.push_back(new leg(weight, i));}
+                                if (LINE_READING == "head"){body.push_back(new head("human",weight));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight, i));}
+                                else if (LINE_READING == "neck"){body.push_back(new neck("human",weight));}
+                                else if (LINE_READING=="torso"){body.push_back(new torso("human",weight));}
+                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, i));}
+                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, i));}
                             }
                             LINE_READING.clear();
                             continue;
                         }
                     }
-
                     if (foundDataMember == true and _c == ';'){
                         return body;
                     }
@@ -230,18 +228,20 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
 
     sf::Texture whatever;
 
+    std::cout << fileName << std::endl;
+
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
 
     std::string line;
     std::ifstream loadFile(fileName);
-
+    std::cout << dataType << ":" << dataMember << std::endl;
 
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
-
+                std::cout << line << std::endl;
                 for (char _c : line){
 
                     if (_c == '\t' or _c == '{' or _c == '}'){
@@ -307,6 +307,7 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
             }
         }
     }
+    std::cout << "Reached the end of the file\n";
 }
 
 std::vector<material> unloadMaterials(std::string fileName)

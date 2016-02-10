@@ -77,8 +77,13 @@ int main()
     bool keyrelease=true;
 
 
+    std::vector<actor*> actors;
 
     char ch;
+    actors.push_back(new player("human"));
+    actors[0]->pos(1,1);
+    actors.push_back(new player("human"));
+    actors[1]->pos(16,1);
 
 
 
@@ -95,7 +100,6 @@ int main()
 
 
     std::vector<std::vector<tile* > > _map;
-    std::vector<actor*> actors;
 
 
 
@@ -170,10 +174,6 @@ int main()
 //    }
 
 
-    actors.push_back(new player("human"));
-    actors.push_back(new monster("goblin"));
-    actors[1]->pos(1,1);
-    actors[0]->pos(17,17);
 
     while (window.isOpen())
     {
