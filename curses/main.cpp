@@ -35,7 +35,10 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
-    Selector * root = new Selector;
+    sf::RenderWindow window(sf::VideoMode(800,600), "SFML Window");
+    city myCity;
+    announcements no_announcements;
+    /*Selector * root = new Selector;
 
     Selector * decisionMaker = new Selector;
     //Defining the tree
@@ -67,25 +70,22 @@ int main()
 
     root->addChild(decisionMaker);
     root->addChild(movement);
+*/
 
-
-
-    sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
     //window.setFramerateLimit(60);
 
-    announcements announcementList;
 
-    bool keyrelease=true;
+   // bool keyrelease=true;
 
 
     std::vector<actor*> actors;
 
-    char ch;
+    //char ch;
     actors.push_back(new player("human"));
-    actors[0]->pos(1,1);
-    actors.push_back(new monster("human"));
-    actors[1]->pos(16,1);
+    //actors[0]->pos(1,1);
+   // actors.push_back(new monster("human"));
+   // actors[1]->pos(16,1);
 
 
 
@@ -97,15 +97,15 @@ int main()
     localItems.push_back(globalItems[1]);
 
 
-    coordinate temp;
+    //coordinate temp;
 
 
 
-    std::vector<std::vector<tile* > > _map;
+   // std::vector<std::vector<tile* > > _map;
 
 
 
-
+/*
     _map.resize(20);
     for (int y=0;y<20;y++){
         _map[y].resize(20);
@@ -212,6 +212,8 @@ int main()
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
+*/
 
+myCity.generateCity(actors,localItems,window,no_announcements);
     return 0;
 }
