@@ -58,8 +58,8 @@ int main()
 
 
     decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(itemSequence);
-    decisionMaker->addChild(doorSequence);
+    //decisionMaker->addChild(itemSequence);
+    //decisionMaker->addChild(doorSequence);
 
     root->addChild(decisionMaker);
     root->addChild(movement);

@@ -417,9 +417,6 @@ monster::monster(std::string speciesToLoad)
     sprite.setTexture(texture);
 
     for (bodyPart* _b : body){
-        if (_b->hasFoot() == true){
-            numberOfLegs++;
-        }
         totalWeight+=_b->weight;
     }
 
@@ -436,6 +433,9 @@ monster::monster(std::string speciesToLoad)
 void actor::drawActor(sf::RenderWindow& window)
 {
     for (bodyPart * _b : body){
-        window.draw(_b->sprite);
+        if (_b->name == "torso"){
+            _b->draw(window);
+            return;
+        }
     }
 }

@@ -3,8 +3,8 @@
 	[TEXTURE]creature_standard.png,0:0:;
 	[DESCRIPTION]An average, intelligent creature.;
 	[TAGS];
-	-- template:(quantity of body part) (weight of body part less than 10) (name of body part):
-	[LIMBS]{1,11,head:2,0,eye:1,4,neck:1,100,torso:2,8,arm:2,26,leg:};
+	-- template: (weight of body part less than 10) (name of body part):
+	[LIMBS]{01,03,11,head:02,01,0,eye:03,00,4,neck:00,00,100,torso:04,00,8,arm:07,00,8,arm:05,00,26,leg:06,00,26,leg:09,05,hand:0A,07,hand:0B,06,foot:0C,05,foot:}
 	[HAIRCOLOR]{brown:black:blonde:grey:};
 	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
 	[STRENGTH]5;
@@ -16,7 +16,7 @@
 	[TEXTURE]creature_standard.png,0:17:;
 	[DESCRIPTION]A small cruel creature.;
 	[TAGS]EVIL;
-	[LIMBS]{1,5,head:2,0,eye:1,2,neck:1,55,torso:2,4,arm:2,12,leg:};
+	[LIMBS]{01,03,5,head:0201,0,eye:03,00,2,neck:00,00,55,torso:04,00,4,arm:05,00,12,leg:};
 	[HAIRCOLOR]{black:};
 	[EYECOLOR]{grey:black:yellow:};
 	[STRENGTH]5;

@@ -43,6 +43,7 @@ public:
     std::vector<item*> inventory;
     std::vector<item*> equipment;
     std::vector<bodyPart*> body;
+
     item* wielded;
 //  AFFECTS SPEED
     int coolDown;
