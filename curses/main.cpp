@@ -36,6 +36,8 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 int main()
 {
     Selector * root = new Selector;
+
+    Selector * decisionMaker = new Selector;
     //Defining the tree
 
     Sequence * doorSequence = new Sequence;
@@ -59,13 +61,13 @@ int main()
             movement->addChild(new findPathNode);
 
 
+    decisionMaker->addChild(attackSequence);
+    decisionMaker->addChild(itemSequence);
+    decisionMaker->addChild(doorSequence);
 
-
-
-    root->addChild(attackSequence);
-    root->addChild(itemSequence);
-    root->addChild(doorSequence);
+    root->addChild(decisionMaker);
     root->addChild(movement);
+
 
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
@@ -82,7 +84,7 @@ int main()
     char ch;
     actors.push_back(new player("human"));
     actors[0]->pos(1,1);
-    actors.push_back(new player("human"));
+    actors.push_back(new monster("human"));
     actors[1]->pos(16,1);
 
 
@@ -121,9 +123,7 @@ int main()
             }
             _map[y][x]->position=coordinate(x,y);
             _map[y][x]->sprite.setPosition(x*16,y*16);
-            std::cout << _map[y][x]->isDoor;
         }
-        std::cout << endl;
     }
 
 
@@ -193,7 +193,6 @@ int main()
                 std::cout << "_______________________________________\n";
                 root->run(actors[i],_map,localItems,actors,announcementList);
                 actors[i]->resetCounter();
-                std::cout << "bodySize:" << actors[0]->body.size() << std::endl;
             }
             else{
                 actors[i]->increaseCounter();

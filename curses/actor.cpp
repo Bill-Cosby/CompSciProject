@@ -81,16 +81,13 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
             }
         }
     }
-            std::cout << "Here1\n";
     if (bodyPartToHit != NULL){
         bodyPartToHit->damage = highestDamage;
         std::cout << bodyPartToHit->name << std::endl;
         localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(), bodyPartToHit->sprite));
         for (int i = 0;i<actorAttacking->body.size();i++){
             if (actorAttacking->body[i]->name==bodyPartToHit->name){
-                actorAttacking->body.erase(actorAttacking->body.begin()+i);
-
-                std::cout << "Her3e\n";
+                actorAttacking->body.erase(actorAttacking->body.begin()+i);\
             }
         }
     }

@@ -11,4 +11,4 @@
 [HUMANFOOT]
 	[TEXTURE]creature_standard.png,0:32:;
 [HUMANEYE]
-	[TEXTURE]creature_standard.png,0:32:;
+	[TEXTURE]creature_standard.png,0:0:;

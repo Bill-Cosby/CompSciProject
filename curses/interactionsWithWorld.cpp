@@ -84,7 +84,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
         if (isDoor == true){
             temp = *openSet[i];
             if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true){
-                goal = temp;
                 return temp;
             }
         }
@@ -94,7 +93,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
                 delete openSet[i];
             }
             if (!(canSee(_map,memory,*openSet[i]))){
-                goal = temp;
                 return temp;
             }
         }

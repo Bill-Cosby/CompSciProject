@@ -93,6 +93,7 @@ public:
     {
         std::cout << "Do I have a path?\n";
         if (testingCharacter->path.size()>0){
+            std::cout << testingCharacter->path.size() << std::endl;
             std::cout << "Moving On Path...\n";
             testingCharacter->moveOnPath();
             return true;
@@ -110,6 +111,7 @@ public:
         coordinate temp = testingCharacter->findTile(_map,true,false);
         std::cout << "Looking for a door...\n";
         if (temp!= coordinate(-1,-1) and !_map[temp.y][temp.x]->isOpen()){
+            testingCharacter->goal = temp;
             std::cout << "Found a door...\n";
             if (testingCharacter->findDistance(testingCharacter->goal)<=1.4){
                 testingCharacter->openDoor(_map);
@@ -186,8 +188,10 @@ class attackNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Take that!\n";
-        testingCharacter->attackEnemy(_map, announcementList, localItems);
+        if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
+            std::cout << "Take that!\n";
+            testingCharacter->attackEnemy(_map, announcementList, localItems);
+        }
     }
 };
 

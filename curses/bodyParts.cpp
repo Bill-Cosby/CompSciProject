@@ -60,7 +60,7 @@ eye::eye(std::string species, int _weight, bool _left)
     grasps=false;
     texture = RSL::getTextureData("data/textures/creature_standard.raw", "humaneye.texture");
     sprite.setTexture(texture);
-    sprite.setColor(sf::Color(255,0,1));
+    sprite.setColor(sf::Color(0,0,255));
     if (left==true){
         name = "left eye";
         sprite.setOrigin(sprite.getPosition().x+17,0);
