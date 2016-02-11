@@ -1159,3 +1159,457 @@
 1454443448 source:c:\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
 
+1455212748 source:c:\users\taldape1171\compsciproject\curses\actor.cpp
+	"actor.h"
+	<cstdlib>
+
+1455212748 c:\users\taldape1171\compsciproject\curses\actor.h
+	"window.h"
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	<SFML/Graphics.hpp>
+	<cctype>
+	"bodyParts.h"
+	"aStar.h"
+	<random>
+
+1455055044 c:\users\taldape1171\compsciproject\curses\window.h
+	"tile.h"
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	<SFML/Graphics.hpp>
+
+1455055043 c:\users\taldape1171\compsciproject\curses\tile.h
+	"item.h"
+	"node.h"
+	"RSL.h"
+	"materials.h"
+	<SFML/Graphics.hpp>
+
+1455212748 c:\users\taldape1171\compsciproject\curses\item.h
+	<string>
+	<sstream>
+	<SFML/Graphics.hpp>
+	<vector>
+	"materials.h"
+	"RSL.h"
+
+1455055043 c:\users\taldape1171\compsciproject\curses\materials.h
+	<vector>
+	<SFML/Graphics.hpp>
+
+1455055043 c:\users\taldape1171\compsciproject\curses\rsl.h
+	"bodyParts.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	<vector>
+	<stdlib.h>
+	<time.h>
+	<SFML/Graphics.hpp>
+	"materials.h"
+
+1455212748 c:\users\taldape1171\compsciproject\curses\bodyparts.h
+	<string>
+	<SFML/Graphics.hpp>
+
+1454004771 c:\users\taldape1171\compsciproject\curses\node.h
+
+1455055043 c:\users\taldape1171\compsciproject\curses\astar.h
+	<algorithm>
+	<vector>
+	<stdlib.h>
+	<limits>
+	<iostream>
+	"tile.h"
+	<queue>
+	<sstream>
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\actormenus.cpp
+	"actor.h"
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\astar.cpp
+	"aStar.h"
+	<unordered_set>
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\bodyparts.cpp
+	"bodyParts.h"
+	"RSL.h"
+
+1455055043 source:c:\users\taldape1171\compsciproject\curses\building.cpp
+	"building.h"
+	<iostream>
+
+1454004771 c:\users\taldape1171\compsciproject\curses\building.h
+	<vector>
+	<fstream>
+	<string>
+	<cctype>
+	<math.h>
+	"tile.h"
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\drawgame.cpp
+	"drawGame.h"
+
+1455055043 c:\users\taldape1171\compsciproject\curses\drawgame.h
+	"actor.h"
+	"shadowcasting.h"
+	<SFML/Graphics.hpp>
+
+1455055043 c:\users\taldape1171\compsciproject\curses\shadowcasting.h
+	"tile.h"
+	<vector>
+	<math.h>
+	<cmath>
+	<SFML/Graphics.hpp>
+
+1454004771 source:c:\users\taldape1171\compsciproject\curses\include\dungeon.cpp
+	"dungeon.h"
+
+1454004771 c:\users\taldape1171\compsciproject\curses\include\dungeon.h
+	<random>
+	<stdlib.h>
+	<time.h>
+	<stack>
+	<fstream>
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\interactionswithworld.cpp
+	"actor.h"
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\item.cpp
+	"item.h"
+
+1455215409 source:c:\users\taldape1171\compsciproject\curses\main.cpp
+	"menu.h"
+	"drawGame.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+	<SFML/Graphics.hpp>
+	"building.h"
+	"generateCity.h"
+	"tiles.h"
+	"behaviorTree.h"
+
+1455055043 c:\users\taldape1171\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	<SFML/Audio.hpp>
+	"actor.h"
+
+1455212748 c:\users\taldape1171\compsciproject\curses\generatecity.h
+	"tile.h"
+	<time.h>
+	<random>
+	<vector>
+	"actor.h"
+	<SFML/Graphics.hpp>
+
+1455214467 c:\users\taldape1171\compsciproject\curses\tiles.h
+	<vector>
+	"tile.h"
+	<noise/noise.h>
+	"noiseutils.h"
+
+1455054441 c:\users\taldape1171\compsciproject\curses\noiseutils.h
+	<stdlib.h>
+	<string.h>
+	<string>
+	<noise/noise.h>
+
+1455212748 c:\users\taldape1171\compsciproject\curses\behaviortree.h
+	<list>
+	"actor.h"
+
+1455055043 source:c:\users\taldape1171\compsciproject\curses\menu.cpp
+	"menu.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\latlon.cpp
+	"latlon.h"
+
+1454004771 c:\users\taldape1171\compsciproject\curses\noise\latlon.h
+	<math.h>
+	"mathconsts.h"
+
+1454004771 c:\users\taldape1171\compsciproject\curses\noise\mathconsts.h
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\model\cylinder.cpp
+	"../mathconsts.h"
+	"cylinder.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\model\cylinder.h
+	<assert.h>
+	<math.h>
+	<stdlib.h>
+	"../module/modulebase.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\modulebase.h
+	<stdlib.h>
+	<assert.h>
+	<math.h>
+	"../basictypes.h"
+	"../exception.h"
+	"../noisegen.h"
+
+1454004771 c:\users\taldape1171\compsciproject\curses\noise\basictypes.h
+
+1454004771 c:\users\taldape1171\compsciproject\curses\noise\exception.h
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\noisegen.h
+	<math.h>
+	"basictypes.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\model\line.cpp
+	"line.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\model\line.h
+	<assert.h>
+	<math.h>
+	<stdlib.h>
+	"../module/modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\model\plane.cpp
+	"plane.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\model\plane.h
+	<assert.h>
+	"../module/modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\model\sphere.cpp
+	"../latlon.h"
+	"sphere.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\model\sphere.h
+	<assert.h>
+	"../module/modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\abs.cpp
+	"abs.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\abs.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\add.cpp
+	"add.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\add.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\billow.cpp
+	"billow.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\billow.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\blend.cpp
+	"blend.h"
+	"../interp.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\blend.h
+	"modulebase.h"
+
+1454004771 c:\users\taldape1171\compsciproject\curses\noise\interp.h
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\cache.cpp
+	"cache.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\cache.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\checkerboard.cpp
+	"checkerboard.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\checkerboard.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\clamp.cpp
+	"clamp.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\clamp.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\const.cpp
+	"const.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\const.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\curve.cpp
+	"../interp.h"
+	"../misc.h"
+	"curve.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\misc.h
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\curve.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\cylinders.cpp
+	"../misc.h"
+	"cylinders.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\cylinders.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\displace.cpp
+	"displace.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\displace.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\exponent.cpp
+	"exponent.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\exponent.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\invert.cpp
+	"invert.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\invert.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\max.cpp
+	"../misc.h"
+	"max.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\max.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\min.cpp
+	"../misc.h"
+	"min.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\min.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\modulebase.cpp
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\multiply.cpp
+	"multiply.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\multiply.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\perlin.cpp
+	"perlin.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\perlin.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\power.cpp
+	"power.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\power.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\ridgedmulti.cpp
+	"ridgedmulti.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\ridgedmulti.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\rotatepoint.cpp
+	"../mathconsts.h"
+	"rotatepoint.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\rotatepoint.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\scalebias.cpp
+	"scalebias.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\scalebias.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\scalepoint.cpp
+	"scalepoint.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\scalepoint.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\select.cpp
+	"../interp.h"
+	"select.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\select.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\spheres.cpp
+	"../misc.h"
+	"spheres.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\spheres.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\terrace.cpp
+	"../interp.h"
+	"../misc.h"
+	"terrace.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\terrace.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\translatepoint.cpp
+	"translatepoint.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\translatepoint.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\turbulence.cpp
+	"turbulence.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\turbulence.h
+	"perlin.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\module\voronoi.cpp
+	"../mathconsts.h"
+	"voronoi.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\module\voronoi.h
+	"modulebase.h"
+
+1455054440 source:c:\users\taldape1171\compsciproject\curses\noise\noisegen.cpp
+	"noisegen.h"
+	"interp.h"
+	"vectortable.h"
+
+1454004772 c:\users\taldape1171\compsciproject\curses\noise\vectortable.h
+
+1455054441 source:c:\users\taldape1171\compsciproject\curses\noiseutils.cpp
+	<fstream>
+	<noise/interp.h>
+	<noise/mathconsts.h>
+	"noiseutils.h"
+
+1455212748 source:c:\users\taldape1171\compsciproject\curses\rsl.cpp
+	"RSL.h"
+
+1455212749 source:c:\users\taldape1171\compsciproject\curses\shadowcasting.cpp
+	"shadowcasting.h"
+
+1455055043 source:c:\users\taldape1171\compsciproject\curses\tile.cpp
+	"tile.h"
+
+1455214661 source:c:\users\taldape1171\compsciproject\curses\tiles.cpp
+	<iostream>
+	"tiles.h"
+	<stdlib.h>
+	<time.h>
+	<vector>
+
+1455055043 source:c:\users\taldape1171\compsciproject\curses\window.cpp
+
+1455215432 source:c:\users\taldape1171\compsciproject\curses\generatecity.cpp
+	"generateCity.h"
+	<vector>
+	"drawGame.h"
+	<random>
+	<vector>
+

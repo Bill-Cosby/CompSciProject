@@ -77,12 +77,13 @@ int main()
 
 
    // bool keyrelease=true;
+std::vector<actor*> actors;
+//actors.push_back(new player("human"));
 
 
-    std::vector<actor*> actors;
 
     //char ch;
-    actors.push_back(new player("human"));
+
     //actors[0]->pos(1,1);
    // actors.push_back(new monster("human"));
    // actors[1]->pos(16,1);
@@ -91,11 +92,10 @@ int main()
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
-    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
-    localItems.push_back(globalItems[0]);
-    localItems.push_back(globalItems[1]);
-
+  //  globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+   // globalItems.push_back(new weapon(5,"Sword",'/',16,18));
+   // localItems.push_back(globalItems[0]);
+   // localItems.push_back(globalItems[1]);
 
     //coordinate temp;
 
