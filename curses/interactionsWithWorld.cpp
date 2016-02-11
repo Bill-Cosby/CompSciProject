@@ -14,25 +14,28 @@ bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 
 bool actor::equipItem(std::vector<item*> & localItems)
 {
-    if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
-        if (itemToPickUp->canEquip){
-            for (bodyPart * _b : body){
-                if (_b->hasHand() == true){
-                    _b->equip(itemToPickUp, true);
+    if (itemToPickUp != NULL){
+        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
+            if (itemToPickUp->canEquip){
+                for (bodyPart * _b : body){
+                    if (_b->hasHand() == true){
+                        _b->equip(itemToPickUp, true);
 
-                    equipment.push_back(itemToPickUp);
+                        equipment.push_back(itemToPickUp);
 
-                    for (int i = 0; i < localItems.size(); i++){
-                        if (localItems[i] == itemToPickUp){
-                            localItems.erase(localItems.begin() + i);
+                        for (int i = 0; i < localItems.size(); i++){
+                            if (localItems[i] == itemToPickUp){
+                                localItems.erase(localItems.begin() + i);
+                            }
                         }
-                    }
 
-                    return true;
+                        return true;
+                    }
                 }
             }
         }
     }
+
     return false;
 }
 

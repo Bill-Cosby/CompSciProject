@@ -362,6 +362,8 @@ player::player(std::string speciesToLoad)
     controlled=true;
     sprinting=false;
 
+    itemToPickUp = NULL;
+
     std::string fileName = "data/creatures/creature_standard.raw";
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
@@ -399,6 +401,7 @@ monster::monster(std::string speciesToLoad)
     sprinting=false;
 
     actorAttacking = NULL;
+    itemToPickUp = NULL;
 
     std::string fileName = "data/creatures/creature_standard.raw";
 

@@ -41,22 +41,18 @@ int main()
     //Defining the tree
 
     Sequence * doorSequence = new Sequence;
-
             doorSequence->addChild(new findDoorNode);
             doorSequence->addChild(new openDoorNode);
 
-    Sequence * itemSequence = new Sequence;
-
-            itemSequence->addChild(new lookForItemNode);
+    Selector * itemSequence = new Selector;
             itemSequence->addChild(new pickUpItemNode);
+            itemSequence->addChild(new lookForItemNode);
 
     Sequence * attackSequence = new Sequence;
-
             attackSequence->addChild(new decideIfCanAttackNode);
             attackSequence->addChild(new attackNode);
 
     Selector * movement = new Selector;
-
             movement->addChild(new moveOnPathNode);
             movement->addChild(new findPathNode);
 
