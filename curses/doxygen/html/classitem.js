@@ -1,0 +1,25 @@
+var classitem =
+[
+    [ "equip", "classitem.html#a04d0deeeb855afde946dcd9f6f9cde91", null ],
+    [ "itemDescription", "classitem.html#a55098d896b721aae01fbf2716c3147ad", null ],
+    [ "use", "classitem.html#a5f738a8982efc2fb86b17a65c91ae05f", null ],
+    [ "attack", "classitem.html#a7e90966eb938c8c342345d483838ca23", null ],
+    [ "canEquip", "classitem.html#af90d12719fff63eb858505951110a6aa", null ],
+    [ "canGrasp", "classitem.html#aed5ad955c2482c66d1769f95c4d490d1", null ],
+    [ "canUse", "classitem.html#a802b1631d8724c100389843ea56c42ce", null ],
+    [ "canWear", "classitem.html#ac5a8eb5c25ea2114aefc29b85be6a226", null ],
+    [ "canWield", "classitem.html#aeed4bc6771b891bf05e4b266a0dc7ae0", null ],
+    [ "defense", "classitem.html#a191dd22a36d91a1ef2b97edcb91ff861", null ],
+    [ "equipped", "classitem.html#a9c349f7f403fb11e3eb9335b5ed7a934", null ],
+    [ "health", "classitem.html#a68a5cc1a1b782e2e478428c8cd215c89", null ],
+    [ "locationOnBody", "classitem.html#a772571ad38ed2dcff334a95dbf5499cd", null ],
+    [ "material", "classitem.html#a771c88d7bc1824fb09af6cc0829b7651", null ],
+    [ "name", "classitem.html#a912866ef25d124ec966c81765e9ee429", null ],
+    [ "selected", "classitem.html#ab27ebc2a37459a27c4a10e3309e55b99", null ],
+    [ "speed", "classitem.html#a7574e38b1593aa48fc5348a19575ba1d", null ],
+    [ "sprite", "classitem.html#adb991244770ef45558a35510f38ffb04", null ],
+    [ "texture", "classitem.html#af2fe0df797bc29b4b907e03823df5c3c", null ],
+    [ "value", "classitem.html#a48e03a66deef7b4ec95296391a17a420", null ],
+    [ "x", "classitem.html#ace71324934040f456926da5c2fa50a98", null ],
+    [ "y", "classitem.html#a5962abbc0602c14b07790acf589cfa4a", null ]
+];

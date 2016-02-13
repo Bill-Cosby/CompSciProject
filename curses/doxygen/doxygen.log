@@ -1,0 +1,70 @@
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/noise.h:28: warning: multiple use of section label 'intro' while adding section, (first occurrence: C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noiseutils.h, line 42)
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/noise.h:64: warning: multiple use of section label 'contact' while adding section, (first occurrence: C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noiseutils.h, line 72)
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:203: warning: documented symbol `PathNodePool::PathNodePool' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:235: warning: documented symbol `PathNodePool::~PathNodePool' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:247: warning: documented symbol `bool PathNodePool::PushCache' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:261: warning: no uniquely matching class member found for 
+  void PathNodePool::Clear()
+
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:300: warning: documented symbol `PathNodePool::Block * PathNodePool::NewBlock' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:313: warning: documented symbol `unsigned PathNodePool::Hash' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:365: warning: documented symbol `PathNode * PathNodePool::Alloc' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:385: warning: documented symbol `void PathNodePool::AddPathNode' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:406: warning: documented symbol `PathNode * PathNodePool::FetchPathNode' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:422: warning: documented symbol `PathNode * PathNodePool::GetPathNode' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:448: warning: documented symbol `void PathNode::Init' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:464: warning: documented symbol `MicroPather::MicroPather' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:478: warning: documented symbol `MicroPather::~MicroPather' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:484: warning: documented symbol `void MicroPather::Reset' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:494: warning: documented symbol `void MicroPather::GoalReached' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:579: warning: documented symbol `void MicroPather::GetNodeNeighbors' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:666: warning: documented symbol `void MicroPather::StatesInPool' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:673: warning: documented symbol `void PathNodePool::AllStates' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:686: warning: documented symbol `PathCache::PathCache' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:697: warning: documented symbol `PathCache::~PathCache' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:703: warning: documented symbol `void PathCache::Reset' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:714: warning: no uniquely matching class member found for 
+  void PathCache::Add(const MP_VECTOR< void * > &path, const MP_VECTOR< float > &cost)
+
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:734: warning: documented symbol `void PathCache::AddNoSolution' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:747: warning: documented symbol `int PathCache::Solve' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:773: warning: documented symbol `void PathCache::AddItem' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:798: warning: documented symbol `const PathCache::Item * PathCache::Find' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:817: warning: documented symbol `void MicroPather::GetCacheData' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:839: warning: documented symbol `int MicroPather::Solve' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/micropather.cpp:956: warning: documented symbol `int MicroPather::SolveForNearStates' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/voronoi.cpp:28: warning: documented symbol `Voronoi::Voronoi' was not declared or defined.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/voronoi.cpp:37: warning: no uniquely matching class member found for 
+  double Voronoi::GetValue(double x, double y, double z) const
+
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/noise.h:26: warning: found more than one \mainpage comment block! (first occurrence: C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noiseutils.h, line 42), Skipping current block!
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/model/cylinder.h:46: warning: image file modelcylinder.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/model/sphere.h:43: warning: image file modelsphere.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/abs.h:46: warning: image file moduleabs.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/add.h:47: warning: image file moduleadd.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/billow.h:69: warning: image file modulebillow.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/blend.h:47: warning: image file moduleblend.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/checkerboard.h:45: warning: image file modulecheckerboard.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/clamp.h:54: warning: image file moduleclamp.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/const.h:49: warning: image file moduleconst.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/curve.h:60: warning: image file modulecurve.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/curve.h:68: warning: image file curve.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/cylinders.h:48: warning: image file modulecylinders.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/displace.h:48: warning: image file moduledisplace.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/exponent.h:49: warning: image file moduleexponent.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/invert.h:45: warning: image file moduleinvert.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/max.h:46: warning: image file modulemax.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/min.h:46: warning: image file modulemin.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/multiply.h:46: warning: image file modulemultiply.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/perlin.h:66: warning: image file moduleperlin.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/power.h:46: warning: image file modulepower.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/ridgedmulti.h:66: warning: image file moduleridgedmulti.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/rotatepoint.h:58: warning: image file modulerotatepoint.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/scalebias.h:52: warning: image file modulescalebias.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/scalepoint.h:58: warning: image file modulescalepoint.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/select.h:57: warning: image file moduleselect.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/spheres.h:48: warning: image file modulespheres.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/terrace.h:46: warning: image file moduleterrace.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/terrace.h:54: warning: image file terrace.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/translatepoint.h:58: warning: image file moduletranslatepoint.png is not found in IMAGE_PATH: assuming external image.
+C:/of_v0.8.4_win_cb_release/apps/myApps/CompSciProject/curses/noise/module/turbulence.h:58: warning: image file moduleturbulence.png is not found in IMAGE_PATH: assuming external image.

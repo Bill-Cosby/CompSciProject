@@ -1,0 +1,28 @@
+var struct__win =
+[
+    [ "_attrs", "struct__win.html#a3cd540fac581731242998fae056c2790", null ],
+    [ "_begx", "struct__win.html#a47b1f8dd0ac3881c2545f837c4c7df48", null ],
+    [ "_begy", "struct__win.html#aebc14f76a10a6a6e8e325cdce8efa920", null ],
+    [ "_bkgd", "struct__win.html#ad4ff09ef157d2fd83b6408ab06027e35", null ],
+    [ "_bmarg", "struct__win.html#abc41beddf6fae4b7736db67034165c39", null ],
+    [ "_clear", "struct__win.html#a274143649a929aa1ce4be65af7e7c10d", null ],
+    [ "_curx", "struct__win.html#ac1223f2a5936f9f5c50395b54d681bb8", null ],
+    [ "_cury", "struct__win.html#a3c9396e362f6045db955d354ac8afdd3", null ],
+    [ "_delayms", "struct__win.html#aa35c75071b7f47b1b6b5f008cb5aa40c", null ],
+    [ "_firstch", "struct__win.html#a4403cf4cb02f847df9ba2d7223c84624", null ],
+    [ "_flags", "struct__win.html#a52c42a525dd996467c9b52bc34978a1d", null ],
+    [ "_immed", "struct__win.html#a364446f14ce98f50e6db2f64340d29ae", null ],
+    [ "_lastch", "struct__win.html#a01dc8f287591772108a05ce259d819f3", null ],
+    [ "_leaveit", "struct__win.html#ac86819092f1b3e917149ec14566baa12", null ],
+    [ "_maxx", "struct__win.html#a418239ce0ef32b00f5f88d09044308b2", null ],
+    [ "_maxy", "struct__win.html#a6db30778f2228f10811e08763a329897", null ],
+    [ "_nodelay", "struct__win.html#aa82aca18ad8733b07009a2f2b3450bf4", null ],
+    [ "_parent", "struct__win.html#a91014d37281ccdde7d37cfc9f2208e6b", null ],
+    [ "_parx", "struct__win.html#a4cfae0166106a740706fcd93a3b4b84d", null ],
+    [ "_pary", "struct__win.html#aaa257b14b762738fbbfd531a530c0a6c", null ],
+    [ "_scroll", "struct__win.html#ac356e38e11aaa2735ada881ec6eb4683", null ],
+    [ "_sync", "struct__win.html#a43fd73fe8831832d65549a187f318bd5", null ],
+    [ "_tmarg", "struct__win.html#adecbf065adc82ff57f0013a8381b01d0", null ],
+    [ "_use_keypad", "struct__win.html#a0ced9223c6470c2ad199513dac314a91", null ],
+    [ "_y", "struct__win.html#a6e174764854b4bfaa441b4a4682f161a", null ]
+];
