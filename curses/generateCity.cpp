@@ -6,15 +6,12 @@
 
 void city::generateCity( std:: vector<actor*> & actors,std::vector<item*> & localItems, sf::RenderWindow & window, announcements & Announcements)
 {
-std::vector<std::vector<tile*> > tileMap;
-setTileMap(tileMap);
-divideBox(3,tileMap); //recursive box dividing and road drawing
+divideBox(3); //recursive box dividing and road drawing
 drawGameworld(tileMap,actors,localItems, window, Announcements);
-deleteTileMap(tileMap);
 }
 
 
-void city::setTileMap(std::vector<std::vector<tile*> > & tileMap)
+void city::setTileMap()
 {
     std::vector<tile*> blank1;
     blank1.resize(50);
@@ -31,40 +28,30 @@ void city::setTileMap(std::vector<std::vector<tile*> > & tileMap)
 
 
 
-void city::deleteTileMap(std::vector<std::vector<tile*> > & tileMap)
+void city::deleteTileMap50()
 {
-    for(int a=0; a<tileMap.size(); a++)
+    for(int a=0; a<50; a++)
     {
-        for(int b=0; b<tileMap[a].size(); b++)
+        for(int b=0; b<50; b++)
         {
             delete tileMap[a][b];
         }
     }
 }
 
- void box::makeRoad(road* myRoad,std::vector<std::vector<tile*> >& tileMap)
-{
- if(myRoad->vertical==true)
+
+
+void city::makeCity()
  {
-  for(int a=0; a<=myRoad->Point2->y-myRoad->Point1->y; a++)
-  {
-   tileMap[myRoad->Point1->y+a][myRoad->Point2->x]=new tile('/',10,stone);
-  }
- }
-
-  if(myRoad->vertical==false)
-  {
-  for(int a=0; a<myRoad->Point2->x-myRoad->Point1->x; a++)
-   {
-   tileMap[myRoad->Point2->y][myRoad->Point1->x+a]=new tile('/',10,stone);
-
-   }
-  }
-
-
+      for(int a=0; a<roads.size(); a++)
+      {
+         makeRoad(roads[a]);
+      }
 }
 
-void box::divideBox(int level, std::vector<std::vector<tile*> >& tileMap)
+
+
+void box::divideBox(int level)
 {
   if(level!=0)
   {
@@ -77,11 +64,14 @@ std::uniform_int_distribution<int> halfChance(0,1);
         double splitPoint=findSplitPoint(generator);
         coordinate lowPoint(bottom, splitPoint);
         coordinate highPoint(top, splitPoint);
-        road tempRoad;
-        tempRoad.vertical=true;
-        tempRoad.Point1=&lowPoint;
-        tempRoad.Point2=&highPoint;
-        makeRoad(tempRoad, tileMap); //builds list of roads
+        tempRoad=new road;
+        tempRoad->vertical=true;
+        tempRoad->Point1=&leftPoint;
+        tempRoad->Point2=&rightPoint;
+        drawRoad(tempRoad); //builds list of roads
+        delete tempRoad;
+        delete bottomPoint;
+        delete topPoint;
 
         subBox1=new box;
         subBox2=new box;
@@ -104,26 +94,31 @@ std::uniform_int_distribution<int> halfChance(0,1);
         coordinate leftPoint(splitPoint, left);
         coordinate rightPoint(splitPoint, right);
 
-        road tempRoad;
-        tempRoad.vertical=false;
-        tempRoad.Point1=&leftPoint;
-        tempRoad.Point2=&rightPoint;
-        makeRoad(tempRoad, &tileMap); //builds list of roads
+        tempRoad=new road;
+        tempRoad->vertical=false;
+        tempRoad->Point1=&leftPoint;
+        tempRoad->Point2=&rightPoint;
+        drawRoad(tempRoad); //builds list of roads
+        delete tempRoad;
+        delete leftPoint
+        delete rightPoint;
 
 
         box1=new box;
         box2=new box;
 
-        box1.left=left;
-        box1.right=right;
-        box1.top=top;
-        box1.bottom=splitPoint;
-        box2.left=left;
-        box2.right=right;
-        box2.top=splitPoint;
-        box2.bottom=bottom;  //forms
+        box1->left=left;
+        box1->right=right;
+        box1->top=top;
+        box1->splitPoint;
+        box2->left=left;
+        box2->right=right;
+        box2->top=splitPoint;
+        box2->bottom=bottom;  //forms
     }
 
+    box1->myCity=myCity;
+    box2->myCity=myCity
     level-=1;
     box1->divideBox(level);
     box2->divideBox(level);
@@ -132,7 +127,27 @@ std::uniform_int_distribution<int> halfChance(0,1);
 
   }
 
+  void city::makeRoad(road* myRoad)
+{
+ if(myRoad->vertical==true)
+ {
+  for(int a=0; a<=myRoad->Point2->y-myRoad->Point1->y; a++)
+  {
+   tileMap[myRoad->Point1->y+a][myRoad->Point2->x]=new tile('/',10,stone);
+  }
+ }
 
+  if(myRoad->vertical==false)
+  {
+  for(int a=0; a<myRoad->Point2->x-myRoad->Point1->x; a++)
+   {
+   tileMap[myRoad->Point2->y][myRoad->Point1->x+a]=new tile('/',10,stone);
+
+   }
+  }
+
+
+}
 }
 
 
