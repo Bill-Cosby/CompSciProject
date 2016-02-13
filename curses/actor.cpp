@@ -53,17 +53,46 @@ void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> 
     }
 }
 
-void actor::attackEnemy(std::vector<std::vector<tile*> > &_map)
+void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
 {
     srand(time(NULL));
     srand(rand()%time(NULL));
-    srand(rand()%rand()%time(NULL));
-    if (rand()%100<accuracy and actorAttacking->name!=name){
-        //actorAttacking->health-=attack-actorAttacking->defense;
+    int highestDamage= 9999999;
+    double temp;
+    bodyPart * bodyPartToHit = NULL;
+    for (int i = 0;i<actorAttacking->body.size();i++){
+        if (rand()%totalWeight < actorAttacking->body[i]->weight)
+        {
+            if (actorAttacking->body[i]->armor!=NULL){
+                if ((actorAttacking->body[i]->armor->defense + actorAttacking->body[i]->weight) - totalAttack() < highestDamage){
+                    bodyPartToHit = actorAttacking->body[i];
+                    temp = (rand()%totalAttack()+1);
+                    highestDamage = (actorAttacking->body[i]->armor->defense + actorAttacking->body[i]->weight) - temp;
+                }
+            }
+            else{
+                if ( actorAttacking->body[i]->weight - totalAttack() < highestDamage){
+                    bodyPartToHit = actorAttacking->body[i];
+                    std::cout << actorAttacking->body[i]->name << std::endl;
+
+                    temp = (rand()%totalAttack()+1);
+                    highestDamage = actorAttacking->body[i]->weight - temp;
+                }
+            }
+        }
     }
-    else if (actorAttacking->name!=name){
-        actorAttacking->dodgeAttack(this,_map);
+    if (bodyPartToHit != NULL){
+        bodyPartToHit->damage = highestDamage;
+        std::cout << bodyPartToHit->name << std::endl;
+        localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(), bodyPartToHit->sprite));
+        for (int i = 0;i<actorAttacking->body.size();i++){
+            if (actorAttacking->body[i]->name==bodyPartToHit->name){
+                actorAttacking->body.erase(actorAttacking->body.begin()+i);\
+            }
+        }
     }
+
+    //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
 bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
@@ -181,7 +210,6 @@ void monster::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*>
             //if an enemy is adjacent, attack them and set attacking to true.
             for (actor* _a : actors){
                 if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attackEnemy(_map);
                     attacking=true;
                 }
             }
@@ -260,7 +288,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems);}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
                 while (pressedKey == false){
                     while (window.pollEvent(event)){
@@ -291,6 +319,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                             pressedKey = true;
                         }
                     }
@@ -300,6 +329,7 @@ void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> 
 //                    if (coordinate(_i->x,_i->y) == temp){itemsExamining.push_back(_i);}
 //                }
                 examineGround(window,localItems,temp, announcementList);
+                std::cout << "Here5\n";
             }
             else if ((*_map)[temp.y][temp.x]->movementCost!=-1){
                 if ((*_map)[temp.y][temp.x]->isDoor){
@@ -335,7 +365,6 @@ player::player(std::string speciesToLoad)
     std::string fileName = "data/creatures/creature_standard.raw";
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
-    texture = RSL::getTextureData(fileName,speciesToLoad+".texture");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
@@ -399,4 +428,11 @@ monster::monster(std::string speciesToLoad)
     memory=coordinate(-1,-1);
     post=coordinate(-1,-1);
     path.resize(0);
+}
+
+void actor::drawActor(sf::RenderWindow& window)
+{
+    for (bodyPart * _b : body){
+        window.draw(_b->sprite);
+    }
 }

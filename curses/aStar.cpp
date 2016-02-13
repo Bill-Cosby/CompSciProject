@@ -49,7 +49,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
 
     while (openSet.size()!=0){
 
-        if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4){
+        if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4 or canSee(_map,goal,currentNode.position)){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){
 
@@ -112,12 +112,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
         timesthroughLoop++;
-
-        if (canSee(_map,goal,currentNode.position)){
-            std::vector<coordinate> path;
-            path.push_back(currentNode.position);
-            return path;
-        }
     }
 }
 

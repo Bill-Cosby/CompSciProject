@@ -7,10 +7,12 @@ void cast_light(std::vector<std::vector<tile*> > &_map, unsigned int x, unsigned
     if (start_slope < end_slope)return;
 
     float next_start_slope = start_slope;
-    for (int i = row; i <= radius; i++){
+
+    for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
-        int dy = i;
-        for (int dx = -i-1;dx <= 0; dx++){
+        int dy = -i;
+        unsigned int radius2 = radius * radius;
+        for (int dx = -i;dx <= 0; dx++){
             float l_slope = (dx - .5) / (dy + .5);
             float r_slope =  (dx + .5) / (dy - .5);
 
@@ -19,7 +21,7 @@ void cast_light(std::vector<std::vector<tile*> > &_map, unsigned int x, unsigned
             else if (end_slope > l_slope)break;
 
             int sax = dx * xx + dy * xy;
-            int say = dx * yx + dy * yy;
+            int say =  dx * yx + dy * yy;
 
             if ((sax < 0 and (unsigned int)std::abs(sax) > x) or (say < 0 and (unsigned int)std::abs(say) > y)){
                 continue;
@@ -29,26 +31,28 @@ void cast_light(std::vector<std::vector<tile*> > &_map, unsigned int x, unsigned
             if (ax >= _map.size() or ay >= _map.size()){
                 continue;
             }
-            unsigned int radius2 = radius * radius;
+            else{
 
-            if ((unsigned int)(dx * dx + dy * dy) < radius2){
-                _map[ay][ax]->drawTile(window);
-            }
-
-            if (blocked) {
-                if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isOpen() == false)){
-                    next_start_slope = r_slope;
-                    continue;
-                }else{
-                    blocked = false;
-                    start_slope = next_start_slope;
+                if ((unsigned int)(dx * dx + dy * dy) < radius2){
+                    _map[ay][ax]->drawTile(window);
                 }
-            }else if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isOpen() == false)){
-                blocked = true;
-                next_start_slope = r_slope;
-                cast_light(_map,x,y,radius,row,start_slope,end_slope,xx,xy,yx,yy,window);
+
+                if (blocked) {
+                    if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isDoor and _map[ay][ax]->isOpen() == false)){
+                        next_start_slope = r_slope;
+                        continue;
+                    }else{
+                        blocked = false;
+                        start_slope = next_start_slope;
+                    }
+                }else if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isDoor and _map[ay][ax]->isOpen() == false)){
+                    blocked = true;
+                    cast_light(_map,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window);
+                    next_start_slope = r_slope;
+                }
             }
         }
+        _map[y][x]->drawTile(window);
         if (blocked)break;
     }
 }

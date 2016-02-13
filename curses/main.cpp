@@ -6,102 +6,127 @@
 #include <SFML/Graphics.hpp>
 #include "building.h"
 #include "generateCity.h"
-#include "actor.h"
-
+#include "tiles.h"
+#include "behaviorTree.h"
 
 using namespace std;
 
-const char testarena[20][20]={{'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','[','#','#','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
-                              {'#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
-                              {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}};
+const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','2','1','1','1','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
+                              {'1','0','0','0','0','0','0','0','0','0','0','0','0','0','1','0','0','0','0','1'},
+                              {'1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'}};
 
 
 int main()
 {
-    sf::RenderWindow window;
+    sf::RenderWindow window(sf::VideoMode(800,600), "SFML Window");
     city myCity;
     announcements no_announcements;
+    /*Selector * root = new Selector;
+
+    Selector * decisionMaker = new Selector;
+    //Defining the tree
+
+    Sequence * doorSequence = new Sequence;
+
+            doorSequence->addChild(new findDoorNode);
+            doorSequence->addChild(new openDoorNode);
+
+    Sequence * itemSequence = new Sequence;
+
+            itemSequence->addChild(new lookForItemNode);
+            itemSequence->addChild(new pickUpItemNode);
+
+    Sequence * attackSequence = new Sequence;
+
+            attackSequence->addChild(new decideIfCanAttackNode);
+            attackSequence->addChild(new attackNode);
+
+    Selector * movement = new Selector;
+
+            movement->addChild(new moveOnPathNode);
+            movement->addChild(new findPathNode);
 
 
-    screen scr(150,80);
+    decisionMaker->addChild(attackSequence);
+    decisionMaker->addChild(itemSequence);
+    decisionMaker->addChild(doorSequence);
 
-    char ch;
+    root->addChild(decisionMaker);
+    root->addChild(movement);
+*/
+
+
+    //window.setFramerateLimit(60);
+
+
+   // bool keyrelease=true;
+std::vector<actor*> actors;
+//actors.push_back(new player("human"));
 
 
 
+    //char ch;
 
-    //    building test;
-    //    test.buildStructure();
+    //actors[0]->pos(1,1);
+   // actors.push_back(new monster("human"));
+   // actors[1]->pos(16,1);
+
+
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
-    localItems.push_back(globalItems[0]);
-    localItems.push_back(globalItems[1]);
+  //  globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+   // globalItems.push_back(new weapon(5,"Sword",'/',16,18));
+   // localItems.push_back(globalItems[0]);
+   // localItems.push_back(globalItems[1]);
+
+    //coordinate temp;
 
 
 
-    coordinate temp;
-    dungeon map_t;
+   // std::vector<std::vector<tile* > > _map;
 
 
 
-    std::vector<std::vector<tile* > > _map;
-    std::vector<monster> monsters;
-    std::vector<actor*> actors;
-
-    _map.resize(100);
-    for (int y=0;y<100;y++){
-        _map[y].resize(100);
-        for (int x=0;x<100;x++){
-            _map[y][x] = new tile(',',0,grass);
+/*
+    _map.resize(20);
+    for (int y=0;y<20;y++){
+        _map[y].resize(20);
+        for (int x=0;x<20;x++){
+            if (testarena[y][x]=='2'){
+                _map[y][x]=new door(0,wood);
+            }
+            else if (testarena[y][x]=='1'){
+                _map[y][x]=new tile('0',-1,stone);
+                _map[y][x]->isDoor=false;
+            }
+            else{
+                _map[y][x]= new tile('1',0,stone);
+                _map[y][x]->isDoor=false;
+            }
+            _map[y][x]->position=coordinate(x,y);
+            _map[y][x]->sprite.setPosition(x*16,y*16);
         }
     }
 
-    for (int y=0;y<test.height;y++){
-        for (int x=0;x<test.width;x++){
-            _map[y][x] = test.structure[y][x];
-        }
-    }
-    //generateCity(&_map,true,1,true,coordinate(_map.size()/2,0),3);
 
-//    _map.resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (testarena[y][x]=='['){
-//                _map[y][x]= new door(0, wood);
-//            }
-//            else if (testarena[y][x]=='#'){
-//                _map[y][x]=new tile('#',-1,stone);
-//                _map[y][x]->isDoor=false;
-//                _map[y][x]->position=coordinate(x,y);
-//            }
-//            else{
-//                _map[y][x]= new tile(' ',0,stone);
-//                _map[y][x]->isDoor=false;
-//                _map[y][x]->position=coordinate(x,y);
-//            }
-//        }
-//    }
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -148,17 +173,34 @@ int main()
 //        actors.push_back(&monsters[i]);
 //    }
 
-/*
-actors.push_back(new player("[HUMAN]"));
 
-    while (first_menu.quit_game==false)
+
+    while (window.isOpen())
     {
-        drawGameworld(_map,&actors,localItems,&scr);
-        for (int i=0;i<actors.size();i++){
-            actors[i]->movement(&_map,&localItems,actors,&scr);
+        sf::Event event;
+
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed){
+                window.close();
+            }
+            if (event.type == sf::Event::KeyReleased){
+                keyrelease = true;
+            }
         }
+        actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
+        for (int i=1;i<actors.size();i++){
+            if (actors[i]->counter >= actors[i]->speed()){
+                std::cout << "_______________________________________\n";
+                root->run(actors[i],_map,localItems,actors,announcementList);
+                actors[i]->resetCounter();
+            }
+            else{
+                actors[i]->increaseCounter();
+            }
+        }
+        drawGameworld(_map,actors,localItems,window, announcementList);
     }
-    endwin();
+
         for (int i=0;i<actors.size();i++){
             delete actors[i];
         }
@@ -170,8 +212,8 @@ actors.push_back(new player("[HUMAN]"));
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
-        */
-myCity.generateCity(&Actors,&localItems,&window,&no_announcements);
-myCity.deleteTileMap50();
+*/
+
+myCity.generateCity(actors,localItems,window,no_announcements);
     return 0;
 }

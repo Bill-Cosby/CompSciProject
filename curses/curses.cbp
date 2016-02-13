@@ -47,6 +47,7 @@
 		<Unit filename="building.h" />
 		<Unit filename="drawGame.cpp" />
 		<Unit filename="drawGame.h" />
+		<Unit filename="generateCity.cpp" />
 		<Unit filename="generateCity.h" />
 		<Unit filename="include/curses.h" />
 		<Unit filename="include/dungeon.cpp" />
@@ -155,6 +156,15 @@
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

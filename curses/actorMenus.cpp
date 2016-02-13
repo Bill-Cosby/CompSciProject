@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localItems)
+void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localItems, bool & keyrelease)
 {
     std::vector<bodyPart*> bodyPartsToEquipIn;
     sf::Font font;
@@ -41,8 +41,6 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
     bool examiningItem = false;
     bool inventoryOpen = true;
-
-    bool keyrelease = true;
 
     item* itemLookingAt = NULL;
 
@@ -223,6 +221,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
 
         window.display();
     }
+    std::cout << "Here\n";
     window.clear();
 }
 
@@ -260,7 +259,7 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
     char ch;
     bool examiningGround=true;
     bool unloadedItem=false;
-    bool keyrelease = true;
+    bool keyrelease = false;
     for (int i=0;i<(*itemsExamining).size();i++){
         if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
             itemsYouFound.push_back((*itemsExamining)[i]);
@@ -315,8 +314,9 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
                     for (int j=0;j<itemsYouFound.size();j++){
                         if (itemsYouFound[j]->selected==true){
                             itemsYouFound[j]->selected=false;
-                            inventory.push_back((*itemsExamining)[j]);
-                            std::string temporary = "You picked up " + (*itemsExamining)[j]->name;
+                            inventory.push_back(itemsYouFound[j]);
+                            std::cout << itemsYouFound[j]->name << std::endl;
+                            std::string temporary = "You picked up " + itemsYouFound[j]->name;
 
                             announcementList.addAnnouncement(temporary);
                             for (int k = 0; k < (*itemsExamining).size(); k++){

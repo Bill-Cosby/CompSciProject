@@ -1,0 +1,20 @@
+[START]
+[WALL]
+	[NAME]wall;
+	[TEXTURE]tiles.png,0:0:;
+[END]
+[START]
+[FLOOR]
+	[NAME]floor;
+	[TEXTURE]tiles.png,0:17:;
+[END]
+[START]
+[DOOR]
+	[NAME]door;
+	[TEXTURE]tiles.png,0:33:;
+[END]
+[START]
+[OPENDOOR]
+	[NAME]opendoor;
+	[TEXTURE]tiles.png,0:48:;
+[END]
