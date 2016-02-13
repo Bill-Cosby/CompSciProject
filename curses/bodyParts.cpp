@@ -59,7 +59,7 @@ head::head(std::string species, int _weight, std::string id, std::string connect
     sprite.setColor(sf::Color(255,200,181));
 }
 
-eye::eye(std::string species, int _weight, std::string id, std::string connectedto)
+eye::eye(std::string species, int _weight, std::string id, std::string connectedto, bool left)
 {
     ID = id;
     connectedTo = connectedto;
@@ -80,7 +80,7 @@ eye::eye(std::string species, int _weight, std::string id, std::string connected
     damage = 0;
 }
 
-hand::hand(std::string species, int _weight,  std::string id, std::string connectedto)
+hand::hand(std::string species, int _weight,  std::string id, std::string connectedto, bool left)
 {
     ID = id;
     connectedTo = connectedto;
@@ -101,7 +101,7 @@ hand::hand(std::string species, int _weight,  std::string id, std::string connec
     damage = 0;
 }
 
-arm::arm(std::string species, int _weight, std::string id, std::string connectedto)
+arm::arm(std::string species, int _weight, std::string id, std::string connectedto, bool left)
 {
     ID = id;
     connectedTo = connectedto;
@@ -123,8 +123,9 @@ arm::arm(std::string species, int _weight, std::string id, std::string connected
     damage = 0;
 }
 
-foot::foot(std::string species, int _weight, std::string id, std::string connectedto)
+foot::foot(std::string species, int _weight, std::string id, std::string connectedto, bool left)
 {
+    std::cout << left << std::endl;
     ID = id;
     connectedTo = connectedto;
     weight=_weight;
@@ -144,7 +145,7 @@ foot::foot(std::string species, int _weight, std::string id, std::string connect
     damage = 0;
 }
 
-leg::leg(std::string species, int _weight,  std::string id, std::string connectedto)
+leg::leg(std::string species, int _weight,  std::string id, std::string connectedto, bool left)
 {
     ID = id;
     connectedTo = connectedto;

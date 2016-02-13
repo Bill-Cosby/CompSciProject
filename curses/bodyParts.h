@@ -37,7 +37,7 @@ struct eye : public bodyPart
 {
 public:
     bool left;
-    eye(std::string species,int _weight, std::string id, std::string connectedto);
+    eye(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
     std::string color;
 };
 
@@ -47,7 +47,7 @@ public:
     bool left;
     item* inHand;
     void equip(item* itemToGrasp, bool equipping);
-    hand(std::string species,int _weight,  std::string id, std::string connectedto);
+    hand(std::string species,int _weight,  std::string id, std::string connectedto, bool Left);
     hand(){inHand = NULL;armor=NULL;}
 };
 
@@ -56,7 +56,7 @@ class foot : public bodyPart
 public:
     bool left;
     item* sock;
-    foot(std::string species,int _weight, std::string id, std::string connectedto);
+    foot(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
     foot(){sock = NULL;armor=NULL;}
 };
 
@@ -64,7 +64,7 @@ class arm : public bodyPart
 {
 public:
     bool left;
-    arm(std::string species,int _weight, std::string id, std::string connectedto);
+    arm(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
     bool hasHand(){return true;}
     item* ARM_ARMOR;
 };
@@ -73,7 +73,7 @@ class leg : public bodyPart
 {
 public:
     bool left;
-    leg(std::string species,int _weight, std::string id, std::string connectedto);
+    leg(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
     bool hasFoot(){return true;}
     item* LEG_ARMOR;
 };

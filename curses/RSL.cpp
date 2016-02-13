@@ -143,7 +143,7 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
     std::string id;
     std::string connectedTo;
 
-    int quantity;
+    bool left=false;
     int weight;
 
 
@@ -181,28 +181,30 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
                             LINE_READING.clear();
                             continue;
                         }
+                        else if (_c == 'L'){
+                            left = true;
+                            continue;
+                        }
                         else if(_c == ':'){
-                                std::cout << LINE_READING << std::endl;
                                 if (LINE_READING == "head"){body.push_back(new head("human",weight,id, connectedTo));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight,id, connectedTo));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight,id, connectedTo, left));}
                                 else if (LINE_READING == "neck"){body.push_back(new neck("human",weight,id, connectedTo));}
                                 else if (LINE_READING=="torso"){body.push_back(new torso("human",weight,id, connectedTo));}
-                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, id, connectedTo));}
-                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, id, connectedTo));}
-                                else if (LINE_READING == "hand"){body.push_back(new hand("human",weight,id, connectedTo));}
-                                else if (LINE_READING == "foot"){body.push_back(new foot("human",weight,id, connectedTo));}
-
+                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, id, connectedTo, left));}
+                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, id, connectedTo, left));}
+                                else if (LINE_READING == "hand"){body.push_back(new hand("human",weight,id, connectedTo, left));}
+                                else if (LINE_READING == "foot"){body.push_back(new foot("human",weight,id, connectedTo, left));}
+                            left = false;
                             LINE_READING.clear();
                             continue;
                         }
                     }
                     if (foundDataMember == true and _c == ';'){
                         for (bodyPart * _b : body){
-                            std::cout << "Here\n";
                             for (bodyPart * _b2 : body){
                                 if (_b2 == _b)continue;
                                 if (_b->connectedTo == _b2->ID){
-                                    _b->attachedParts.push_back(_b2);
+                                    _b2->attachedParts.push_back(_b);
                                 }
                             }
                         }
