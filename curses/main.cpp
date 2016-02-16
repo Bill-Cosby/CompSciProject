@@ -35,7 +35,7 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
-    Selector * root = new Selector;
+    CheckAll * root = new CheckAll;
 
     Selector * decisionMaker = new Selector;
     //Defining the tree
@@ -44,9 +44,9 @@ int main()
             doorSequence->addChild(new findDoorNode);
             doorSequence->addChild(new openDoorNode);
 
-    Selector * itemSequence = new Selector;
-            itemSequence->addChild(new pickUpItemNode);
+    Sequence * itemSequence = new Sequence;
             itemSequence->addChild(new lookForItemNode);
+            itemSequence->addChild(new pickUpItemNode);
 
     Sequence * attackSequence = new Sequence;
             attackSequence->addChild(new decideIfCanAttackNode);
@@ -58,12 +58,11 @@ int main()
 
 
     decisionMaker->addChild(attackSequence);
-    //decisionMaker->addChild(itemSequence);
-    //decisionMaker->addChild(doorSequence);
+    decisionMaker->addChild(itemSequence);
+    decisionMaker->addChild(doorSequence);
 
     root->addChild(decisionMaker);
     root->addChild(movement);
-
 
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");

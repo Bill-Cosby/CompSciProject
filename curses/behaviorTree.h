@@ -27,6 +27,18 @@ public:
     void setChild (Node* _child){child = _child;}
 };
 
+class CheckAll : public compositNode
+{
+public:
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        for (Node* child : getChildren()){
+            child->run(testingCharacter,_map,localItems,actors,announcementList);
+        }
+        return true;
+    }
+};
+
 class Selector : public compositNode
 {
 public:
@@ -91,6 +103,7 @@ class moveOnPathNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        std::cout<<testingCharacter->goal.x<<" "<<testingCharacter->goal.y<<std::endl;
         std::cout << "Do I have a path?\n";
         if (testingCharacter->path.size()>0){
             std::cout << testingCharacter->path.size() << std::endl;
