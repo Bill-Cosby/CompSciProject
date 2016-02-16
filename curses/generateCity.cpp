@@ -40,19 +40,18 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 {
  if(myRoad->vertical==true)
  {
-  for(int a=0; a<=myRoad->Point2->y-myRoad->Point1->y; a++)
+  for(int a=0; a<=5; a++)//myRoad->Point2->y-myRoad->Point1->y
   {
-   tile* test=new tile('0',10,stone);
-   tileMap[myRoad->Point1->y+a][myRoad->Point1->x]=test;
+
+   tileMap[5+a][10]=new tile('1',10,stone);//myRoad->Point1->y+a//myRoad->Point1->x
   }
  }
 
   if(myRoad->vertical==false)
   {
-  for(int a=0; a<myRoad->Point2->x-myRoad->Point1->x; a++)
+  for(int a=0; a<=5; a++)//myRoad->Point2->x-myRoad->Point1->x
    {
-   tile tempTile('0',10,stone);
-   tileMap[myRoad->Point1->y][myRoad->Point1->x+a]=new tile('0',10,stone);
+   tileMap[10][5+a]=new tile('1',10,stone);//myRoad->Point1->y//myRoad->Point1->x+a
 
    }
   }
@@ -138,8 +137,7 @@ std::uniform_int_distribution<int> halfChance(0,1);
 
 std::vector<std::vector<tile*> > tileMap;
 setTileMap(tileMap);
-std::cout<<tileMap.size();
-//divideBox(3,tileMap); //recursive box dividing and road drawing
+divideBox(3,tileMap); //recursive box dividing and road drawing
 while(window.isOpen())
 {
     sf::Event event;

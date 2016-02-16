@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1455209972 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1455639936 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -271,7 +271,7 @@
 	"window.h"
 	<iostream>
 
-1455210850 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
+1455640025 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1454145833 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\drawgame.h
@@ -344,18 +344,21 @@
 	"bodyParts.h"
 	"RSL.h"
 
-1453829303 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
+1455208024 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
+	<vector>
+	"actor.h"
+	<SFML/Graphics.hpp>
 
-1454145833 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.h
+1455639497 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.h
 	<vector>
 	"tile.h"
 	<noise/noise.h>
 	"noiseutils.h"
 
-1454145833 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.cpp
+1455639497 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tiles.cpp
 	<iostream>
 	"tiles.h"
 	<stdlib.h>
@@ -1132,7 +1135,7 @@
 1455210850 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
 
-1455209691 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\behaviortree.h
+1455210850 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\behaviortree.h
 	<list>
 	"actor.h"
 
@@ -1607,6 +1610,13 @@
 1455055043 source:c:\users\taldape1171\compsciproject\curses\window.cpp
 
 1455215432 source:c:\users\taldape1171\compsciproject\curses\generatecity.cpp
+	"generateCity.h"
+	<vector>
+	"drawGame.h"
+	<random>
+	<vector>
+
+1455640227 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.cpp
 	"generateCity.h"
 	<vector>
 	"drawGame.h"

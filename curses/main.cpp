@@ -78,7 +78,7 @@ int main()
 
    // bool keyrelease=true;
 std::vector<actor*> actors;
-//actors.push_back(new player("human"));
+actors.push_back(new player("human"));
 
 
 
