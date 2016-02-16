@@ -309,7 +309,7 @@
 	"materials.h"
 	<iostream>
 
-1455327739 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.h
+1455593788 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\bodyparts.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -1160,4 +1160,6 @@
 
 1455053041 source:c:\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
+
+1455593312 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tissue.h
 

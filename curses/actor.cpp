@@ -374,7 +374,6 @@ player::player(std::string speciesToLoad)
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
-
     sprite.setTexture(texture);
 
 

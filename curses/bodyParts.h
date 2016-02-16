@@ -11,6 +11,7 @@ class item;
 class bodyPart
 {
 public:
+    int skin,fat,muscle,bone;
     std::vector<bodyPart*> attachedParts;
     std::string ID;
     std::string connectedTo;
