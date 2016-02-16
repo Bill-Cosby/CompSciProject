@@ -82,6 +82,16 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
         }
     }
     if (bodyPartToHit != NULL){
+
+        int acceleration = attack/(totalWeight*.07);
+        int distance = sqrt(totalWeight*.07);
+
+
+
+        for (int resistance : bodyPartToHit->tissues){
+            std::cout << (acceleration*distance)/resistance << std::endl;
+        }
+
         bodyPartToHit->damage = highestDamage;
         std::cout << bodyPartToHit->name << std::endl;
         localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(), bodyPartToHit->sprite));

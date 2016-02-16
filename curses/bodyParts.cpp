@@ -30,10 +30,10 @@ torso::torso(std::string species, int _weight,std::string id, std::string connec
     sprite.setTexture(texture);
     sprite.setColor(sf::Color(255,200,181));
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 neck::neck(std::string species, int _weight, std::string id, std::string connectedto)
@@ -49,10 +49,10 @@ neck::neck(std::string species, int _weight, std::string id, std::string connect
     sprite.setTexture(texture);
     sprite.setColor(sf::Color(255,200,181));
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 head::head(std::string species, int _weight, std::string id, std::string connectedto)
@@ -68,10 +68,10 @@ head::head(std::string species, int _weight, std::string id, std::string connect
     sprite.setTexture(texture);
     sprite.setColor(sf::Color(255,200,181));
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 eye::eye(std::string species, int _weight, std::string id, std::string connectedto, bool left)
@@ -94,10 +94,10 @@ eye::eye(std::string species, int _weight, std::string id, std::string connected
     armor = NULL;
     damage = 0;
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 hand::hand(std::string species, int _weight,  std::string id, std::string connectedto, bool left)
@@ -120,10 +120,10 @@ hand::hand(std::string species, int _weight,  std::string id, std::string connec
     armor = NULL;
     damage = 0;
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 arm::arm(std::string species, int _weight, std::string id, std::string connectedto, bool left)
@@ -147,10 +147,10 @@ arm::arm(std::string species, int _weight, std::string id, std::string connected
     armor = NULL;
     damage = 0;
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 foot::foot(std::string species, int _weight, std::string id, std::string connectedto, bool left)
@@ -174,10 +174,10 @@ foot::foot(std::string species, int _weight, std::string id, std::string connect
     armor = NULL;
     damage = 0;
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+"bone");
 }
 
 leg::leg(std::string species, int _weight,  std::string id, std::string connectedto, bool left)
@@ -200,8 +200,8 @@ leg::leg(std::string species, int _weight,  std::string id, std::string connecte
     armor = NULL;
     damage = 0;
 
-    skin = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
-    fat = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
-    muscle = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    bone = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
+    tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
+    tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
+    tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+"bone");
 }
