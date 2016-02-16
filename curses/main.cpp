@@ -35,6 +35,7 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+    int timer = 0;
     Selector * root = new Selector;
 
     Selector * decisionMaker = new Selector;
@@ -179,8 +180,9 @@ int main()
             if (event.type == sf::Event::Closed){
                 window.close();
             }
-            if (event.type == sf::Event::KeyReleased){
+            if (event.type == sf::Event::KeyReleased or timer == 10){
                 keyrelease = true;
+                timer = 0;
             }
         }
         actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
@@ -195,6 +197,7 @@ int main()
             }
         }
         drawGameworld(_map,actors,localItems,window, announcementList);
+        timer++;
     }
 
         for (int i=0;i<actors.size();i++){

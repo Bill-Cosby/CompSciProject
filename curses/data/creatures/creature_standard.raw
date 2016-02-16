@@ -9,6 +9,10 @@
 	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
 	[STRENGTH]5;
 	[DEXTERITY]25;
+	[SKIN]15;
+	[FAT]5;
+	[MUSCLE]25;
+	[BONE]45;
 [ENDSPECIES]
 
 [GOBLIN];
@@ -21,4 +25,8 @@
 	[EYECOLOR]{grey:black:yellow:};
 	[STRENGTH]5;
 	[DEXTERITY]25;
+	[SKIN]15;
+	[FAT]5;
+	[MUSCLE]25;
+	[BONE]45;
 [ENDSPECIES]

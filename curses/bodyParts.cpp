@@ -177,7 +177,7 @@ foot::foot(std::string species, int _weight, std::string id, std::string connect
     tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
     tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
     tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+"bone");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
 
 leg::leg(std::string species, int _weight,  std::string id, std::string connectedto, bool left)
@@ -203,5 +203,5 @@ leg::leg(std::string species, int _weight,  std::string id, std::string connecte
     tissues[0] = RSL::getIntData("data/creatures/creature_standard.raw",species+".skin");
     tissues[1] = RSL::getIntData("data/creatures/creature_standard.raw",species+".fat");
     tissues[2] = RSL::getIntData("data/creatures/creature_standard.raw",species+".muscle");
-    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+"bone");
+    tissues[3] = RSL::getIntData("data/creatures/creature_standard.raw",species+".bone");
 }
