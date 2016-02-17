@@ -26,10 +26,10 @@ public:
 
 box * subBox1;
 box * subBox2;
-double right;
-double left;
-double bottom;
-double top;
+int right;
+int left;
+int bottom;
+int top;
 std::vector<coordinate *> blank;
 
 box(){blank.resize(2);}
@@ -42,7 +42,7 @@ class city: box
     public:
 std::vector<std::vector<tile*> > tileMap;
 void setTileMap(std::vector<std::vector<tile*> > & tileMap);
-city(){left=0; bottom=0; right=50; top=50;}
+city(){left=0; bottom=0; right=24; top=24;}
 void generateCity(std::vector<actor *> &,std::vector<item*> &, sf::RenderWindow&, announcements&);
 void deleteTileMap(std::vector<std::vector<tile*> > & );
 };

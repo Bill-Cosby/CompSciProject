@@ -1,19 +1,21 @@
 #include "generateCity.h"
 #include <vector>
 #include "drawGame.h"
-#include <random>
+#include <time.h>
+#include <stdlib.h>
 #include <vector>
 
 
 void city:: setTileMap(std::vector<std::vector<tile*> > & tileMap)
 {
+    int tileMapSize=27;
     std::vector<tile*> blank1;
-    blank1.resize(50);
-    tileMap.resize(50);
-  for(int a=0; a<50; a++)
+    blank1.resize(tileMapSize);
+    tileMap.resize(tileMapSize);
+  for(int a=0; a<tileMapSize; a++)
     {
         tileMap[a]=blank1;
-        for(int b=0; b<50; b++)
+        for(int b=0; b<tileMapSize; b++)
         {
             tileMap[a][b]=new tile('0',10,grass);
             tileMap[a][b]->position = coordinate(a,b);
@@ -38,20 +40,22 @@ void city:: deleteTileMap(std::vector<std::vector<tile*> > & tileMap)
 
 void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 {
+
  if(myRoad->vertical==true)
  {
-  for(int a=0; a<=5; a++)//myRoad->Point2->y-myRoad->Point1->y
+  for(int a=0; a<(myRoad->Point2->y-myRoad->Point1->y)+1; a++)
   {
-
-   tileMap[5+a][10]=new tile('1',10,stone);//myRoad->Point1->y+a//myRoad->Point1->x
+std::cout<<myRoad->Point1->y+a<<std::endl<<myRoad->Point1->x<<std::endl<<a<<std::endl<<std::endl;
+   tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x]=new tile('1',10,stone);
   }
  }
 
-  if(myRoad->vertical==false)
+  else
   {
-  for(int a=0; a<=5; a++)//myRoad->Point2->x-myRoad->Point1->x
+
+  for(int a=0; a<=myRoad->Point2->x-myRoad->Point1->x; a++)
    {
-   tileMap[10][5+a]=new tile('1',10,stone);//myRoad->Point1->y//myRoad->Point1->x+a
+   tileMap[myRoad->Point1->y][myRoad->Point1->x+a]=new tile('1',10,stone);
 
    }
   }
@@ -62,17 +66,20 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 {
+    srand(time(NULL));
+
   if(level!=0)
   {
-std::default_random_engine generator;
-std::uniform_int_distribution<int> halfChance(0,1);
-    if(halfChance(generator)==0) //if line vertical
+
+    if(rand()%2==0) //if line vertical
     {
-        double width=(right-left);
-        std:: uniform_int_distribution<int> findSplitPoint(left+width/10, right-width/10);
-        int splitPoint=findSplitPoint(generator);
-        coordinate lowPoint(bottom, splitPoint);
-        coordinate highPoint(top, splitPoint);
+        int splitPoint=left+1+rand()%(right-left-1);
+        coordinate lowPoint(splitPoint, bottom);
+        coordinate highPoint(splitPoint, top);
+        while(!(0<=splitPoint<=24))
+        {
+            std::cout<<"BAD";
+        }
         road tempRoad;
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
@@ -95,11 +102,13 @@ std::uniform_int_distribution<int> halfChance(0,1);
 
     else
     {//line horizontal
-        double height=top-bottom;
-        std::uniform_real_distribution<double> findSplitPoint(bottom+height/10, top-height/10);
-        int splitPoint=findSplitPoint(generator);
-        coordinate leftPoint(splitPoint, left);
-        coordinate rightPoint(splitPoint, right);
+        int splitPoint=bottom+1+rand()%(top-bottom-1);
+        coordinate leftPoint(left, splitPoint);
+        coordinate rightPoint(right, splitPoint);
+        while(!(0<=splitPoint<=24))
+        {
+            std::cout<<"BAD";
+        }
 
         road * tempRoad;
         tempRoad=new road;
