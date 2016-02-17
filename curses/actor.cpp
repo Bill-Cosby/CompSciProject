@@ -56,29 +56,25 @@ void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> 
 void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
 {
     int highestDamage = 999999;
-    bodyPart *bodyPartToHit;
+    bodyPart *bodyPartToHit = NULL;
     actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight,totalAttack(),actorAttacking->totalWeight);
 
     if (bodyPartToHit != NULL){
+        std::cout << bodyPartToHit->name << std::endl;
         bodyPartToHit->damage-=highestDamage;
         if (bodyPartToHit->damage <= 0){
-            for(int i=0;i<actorAttacking->body.size();i++){
-                if (actorAttacking->body[i] == bodyPartToHit){
-                    if (bodyPartToHit->ID == "00"){
-                        actorAttacking->body.erase(actorAttacking->body.begin()+i);
-                        localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
-                    }
-                    else{
-                        actorAttacking->body.erase(actorAttacking->body.begin()+i);
-                        localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts));
-                    }
-                    std::cout << "I've killed him!";
-                }
+            if (bodyPartToHit->ID == "00"){
+                localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
+            std::cout << "I've killed him!";
+                return;
             }
+            else{
+                localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts));
+            }
+            delete bodyPartToHit;
         }
+
     }
-
-
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
@@ -348,6 +344,7 @@ player::player(std::string speciesToLoad)
     sprinting=false;
     controlled=true;
     sprinting=false;
+    int temp;
 
     itemToPickUp = NULL;
 
@@ -357,16 +354,14 @@ player::player(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
     sprite.setTexture(texture);
 
 
-    for (bodyPart* _b : body){
-        totalWeight+=_b->weight;
-    }
+    totalWeight = temp;
 
     std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
     std::cout << description << std::endl;
@@ -385,6 +380,7 @@ monster::monster(std::string speciesToLoad)
     sprinting=false;
     controlled=true;
     sprinting=false;
+    int temp;
 
     actorAttacking = NULL;
     itemToPickUp = NULL;
@@ -396,15 +392,13 @@ monster::monster(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
     sprite.setTexture(texture);
 
-    for (bodyPart* _b : body){
-        totalWeight+=_b->weight;
-    }
+    totalWeight = temp;
 
     std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
     std::cout << description << std::endl;

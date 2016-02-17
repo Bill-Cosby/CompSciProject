@@ -18,13 +18,13 @@ void hand::equip(item* itemToGrasp, bool equipping)
     }
 }
 
-void bodyPart::findEasiestHit(bodyPart * bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight)
+void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight)
 {
-    srand(time(NULL));
-    srand(rand()%time(NULL));
     double temp;
-
-    if (rand()%probability < myTotalWeight){
+    std::cout << weight << std::endl;
+    temp = rand()%myTotalWeight;
+    if (temp < probability){
+        probability = temp;
         if (armor!=NULL){
             if((armor->defense + weight) - attack < highestDamage){
                 bodyPartToHit = this;
@@ -40,7 +40,10 @@ void bodyPart::findEasiestHit(bodyPart * bodyPartToHit, int &highestDamage, int 
             }
         }
     }
-    findEasiestHit(bodyPartToHit,highestDamage,probability,attack,myTotalWeight);
+    for (bodyPart * _b : attachedParts){
+        _b->findEasiestHit(bodyPartToHit,highestDamage,probability,attack,myTotalWeight);
+    }
+    return;
 }
 
 torso::torso(std::string species, int _weight,std::string id, std::string connectedto)

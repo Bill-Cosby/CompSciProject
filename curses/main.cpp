@@ -35,6 +35,7 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+    srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
 
     Selector * decisionMaker = new Selector;
@@ -80,7 +81,7 @@ int main()
     actors.push_back(new player("human"));
     actors[0]->pos(1,1);
     actors.push_back(new monster("human"));
-    actors[1]->pos(16,1);
+    actors[1]->pos(2,1);
 
 
 

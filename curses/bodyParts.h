@@ -34,7 +34,7 @@ public:
             _b->draw(window,x,y);
         }
     }
-    void findEasiestHit(bodyPart * bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
+    void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
 };
 
 struct eye : public bodyPart

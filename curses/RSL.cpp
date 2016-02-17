@@ -133,7 +133,7 @@ int getIntData(std::string fileName, std::string dataToGet)
     }
 }
 
-bodyPart* getBodyData(std::string fileName, std::string dataToGet)
+bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -144,7 +144,6 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet)
     std::string connectedTo;
 
     bool left=false;
-    int weight;
 
 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
