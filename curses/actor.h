@@ -27,6 +27,7 @@ protected:
 
     int x,y;
 public:
+    bodyPart * rootPart;
     coordinate memory;
     coordinate goal;
 

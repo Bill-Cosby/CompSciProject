@@ -3,16 +3,15 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
+
 
 class item;
-
-
 
 class bodyPart
 {
 public:
-
-    int tissues[4];
 
     std::vector<bodyPart*> attachedParts;
     std::string ID;
@@ -28,12 +27,14 @@ public:
     item * vanity;
     bool wear(item* itemToWear){if (armor==NULL){armor= itemToWear;return true;}return false;}
 
-    void draw(sf::RenderWindow &window){
+    void draw(sf::RenderWindow &window, int x, int y){
+        sprite.setPosition(x,y);
         window.draw(sprite);
         for (bodyPart * _b : attachedParts){
-            _b->draw(window);
+            _b->draw(window,x,y);
         }
     }
+    void findEasiestHit(bodyPart * bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
 };
 
 struct eye : public bodyPart
@@ -42,6 +43,7 @@ public:
     bool left;
     eye(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
     std::string color;
+
 };
 
 class hand : public bodyPart

@@ -38,7 +38,7 @@ short backgroundValue;
         {
             if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
                 for (item* _i : localItems){
-                    window.draw(_i->sprite);
+                    _i->draw(window);
                 }
                 for (actor* _a: actors)
                 {

@@ -12,7 +12,7 @@ const short int numberOfControls = 16;
 void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
 {
     std::string temp = name + "'s corpse";
-    globalItems->push_back(new corpse(temp,equipment,_symbol,col(),row()));
+    globalItems->push_back(new corpse(temp,rootPart,sprite,col(),row()));
     localItems->push_back((*globalItems)[globalItems->size()-1]);
     delete this;
 }
@@ -55,60 +55,29 @@ void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> 
 
 void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
 {
-    srand(time(NULL));
-    srand(rand()%time(NULL));
-    int highestDamage= 9999999;
-    double temp;
-    bodyPart * bodyPartToHit = NULL;
-    for (int i = 0;i<actorAttacking->body.size();i++){
-        if (rand()%totalWeight < actorAttacking->body[i]->weight)
-        {
-            if (actorAttacking->body[i]->armor!=NULL){
-                if ((actorAttacking->body[i]->armor->defense + actorAttacking->body[i]->weight) - totalAttack() < highestDamage){
-                    bodyPartToHit = actorAttacking->body[i];
-                    temp = (rand()%totalAttack()+1);
-                    highestDamage = (actorAttacking->body[i]->armor->defense + actorAttacking->body[i]->weight) - temp;
-                }
-            }
-            else{
-                if ( actorAttacking->body[i]->weight - totalAttack() < highestDamage){
-                    bodyPartToHit = actorAttacking->body[i];
+    int highestDamage = 999999;
+    bodyPart *bodyPartToHit;
+    actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight,totalAttack(),actorAttacking->totalWeight);
 
-                    temp = (rand()%totalAttack()+1);
-                    highestDamage = actorAttacking->body[i]->weight - temp;
-                }
-            }
-        }
-    }
-    double surfaceArea = .60;
-    bodyPartToHit = actorAttacking->body[0];
     if (bodyPartToHit != NULL){
-        double force;
-        double acceleration = attack*(totalWeight*.07);
-
-        double distance = totalWeight*.07;
-
-        for (int i = 0; i < 4; i++){
-            if (bodyPartToHit->tissues[i] <= 0){
-                continue;
-            }
-            force = ((acceleration*distance)/(bodyPartToHit->tissues[i]*surfaceArea));
-            acceleration -= bodyPartToHit->tissues[i];
-            distance-=sqrt(distance);
-            bodyPartToHit->tissues[i]-= force/(bodyPartToHit->tissues[i]);
-            if (bodyPartToHit->tissues[3] <=0){
-                std::cout << bodyPartToHit->name << std::endl;
-                localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(), bodyPartToHit->sprite));
-                for (int i = 0;i<actorAttacking->body.size();i++){
-                    if (actorAttacking->body[i]->name==bodyPartToHit->name){
+        bodyPartToHit->damage-=highestDamage;
+        if (bodyPartToHit->damage <= 0){
+            for(int i=0;i<actorAttacking->body.size();i++){
+                if (actorAttacking->body[i] == bodyPartToHit){
+                    if (bodyPartToHit->ID == "00"){
                         actorAttacking->body.erase(actorAttacking->body.begin()+i);
+                        localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
                     }
+                    else{
+                        actorAttacking->body.erase(actorAttacking->body.begin()+i);
+                        localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts));
+                    }
+                    std::cout << "I've killed him!";
                 }
             }
         }
-
-        bodyPartToHit->damage = highestDamage;
     }
+
 
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
@@ -388,7 +357,7 @@ player::player(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs");
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
@@ -427,7 +396,7 @@ monster::monster(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    body = RSL::getBodyData(fileName, speciesToLoad+".limbs");
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs");
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
 
@@ -449,10 +418,5 @@ monster::monster(std::string speciesToLoad)
 
 void actor::drawActor(sf::RenderWindow& window)
 {
-    for (bodyPart * _b : body){
-        if (_b->name == "torso"){
-            _b->draw(window);
-            return;
-        }
-    }
+    rootPart->draw(window,col()*16,row()*16);
 }

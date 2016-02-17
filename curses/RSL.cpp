@@ -133,7 +133,7 @@ int getIntData(std::string fileName, std::string dataToGet)
     }
 }
 
-std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
+bodyPart* getBodyData(std::string fileName, std::string dataToGet)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -208,7 +208,9 @@ std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToGet)
                                 }
                             }
                         }
-                        return body;
+                        for (bodyPart * _b : body){
+                            if (_b->ID == "00")return _b;
+                        }
                     }
 
                     LINE_READING+=_c;

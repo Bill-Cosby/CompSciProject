@@ -40,20 +40,22 @@ void weapon::equip(bool equipping)
 
 }
 
-corpse::corpse(std::string _name, std::vector<item*> _equipment, char _symbol, int _x, int _y)
+corpse::corpse(std::string _name, bodyPart * _torso, sf::Sprite _sprite, int _x, int _y)
 {
     name=_name;
-    equipment=_equipment;
+    torso = _torso;
+    sprite = _sprite;
     x=_x;
     y=_y;
 }
 
-limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite)
+limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached)
 {
     sprite = _sprite;
     name = _name;
     armor = _armor;
     vanity = _vanity;
+    partsAttached = _partsAttached;
     x = _x;
     y = _y;
     equipped = false;

@@ -23,7 +23,7 @@ namespace RSL
     std::vector<material> unloadMaterials(std::string fileName);
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
-    std::vector<bodyPart*> getBodyData(std::string fileName, std::string dataToRecieve);
+    bodyPart* getBodyData(std::string fileName, std::string dataToRecieve);
 }
 
 
