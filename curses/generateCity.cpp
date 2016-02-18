@@ -6,9 +6,8 @@
 #include <vector>
 
 
-void city:: setTileMap(std::vector<std::vector<tile*> > & tileMap)
+void city:: setTileMap()
 {
-    int tileMapSize=27;
     std::vector<tile*> blank1;
     blank1.resize(tileMapSize);
     tileMap.resize(tileMapSize);
@@ -27,7 +26,7 @@ void city:: setTileMap(std::vector<std::vector<tile*> > & tileMap)
 }
 
 
-void city:: deleteTileMap(std::vector<std::vector<tile*> > & tileMap)
+void city:: deleteTileMap()
 {
     for(int a=0; a<tileMap.size(); a++)
     {
@@ -43,7 +42,6 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 
  if(myRoad->vertical==true)
  {
-
   for(int a=0; a<(myRoad->Point2->y-myRoad->Point1->y)+1; a++)
   {
    tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x]=new tile('1',10,stone);
@@ -52,11 +50,9 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 
   else
   {
-
   for(int a=0; a<=myRoad->Point2->x-myRoad->Point1->x; a++)
    {
    tileMap[myRoad->Point1->y][myRoad->Point1->x+a]=new tile('1',10,stone);
-
    }
   }
 
@@ -66,16 +62,18 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 {
-    srand(time(NULL));
+    if(level==3){srand(time(NULL));}
+
 
   if(level!=0)
   {
 
-    if(rand()%2==0) //if line vertical
-    {
+    if(rand()%2==0 and (left+1)!=right) //if line vertical
+    {std::cout<<"Horizontal"<<std::endl;
         int splitPoint=left+1+rand()%(right-left-1);
         coordinate lowPoint(splitPoint, bottom);
         coordinate highPoint(splitPoint, top);
+
         road tempRoad;
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
@@ -89,14 +87,20 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         subBox1->right=splitPoint;
         subBox1->top=top;
         subBox1->bottom=bottom;
+
         subBox2->left=splitPoint;
         subBox2->right=right;
         subBox2->top=top;
         subBox2->bottom=bottom;
 
+        subBox1->divideBox(level-1, tileMap);
+        subBox2->divideBox(level-1, tileMap);
+        delete subBox1;
+        delete subBox2;
+
     }
 
-    else
+    else if (top!=(bottom+1))
     {//line horizontal
         int splitPoint=bottom+1+rand()%(top-bottom-1);
         coordinate leftPoint(left, splitPoint);
@@ -115,43 +119,30 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         subBox1->right=right;
         subBox1->top=top;
         subBox1->bottom=splitPoint;
+
         subBox2->left=left;
         subBox2->right=right;
         subBox2->top=splitPoint;
-        subBox1->bottom=bottom;  //forms 2 new boxes
+        subBox2->bottom=bottom;  //forms 2 new boxes
+        subBox1->divideBox(level-1, tileMap);
+        subBox2->divideBox(level-1, tileMap);
+        delete subBox1;
+        delete subBox2;
+
     }
 
-    level-=1;
-    subBox1->divideBox(level, tileMap);
-    subBox2->divideBox(level, tileMap);
-    delete subBox1;
-    delete subBox2;
+
 
   }
 
 }
 
-  void city::generateCity(std:: vector<actor*> & actors,std::vector<item*> & localItems, sf::RenderWindow & window, announcements & Announcements)
+  void city::generateCity()
 {
 
 std::vector<std::vector<tile*> > tileMap;
-setTileMap(tileMap);
-divideBox(3,tileMap); //recursive box dividing and road drawing
-while(window.isOpen())
-{
-    sf::Event event;
-    while(window.pollEvent(event))
-    {
-        if(event.type==sf::Event::Closed)
-        {
-        window.close();
-        }
-    }
-    window.clear();
-
- drawGameworld(tileMap,actors,localItems, window, Announcements);
-}
-deleteTileMap(tileMap);
+setTileMap();
+divideBox(4,tileMap); //recursive box dividing and road drawing
 }
 
 

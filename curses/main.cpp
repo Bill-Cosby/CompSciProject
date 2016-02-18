@@ -84,7 +84,7 @@ actors.push_back(new player("human"));
 
     //char ch;
 
-    //actors[0]->pos(1,1);
+    actors[0]->pos(1,1);
    // actors.push_back(new monster("human"));
    // actors[1]->pos(16,1);
 
@@ -105,26 +105,26 @@ actors.push_back(new player("human"));
 
 
 
-/*
-    _map.resize(20);
-    for (int y=0;y<20;y++){
-        _map[y].resize(20);
-        for (int x=0;x<20;x++){
-            if (testarena[y][x]=='2'){
-                _map[y][x]=new door(0,wood);
-            }
-            else if (testarena[y][x]=='1'){
-                _map[y][x]=new tile('0',-1,stone);
-                _map[y][x]->isDoor=false;
-            }
-            else{
-                _map[y][x]= new tile('1',0,stone);
-                _map[y][x]->isDoor=false;
-            }
-            _map[y][x]->position=coordinate(x,y);
-            _map[y][x]->sprite.setPosition(x*16,y*16);
-        }
-    }
+
+//    _map.resize(20);
+//    for (int y=0;y<20;y++){
+//        _map[y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (testarena[y][x]=='2'){
+//                _map[y][x]=new door(0,wood);
+//            }
+//            else if (testarena[y][x]=='1'){
+//                _map[y][x]=new tile('0',-1,stone);
+//                _map[y][x]->isDoor=false;
+//            }
+//            else{
+//                _map[y][x]= new tile('1',0,stone);
+//                _map[y][x]->isDoor=false;
+//            }
+//            _map[y][x]->position=coordinate(x,y);
+//            _map[y][x]->sprite.setPosition(x*16,y*16);
+//        }
+//    }
 
 
 
@@ -174,6 +174,10 @@ actors.push_back(new player("human"));
 //    }
 
 
+myCity.generateCity();
+
+
+
 
     while (window.isOpen())
     {
@@ -198,7 +202,7 @@ actors.push_back(new player("human"));
                 actors[i]->increaseCounter();
             }
         }
-        drawGameworld(_map,actors,localItems,window, announcementList);
+        drawGameworld(myCity.tileMap,localItems,window,no_announcements);
     }
 
         for (int i=0;i<actors.size();i++){
@@ -212,8 +216,8 @@ actors.push_back(new player("human"));
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
-*/
+        myCity.deleteTileMap();
 
-myCity.generateCity(actors,localItems,window,no_announcements);
+
     return 0;
 }

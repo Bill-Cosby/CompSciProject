@@ -41,10 +41,11 @@ class city: box
 {
     public:
 std::vector<std::vector<tile*> > tileMap;
-void setTileMap(std::vector<std::vector<tile*> > & tileMap);
-city(){left=0; bottom=0; right=24; top=24;}
-void generateCity(std::vector<actor *> &,std::vector<item*> &, sf::RenderWindow&, announcements&);
-void deleteTileMap(std::vector<std::vector<tile*> > & );
+int tileMapSize;
+void setTileMap();
+city(){tileMapSize=50; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; }
+void generateCity();
+void deleteTileMap();
 };
 
 

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1455639936 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
+1455816448 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -344,7 +344,7 @@
 	"bodyParts.h"
 	"RSL.h"
 
-1455208024 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
+1455816383 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
@@ -1619,11 +1619,12 @@
 	<random>
 	<vector>
 
-1455640227 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.cpp
+1455816610 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.cpp
 	"generateCity.h"
 	<vector>
 	"drawGame.h"
-	<random>
+	<time.h>
+	<stdlib.h>
 	<vector>
 
 1455761806 source:c:\compsciproject\curses\generatecity.cpp
