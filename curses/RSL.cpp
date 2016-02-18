@@ -133,7 +133,7 @@ int getIntData(std::string fileName, std::string dataToGet)
     }
 }
 
-bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight)
+bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, sf::Color color)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -185,14 +185,14 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight)
                             continue;
                         }
                         else if(_c == ':'){
-                                if (LINE_READING == "head"){body.push_back(new head("human",weight,id, connectedTo));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight,id, connectedTo, left));}
-                                else if (LINE_READING == "neck"){body.push_back(new neck("human",weight,id, connectedTo));}
-                                else if (LINE_READING=="torso"){body.push_back(new torso("human",weight,id, connectedTo));}
-                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, id, connectedTo, left));}
-                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, id, connectedTo, left));}
-                                else if (LINE_READING == "hand"){body.push_back(new hand("human",weight,id, connectedTo, left));}
-                                else if (LINE_READING == "foot"){body.push_back(new foot("human",weight,id, connectedTo, left));}
+                                if (LINE_READING == "head"){body.push_back(new head("human",weight,id, connectedTo, color));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "neck"){body.push_back(new neck("human",weight,id, connectedTo, color));}
+                                else if (LINE_READING=="torso"){body.push_back(new torso("human",weight,id, connectedTo, color));}
+                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, id, connectedTo, left, color));}
+                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, id, connectedTo, left, color));}
+                                else if (LINE_READING == "hand"){body.push_back(new hand("human",weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "foot"){body.push_back(new foot("human",weight,id, connectedTo, left, color));}
                             left = false;
                             LINE_READING.clear();
                             continue;

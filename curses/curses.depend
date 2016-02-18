@@ -698,11 +698,11 @@
 1455815742 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
-1455734114 source:c:\compsciproject\curses\astar.cpp
+1455658553 source:c:\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
-1454100008 c:\compsciproject\curses\astar.h
+1455053040 c:\compsciproject\curses\astar.h
 	<algorithm>
 	<vector>
 	<stdlib.h>
@@ -712,14 +712,14 @@
 	<queue>
 	<sstream>
 
-1454443448 c:\compsciproject\curses\tile.h
+1455053041 c:\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"RSL.h"
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1455736550 c:\compsciproject\curses\item.h
+1455825877 c:\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -727,28 +727,29 @@
 	"materials.h"
 	"RSL.h"
 
-1454099595 c:\compsciproject\curses\materials.h
+1455825877 c:\compsciproject\curses\materials.h
 	<vector>
 	<SFML/Graphics.hpp>
 
-1454099538 c:\compsciproject\curses\node.h
+1455053040 c:\compsciproject\curses\node.h
 
-1455735207 source:c:\compsciproject\curses\bodyparts.cpp
+1455826603 source:c:\compsciproject\curses\bodyparts.cpp
 	"bodyParts.h"
 	"RSL.h"
+	"item.h"
 
-1455737555 c:\compsciproject\curses\bodyparts.h
+1455826603 c:\compsciproject\curses\bodyparts.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
 	<stdlib.h>
 	<time.h>
 
-1454099595 source:c:\compsciproject\curses\building.cpp
+1455053040 source:c:\compsciproject\curses\building.cpp
 	"building.h"
 	<iostream>
 
-1454099538 c:\compsciproject\curses\building.h
+1455053040 c:\compsciproject\curses\building.h
 	<vector>
 	<fstream>
 	<string>
@@ -756,15 +757,15 @@
 	<math.h>
 	"tile.h"
 
-1455735734 source:c:\compsciproject\curses\drawgame.cpp
+1455825877 source:c:\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1454443448 c:\compsciproject\curses\drawgame.h
+1455053040 c:\compsciproject\curses\drawgame.h
 	"actor.h"
 	"shadowcasting.h"
 	<SFML/Graphics.hpp>
 
-1455736038 c:\compsciproject\curses\actor.h
+1455825877 c:\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
@@ -775,7 +776,7 @@
 	"aStar.h"
 	<random>
 
-1454100021 c:\compsciproject\curses\window.h
+1455053041 c:\compsciproject\curses\window.h
 	"tile.h"
 	<string>
 	<stdio.h>
@@ -784,7 +785,7 @@
 	<vector>
 	<SFML/Graphics.hpp>
 
-1455736361 c:\compsciproject\curses\rsl.h
+1455826603 c:\compsciproject\curses\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -796,48 +797,48 @@
 	<SFML/Graphics.hpp>
 	"materials.h"
 
-1454099538 source:c:\compsciproject\curses\include\dungeon.cpp
+1455053040 source:c:\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
 
-1454099538 c:\compsciproject\curses\include\dungeon.h
+1455053040 c:\compsciproject\curses\include\dungeon.h
 	<random>
 	<stdlib.h>
 	<time.h>
 	<stack>
 	<fstream>
 
-1455736209 source:c:\compsciproject\curses\item.cpp
+1455825877 source:c:\compsciproject\curses\item.cpp
 	"item.h"
 
-1454100146 source:c:\compsciproject\curses\menu.cpp
+1455053040 source:c:\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1454100128 c:\compsciproject\curses\menu.h
+1455053040 c:\compsciproject\curses\menu.h
 	<vector>
 	<string>
 	<SFML/Audio.hpp>
 	"actor.h"
 
-1454099538 source:c:\compsciproject\curses\noise\latlon.cpp
+1455053040 source:c:\compsciproject\curses\noise\latlon.cpp
 	"latlon.h"
 
-1454099538 c:\compsciproject\curses\noise\latlon.h
+1455053040 c:\compsciproject\curses\noise\latlon.h
 	<math.h>
 	"mathconsts.h"
 
-1454099538 c:\compsciproject\curses\noise\mathconsts.h
+1455053040 c:\compsciproject\curses\noise\mathconsts.h
 
-1454099538 source:c:\compsciproject\curses\noise\model\cylinder.cpp
+1455053040 source:c:\compsciproject\curses\noise\model\cylinder.cpp
 	"../mathconsts.h"
 	"cylinder.h"
 
-1454099538 c:\compsciproject\curses\noise\model\cylinder.h
+1455053040 c:\compsciproject\curses\noise\model\cylinder.h
 	<assert.h>
 	<math.h>
 	<stdlib.h>
 	"../module/modulebase.h"
 
-1454099539 c:\compsciproject\curses\noise\module\modulebase.h
+1455053040 c:\compsciproject\curses\noise\module\modulebase.h
 	<stdlib.h>
 	<assert.h>
 	<math.h>
@@ -845,270 +846,270 @@
 	"../exception.h"
 	"../noisegen.h"
 
-1454099538 c:\compsciproject\curses\noise\basictypes.h
+1455053040 c:\compsciproject\curses\noise\basictypes.h
 
-1454099538 c:\compsciproject\curses\noise\exception.h
+1455053040 c:\compsciproject\curses\noise\exception.h
 
-1454099539 c:\compsciproject\curses\noise\noisegen.h
+1455053040 c:\compsciproject\curses\noise\noisegen.h
 	<math.h>
 	"basictypes.h"
 
-1454099538 source:c:\compsciproject\curses\noise\model\line.cpp
+1455053040 source:c:\compsciproject\curses\noise\model\line.cpp
 	"line.h"
 
-1454099538 c:\compsciproject\curses\noise\model\line.h
+1455053040 c:\compsciproject\curses\noise\model\line.h
 	<assert.h>
 	<math.h>
 	<stdlib.h>
 	"../module/modulebase.h"
 
-1454099538 source:c:\compsciproject\curses\noise\model\plane.cpp
+1455053040 source:c:\compsciproject\curses\noise\model\plane.cpp
 	"plane.h"
 
-1454099539 c:\compsciproject\curses\noise\model\plane.h
+1455053040 c:\compsciproject\curses\noise\model\plane.h
 	<assert.h>
 	"../module/modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\model\sphere.cpp
+1455053040 source:c:\compsciproject\curses\noise\model\sphere.cpp
 	"../latlon.h"
 	"sphere.h"
 
-1454099539 c:\compsciproject\curses\noise\model\sphere.h
+1455053040 c:\compsciproject\curses\noise\model\sphere.h
 	<assert.h>
 	"../module/modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\abs.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\abs.cpp
 	"abs.h"
 
-1454099539 c:\compsciproject\curses\noise\module\abs.h
+1455053040 c:\compsciproject\curses\noise\module\abs.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\add.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\add.cpp
 	"add.h"
 
-1454099539 c:\compsciproject\curses\noise\module\add.h
+1455053040 c:\compsciproject\curses\noise\module\add.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\billow.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\billow.cpp
 	"billow.h"
 
-1454099539 c:\compsciproject\curses\noise\module\billow.h
+1455053040 c:\compsciproject\curses\noise\module\billow.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\blend.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\blend.cpp
 	"blend.h"
 	"../interp.h"
 
-1454099539 c:\compsciproject\curses\noise\module\blend.h
+1455053040 c:\compsciproject\curses\noise\module\blend.h
 	"modulebase.h"
 
-1454099538 c:\compsciproject\curses\noise\interp.h
+1455053040 c:\compsciproject\curses\noise\interp.h
 
-1454099539 source:c:\compsciproject\curses\noise\module\cache.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\cache.cpp
 	"cache.h"
 
-1454099539 c:\compsciproject\curses\noise\module\cache.h
+1455053040 c:\compsciproject\curses\noise\module\cache.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\checkerboard.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\checkerboard.cpp
 	"checkerboard.h"
 
-1454099539 c:\compsciproject\curses\noise\module\checkerboard.h
+1455053040 c:\compsciproject\curses\noise\module\checkerboard.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\clamp.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\clamp.cpp
 	"clamp.h"
 
-1454099539 c:\compsciproject\curses\noise\module\clamp.h
+1455053040 c:\compsciproject\curses\noise\module\clamp.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\const.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\const.cpp
 	"const.h"
 
-1454099539 c:\compsciproject\curses\noise\module\const.h
+1455053040 c:\compsciproject\curses\noise\module\const.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\curve.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\curve.cpp
 	"../interp.h"
 	"../misc.h"
 	"curve.h"
 
-1454099538 c:\compsciproject\curses\noise\misc.h
+1455053040 c:\compsciproject\curses\noise\misc.h
 
-1454099539 c:\compsciproject\curses\noise\module\curve.h
+1455053040 c:\compsciproject\curses\noise\module\curve.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\cylinders.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\cylinders.cpp
 	"../misc.h"
 	"cylinders.h"
 
-1454099539 c:\compsciproject\curses\noise\module\cylinders.h
+1455053040 c:\compsciproject\curses\noise\module\cylinders.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\displace.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\displace.cpp
 	"displace.h"
 
-1454099539 c:\compsciproject\curses\noise\module\displace.h
+1455053040 c:\compsciproject\curses\noise\module\displace.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\exponent.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\exponent.cpp
 	"exponent.h"
 
-1454099539 c:\compsciproject\curses\noise\module\exponent.h
+1455053040 c:\compsciproject\curses\noise\module\exponent.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\invert.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\invert.cpp
 	"invert.h"
 
-1454099539 c:\compsciproject\curses\noise\module\invert.h
+1455053040 c:\compsciproject\curses\noise\module\invert.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\max.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\max.cpp
 	"../misc.h"
 	"max.h"
 
-1454099539 c:\compsciproject\curses\noise\module\max.h
+1455053040 c:\compsciproject\curses\noise\module\max.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\min.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\min.cpp
 	"../misc.h"
 	"min.h"
 
-1454099539 c:\compsciproject\curses\noise\module\min.h
+1455053040 c:\compsciproject\curses\noise\module\min.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\modulebase.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\modulebase.cpp
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\multiply.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\multiply.cpp
 	"multiply.h"
 
-1454099539 c:\compsciproject\curses\noise\module\multiply.h
+1455053040 c:\compsciproject\curses\noise\module\multiply.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\perlin.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\perlin.cpp
 	"perlin.h"
 
-1454099539 c:\compsciproject\curses\noise\module\perlin.h
+1455053040 c:\compsciproject\curses\noise\module\perlin.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\power.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\power.cpp
 	"power.h"
 
-1454099539 c:\compsciproject\curses\noise\module\power.h
+1455053040 c:\compsciproject\curses\noise\module\power.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\ridgedmulti.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\ridgedmulti.cpp
 	"ridgedmulti.h"
 
-1454099539 c:\compsciproject\curses\noise\module\ridgedmulti.h
+1455053040 c:\compsciproject\curses\noise\module\ridgedmulti.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\rotatepoint.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\rotatepoint.cpp
 	"../mathconsts.h"
 	"rotatepoint.h"
 
-1454099539 c:\compsciproject\curses\noise\module\rotatepoint.h
+1455053040 c:\compsciproject\curses\noise\module\rotatepoint.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\scalebias.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\scalebias.cpp
 	"scalebias.h"
 
-1454099539 c:\compsciproject\curses\noise\module\scalebias.h
+1455053040 c:\compsciproject\curses\noise\module\scalebias.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\scalepoint.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\scalepoint.cpp
 	"scalepoint.h"
 
-1454099539 c:\compsciproject\curses\noise\module\scalepoint.h
+1455053040 c:\compsciproject\curses\noise\module\scalepoint.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\select.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\select.cpp
 	"../interp.h"
 	"select.h"
 
-1454099539 c:\compsciproject\curses\noise\module\select.h
+1455053040 c:\compsciproject\curses\noise\module\select.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\spheres.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\spheres.cpp
 	"../misc.h"
 	"spheres.h"
 
-1454099539 c:\compsciproject\curses\noise\module\spheres.h
+1455053040 c:\compsciproject\curses\noise\module\spheres.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\terrace.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\terrace.cpp
 	"../interp.h"
 	"../misc.h"
 	"terrace.h"
 
-1454099539 c:\compsciproject\curses\noise\module\terrace.h
+1455053040 c:\compsciproject\curses\noise\module\terrace.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\translatepoint.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\translatepoint.cpp
 	"translatepoint.h"
 
-1454099539 c:\compsciproject\curses\noise\module\translatepoint.h
+1455053040 c:\compsciproject\curses\noise\module\translatepoint.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\turbulence.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\turbulence.cpp
 	"turbulence.h"
 
-1454099539 c:\compsciproject\curses\noise\module\turbulence.h
+1455053040 c:\compsciproject\curses\noise\module\turbulence.h
 	"perlin.h"
 
-1454099539 source:c:\compsciproject\curses\noise\module\voronoi.cpp
+1455053040 source:c:\compsciproject\curses\noise\module\voronoi.cpp
 	"../mathconsts.h"
 	"voronoi.h"
 
-1454099539 c:\compsciproject\curses\noise\module\voronoi.h
+1455053040 c:\compsciproject\curses\noise\module\voronoi.h
 	"modulebase.h"
 
-1454099539 source:c:\compsciproject\curses\noise\noisegen.cpp
+1455053040 source:c:\compsciproject\curses\noise\noisegen.cpp
 	"noisegen.h"
 	"interp.h"
 	"vectortable.h"
 
-1454099539 c:\compsciproject\curses\noise\vectortable.h
+1455053040 c:\compsciproject\curses\noise\vectortable.h
 
-1454099539 source:c:\compsciproject\curses\noiseutils.cpp
+1455053040 source:c:\compsciproject\curses\noiseutils.cpp
 	<fstream>
 	<noise/interp.h>
 	<noise/mathconsts.h>
 	"noiseutils.h"
 
-1454099539 c:\compsciproject\curses\noiseutils.h
+1455053040 c:\compsciproject\curses\noiseutils.h
 	<stdlib.h>
 	<string.h>
 	<string>
 	<noise/noise.h>
 
-1454099595 source:c:\compsciproject\curses\tile.cpp
+1455053041 source:c:\compsciproject\curses\tile.cpp
 	"tile.h"
 
-1454100155 source:c:\compsciproject\curses\window.cpp
+1455053041 source:c:\compsciproject\curses\window.cpp
 
-1455737453 source:c:\compsciproject\curses\actor.cpp
+1455826662 source:c:\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1455736038 source:c:\compsciproject\curses\rsl.cpp
+1455826603 source:c:\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
-1454099595 source:c:\compsciproject\curses\tiles.cpp
+1455053041 source:c:\compsciproject\curses\tiles.cpp
 	<iostream>
 	"tiles.h"
 	<stdlib.h>
 	<time.h>
 	<vector>
 
-1454099595 c:\compsciproject\curses\tiles.h
+1455053041 c:\compsciproject\curses\tiles.h
 	<vector>
 	"tile.h"
 	<noise/noise.h>
 	"noiseutils.h"
 
-1455734539 source:c:\compsciproject\curses\main.cpp
+1455825877 source:c:\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -1120,7 +1121,7 @@
 	"tiles.h"
 	"behaviorTree.h"
 
-1454099595 c:\compsciproject\curses\generatecity.h
+1455053040 c:\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
@@ -1128,10 +1129,10 @@
 1455210674 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
-1455134573 source:c:\compsciproject\curses\actormenus.cpp
+1455053040 source:c:\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
-1455734114 c:\compsciproject\curses\behaviortree.h
+1455658553 c:\compsciproject\curses\behaviortree.h
 	<list>
 	"actor.h"
 
@@ -1142,7 +1143,7 @@
 	<list>
 	"actor.h"
 
-1455734118 source:c:\compsciproject\curses\interactionswithworld.cpp
+1455658553 source:c:\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
 
 1455210674 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.h
@@ -1155,14 +1156,14 @@
 1455210674 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
 
-1454443448 c:\compsciproject\curses\shadowcasting.h
+1455053041 c:\compsciproject\curses\shadowcasting.h
 	"tile.h"
 	<vector>
 	<math.h>
 	<cmath>
 	<SFML/Graphics.hpp>
 
-1454443448 source:c:\compsciproject\curses\shadowcasting.cpp
+1455053041 source:c:\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
 
 1455593312 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tissue.h
@@ -1611,4 +1612,7 @@
 	<vector>
 
 1455051062 source:c:\users\damion\desktop\compsciproject\curses\window.cpp
+
+1455826111 source:c:\compsciproject\curses\materials.cpp
+	"materials.h"
 

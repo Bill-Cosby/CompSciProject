@@ -354,13 +354,10 @@ player::player(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-
-    sprite.setTexture(texture);
-
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp,material(skinColor).color);
 
     totalWeight = temp;
 
@@ -393,12 +390,10 @@ monster::monster(std::string speciesToLoad)
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-
-    sprite.setTexture(texture);
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, material(skinColor).color);
 
     totalWeight = temp;
 

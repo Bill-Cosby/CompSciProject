@@ -41,7 +41,7 @@ struct eye : public bodyPart
 {
 public:
     bool left;
-    eye(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
+    eye(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     std::string color;
 
 };
@@ -52,7 +52,7 @@ public:
     bool left;
     item* inHand;
     void equip(item* itemToGrasp, bool equipping);
-    hand(std::string species,int _weight,  std::string id, std::string connectedto, bool Left);
+    hand(std::string species,int _weight,  std::string id, std::string connectedto, bool Left, sf::Color color);
     hand(){inHand = NULL;armor=NULL;}
 };
 
@@ -61,7 +61,7 @@ class foot : public bodyPart
 public:
     bool left;
     item* sock;
-    foot(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
+    foot(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     foot(){sock = NULL;armor=NULL;}
 };
 
@@ -69,7 +69,7 @@ class arm : public bodyPart
 {
 public:
     bool left;
-    arm(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
+    arm(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasHand(){return true;}
     item* ARM_ARMOR;
 };
@@ -78,7 +78,7 @@ class leg : public bodyPart
 {
 public:
     bool left;
-    leg(std::string species,int _weight, std::string id, std::string connectedto, bool Left);
+    leg(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasFoot(){return true;}
     item* LEG_ARMOR;
 };
@@ -87,7 +87,7 @@ class torso : public bodyPart
 {
 public:
     bool severed_spine;
-    torso(std::string species, int _weight, std::string id, std::string connectedto);
+    torso(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color);
     torso(){armor=false;}
 
 };
@@ -96,7 +96,7 @@ class neck : public bodyPart
 {
 public:
     bool severed_spine;
-    neck(std::string species,int _weight, std::string id, std::string connectedto);
+    neck(std::string species,int _weight, std::string id, std::string connectedto, sf::Color color);
     neck(){armor = NULL;}
 };
 
@@ -104,7 +104,7 @@ class head : public bodyPart
 {
 public:
     bool conscious;
-    head(std::string species,int _weight, std::string id, std::string connectedto);
+    head(std::string species,int _weight, std::string id, std::string connectedto, sf::Color color);
     std::string color;
     head(){armor = NULL;}
 };
