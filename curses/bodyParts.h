@@ -22,9 +22,11 @@ public:
     int weight;
     bool grasps;
     int damage;
-    virtual void equip(item* itemToGrasp, bool equipping){}
+    virtual bool equip(item* itemToGrasp, bool equipping){}
+
     item * armor;
     item * vanity;
+
     bool wear(item* itemToWear){if (armor==NULL){armor= itemToWear;return true;}return false;}
 
     void draw(sf::RenderWindow &window, int x, int y){
@@ -35,6 +37,7 @@ public:
         }
     }
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
+    bool canEquip(item* itemToGrasp, bool equipping);
 };
 
 struct eye : public bodyPart
@@ -51,7 +54,7 @@ class hand : public bodyPart
 public:
     bool left;
     item* inHand;
-    void equip(item* itemToGrasp, bool equipping);
+    bool equip(item* itemToGrasp, bool equipping);
     hand(std::string species,int _weight,  std::string id, std::string connectedto, bool Left, sf::Color color);
     hand(){inHand = NULL;armor=NULL;}
 };

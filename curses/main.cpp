@@ -35,6 +35,7 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+    srand(time(NULL));
     srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
 
