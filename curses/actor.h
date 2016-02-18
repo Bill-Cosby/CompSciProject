@@ -75,6 +75,7 @@ public:
         }
         return temp;
     }
+    bool isItemBetter();
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return dexterity;}
     int customSpeed;
@@ -120,7 +121,7 @@ public:
 //  METHODS FOR COMBAT
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map);
     void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems);
-    void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
+    void makeCorpse(std::vector<item*> &localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
     bool findPath(std::vector<std::vector<tile*> > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}

@@ -47,6 +47,7 @@ int main()
 
     Sequence * itemSequence = new Sequence;
             itemSequence->addChild(new lookForItemNode);
+            itemSequence->addChild(new isItemBetterNode);
             itemSequence->addChild(new pickUpItemNode);
 
     Sequence * attackSequence = new Sequence;
@@ -87,8 +88,8 @@ int main()
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
-    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
+    globalItems.push_back(new weapon(10,"Axe",'P',16,18,10,"weapon"));
+    globalItems.push_back(new weapon(5,"Sword",'/',10,18,7,"weapon"));
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
 

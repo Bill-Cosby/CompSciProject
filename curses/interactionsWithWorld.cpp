@@ -12,6 +12,29 @@ bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
     }
 }
 
+bool actor::isItemBetter()
+{
+    float currentItemStat = 0;
+    float newItemStat = 0;
+    newItemStat = itemToPickUp->attack + itemToPickUp->defense + itemToPickUp->health + itemToPickUp->speed + itemToPickUp->value;
+    newItemStat /= 5;
+    if(equipment.size() == 0)
+    {
+        return true;
+    }
+    for(item* _i : equipment){
+        if (_i->type == itemToPickUp->type){
+            currentItemStat = _i->attack + _i->defense + _i->health + _i->speed + _i->value;
+            currentItemStat /= 5;
+            if(currentItemStat > newItemStat)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool actor::equipItem(std::vector<item*> & localItems)
 {
     if (itemToPickUp != NULL){
@@ -21,8 +44,11 @@ bool actor::equipItem(std::vector<item*> & localItems)
                 for (bodyPart * _b : body){
                     if (_b->grasps){
                         _b->equip(itemToPickUp,true);
+                        equipment.push_back(itemToPickUp);
                         for (int i = 0; i < localItems.size();i++){
-                            if (localItems[i]== itemToPickUp){
+                            std::cout << localItems[i] << ":" << itemToPickUp << std::endl;
+                            if (localItems[i] == itemToPickUp){
+                                std::cout<<"Here\n";
                                 localItems.erase(localItems.begin()+i);
                             }
                         }
@@ -54,6 +80,8 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
     }
     return false;
 }
+
+
 
 coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
 {

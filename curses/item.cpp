@@ -1,8 +1,9 @@
 #include "item.h"
 
-weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y)
+weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y, int _value, std::string type)
 {
     attack=_attack;
+    value=_value;
     health=0;
     defense=0;
     speed=5;
@@ -39,19 +40,21 @@ void weapon::equip(bool equipping)
 
 }
 
-corpse::corpse(std::string _name, bodyPart * _torso, sf::Sprite _sprite, int _x, int _y)
+corpse::corpse(std::string _name, bodyPart * _torso, sf::Sprite _sprite, int _x, int _y, int _value, std::string type)
 {
     name=_name;
+    value=_value;
     torso = _torso;
     sprite = _sprite;
     x=_x;
     y=_y;
 }
 
-limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached)
+limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached, int _value, std::string type)
 {
     sprite = _sprite;
     name = _name;
+    value=_value;
     armor = _armor;
     vanity = _vanity;
     partsAttached = _partsAttached;

@@ -70,6 +70,17 @@ public:
     }
 };
 
+class isItemBetterNode : public Node
+{
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        if(testingCharacter->isItemBetter())
+        {
+            return true;
+        }
+        return false;
+    }
+};
 
 class findPathNode : public Node
 {

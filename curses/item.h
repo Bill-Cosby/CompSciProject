@@ -30,6 +30,7 @@ public:
     int x,y;//if item is on ground
     int value;
     int material;
+    std::string type;
     sf::Texture texture;
     sf::Sprite sprite;
     virtual void equip(bool equipping){}
@@ -43,9 +44,8 @@ class weapon : public item
 {
 protected:
 public:
-    std::string type;
     bool twoHanded;
-    weapon(int _attack, std::string _name, char _symbol, int _x, int _y);
+    weapon(int _attack, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping);
     std::string itemDescription();
 };
@@ -54,7 +54,7 @@ class clothing : public item
 {
 protected:
 public:
-    clothing(int _defence, std::string _name, char _symbol, int _x, int _y);
+    clothing(int _defence, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping);
     std::string itemDescription();
 };
@@ -63,7 +63,7 @@ class consumable : public item
 {
 protected:
 public:
-    consumable(int _health, std::string _name, char _symbol, int _x, int _y);
+    consumable(int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping);
     std::string itemDescription();
 
@@ -74,7 +74,7 @@ class corpse : public item
 public:
     bodyPart * torso;
     sf::Sprite sprite;
-    corpse(std::string _name, bodyPart * _torso, sf::Sprite sprite, int _x, int _y);
+    corpse(std::string _name, bodyPart * _torso, sf::Sprite sprite, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping){}
     std::string itemDescription(){}
     void draw(sf::RenderWindow &window){
@@ -91,7 +91,7 @@ public:
     std::vector<bodyPart*> partsAttached;
     void equip(bool equipping){}
     std::string itemDescription(){}
-    limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached);
+    limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached, int _value, std::string _type);
     void draw(sf::RenderWindow &window){
         for (bodyPart * _b : partsAttached){
             if (_b->name == "torso"){

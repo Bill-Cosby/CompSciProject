@@ -9,11 +9,10 @@ const short int numberOfControls = 16;
 
 
 
-void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
+void actor::makeCorpse(std::vector<item*> &localItems)
 {
     std::string temp = name + "'s corpse";
-    globalItems->push_back(new corpse(temp,rootPart,sprite,col(),row()));
-    localItems->push_back((*globalItems)[globalItems->size()-1]);
+    localItems.push_back(new corpse(temp,rootPart,sprite,col(),row(),0,"corpse"));
     delete this;
 }
 
@@ -64,12 +63,12 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
         bodyPartToHit->damage-=highestDamage;
         if (bodyPartToHit->damage <= 0){
             if (bodyPartToHit->ID == "00"){
-                localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
+                actorAttacking->makeCorpse(localItems);
             std::cout << "I've killed him!";
                 return;
             }
             else{
-                localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts));
+                localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts, 0, "limb"));
             }
             delete bodyPartToHit;
         }
