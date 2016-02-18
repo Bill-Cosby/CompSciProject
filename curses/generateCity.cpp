@@ -18,8 +18,8 @@ void city:: setTileMap(std::vector<std::vector<tile*> > & tileMap)
         for(int b=0; b<tileMapSize; b++)
         {
             tileMap[a][b]=new tile('0',10,grass);
-            tileMap[a][b]->position = coordinate(a,b);
-            tileMap[a][b]->sprite.setPosition(a*16,b*16);
+            tileMap[a][b]->position = coordinate(b,a);
+            tileMap[a][b]->sprite.setPosition(b*16,a*16);
             tileMap[a][b]->isDoor = false;
         }
     }
@@ -43,9 +43,9 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
 
  if(myRoad->vertical==true)
  {
+
   for(int a=0; a<(myRoad->Point2->y-myRoad->Point1->y)+1; a++)
   {
-std::cout<<myRoad->Point1->y+a<<std::endl<<myRoad->Point1->x<<std::endl<<a<<std::endl<<std::endl;
    tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x]=new tile('1',10,stone);
   }
  }
@@ -76,10 +76,6 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         int splitPoint=left+1+rand()%(right-left-1);
         coordinate lowPoint(splitPoint, bottom);
         coordinate highPoint(splitPoint, top);
-        while(!(0<=splitPoint<=24))
-        {
-            std::cout<<"BAD";
-        }
         road tempRoad;
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
@@ -92,7 +88,7 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         subBox1->left=left;
         subBox1->right=splitPoint;
         subBox1->top=top;
-        subBox1->bottom;
+        subBox1->bottom=bottom;
         subBox2->left=splitPoint;
         subBox2->right=right;
         subBox2->top=top;
@@ -105,18 +101,12 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         int splitPoint=bottom+1+rand()%(top-bottom-1);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
-        while(!(0<=splitPoint<=24))
-        {
-            std::cout<<"BAD";
-        }
+        road tempRoad;
+        tempRoad.vertical=false;
+        tempRoad.Point1=&leftPoint;
+        tempRoad.Point2=&rightPoint;
 
-        road * tempRoad;
-        tempRoad=new road;
-        tempRoad->vertical=false;
-        tempRoad->Point1=&leftPoint;
-        tempRoad->Point2=&rightPoint;
-        makeRoad(tempRoad, tileMap); //draws road on tileMap
-        delete tempRoad;
+        makeRoad(&tempRoad, tileMap); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;
