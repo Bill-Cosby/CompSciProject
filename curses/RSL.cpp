@@ -328,68 +328,7 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
     }
 }
 
-std::vector<material> unloadMaterials(std::string fileName)
-{
 
-    bool foundDatatype = false;
-    bool foundDataMember = false;
-    std::vector<int> intRectangle;
-
-    std::vector<material> materials;
-
-    std::string dataMember;
-
-    sf::Texture whatever;
-
-    std::string line;
-    std::ifstream loadFile(fileName);
-
-
-    if ( loadFile.is_open() ){
-        while ( !loadFile.eof() ){
-            while ( getline( loadFile , line ) ){
-                std::string LINE_READING;
-
-                if (line == "[START]"){
-                    foundDatatype = true;
-                    materials.resize(materials.size()+1);
-                    continue;
-                }
-
-                if (line == "[END]"){
-                    foundDatatype = false;
-                }
-
-                if (foundDatatype == true){
-                    for (char _c : line){
-                            if (_c == '\t'){
-                                continue;
-                            }
-
-                        if (LINE_READING == "[NAME]" or LINE_READING == "[TEXTURE]"){
-                            foundDataMember = true;
-                            dataMember = LINE_READING;
-                            LINE_READING.clear();
-                        }
-
-                        if (foundDataMember == true){
-                            if (_c == ';' or _c == ','){
-                                if (dataMember == "[NAME]"){ materials[materials.size()-1].name = LINE_READING;}
-                                if (dataMember == "[TEXTURE]"){ materials[materials.size()-1].texture = RSL::getTextureData(fileName, materials[materials.size()-1].name + ".texture");}
-
-                                dataMember.clear();
-                                LINE_READING.clear();
-
-                            }
-                        }
-                        LINE_READING += _c;
-                    }
-                }
-            }
-        }
-    }
-    return materials;
-}
 
 std::string GET_FORMATTED_TYPE(std::string *typeToFix)
 {

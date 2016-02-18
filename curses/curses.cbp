@@ -57,6 +57,7 @@
 		<Unit filename="item.h" />
 		<Unit filename="lib/pdcurses.lib" />
 		<Unit filename="main.cpp" />
+		<Unit filename="materials.cpp" />
 		<Unit filename="materials.h" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="menu.h" />

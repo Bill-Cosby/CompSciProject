@@ -7,20 +7,26 @@
 
 #include <SFML/Graphics.hpp>
 
-#define wood 9
-#define stone 10
-#define iron 11
-#define grass 12
+const sf::Color  ironColor  = sf::Color(sf::Color(197,103,41));
+const sf::Color steelColor  = sf::Color(sf::Color(180,184,187));
+const sf::Color  woodColor  = sf::Color(sf::Color(156,94,47));
+const sf::Color copperColor = sf::Color(sf::Color(188,84,31));
+const sf::Color stoneColor  = sf::Color (sf::Color(128,128,128));
 
+const sf::Color whiteSkinColor = sf::Color(sf::Color(36,42,147));
+const sf::Color brownSkinColor = sf::Color(sf::Color(109,70,0));
+const sf::Color  tanSkinColor  = sf::Color(sf::Color(173,109,0));
+const sf::Color greenSkinColor = sf::Color(sf::Color(51,109,0));
+const sf::Color blackSkinColor = sf::Color(sf::Color(0,0,0));
 
 class material
 {
     public:
-    sf::Texture texture;
-    std::string name;
+    sf::Color color;
+    int weight;
+    material(std::string mat_name);
 };
 
-void declareColors();
 
 
 #endif // MATERIALS_H_INCLUDED

@@ -41,6 +41,7 @@ public:
     std::string name;
     std::string hairColor;
     std::string eyeColor;
+    std::string skinColor;
     std::vector<item*> inventory;
     std::vector<item*> equipment;
     std::vector<bodyPart*> body;
@@ -77,7 +78,6 @@ public:
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return dexterity;}
     int customSpeed;
-    std::string skinColor;
 
 //  TAGS FOR AI
     bool EVIL;

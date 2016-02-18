@@ -5,6 +5,7 @@
 	[TAGS];
 	-- template:(quantity of body part) (weight of body part less than 10) (name of body part):
 	[LIMBS]{01,02,11,head:02,00,4,neck:03,01,1,Leye:0C,01,1,eye:00,00,100,torso:04,00,8,Larm:05,00,8,arm:06,00,26,Lleg:07,00,26,leg:08,06,4,Lfoot:09,07,4,foot:0A,05,4,Lhand:0B,04,4,hand:};
+	[SKINCOLOR]{white:brown:tan:};
 	[HAIRCOLOR]{brown:black:blonde:grey:};
 	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
 	[STRENGTH]5;
@@ -22,6 +23,7 @@
 	[DESCRIPTION]A small cruel creature.;
 	[TAGS]EVIL;
 	[LIMBS]{1,5,head:1,2,neck:2,0,eye:1,55,torso:2,4,arm:2,12,leg:};
+	[SKINCOLOR]{green:};
 	[HAIRCOLOR]{black:};
 	[EYECOLOR]{grey:black:yellow:};
 	[STRENGTH]5;

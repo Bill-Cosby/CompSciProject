@@ -63,7 +63,7 @@ int main()
     decisionMaker->addChild(doorSequence);
 
     root->addChild(decisionMaker);
-    //root->addChild(movement);
+    root->addChild(movement);
 
 
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
@@ -101,20 +101,19 @@ int main()
 
 
 
-
     _map.resize(20);
     for (int y=0;y<20;y++){
         _map[y].resize(20);
         for (int x=0;x<20;x++){
             if (testarena[y][x]=='2'){
-                _map[y][x]=new door(0,wood);
+                _map[y][x]=new door(0,10);
             }
             else if (testarena[y][x]=='1'){
-                _map[y][x]=new tile('0',-1,stone);
+                _map[y][x]=new tile('0',-1,10);
                 _map[y][x]->isDoor=false;
             }
             else{
-                _map[y][x]= new tile('1',0,stone);
+                _map[y][x]= new tile('1',0,20);
                 _map[y][x]->isDoor=false;
             }
             _map[y][x]->position=coordinate(x,y);

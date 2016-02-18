@@ -357,6 +357,7 @@ player::player(std::string speciesToLoad)
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
+    skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
 
     sprite.setTexture(texture);
 
@@ -395,6 +396,7 @@ monster::monster(std::string speciesToLoad)
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
+    skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
 
     sprite.setTexture(texture);
 
