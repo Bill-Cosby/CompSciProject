@@ -1259,7 +1259,7 @@
 	<math.h>
 	"tile.h"
 
-1455212748 source:c:\users\taldape1171\compsciproject\curses\drawgame.cpp
+1455645125 source:c:\users\taldape1171\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1455055043 c:\users\taldape1171\compsciproject\curses\drawgame.h
@@ -1308,7 +1308,7 @@
 	<SFML/Audio.hpp>
 	"actor.h"
 
-1455212748 c:\users\taldape1171\compsciproject\curses\generatecity.h
+1455817979 c:\users\taldape1171\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
@@ -1612,11 +1612,12 @@
 
 1455055043 source:c:\users\taldape1171\compsciproject\curses\window.cpp
 
-1455215432 source:c:\users\taldape1171\compsciproject\curses\generatecity.cpp
+1455818165 source:c:\users\taldape1171\compsciproject\curses\generatecity.cpp
 	"generateCity.h"
 	<vector>
 	"drawGame.h"
-	<random>
+	<time.h>
+	<stdlib.h>
 	<vector>
 
 1455816610 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\generatecity.cpp

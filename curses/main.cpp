@@ -176,9 +176,7 @@ actors.push_back(new player("human"));
 
 myCity.generateCity();
 
-
-
-
+bool keyrelease;
     while (window.isOpen())
     {
         sf::Event event;
@@ -188,35 +186,38 @@ myCity.generateCity();
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-                keyrelease = true;
+            keyrelease = true;
             }
         }
-        actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
-        for (int i=1;i<actors.size();i++){
+        actors[0]->movement(&myCity.tileMap, &localItems, actors, window, keyrelease, no_announcements);
+      /*  for (int i=1;i<actors.size();i++){
             if (actors[i]->counter >= actors[i]->speed()){
                 std::cout << "_______________________________________\n";
-                root->run(actors[i],_map,localItems,actors,announcementList);
+                root->run(actors[i],tileMap,localItems,actors,announcementList);
                 actors[i]->resetCounter();
             }
             else{
                 actors[i]->increaseCounter();
             }
         }
-        drawGameworld(myCity.tileMap,localItems,window,no_announcements);
+        */
+        drawGameworld(myCity.tileMap, actors, localItems,window,no_announcements);
     }
 
         for (int i=0;i<actors.size();i++){
             delete actors[i];
         }
-        for (int i=0;i<_map.size();i++){
-            for (int j=0;j<_map[i].size();i++){
+        /*for (int i=0;i<myCity.tileMap.size();i++){
+            for (int j=0;j<myCity.tileMap.size();i++){
                 delete _map[i][j];
             }
-        }
+        }*/
+        myCity.deleteTileMap();
+
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
-        myCity.deleteTileMap();
+
 
 
     return 0;

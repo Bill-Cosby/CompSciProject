@@ -139,8 +139,6 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 
   void city::generateCity()
 {
-
-std::vector<std::vector<tile*> > tileMap;
 setTileMap();
 divideBox(4,tileMap); //recursive box dividing and road drawing
 }
