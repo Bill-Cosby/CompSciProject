@@ -35,9 +35,16 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+<<<<<<< HEAD
     srand(time(NULL));
     srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
+=======
+    sf::RenderWindow window(sf::VideoMode(800,600), "SFML Window");
+    city myCity;
+    announcements no_announcements;
+    /*Selector * root = new Selector;
+>>>>>>> origin/Toby
 
     Selector * decisionMaker = new Selector;
     //Defining the tree
@@ -65,43 +72,53 @@ int main()
 
     root->addChild(decisionMaker);
     root->addChild(movement);
+*/
 
 
+<<<<<<< HEAD
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
 
+=======
+>>>>>>> origin/Toby
     //window.setFramerateLimit(60);
 
-    announcements announcementList;
 
-    bool keyrelease=true;
+   // bool keyrelease=true;
+std::vector<actor*> actors;
+actors.push_back(new player("human"));
 
 
-    std::vector<actor*> actors;
 
-    char ch;
-    actors.push_back(new player("human"));
+    //char ch;
+
     actors[0]->pos(1,1);
+<<<<<<< HEAD
     actors.push_back(new monster("human"));
     actors[1]->pos(2,1);
+=======
+   // actors.push_back(new monster("human"));
+   // actors[1]->pos(16,1);
+>>>>>>> origin/Toby
 
 
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18));
-    globalItems.push_back(new weapon(5,"Sword",'/',16,18));
-    localItems.push_back(globalItems[0]);
-    localItems.push_back(globalItems[1]);
+  //  globalItems.push_back(new weapon(10,"Axe",'P',16,18));
+   // globalItems.push_back(new weapon(5,"Sword",'/',16,18));
+   // localItems.push_back(globalItems[0]);
+   // localItems.push_back(globalItems[1]);
 
-
-    coordinate temp;
-
-
-
-    std::vector<std::vector<tile* > > _map;
+    //coordinate temp;
 
 
 
+   // std::vector<std::vector<tile* > > _map;
+
+
+
+
+<<<<<<< HEAD
     _map.resize(20);
     for (int y=0;y<20;y++){
         _map[y].resize(20);
@@ -121,6 +138,27 @@ int main()
             _map[y][x]->sprite.setPosition(x*16,y*16);
         }
     }
+=======
+//    _map.resize(20);
+//    for (int y=0;y<20;y++){
+//        _map[y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (testarena[y][x]=='2'){
+//                _map[y][x]=new door(0,wood);
+//            }
+//            else if (testarena[y][x]=='1'){
+//                _map[y][x]=new tile('0',-1,stone);
+//                _map[y][x]->isDoor=false;
+//            }
+//            else{
+//                _map[y][x]= new tile('1',0,stone);
+//                _map[y][x]->isDoor=false;
+//            }
+//            _map[y][x]->position=coordinate(x,y);
+//            _map[y][x]->sprite.setPosition(x*16,y*16);
+//        }
+//    }
+>>>>>>> origin/Toby
 
 
 
@@ -170,7 +208,9 @@ int main()
 //    }
 
 
+myCity.generateCity();
 
+bool keyrelease;
     while (window.isOpen())
     {
         sf::Event event;
@@ -180,34 +220,39 @@ int main()
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-                keyrelease = true;
+            keyrelease = true;
             }
         }
-        actors[0]->movement(&_map, &localItems, actors, window, keyrelease, announcementList);
-        for (int i=1;i<actors.size();i++){
+        actors[0]->movement(&myCity.tileMap, &localItems, actors, window, keyrelease, no_announcements);
+      /*  for (int i=1;i<actors.size();i++){
             if (actors[i]->counter >= actors[i]->speed()){
                 std::cout << "_______________________________________\n";
-                root->run(actors[i],_map,localItems,actors,announcementList);
+                root->run(actors[i],tileMap,localItems,actors,announcementList);
                 actors[i]->resetCounter();
             }
             else{
                 actors[i]->increaseCounter();
             }
         }
-        drawGameworld(_map,actors,localItems,window, announcementList);
+        */
+        drawGameworld(myCity.tileMap, actors, localItems,window,no_announcements);
     }
 
         for (int i=0;i<actors.size();i++){
             delete actors[i];
         }
-        for (int i=0;i<_map.size();i++){
-            for (int j=0;j<_map[i].size();i++){
+        /*for (int i=0;i<myCity.tileMap.size();i++){
+            for (int j=0;j<myCity.tileMap.size();i++){
                 delete _map[i][j];
             }
-        }
+        }*/
+        myCity.deleteTileMap();
+
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];
         }
+
+
 
     return 0;
 }
