@@ -35,16 +35,13 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
-<<<<<<< HEAD
+    sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
+    gameWorld gameworld(window);
     srand(time(NULL));
     srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
-=======
-    sf::RenderWindow window(sf::VideoMode(800,600), "SFML Window");
     city myCity;
     announcements no_announcements;
-    /*Selector * root = new Selector;
->>>>>>> origin/Toby
 
     Selector * decisionMaker = new Selector;
     //Defining the tree
@@ -72,14 +69,8 @@ int main()
 
     root->addChild(decisionMaker);
     root->addChild(movement);
-*/
 
 
-<<<<<<< HEAD
-    sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
-
-=======
->>>>>>> origin/Toby
     //window.setFramerateLimit(60);
 
 
@@ -92,13 +83,6 @@ actors.push_back(new player("human"));
     //char ch;
 
     actors[0]->pos(1,1);
-<<<<<<< HEAD
-    actors.push_back(new monster("human"));
-    actors[1]->pos(2,1);
-=======
-   // actors.push_back(new monster("human"));
-   // actors[1]->pos(16,1);
->>>>>>> origin/Toby
 
 
 
@@ -114,31 +98,6 @@ actors.push_back(new player("human"));
 
 
    // std::vector<std::vector<tile* > > _map;
-
-
-
-
-<<<<<<< HEAD
-    _map.resize(20);
-    for (int y=0;y<20;y++){
-        _map[y].resize(20);
-        for (int x=0;x<20;x++){
-            if (testarena[y][x]=='2'){
-                _map[y][x]=new door(0,10);
-            }
-            else if (testarena[y][x]=='1'){
-                _map[y][x]=new tile('0',-1,10);
-                _map[y][x]->isDoor=false;
-            }
-            else{
-                _map[y][x]= new tile('1',0,20);
-                _map[y][x]->isDoor=false;
-            }
-            _map[y][x]->position=coordinate(x,y);
-            _map[y][x]->sprite.setPosition(x*16,y*16);
-        }
-    }
-=======
 //    _map.resize(20);
 //    for (int y=0;y<20;y++){
 //        _map[y].resize(20);
@@ -158,7 +117,6 @@ actors.push_back(new player("human"));
 //            _map[y][x]->sprite.setPosition(x*16,y*16);
 //        }
 //    }
->>>>>>> origin/Toby
 
 
 
@@ -235,7 +193,7 @@ bool keyrelease;
             }
         }
         */
-        drawGameworld(myCity.tileMap, actors, localItems,window,no_announcements);
+        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,no_announcements);
     }
 
         for (int i=0;i<actors.size();i++){
