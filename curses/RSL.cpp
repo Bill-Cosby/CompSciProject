@@ -4,7 +4,7 @@ namespace RSL
 {
 std::string getStringData(std::string fileName, std::string dataToGet)
 {
-    srand(time(NULL));
+    std::mt19937 generator(rand()%rand()%1000000);
     bool foundDatatype = false;
     bool foundDataMember = false;
     bool inArray = false;
@@ -43,7 +43,8 @@ std::string getStringData(std::string fileName, std::string dataToGet)
 
                     if (foundDataMember == true and _c == ';'){
                         if (colorContainer.size()!=0){
-                            return colorContainer[rand()%colorContainer.size()];
+                            std::uniform_real_distribution<float> distributor(0,(colorContainer.size()));
+                            return colorContainer[distributor(generator)];
                         }
                         return LINE_READING;
                     }

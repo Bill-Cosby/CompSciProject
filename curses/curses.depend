@@ -719,7 +719,7 @@
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1455825877 c:\compsciproject\curses\item.h
+1455826993 c:\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -727,18 +727,18 @@
 	"materials.h"
 	"RSL.h"
 
-1455825877 c:\compsciproject\curses\materials.h
+1455827308 c:\compsciproject\curses\materials.h
 	<vector>
 	<SFML/Graphics.hpp>
 
 1455053040 c:\compsciproject\curses\node.h
 
-1455826603 source:c:\compsciproject\curses\bodyparts.cpp
+1455830345 source:c:\compsciproject\curses\bodyparts.cpp
 	"bodyParts.h"
 	"RSL.h"
 	"item.h"
 
-1455826603 c:\compsciproject\curses\bodyparts.h
+1455830307 c:\compsciproject\curses\bodyparts.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -757,7 +757,7 @@
 	<math.h>
 	"tile.h"
 
-1455825877 source:c:\compsciproject\curses\drawgame.cpp
+1455826993 source:c:\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1455053040 c:\compsciproject\curses\drawgame.h
@@ -765,7 +765,7 @@
 	"shadowcasting.h"
 	<SFML/Graphics.hpp>
 
-1455825877 c:\compsciproject\curses\actor.h
+1455826993 c:\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
@@ -785,7 +785,7 @@
 	<vector>
 	<SFML/Graphics.hpp>
 
-1455826603 c:\compsciproject\curses\rsl.h
+1455830007 c:\compsciproject\curses\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -795,6 +795,7 @@
 	<stdlib.h>
 	<time.h>
 	<SFML/Graphics.hpp>
+	<random>
 	"materials.h"
 
 1455053040 source:c:\compsciproject\curses\include\dungeon.cpp
@@ -807,7 +808,7 @@
 	<stack>
 	<fstream>
 
-1455825877 source:c:\compsciproject\curses\item.cpp
+1455828493 source:c:\compsciproject\curses\item.cpp
 	"item.h"
 
 1455053040 source:c:\compsciproject\curses\menu.cpp
@@ -1089,11 +1090,11 @@
 
 1455053041 source:c:\compsciproject\curses\window.cpp
 
-1455826662 source:c:\compsciproject\curses\actor.cpp
+1455826993 source:c:\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1455826603 source:c:\compsciproject\curses\rsl.cpp
+1455830415 source:c:\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
 1455053041 source:c:\compsciproject\curses\tiles.cpp
@@ -1109,7 +1110,7 @@
 	<noise/noise.h>
 	"noiseutils.h"
 
-1455825877 source:c:\compsciproject\curses\main.cpp
+1455829485 source:c:\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -1613,6 +1614,6 @@
 
 1455051062 source:c:\users\damion\desktop\compsciproject\curses\window.cpp
 
-1455826111 source:c:\compsciproject\curses\materials.cpp
+1455826993 source:c:\compsciproject\curses\materials.cpp
 	"materials.h"
 

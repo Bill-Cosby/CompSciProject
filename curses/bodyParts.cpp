@@ -3,10 +3,11 @@
 #include "RSL.h"
 #include "item.h"
 
-void hand::equip(item* itemToGrasp, bool equipping)
+bool hand::equip(item* itemToGrasp, bool equipping)
 {
     if (inHand==NULL){
         inHand = itemToGrasp;
+        return true;
     }
     else {
         if (inHand == itemToGrasp){
@@ -14,15 +15,29 @@ void hand::equip(item* itemToGrasp, bool equipping)
         }
         else{
             inHand == itemToGrasp;
+            return true;
         }
     }
+    return false;
+}
+
+bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
+{
+    if (grasps == true){
+        equip(itemToGrasp, equipping);
+        return true;
+    }
+    for (bodyPart* _b : attachedParts){
+        _b->canEquip(itemToGrasp,equipping);
+    }
+    return false;
 }
 
 void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight)
 {
     double temp;
-    std::cout << weight << std::endl;
     temp = rand()%myTotalWeight;
+
     if (temp < probability){
         probability = temp;
         if (armor!=NULL){
@@ -40,6 +55,7 @@ void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int 
             }
         }
     }
+
     for (bodyPart * _b : attachedParts){
         _b->findEasiestHit(bodyPartToHit,highestDamage,probability,attack,myTotalWeight);
     }
