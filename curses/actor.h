@@ -9,6 +9,7 @@
 #include "bodyParts.h"
 #include "aStar.h"
 #include <random>
+#include <string>
 
 class announcements
 {
@@ -119,7 +120,8 @@ public:
 
 //  METHODS FOR COMBAT
     void dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map);
-    void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems);
+    virtual void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window){}
+    void simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems);
     void makeCorpse(std::vector<item*> *globalItems, std::vector<item*> *localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
@@ -140,7 +142,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems,std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
+    virtual void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*>&localItems,std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
@@ -151,9 +153,10 @@ class player: public actor
 {
     bool keyIsPressed;
 public:
-    void movement(std::vector<std::vector<tile*> >* _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
-    void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList);
-    void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems, bool & keyrelease);
+    void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
+    void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList);
+    void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems, bool & keyrelease);
+    virtual void attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window);
     player(std::string speciesToLoad);
 };
 
@@ -165,7 +168,7 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
+    void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath();

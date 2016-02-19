@@ -77,12 +77,14 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
+actors.push_back(new monster("human"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
+    actors[1]->pos(2,2);
 
 
 
@@ -181,7 +183,7 @@ bool keyrelease;
             keyrelease = true;
             }
         }
-        actors[0]->movement(&myCity.tileMap, &localItems, actors, window, keyrelease, no_announcements);
+        actors[0]->movement(myCity.tileMap, localItems, actors, window, keyrelease, no_announcements);
       /*  for (int i=1;i<actors.size();i++){
             if (actors[i]->counter >= actors[i]->speed()){
                 std::cout << "_______________________________________\n";

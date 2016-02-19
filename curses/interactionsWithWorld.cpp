@@ -1,137 +1,143 @@
 #include "actor.h"
 
-bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
+
+
+bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 {
-    std::cout << findDistance(goal) << std::endl;
-    if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
-        _map[goal.y][goal.x]->interactWithDoor(true);
-        return true;
-    }
-    else{
-        return false;
-    }
-}
+    int x1=col();
+    int y1=row();
+    int delta_x(checkSpot.x - x1);
+    // if col() == checkSpot.x, then it does not matter what we set here
+    signed char const ix((delta_x > 0) - (delta_x < 0));
+    delta_x = std::abs(delta_x) << 1;
 
-bool actor::equipItem(std::vector<item*> & localItems)
-{
-    if (itemToPickUp != NULL){
-            std::cout << itemToPickUp->name << std::endl;
-        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
-            if (itemToPickUp->canEquip){
-                for (bodyPart * _b : body){
-                    if (_b->grasps){
-                        _b->equip(itemToPickUp,true);
-                        for (int i = 0; i < localItems.size();i++){
-                            if (localItems[i]== itemToPickUp){
-                                localItems.erase(localItems.begin()+i);
-                            }
-                        }
-                    }
-                }
+    int delta_y(checkSpot.y - y1);
+    // if row() == checkSpot.y, then it does not matter what we set here
+    signed char const iy((delta_y > 0) - (delta_y < 0));
+    delta_y = std::abs(delta_y) << 1;
+
+    if (delta_x >= delta_y)
+    {
+        // error may go below zero
+        int error(delta_y - (delta_x >> 1));
+
+        while (x1 != checkSpot.x)
+        {
+            if ((error >= 0) && (error || (ix > 0)))
+            {
+                error -= delta_x;
+                y1 += iy;
+            }
+            // else do nothing
+
+            error += delta_y;
+            x1 += ix;
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
+                return false;
             }
         }
     }
+    else
+    {
+        // error may go below zero
+        int error(delta_x - (delta_y >> 1));
 
-    return false;
-}
-
-bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems)
-{
-    int positionInVector = 0;
-    for (item* _i : localItems){
-        if (findDistance(coordinate(_i->x,_i->y)) < 30){
-            if (canSee(_map,coordinate(_i->x,_i->y),coordinate(x,y))){
-
-                if (_i->attack+attack > totalAttack() or _i->defense+defense > defense){
-                    goal = coordinate(_i->x,_i->y);
-                    itemToPickUp = _i;
-                    return true;
-                }
-
+        while (y1 != checkSpot.y)
+        {
+            if ((error >= 0) && (error || (iy > 0)))
+            {
+                error -= delta_y;
+                x1 += ix;
             }
-        }
-        positionInVector++;
-    }
-    return false;
-}
+            // else do nothing
 
-coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
-{
-    std::vector<coordinate*> openSet;
-    std::vector<coordinate> closedSet;
-    coordinate temp;
-
-    openSet.push_back(new coordinate(x,y));
-
-    bool tileWorks;
-
-    for (int i = 0;i < openSet.size(); i++){
-        temp = *openSet[i];
-        if (openSet.size() > 10000){
-            return coordinate(-1,-1);
-        }
-        tileWorks = true;
-        for (coordinate _c : closedSet){
-            if (_c == *openSet[i]){
-                tileWorks = false;
-                break;
-            }
-        }
-        if (tileWorks == false){
-            continue;
-        }
-        if (isDoor == true){
-            temp = *openSet[i];
-            if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true and _map[openSet[i]->y][openSet[i]->x]->isOpen() == false){
-                return temp;
-            }
-        }
-        if (hiddenFromEnemy == true){
-            temp = *openSet[i];
-            for (coordinate* _o : openSet){
-                delete openSet[i];
-            }
-            if (!(canSee(_map,memory,*openSet[i]))){
-                return temp;
-            }
-        }
-        closedSet.push_back(*openSet[i]);
-        for (int i=-1;i<2;i++){
-            for (int j=-1;j<2;j++){
-                if (abs(i) == abs(j)){
-                    continue;
-                }
-                if (temp.x+i>0 and temp.x+i < _map.size() and temp.y+j > 0 and temp.y+j < _map.size()){
-                    openSet.push_back(new coordinate(temp.x+i,temp.y+j));
-                }
-            }
-        }
-        delete openSet[i];
-    }
-    return coordinate(-1,-1);
-}
-
-bool actor::decideIfCanAttack(std::vector<actor*> actors)
-{
-    int totalDanger = 0;
-    int lowestAttack = 10000;
-    for (actor* _a : actors){
-        if (_a == this)continue;
-        if (findDistance(coordinate(_a->col(),_a->row()))<=15){
-
-            totalDanger += _a->totalAttack()-totalAttack();
-            if (_a->totalAttack() < lowestAttack){
-                actorAttacking = _a;
+            error += delta_x;
+            y1 += iy;
+            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
+                return false;
             }
         }
     }
-    if (totalDanger > totalAttack()){
-        return false;
-    }
-    if (actorAttacking != NULL){
-        goal = coordinate(actorAttacking->col(), actorAttacking->row());
-    }
-    else return false;
-
     return true;
+}
+
+void monster::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors,  sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+{
+
+    //initialize the goal to not be used
+    coordinate goal(-1,-1);
+
+    //raise the monster's counter by 1
+    counter++;
+
+    //we aren't initially attacking anything (stateless AI)
+    bool attacking=false;
+
+    //not currently used until we find a better method
+    std::vector<coordinate> noGo;
+
+    //if you're evil and you see someone of a different species, they're your target
+    for (actor* _a : actors){
+        noGo.push_back(coordinate(_a->col(),_a->row()));
+        if (EVIL==true and species!=_a->species and canSee(_map,coordinate(_a->col(),_a->row()))){
+            goal = coordinate(_a->col(),_a->row());
+            memory=goal;
+        }
+    }
+
+    // if you can see your goal, make a path to it.
+    if (canSee(_map,goal))
+    {
+        path = pathFinder(_map,coordinate(col(),row()),goal,noGo);
+    }
+
+
+
+    //to actually commence AI movement and things:
+    if (counter==5){//if there's no path:
+
+        if (path.size()== 0)
+        {
+
+            //if you have no memory:
+            if (memory.x!=-1 and memory.y!=-1)
+            {
+                path=pathFinder(_map,coordinate(col(),row()),memory,noGo);
+                memory=coordinate(-1,-1);
+            }
+
+            //if your position isn't your post and you have a post
+            else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
+                path=pathFinder(_map,coordinate(col(),row()),post,noGo);
+            }
+        }
+        //if you have a path:
+        if (path.size()>0)
+        {
+            //if an enemy is adjacent, attack them and set attacking to true.
+            for (actor* _a : actors){
+                if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
+                    attacking=true;
+                }
+            }
+            //if you aren't attacking anyone, move along your path.
+            if (attacking==false){
+                moveOnPath();
+            }
+
+        }
+        //reset the counter to 0
+        counter=0;
+
+        sprite.setPosition(x*16,y*16);
+    }
+    return;
+}
+
+void monster::moveOnPath()
+{
+    if (path.size()!=0){
+        pos(path[path.size()-1].y,path[path.size()-1].x);
+        path.erase(path.begin()+path.size()-1);
+    }
 }

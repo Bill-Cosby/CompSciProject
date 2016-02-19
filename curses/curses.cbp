@@ -38,6 +38,7 @@
 		<Unit filename="aStar.h" />
 		<Unit filename="actor.cpp" />
 		<Unit filename="actor.h" />
+		<Unit filename="actorConstructors.cpp" />
 		<Unit filename="actorMenus.cpp" />
 		<Unit filename="behaviorTree.h" />
 		<Unit filename="binarySearchStack.h" />
@@ -144,6 +145,7 @@
 		<Unit filename="noise/vectortable.h" />
 		<Unit filename="noiseutils.cpp" />
 		<Unit filename="noiseutils.h" />
+		<Unit filename="playerActions.cpp" />
 		<Unit filename="shadowcasting.cpp" />
 		<Unit filename="shadowcasting.h" />
 		<Unit filename="tile.cpp" />

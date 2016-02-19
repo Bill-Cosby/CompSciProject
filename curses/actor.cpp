@@ -7,8 +7,6 @@
     coordinate directions[9] = {coordinate(0,-1),coordinate(0,0),coordinate(0,1),coordinate(1,0),coordinate(-1,0),coordinate(-1,-1),coordinate(1,-1),coordinate(1,1),coordinate(-1,1)};
 const short int numberOfControls = 16;
 
-
-
 void actor::makeCorpse( std::vector<item*> *globalItems, std::vector<item*> *localItems)
 {
     std::string temp = name + "'s corpse";
@@ -53,7 +51,7 @@ void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> 
     }
 }
 
-void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
+void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
 {
     int highestDamage = 999999;
     bodyPart *bodyPartToHit = NULL;
@@ -78,333 +76,140 @@ void actor::attackEnemy(std::vector<std::vector<tile*> > &_map, announcements & 
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
-bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
+bool actor::decideIfCanAttack(std::vector<actor*> actors)
 {
-    int x1=col();
-    int y1=row();
-    int delta_x(checkSpot.x - x1);
-    // if col() == checkSpot.x, then it does not matter what we set here
-    signed char const ix((delta_x > 0) - (delta_x < 0));
-    delta_x = std::abs(delta_x) << 1;
+    int totalDanger = 0;
+    int lowestAttack = 10000;
+    for (actor* _a : actors){
+        if (_a == this)continue;
+        if (findDistance(coordinate(_a->col(),_a->row()))<=15){
 
-    int delta_y(checkSpot.y - y1);
-    // if row() == checkSpot.y, then it does not matter what we set here
-    signed char const iy((delta_y > 0) - (delta_y < 0));
-    delta_y = std::abs(delta_y) << 1;
-
-    if (delta_x >= delta_y)
-    {
-        // error may go below zero
-        int error(delta_y - (delta_x >> 1));
-
-        while (x1 != checkSpot.x)
-        {
-            if ((error >= 0) && (error || (ix > 0)))
-            {
-                error -= delta_x;
-                y1 += iy;
-            }
-            // else do nothing
-
-            error += delta_y;
-            x1 += ix;
-            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
-                return false;
+            totalDanger += _a->totalAttack()-totalAttack();
+            if (_a->totalAttack() < lowestAttack){
+                actorAttacking = _a;
             }
         }
     }
-    else
-    {
-        // error may go below zero
-        int error(delta_x - (delta_y >> 1));
-
-        while (y1 != checkSpot.y)
-        {
-            if ((error >= 0) && (error || (iy > 0)))
-            {
-                error -= delta_y;
-                x1 += ix;
-            }
-            // else do nothing
-
-            error += delta_x;
-            y1 += iy;
-            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
-                return false;
-            }
-        }
+    if (totalDanger > totalAttack()){
+        return false;
     }
+    if (actorAttacking != NULL){
+        goal = coordinate(actorAttacking->col(), actorAttacking->row());
+    }
+    else return false;
+
     return true;
 }
 
-void monster::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> *localItems, std::vector<actor*> actors,  sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
 {
+    std::vector<coordinate*> openSet;
+    std::vector<coordinate> closedSet;
+    coordinate temp;
 
-    //initialize the goal to not be used
-    coordinate goal(-1,-1);
+    openSet.push_back(new coordinate(x,y));
 
-    //raise the monster's counter by 1
-    counter++;
+    bool tileWorks;
 
-    //we aren't initially attacking anything (stateless AI)
-    bool attacking=false;
-
-    //not currently used until we find a better method
-    std::vector<coordinate> noGo;
-
-    //if you're evil and you see someone of a different species, they're your target
-    for (actor* _a : actors){
-        noGo.push_back(coordinate(_a->col(),_a->row()));
-        if (EVIL==true and species!=_a->species and canSee(_map,coordinate(_a->col(),_a->row()))){
-            goal = coordinate(_a->col(),_a->row());
-            memory=goal;
+    for (int i = 0;i < openSet.size(); i++){
+        temp = *openSet[i];
+        if (openSet.size() > 10000){
+            return coordinate(-1,-1);
         }
-    }
-
-    // if you can see your goal, make a path to it.
-    if (canSee(_map,goal))
-    {
-        path = pathFinder(_map,coordinate(col(),row()),goal,noGo);
-    }
-
-
-
-    //to actually commence AI movement and things:
-    if (counter==5){//if there's no path:
-
-        if (path.size()== 0)
-        {
-
-            //if you have no memory:
-            if (memory.x!=-1 and memory.y!=-1)
-            {
-                path=pathFinder(_map,coordinate(col(),row()),memory,noGo);
-                memory=coordinate(-1,-1);
-            }
-
-            //if your position isn't your post and you have a post
-            else if (coordinate(x,y) != post and post!=coordinate(-1,-1)){
-                path=pathFinder(_map,coordinate(col(),row()),post,noGo);
+        tileWorks = true;
+        for (coordinate _c : closedSet){
+            if (_c == *openSet[i]){
+                tileWorks = false;
+                break;
             }
         }
-        //if you have a path:
-        if (path.size()>0)
-        {
-            //if an enemy is adjacent, attack them and set attacking to true.
-            for (actor* _a : actors){
-                if (coordinate(_a->col(),_a->row())==coordinate(path[path.size()-1].x,path[path.size()-1].y)){
-                    attacking=true;
+        if (tileWorks == false){
+            continue;
+        }
+        if (isDoor == true){
+            temp = *openSet[i];
+            if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true and _map[openSet[i]->y][openSet[i]->x]->isOpen() == false){
+                return temp;
+            }
+        }
+        if (hiddenFromEnemy == true){
+            temp = *openSet[i];
+            for (coordinate* _o : openSet){
+                delete openSet[i];
+            }
+            if (!(canSee(_map,memory,*openSet[i]))){
+                return temp;
+            }
+        }
+        closedSet.push_back(*openSet[i]);
+        for (int i=-1;i<2;i++){
+            for (int j=-1;j<2;j++){
+                if (abs(i) == abs(j)){
+                    continue;
+                }
+                if (temp.x+i>0 and temp.x+i < _map.size() and temp.y+j > 0 and temp.y+j < _map.size()){
+                    openSet.push_back(new coordinate(temp.x+i,temp.y+j));
                 }
             }
-            //if you aren't attacking anyone, move along your path.
-            if (attacking==false){
-                moveOnPath();
-            }
-
         }
-        //reset the counter to 0
-        counter=0;
-
-        sprite.setPosition(x*16,y*16);
+        delete openSet[i];
     }
-    return;
+    return coordinate(-1,-1);
 }
 
-void monster::moveOnPath()
+bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    if (path.size()!=0){
-        pos(path[path.size()-1].y,path[path.size()-1].x);
-        path.erase(path.begin()+path.size()-1);
+    std::cout << findDistance(goal) << std::endl;
+    if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
+        _map[goal.y][goal.x]->interactWithDoor(true);
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
-void player::movement(std::vector<std::vector<tile*> > *_map,std::vector<item*> *localItems, std::vector<actor*> actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+bool actor::equipItem(std::vector<item*> & localItems)
 {
-    /*
-    0 = NORTH
-    1 = CENTER
-    2 = SOUTH
-    3 = EAST
-    4 = WEST
-    5 = NORTH-WEST
-    6 = NORTH-EAST
-    7 = SOUTH-EAST
-    8 = SOUTH-WEST
-    9 = CLOSE DOOR
-    10 = OPEN DOOR
-    11 = INVENTORY
-    12 = PAUSE(options, quit game)/EXIT MENU
-    13 = STATS
-    14 = EXAMINE
-    15 = EXECUTE
-    16 = LOOK
-    */
-    int ch;
-    coordinate temp = coordinate(x,y);
-    bool moveThroughDoor=true;
-    bool attacking=false;
-    bool pressedKey = false;
-    char inventoryMovement;
-    char closeDirection;
-    char examineDirection;
-    std::vector<item*> itemsExamining;
-
-    sf::Event event;
-
-    tile tempFuckdebugging;
-    coordinate tempShit=coordinate(x,y);
-    customSpeed=speed();
-    while (counter>=customSpeed and keyrelease == true){
-
-            while (pressedKey == false){
-                while (window.pollEvent(event)){
-                    if (event.type == sf::Event::KeyPressed){
-                        pressedKey = true;
-                    }
-                }
-            }
-            pressedKey = false;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
-                while (pressedKey == false){
-                    while (window.pollEvent(event)){
-                        if (event.type == sf::Event::KeyPressed){
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
-                            pressedKey = true;
+    if (itemToPickUp != NULL){
+            std::cout << itemToPickUp->name << std::endl;
+        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
+            if (itemToPickUp->canEquip){
+                for (bodyPart * _b : body){
+                    if (_b->grasps){
+                        _b->equip(itemToPickUp,true);
+                        for (int i = 0; i < localItems.size();i++){
+                            if (localItems[i]== itemToPickUp){
+                                localItems.erase(localItems.begin()+i);
+                            }
                         }
                     }
                 }
-                (*_map)[temp.y][temp.x]->interactWithDoor(false);
             }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-                while (pressedKey == false){
-                    while (window.pollEvent(event)){
-                        if (event.type == sf::Event::KeyPressed){
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
-                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
-                            pressedKey = true;
-                        }
-                    }
-                }
-                std::cout << "Here\n";
-//                for (item* _i : localItems){
-//                    if (coordinate(_i->x,_i->y) == temp){itemsExamining.push_back(_i);}
-//                }
-                examineGround(window,localItems,temp, announcementList);
-                std::cout << "Here5\n";
-            }
-            else if ((*_map)[temp.y][temp.x]->movementCost!=-1){
-                if ((*_map)[temp.y][temp.x]->isDoor){
-                    moveThroughDoor = (*_map)[temp.y][temp.x]->interactWithDoor(true);
-                }
-                if (moveThroughDoor == true){
-                    pos(temp.y,temp.x);
-                    counter=0;
-                }
-            }
-
-
-        sprite.setPosition(x*16,y*16);
+        }
     }
-    counter++;
+
+    return false;
 }
 
-
-
-player::player(std::string speciesToLoad)
+bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems)
 {
-    coolDown=0;
-    numberOfLegs=0;
-    totalWeight=0;
-    accuracy=100;
-    defense=0;
-    counter=0;
-    onGround = false;
-    sprinting=false;
-    controlled=true;
-    sprinting=false;
-    int temp;
+    int positionInVector = 0;
+    for (item* _i : localItems){
+        if (findDistance(coordinate(_i->x,_i->y)) < 30){
+            if (canSee(_map,coordinate(_i->x,_i->y),coordinate(x,y))){
 
-    itemToPickUp = NULL;
+                if (_i->attack+attack > totalAttack() or _i->defense+defense > defense){
+                    goal = coordinate(_i->x,_i->y);
+                    itemToPickUp = _i;
+                    return true;
+                }
 
-    std::string fileName = "data/creatures/creature_standard.raw";
-
-    species = RSL::getStringData(fileName,speciesToLoad+".name");
-    description = RSL::getStringData(fileName, speciesToLoad+".description");
-    attack = RSL::getIntData(fileName, speciesToLoad+".strength");
-    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
-    eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
-    skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp,material(skinColor).color);
-
-    totalWeight = temp;
-
-    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
-    std::cout << description << std::endl;
-
-}
-
-monster::monster(std::string speciesToLoad)
-{
-    coolDown=0;
-    numberOfLegs=0;
-    totalWeight=0;
-    accuracy=100;
-    defense=0;
-    counter=0;
-    onGround = false;
-    sprinting=false;
-    controlled=true;
-    sprinting=false;
-    int temp;
-
-    actorAttacking = NULL;
-    itemToPickUp = NULL;
-
-    std::string fileName = "data/creatures/creature_standard.raw";
-
-    species = RSL::getStringData(fileName,speciesToLoad+".name");
-    texture = RSL::getTextureData(fileName, speciesToLoad+".texture");
-    description = RSL::getStringData(fileName, speciesToLoad+".description");
-    attack = RSL::getIntData(fileName, speciesToLoad+".strength");
-    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
-    hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
-    eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
-    skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, material(skinColor).color);
-
-    totalWeight = temp;
-
-    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
-    std::cout << description << std::endl;
-    controlled=false;
-    sprinting=false;
-    goal = coordinate(-1,-1);
-    memory=coordinate(-1,-1);
-    post=coordinate(-1,-1);
-    path.resize(0);
+            }
+        }
+        positionInVector++;
+    }
+    return false;
 }
 
 void actor::drawActor(sf::RenderWindow& window)
