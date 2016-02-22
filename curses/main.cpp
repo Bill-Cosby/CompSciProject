@@ -47,7 +47,7 @@ int main()
     city myCity;
     announcements announcementList;
 
-    ifFalse* decisionMaker = new ifFalse;
+    Selector* decisionMaker = new Selector;
     //Defining the tree
 
     Sequence * doorSequence = new Sequence;
@@ -69,8 +69,8 @@ int main()
 
 
     decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(itemSequence);
     decisionMaker->addChild(doorSequence);
+    decisionMaker->addChild(itemSequence);
 
     root->addChild(decisionMaker);
     root->addChild(movement);
@@ -193,6 +193,7 @@ window.setView(view);
                 keyrelease = true;
             }
         }
+
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
         for (int i=1;i<actors.size();i++){
             if (actors[i]->counter >= actors[i]->speed()){

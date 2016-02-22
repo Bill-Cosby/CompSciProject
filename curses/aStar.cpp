@@ -49,7 +49,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
 
     while (openSet.size()!=0){
 
-        if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4/* or canSee(_map,goal,currentNode.position)*/){
+        if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){
 
@@ -101,7 +101,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
                     heapStorage.push_back(*_n);
                 }
             }
-
         }
 
         tempNeighborStorage.clear();
@@ -112,6 +111,21 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
         timesthroughLoop++;
+
+        if (canSee(_map,currentNode.position,goal)){
+            std::vector<coordinate> path;
+            while (!(currentNode.position==start)){
+
+                for (int i=0;i<closedSet.size();i++){
+                    if (closedSet[i].position==currentNode.parent){
+                        path.push_back(currentNode.position);
+                        currentNode=closedSet[i];
+                        break;
+                    }
+                }
+            }
+            return path;
+        }
     }
 }
 

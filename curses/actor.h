@@ -72,10 +72,18 @@ public:
         int temp = attack;
         for (item* _i : equipment){
             temp += _i->attack;
-            std::cout << temp << std::endl;
         }
         return temp;
     }
+
+    int totalDefense(){
+        int temp = totalWeight;
+        for (item* _i : equipment){
+            temp += _i->defense;
+        }
+        return temp;
+    }
+
     bool isItemBetter();
     //int speed(){if (onGround == true){return ((totalWeight/dexterity)+coolDown)/3;}return ((totalWeight/dexterity)+coolDown);}
     int speed(){return dexterity;}

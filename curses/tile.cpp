@@ -13,6 +13,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     hCost=getDistance(position,goal);
     gCost=cSF;
     isDoor=false;
+    sprite.setColor(woodColor);
 }
 
 door::door(bool _o, short __material)
@@ -23,6 +24,7 @@ door::door(bool _o, short __material)
     closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
     isDoor=true;
     _material=__material;
+    sprite.setColor(woodColor);
 }
 
 void door::drawTile(sf::RenderWindow &window)
@@ -49,7 +51,7 @@ tile::tile(char dc, int mv, short mat)
     }
     movementCost = mv;
     sprite.setTexture(texture);
-    sprite.setColor(sf::Color(255,255,255,255));
+    sprite.setColor(woodColor);
 }
 
 bool door::interactWithDoor(bool opening)

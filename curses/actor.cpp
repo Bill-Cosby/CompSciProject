@@ -78,26 +78,20 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
 bool actor::decideIfCanAttack(std::vector<actor*> actors)
 {
     int totalDanger = 0;
-    int lowestAttack = 10000;
+    float dangerRatio;
     for (actor* _a : actors){
         if (_a == this)continue;
-        if (findDistance(coordinate(_a->col(),_a->row()))<=15){
-
-            totalDanger += _a->totalAttack()-totalAttack();
-            if (_a->totalAttack() < lowestAttack){
-                actorAttacking = _a;
-            }
+        totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+        dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
+        if (dangerRatio < 1){
+            actorAttacking = _a;
         }
     }
-    if (totalDanger >= totalAttack()){
-        return false;
-    }
     if (actorAttacking != NULL){
-        goal = coordinate(actorAttacking->col(), actorAttacking->row());
+        goal = coordinate(actorAttacking->col(),actorAttacking->row());
+        return true;
     }
-    else return false;
-
-    return true;
+    return false;
 }
 
 coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
@@ -177,6 +171,7 @@ bool actor::equipItem(std::vector<item*> & localItems)
                 if (rootPart->canEquip(itemToPickUp,true)){
                     for (int i = 0; i < localItems.size();i++){
                         if (localItems[i]==itemToPickUp){
+                            equipment.push_back(itemToPickUp);
                             localItems.erase(localItems.begin() + i);
                         }
                     }
