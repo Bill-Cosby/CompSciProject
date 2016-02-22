@@ -38,7 +38,7 @@ public:
     }
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);
-    std::vector<bodyPart*> returnParts(std::vector<bodyPart*> &returnBodyParts);
+    void returnParts(std::vector<bodyPart*> &returnBodyParts);
 };
 
 struct eye : public bodyPart

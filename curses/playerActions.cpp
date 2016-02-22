@@ -155,18 +155,18 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
     text.setFont(font);
     text.setCharacterSize(12);
 
-    std::vector<bodyPart*> bodyPartList = actorAttacking->rootPart->returnParts(bodyPartList);
+    std::vector<bodyPart*>bodyPartList;
+    actorAttacking->rootPart->returnParts(bodyPartList);
+
 
     for (bodyPart* _b : bodyPartList){
-        std::cout << _b->weight - attack << std::endl;
-        if (_b->armor !=NULL)temp = (_b->armor->defense + _b->weight) - attack;
-        else temp = (_b->weight - attack);
+        if (_b->armor !=NULL)temp = (_b->damage) - attack/_b->armor->defense;
+        else temp = (_b->damage - attack);
         if (temp < 0){
             temp = 0;
         }
         attackValues.push_back(temp);
         probabilityValues.push_back(rand()%actorAttacking->totalWeight);
-        std::cout << _b << std::endl;
     }
     std::stringstream stream;
     sf::Event event;
@@ -209,8 +209,18 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))buttonSelected++;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
-                    bodyPartList[buttonSelected]->damage-=attackValues[buttonSelected];
-                    return;
+                    bodyPartList[buttonSelected]->damage-=attack;
+                    if (bodyPartList[buttonSelected]->damage<=0){
+                        if (bodyPartList[buttonSelected]->ID == "00"){
+                            localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
+                            std::cout << "I've killed him!";
+                            return;
+                        }
+                        else{
+                            localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts));
+                        }
+                        delete bodyPartList[buttonSelected];
+                    }
                 }
             }
         }
