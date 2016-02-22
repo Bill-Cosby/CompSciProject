@@ -34,7 +34,7 @@ std::vector<coordinate *> blank;
 
 box(){blank.resize(2);}
 void divideBox(int, std::vector<std::vector<tile*> > &);
-void makeRoad(road*, std::vector<std::vector<tile*> > &);
+void makeRoad(road*, std::vector<std::vector<tile*> > &, int);
 };
 
 class city: box

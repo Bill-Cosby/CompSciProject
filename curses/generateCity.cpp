@@ -37,14 +37,18 @@ void city:: deleteTileMap()
     }
 }
 
-void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
+void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int level)
 {
 
  if(myRoad->vertical==true)
  {
-  for(int a=0; a<(myRoad->Point2->y-myRoad->Point1->y)+1; a++)
+  for(int a=0; a<=(myRoad->Point2->y-myRoad->Point1->y); a++)
   {
-   tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x]=new tile('1',10,10);
+      for(int b=0; b<level; b++)
+      {
+          tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x-level/2+b]=new tile('1',10,10);
+      }
+
   }
  }
 
@@ -52,7 +56,11 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap)
   {
   for(int a=0; a<=myRoad->Point2->x-myRoad->Point1->x; a++)
    {
-   tileMap[myRoad->Point1->y][myRoad->Point1->x+a]=new tile('1',10,10);
+       for(int b=0; b<level; b++)
+       {
+           tileMap[myRoad->Point1->y-level/2+b][myRoad->Point1->x+a]=new tile('1',10,10);
+       }
+
    }
   }
 
@@ -68,9 +76,9 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
   if(level!=0)
   {
 
-    if(rand()%2==0 and (left+1)!=right) //if line vertical
-    {std::cout<<"Horizontal"<<std::endl;
-        int splitPoint=left+1+rand()%(right-left-1);
+    if(rand()%2==0 and right-left>3) //if line vertical and there is space to draw single line
+    {
+        int splitPoint=left+2+rand()%(right-left-3);
         coordinate lowPoint(splitPoint, bottom);
         coordinate highPoint(splitPoint, top);
 
@@ -78,7 +86,7 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
         tempRoad.Point2=&highPoint;
-        makeRoad(&tempRoad, tileMap); //draws road on tile map
+        makeRoad(&tempRoad, tileMap, level); //draws road on tile map
 
         subBox1=new box;
         subBox2=new box;
@@ -100,9 +108,9 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 
     }
 
-    else if (top!=(bottom+1))
+    else if (top-bottom>3)
     {//line horizontal
-        int splitPoint=bottom+1+rand()%(top-bottom-1);
+        int splitPoint=bottom+2+rand()%(top-bottom-3);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
         road tempRoad;
@@ -110,7 +118,7 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
         tempRoad.Point1=&leftPoint;
         tempRoad.Point2=&rightPoint;
 
-        makeRoad(&tempRoad, tileMap); //draws road on tileMap
+        makeRoad(&tempRoad, tileMap, level); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;
