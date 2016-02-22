@@ -166,7 +166,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
             temp = 0;
         }
         attackValues.push_back(temp);
-        probabilityValues.push_back(rand()%actorAttacking->totalWeight);
+        probabilityValues.push_back((rand()%actorAttacking->totalWeight/actorAttacking->totalWeight)*100);
     }
     std::stringstream stream;
     sf::Event event;
