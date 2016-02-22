@@ -35,7 +35,11 @@ const char testarena[20][20]={{'1','1','1','1','1','1','1','1','1','1','1','1','
 
 int main()
 {
+
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
+    sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
+    view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
+
     gameWorld gameworld(window);
     srand(time(NULL));
     srand(rand()%time(NULL));
@@ -170,9 +174,14 @@ actors.push_back(new monster("human"));
 
 myCity.generateCity();
 
+
 bool keyrelease;
     while (window.isOpen())
     {
+        if (actors[0]->col()*16 - view.getSize().x/2 > 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
+        if (actors[0]->row()*16 - view.getSize().y/2 > 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
+window.setView(view);
+
         sf::Event event;
 
         while (window.pollEvent(event)){

@@ -17,7 +17,6 @@ public:
         announcementBorder.setFillColor(sf::Color::Black);
         announcementBorder.setOutlineThickness(3);
         announcementBorder.setOutlineColor(sf::Color::White);
-        announcementBorder.setPosition(window.getSize().x*.60,window.getSize().y*.25);
         announcementBorder.setSize(sf::Vector2f(window.getSize().x*.40,window.getSize().y*.75));
     }
 };

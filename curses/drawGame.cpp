@@ -13,8 +13,6 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 
     window.clear();
 
-    window.draw(announcementBorder);
-
     do_fov(_map,localItems,actors,actors[0]->col(),actors[0]->row(),15,window);
 
 //    for (int y=0;y<25;y++)
@@ -34,6 +32,9 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 //            }
 //        }
 //    }
+    window.setView(window.getDefaultView());
+    announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
+    window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
     window.display();
 }
