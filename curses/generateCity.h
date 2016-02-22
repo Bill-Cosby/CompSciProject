@@ -6,6 +6,7 @@
 #include <vector>
 #include "actor.h"
 #include <SFML/Graphics.hpp>
+#include "building.h"
 
 
 

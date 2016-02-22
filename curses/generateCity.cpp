@@ -70,15 +70,23 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int
 
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 {
-    if(level==3){srand(time(NULL));}
+
+
+if(level==3)
+{
+  srand(time(NULL));
+}
+
+        building build_ing;
+        build_ing.buildStructure("HOUSE1");
 
 
   if(level!=0)
   {
 
-    if(rand()%2==0 and right-left>3) //if line vertical and there is space to draw single line
+    if(rand()%2==0 and right-left>level+2) //if line vertical and there is space to draw line
     {
-        int splitPoint=left+2+rand()%(right-left-3);
+        int splitPoint=left+level/2+1+rand()%(right-left-level-2);
         coordinate lowPoint(splitPoint, bottom);
         coordinate highPoint(splitPoint, top);
 
@@ -108,9 +116,9 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 
     }
 
-    else if (top-bottom>3)
+    else if (top-bottom>level+2)
     {//line horizontal
-        int splitPoint=bottom+2+rand()%(top-bottom-3);
+        int splitPoint=bottom+1+level/2+rand()%(top-bottom-level-2);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
         road tempRoad;
@@ -139,14 +147,33 @@ void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
 
     }
 
-
-
   }
+
+  else if(right-left>13 and top-bottom>13)
+
+
+    {
+      for(int a=0;a<10; a++)
+      {
+          for(int b=0; b<10; b++)
+          { tile* temp_tile=build_ing.structure[a][b];
+             tileMap[bottom+2+a][left+2+b]=temp_tile;
+          }
+
+      }
+
+    }
+
+
+
 
 }
 
   void city::generateCity()
 {
+    srand(time(NULL));
+        building build_ing;
+        build_ing.buildStructure("HOUSE1");
 setTileMap();
 divideBox(4,tileMap); //recursive box dividing and road drawing
 }

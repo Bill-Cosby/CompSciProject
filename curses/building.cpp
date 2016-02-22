@@ -34,12 +34,12 @@ void building::buildStructure(std::string building)
                                 buildingName = constructionLine;
                                 buildingFound = true;
                             }
-                            if (type=="[HEIGHT]" and buildingFound == true){
+                            if (type=="HEIGHT" and buildingFound == true){
                                 for (int i=constructionLine.size()-1;i>=0;i--){
                                     height+=(constructionLine[i]-'0')*(pow(10,(constructionLine.size()-1)-i));
                                 }
                                 structure.resize(height);
-                            }if (type=="[WIDTH]" and buildingFound == true){
+                            }if (type=="WIDTH" and buildingFound == true){
                                 for (int i=constructionLine.size()-1;i>=0;i--){
                                     width+=(constructionLine[i]-'0')*(pow(10,(constructionLine.size()-1)-i));
                                 }
