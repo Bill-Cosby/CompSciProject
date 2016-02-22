@@ -39,6 +39,21 @@ public:
     }
 };
 
+class ifFalse : public compositNode
+{
+public:
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        for (Node* child : getChildren()){
+            std::cout << "selecting child...\n";
+            if (child->run(testingCharacter, _map, localItems, actors, announcementList) == false){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
 class Selector : public compositNode
 {
 public:

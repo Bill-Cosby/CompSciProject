@@ -47,7 +47,7 @@ int main()
     city myCity;
     announcements announcementList;
 
-    Selector * decisionMaker = new Selector;
+    ifFalse* decisionMaker = new ifFalse;
     //Defining the tree
 
     Sequence * doorSequence = new Sequence;

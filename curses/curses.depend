@@ -1174,11 +1174,11 @@
 
 1455593312 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tissue.h
 
-1455829315 source:c:\users\damion\desktop\compsciproject\curses\actor.cpp
+1456174355 source:c:\users\damion\desktop\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1455829303 c:\users\damion\desktop\compsciproject\curses\actor.h
+1456173258 c:\users\damion\desktop\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
@@ -1188,6 +1188,7 @@
 	"bodyParts.h"
 	"aStar.h"
 	<random>
+	<string>
 
 1455051062 c:\users\damion\desktop\compsciproject\curses\window.h
 	"tile.h"
@@ -1205,7 +1206,7 @@
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1455829143 c:\users\damion\desktop\compsciproject\curses\item.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -1213,11 +1214,11 @@
 	"materials.h"
 	"RSL.h"
 
-1455827035 c:\users\damion\desktop\compsciproject\curses\materials.h
+1455831327 c:\users\damion\desktop\compsciproject\curses\materials.h
 	<vector>
 	<SFML/Graphics.hpp>
 
-1455827035 c:\users\damion\desktop\compsciproject\curses\rsl.h
+1455831327 c:\users\damion\desktop\compsciproject\curses\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -1227,9 +1228,10 @@
 	<stdlib.h>
 	<time.h>
 	<SFML/Graphics.hpp>
+	<random>
 	"materials.h"
 
-1455827035 c:\users\damion\desktop\compsciproject\curses\bodyparts.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\bodyparts.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -1248,23 +1250,23 @@
 	<queue>
 	<sstream>
 
-1455653572 source:c:\users\damion\desktop\compsciproject\curses\actormenus.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
-1455658403 source:c:\users\damion\desktop\compsciproject\curses\astar.cpp
+1455831327 source:c:\users\damion\desktop\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
-1455827035 source:c:\users\damion\desktop\compsciproject\curses\bodyparts.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\bodyparts.cpp
 	"bodyParts.h"
 	"RSL.h"
 	"item.h"
 
-1455051061 source:c:\users\damion\desktop\compsciproject\curses\building.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\building.cpp
 	"building.h"
 	<iostream>
 
-1455051061 c:\users\damion\desktop\compsciproject\curses\building.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\building.h
 	<vector>
 	<fstream>
 	<string>
@@ -1272,20 +1274,21 @@
 	<math.h>
 	"tile.h"
 
-1455827035 source:c:\users\damion\desktop\compsciproject\curses\drawgame.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
-1455051061 c:\users\damion\desktop\compsciproject\curses\drawgame.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\drawgame.h
 	"actor.h"
 	"shadowcasting.h"
 	<SFML/Graphics.hpp>
 
-1455051062 c:\users\damion\desktop\compsciproject\curses\shadowcasting.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\shadowcasting.h
 	"tile.h"
 	<vector>
 	<math.h>
 	<cmath>
 	<SFML/Graphics.hpp>
+	"actor.h"
 
 1455051061 source:c:\users\damion\desktop\compsciproject\curses\include\dungeon.cpp
 	"dungeon.h"
@@ -1297,13 +1300,13 @@
 	<stack>
 	<fstream>
 
-1455829143 source:c:\users\damion\desktop\compsciproject\curses\interactionswithworld.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
 
-1455829393 source:c:\users\damion\desktop\compsciproject\curses\item.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\item.cpp
 	"item.h"
 
-1455829463 source:c:\users\damion\desktop\compsciproject\curses\main.cpp
+1456173405 source:c:\users\damion\desktop\compsciproject\curses\main.cpp
 	"menu.h"
 	"drawGame.h"
 	"include/dungeon.h"
@@ -1321,12 +1324,15 @@
 	<SFML/Audio.hpp>
 	"actor.h"
 
-1455051061 c:\users\damion\desktop\compsciproject\curses\generatecity.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
+	<vector>
+	"actor.h"
+	<SFML/Graphics.hpp>
 
-1455052943 c:\users\damion\desktop\compsciproject\curses\tiles.h
+1456173259 c:\users\damion\desktop\compsciproject\curses\tiles.h
 	<vector>
 	"tile.h"
 	<noise/noise.h>
@@ -1338,7 +1344,7 @@
 	<string>
 	<noise/noise.h>
 
-1455829401 c:\users\damion\desktop\compsciproject\curses\behaviortree.h
+1456173405 c:\users\damion\desktop\compsciproject\curses\behaviortree.h
 	<list>
 	"actor.h"
 
@@ -1604,16 +1610,16 @@
 	<noise/mathconsts.h>
 	"noiseutils.h"
 
-1455827035 source:c:\users\damion\desktop\compsciproject\curses\rsl.cpp
+1455831327 source:c:\users\damion\desktop\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
-1455051062 source:c:\users\damion\desktop\compsciproject\curses\shadowcasting.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
 
 1455051062 source:c:\users\damion\desktop\compsciproject\curses\tile.cpp
 	"tile.h"
 
-1455051062 source:c:\users\damion\desktop\compsciproject\curses\tiles.cpp
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\tiles.cpp
 	<iostream>
 	"tiles.h"
 	<stdlib.h>
@@ -1625,7 +1631,7 @@
 1455826993 source:c:\compsciproject\curses\materials.cpp
 	"materials.h"
 
-1455827035 source:c:\users\damion\desktop\compsciproject\curses\materials.cpp
+1455831327 source:c:\users\damion\desktop\compsciproject\curses\materials.cpp
 	"materials.h"
 
 1456171844 source:c:\compsciproject\curses\generatecity.cpp
@@ -1640,5 +1646,19 @@
 	"actor.h"
 
 1456172276 source:c:\compsciproject\curses\playeractions.cpp
+	"actor.h"
+
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\generatecity.cpp
+	"generateCity.h"
+	<vector>
+	"drawGame.h"
+	<time.h>
+	<stdlib.h>
+	<vector>
+
+1456173258 source:c:\users\damion\desktop\compsciproject\curses\actorconstructors.cpp
+	"actor.h"
+
+1456173259 source:c:\users\damion\desktop\compsciproject\curses\playeractions.cpp
 	"actor.h"
 

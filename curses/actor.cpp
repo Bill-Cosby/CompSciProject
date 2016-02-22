@@ -89,7 +89,7 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors)
             }
         }
     }
-    if (totalDanger > totalAttack()){
+    if (totalDanger >= totalAttack()){
         return false;
     }
     if (actorAttacking != NULL){
@@ -174,16 +174,14 @@ bool actor::equipItem(std::vector<item*> & localItems)
             std::cout << itemToPickUp->name << std::endl;
         if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
             if (itemToPickUp->canEquip){
-                for (bodyPart * _b : body){
-                    if (_b->grasps){
-                        _b->equip(itemToPickUp,true);
-                        for (int i = 0; i < localItems.size();i++){
-                            if (localItems[i]== itemToPickUp){
-                                localItems.erase(localItems.begin()+i);
-                            }
+                if (rootPart->canEquip(itemToPickUp,true)){
+                    for (int i = 0; i < localItems.size();i++){
+                        if (localItems[i]==itemToPickUp){
+                            localItems.erase(localItems.begin() + i);
                         }
                     }
                 }
+
             }
         }
     }
