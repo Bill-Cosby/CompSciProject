@@ -62,6 +62,16 @@ void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int 
     return;
 }
 
+void bodyPart::returnParts(std::vector<bodyPart*> &returnBodyParts)
+{
+    returnBodyParts.push_back(this);
+
+    for (bodyPart* _b : attachedParts){
+        _b->returnParts(returnBodyParts);
+    }
+    return;
+}
+
 torso::torso(std::string species, int _weight,std::string id, std::string connectedto, sf::Color color)
 {
     ID = id;

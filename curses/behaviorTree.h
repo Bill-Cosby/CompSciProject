@@ -214,7 +214,7 @@ public:
     {
         if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
             std::cout << "Take that!\n";
-            testingCharacter->attackEnemy(_map, announcementList, localItems);
+            testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
         }
     }
 };

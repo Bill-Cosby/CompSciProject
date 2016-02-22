@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localItems, bool & keyrelease)
+void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localItems, bool & keyrelease)
 {
     std::vector<bodyPart*> bodyPartsToEquipIn;
     sf::Font font;
@@ -177,7 +177,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
                     itemLookingAt->sprite.setPosition(x*16,y*16);
                     itemLookingAt->selected = false;
 
-                    localItems->push_back(itemLookingAt);
+                    localItems.push_back(itemLookingAt);
                     if (activeWindow == 0)inventory.erase(inventory.begin()+itemSelected);
                     if (activeWindow == 1)equipment.erase(equipment.begin()+itemSelected);
                 }
@@ -225,7 +225,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> *localIt
     window.clear();
 }
 
-void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining,coordinate spotExamining, announcements & announcementList)
+void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList)
 {
     sf::Event event;
 
@@ -260,9 +260,9 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
     bool examiningGround=true;
     bool unloadedItem=false;
     bool keyrelease = false;
-    for (int i=0;i<(*itemsExamining).size();i++){
-        if (coordinate(((*itemsExamining)[i]->x),(*itemsExamining)[i]->y)==spotExamining){
-            itemsYouFound.push_back((*itemsExamining)[i]);
+    for (int i=0;i<itemsExamining.size();i++){
+        if (coordinate((itemsExamining[i]->x),itemsExamining[i]->y)==spotExamining){
+            itemsYouFound.push_back(itemsExamining[i]);
         }
     }
 
@@ -319,9 +319,9 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> *itemsEx
                             std::string temporary = "You picked up " + itemsYouFound[j]->name;
 
                             announcementList.addAnnouncement(temporary);
-                            for (int k = 0; k < (*itemsExamining).size(); k++){
-                                if ((*itemsExamining)[k]==itemsYouFound[j]){
-                                    (*itemsExamining).erase((*itemsExamining).begin()+k);
+                            for (int k = 0; k < itemsExamining.size(); k++){
+                                if (itemsExamining[k]==itemsYouFound[j]){
+                                    itemsExamining.erase(itemsExamining.begin()+k);
                                 }
                             }
                         }

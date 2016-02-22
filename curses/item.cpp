@@ -40,12 +40,11 @@ void weapon::equip(bool equipping)
 
 }
 
-corpse::corpse(std::string _name, bodyPart * _torso, sf::Sprite _sprite, int _x, int _y, int _value, std::string type)
+corpse::corpse(std::string _name, bodyPart * _torso, int _x, int _y, int _value, std::string type)
 {
     name=_name;
     value=_value;
     torso = _torso;
-    sprite = _sprite;
     x=_x;
     y=_y;
 }

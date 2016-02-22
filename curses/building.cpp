@@ -1,14 +1,16 @@
 #include "building.h"
 #include <iostream>
-void building::buildStructure()
+void building::buildStructure(std::string building)
 {
     std::string line;
     std::string constructionLine;
+    std::string buildingName;
     int yCounter=0,xCounter=0;
     height=0,width=0;
     bool typeFound=false;
     bool finishedWithType=false;
     bool constructionBool = false;
+    bool buildingFound = false;
     std::ifstream BUILDING_FILE("data/buildings/buildings.raw");
 
     if (BUILDING_FILE.is_open()){
@@ -28,15 +30,16 @@ void building::buildStructure()
                     }
                     if (typeFound==true){
                         if (_c == ']'){
-                            if (type == "structure"){
-                                name = constructionLine;
+                            if (type == building){
+                                buildingName = constructionLine;
+                                buildingFound = true;
                             }
-                            if (type=="height"){
+                            if (type=="[HEIGHT]" and buildingFound == true){
                                 for (int i=constructionLine.size()-1;i>=0;i--){
                                     height+=(constructionLine[i]-'0')*(pow(10,(constructionLine.size()-1)-i));
                                 }
                                 structure.resize(height);
-                            }if (type=="width"){
+                            }if (type=="[WIDTH]" and buildingFound == true){
                                 for (int i=constructionLine.size()-1;i>=0;i--){
                                     width+=(constructionLine[i]-'0')*(pow(10,(constructionLine.size()-1)-i));
                                 }

@@ -13,7 +13,7 @@ public:
     int height,width;
     std::string name;
     std::vector<std::vector<tile*> > structure;
-    void buildStructure();
+    void buildStructure(std::string building);
 };
 
 #endif // BUILDING_H_INCLUDED

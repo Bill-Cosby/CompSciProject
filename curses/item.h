@@ -74,7 +74,7 @@ class corpse : public item
 public:
     bodyPart * torso;
     sf::Sprite sprite;
-    corpse(std::string _name, bodyPart * _torso, sf::Sprite sprite, int _x, int _y, int _value, std::string _type);
+    corpse(std::string _name, bodyPart * _torso, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping){}
     std::string itemDescription(){}
     void draw(sf::RenderWindow &window){
