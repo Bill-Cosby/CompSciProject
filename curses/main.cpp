@@ -40,6 +40,8 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
+    int counter
+
     gameWorld gameworld(window);
     srand(time(NULL));
     srand(rand()%time(NULL));
@@ -69,8 +71,8 @@ int main()
 
 
     decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(doorSequence);
     decisionMaker->addChild(itemSequence);
+    decisionMaker->addChild(doorSequence);
 
     root->addChild(decisionMaker);
     root->addChild(movement);
@@ -88,7 +90,7 @@ actors.push_back(new monster("human"));
 
     //char ch;
 
-    actors[0]->pos(1,1);
+    actors[0]->pos(18,18);
     actors[1]->pos(2,2);
 
 
@@ -176,7 +178,7 @@ actors.push_back(new monster("human"));
 myCity.generateCity();
 
 
-bool keyrelease = false;
+bool keyrelease = true;
     while (window.isOpen())
     {
         if (actors[0]->col()*16 - view.getSize().x/2 > 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);

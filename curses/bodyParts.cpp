@@ -23,7 +23,6 @@ bool hand::equip(item* itemToGrasp, bool equipping)
 
 bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
 {
-    std::cout << name << std::endl;
     if (grasps == true){
         equip(itemToGrasp, equipping);
         return true;

@@ -47,7 +47,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
             }
             pressedKey = false;
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
@@ -116,6 +116,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                         pressedKey = true;
                     }
                     for (actor* _a : actors){
+                        if (_a == this)continue;
                         if (coordinate(_a->col(),_a->row()) == temp){
                             actorAttacking = _a;
                         }
@@ -125,6 +126,13 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                 }
             }
             else if (_map[temp.y][temp.x]->movementCost!=-1){
+                for (actor* _a : actors){
+                    if (coordinate(_a->col(),_a->row()) == temp){
+                        actorAttacking = _a;
+                        simpleAttackEnemy(_map,announcementList,localItems);
+                        return;
+                    }
+                }
                 if (_map[temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[temp.y][temp.x]->interactWithDoor(true);
                 }
@@ -142,6 +150,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
 
 void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)
 {
+    window.setView(window.getDefaultView());
     if (actorAttacking==NULL)return;
     int temp;
     int buttonSelected = 0;
@@ -213,7 +222,6 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                     if (bodyPartList[buttonSelected]->damage<=0){
                         if (bodyPartList[buttonSelected]->ID == "00"){
                             localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->col(),actorAttacking->row(),0,"corpse"));
-                            std::cout << "I've killed him!";
                             return;
                         }
                         else{

@@ -13,7 +13,8 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 
     window.clear();
 
-    do_fov(_map,localItems,actors,actors[0]->col(),actors[0]->row(),15,window);
+    if (actors[0]->controlled == true)do_fov(_map,localItems,actors,actors[0]->col(),actors[0]->row(),15,window);
+
 
 //    for (int y=0;y<25;y++)
 //    {

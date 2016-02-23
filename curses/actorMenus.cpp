@@ -2,6 +2,7 @@
 
 void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localItems, bool & keyrelease)
 {
+    window.setView(window.getDefaultView());
     std::vector<bodyPart*> bodyPartsToEquipIn;
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
@@ -227,6 +228,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
 
 void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList)
 {
+    window.setView(window.getDefaultView());
     sf::Event event;
 
     sf::Font font;
@@ -336,10 +338,6 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
             if (itemExamining==itemsYouFound.size())itemExamining=0;
             if (itemExamining==-1)itemExamining = itemsYouFound.size()-1;
         }
-
-
-
-
     }
 }
 
