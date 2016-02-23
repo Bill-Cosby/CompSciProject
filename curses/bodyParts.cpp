@@ -61,7 +61,6 @@ void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int 
     for (bodyPart * _b : attachedParts){
         _b->findEasiestHit(bodyPartToHit,highestDamage,probability,attack,myTotalWeight);
     }
-    return;
 }
 
 void bodyPart::returnParts(std::vector<bodyPart*> &returnBodyParts)
@@ -71,7 +70,14 @@ void bodyPart::returnParts(std::vector<bodyPart*> &returnBodyParts)
     for (bodyPart* _b : attachedParts){
         _b->returnParts(returnBodyParts);
     }
-    return;
+}
+
+void bodyPart::returnWeight(int &totalWeight)
+{
+    totalWeight+=weight;
+    for (bodyPart* _b : attachedParts){
+        _b->returnWeight(totalWeight);
+    }
 }
 
 torso::torso(std::string species, int _weight,std::string id, std::string connectedto, sf::Color color)

@@ -40,7 +40,7 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
-    int counter
+    int counter = 0;
 
     gameWorld gameworld(window);
     srand(time(NULL));

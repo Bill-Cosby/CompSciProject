@@ -46,7 +46,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
 
     openSet.push(currentNode);
     int timesthroughLoop=0;
-
+    bool dontStep = false;
     while (openSet.size()!=0){
 
         if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4){
@@ -68,11 +68,17 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         closedSet.push_back(currentNode);
         for (int y=-1; y<2; y++){
             for (int x=-1; x<2; x++){
+                dontStep = false;
                 if (y==0 and x==0){
                     continue;
                 }
                 if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
-                    if (_map[currentNode.position.y+y][currentNode.position.x+x]->movementCost != -1){
+                    for (coordinate _c : noGo){
+                        if (_c == coordinate(currentNode.position.x+x,currentNode.position.y+y)){
+                            dontStep = true;
+                        }
+                    }
+                    if (_map[currentNode.position.y+y][currentNode.position.x+x]->movementCost != -1 and dontStep == false){
                         _map[currentNode.position.y+y][currentNode.position.x+x]->parent   = currentNode.position;
                         _map[currentNode.position.y+y][currentNode.position.x+x]->position = coordinate(currentNode.position.x+x,currentNode.position.y+y);
                         _map[currentNode.position.y+y][currentNode.position.x+x]->hCost    = getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);

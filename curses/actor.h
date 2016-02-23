@@ -63,10 +63,11 @@ public:
 //  BASIC STATS OF EVERY CREATURE
     int attack;
     int dexterity;
-    int totalWeight;
+    int totalWeight(){int temp=0;rootPart->returnWeight(temp);return temp;};
     int accuracy;
     int defense;
     int counter;
+
 
     int totalAttack(){
         int temp = attack;
@@ -77,7 +78,7 @@ public:
     }
 
     int totalDefense(){
-        int temp = totalWeight;
+        int temp = totalWeight();
         for (item* _i : equipment){
             temp += _i->defense;
         }
@@ -177,7 +178,6 @@ public:
     monster(std::string);
     bool musttouch;
     bool canSee(std::vector<std::vector<tile*> >, coordinate);
-    void movement(std::vector<std::vector<tile*> >& _map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath();

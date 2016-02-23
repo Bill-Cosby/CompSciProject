@@ -106,6 +106,10 @@ public:
             return false;
         }
 
+        for (actor* _a : actors){
+            testingCharacter->noGo.push_back(coordinate(_a->col(),_a->row()));
+        }
+
         if (testingCharacter->path.size()>0)std::cout << testingCharacter->path[0].x << "," << testingCharacter->path[0].y << ":" << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
 
         if (testingCharacter->path.size() > 0 and testingCharacter->memory==testingCharacter->goal){

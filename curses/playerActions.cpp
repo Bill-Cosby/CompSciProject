@@ -62,7 +62,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                 while (pressedKey == false){
                     while (window.pollEvent(event)){
                         if (event.type == sf::Event::KeyPressed){
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
@@ -81,7 +81,8 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                 while (pressedKey == false){
                     while (window.pollEvent(event)){
                         if (event.type == sf::Event::KeyPressed){
-                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+
+                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
@@ -91,6 +92,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
                             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                             pressedKey = true;
+
                         }
                     }
                 }
@@ -104,7 +106,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                     }
                     pressedKey = false;
                     while (keyrelease == true){
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
@@ -116,7 +118,6 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                         pressedKey = true;
                     }
                     for (actor* _a : actors){
-                        if (_a == this)continue;
                         if (coordinate(_a->col(),_a->row()) == temp){
                             actorAttacking = _a;
                         }
@@ -127,6 +128,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
             }
             else if (_map[temp.y][temp.x]->movementCost!=-1){
                 for (actor* _a : actors){
+                    if (_a == this)continue;
                     if (coordinate(_a->col(),_a->row()) == temp){
                         actorAttacking = _a;
                         simpleAttackEnemy(_map,announcementList,localItems);
@@ -156,7 +158,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
     int buttonSelected = 0;
 
     std::vector<int> attackValues;
-    std::vector<int> probabilityValues;
+    std::vector<float> probabilityValues;
 
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
@@ -175,7 +177,9 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
             temp = 0;
         }
         attackValues.push_back(temp);
-        probabilityValues.push_back((rand()%actorAttacking->totalWeight/actorAttacking->totalWeight)*100);
+        temp = rand()%_b->weight;
+        std::cout << temp << std::endl;
+        probabilityValues.push_back((temp/actorAttacking->totalWeight())*100);
     }
     std::stringstream stream;
     sf::Event event;
@@ -218,7 +222,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))buttonSelected++;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
-                    bodyPartList[buttonSelected]->damage-=attack;
+                    bodyPartList[buttonSelected]->damage-=attackValues[buttonSelected];
                     if (bodyPartList[buttonSelected]->damage<=0){
                         if (bodyPartList[buttonSelected]->ID == "00"){
                             localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->col(),actorAttacking->row(),0,"corpse"));
@@ -233,7 +237,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
             }
         }
         if (buttonSelected == bodyPartList.size())buttonSelected = 0;
-        if (buttonSelected < 0)buttonSelected = bodyPartList.size()-1;
+        if (buttonSelected == -1)buttonSelected = bodyPartList.size()-1;
         window.display();
     }
 

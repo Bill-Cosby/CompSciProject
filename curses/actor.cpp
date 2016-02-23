@@ -54,7 +54,7 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
 {
     int highestDamage = 999999;
     bodyPart *bodyPartToHit = NULL;
-    actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight,totalAttack(),actorAttacking->totalWeight);
+    actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight(),totalAttack(),actorAttacking->totalWeight());
 
     if (bodyPartToHit != NULL){
         std::cout << bodyPartToHit->name << std::endl;

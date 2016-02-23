@@ -4,7 +4,6 @@ player::player(std::string speciesToLoad)
 {
     coolDown=0;
     numberOfLegs=0;
-    totalWeight=0;
     accuracy=100;
     defense=0;
     counter=0;
@@ -27,18 +26,12 @@ player::player(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp,material(skinColor).color);
 
-    totalWeight = temp;
-
-    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
-    std::cout << description << std::endl;
-
 }
 
 monster::monster(std::string speciesToLoad)
 {
     coolDown=0;
     numberOfLegs=0;
-    totalWeight=0;
     accuracy=100;
     defense=0;
     counter=0;
@@ -62,11 +55,6 @@ monster::monster(std::string speciesToLoad)
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, material(skinColor).color);
-
-    totalWeight = temp;
-
-    std::cout << "A " << totalWeight << " pound " << species << " with "<< hairColor << " hair and " << eyeColor << " eyes\n" << std::endl;
-    std::cout << description << std::endl;
     controlled=false;
     sprinting=false;
     goal = coordinate(-1,-1);
