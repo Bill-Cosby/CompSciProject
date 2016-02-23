@@ -14,17 +14,25 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include "materials.h"
+#include "menu.h"
 
 
 namespace RSL
 {
     std::string getStringData(std::string fileName, std::string dataToRecieve);
+    std::string GET_FORMATTED_TYPE(std::string* typeToFix);
+
     int getIntData(std::string fileName, std::string dataToRecieve);
+
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
     std::vector<material> unloadMaterials(std::string fileName);
+
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
-    std::string GET_FORMATTED_TYPE(std::string* typeToFix);
+
     bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color);
+    //MENU FUNCTIONS
+    std::vector<menu_button> getButtons(std::string fileName);
+    void setupMenu(std::string fileName, sf::RenderWindow &window);
 }
 
 

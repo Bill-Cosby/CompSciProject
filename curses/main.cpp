@@ -1,4 +1,3 @@
-#include "menu.h"
 #include "drawGame.h"
 #include "include/dungeon.h"
 #include <string>
@@ -39,6 +38,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
+
+    RSL::setupMenu("data/menus/mainMenu.raw", window);
 
     int counter = 0;
 

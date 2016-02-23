@@ -1,7 +1,6 @@
 #include <vector>
 #include <string>
 #include <SFML/Audio.hpp>
-#include "actor.h"
 
 class menu_button
 {
@@ -13,6 +12,8 @@ public:
     int x,y;
     menu_button(std::string);
     menu_button(std::string,std::string);
+    menu_button(){}
+    void (*func)();
 };
 
 class custom_menu
