@@ -233,9 +233,11 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                                 return;
                             }
                             else{
+                                std::cout << "Here\n";
                                 localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts,0,"limb"));
                             }
-                            delete bodyPartList[buttonSelected];
+                            bodyPartList[buttonSelected] = NULL;
+                            actorAttacking->rootPart->clearDeadParts();
                         }
                     }
                     else{

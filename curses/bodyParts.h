@@ -38,6 +38,15 @@ public:
         }
     }
 
+    void clearDeadParts()
+    {
+        for (int i=0;i<attachedParts.size();i++){
+            if (attachedParts[i] == NULL){
+                attachedParts.erase(attachedParts.begin()+i);
+            }
+        }
+    }
+
 
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);
