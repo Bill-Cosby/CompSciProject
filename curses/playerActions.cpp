@@ -154,7 +154,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
 {
     window.setView(window.getDefaultView());
     if (actorAttacking==NULL)return;
-    int temp;
+    float temp;
     int buttonSelected = 0;
 
     std::vector<int> attackValues;
@@ -171,16 +171,18 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
 
 
     for (bodyPart* _b : bodyPartList){
-        if (_b->armor !=NULL)temp = (_b->damage) - attack/_b->armor->defense;
-        else temp = (_b->damage - attack);
+        std::cout << _b->damage << std::endl;
+        if (_b->armor !=NULL)temp = (_b->damage) - totalAttack()/_b->armor->defense;
+        else temp = (_b->damage - totalAttack());
         if (temp < 0){
             temp = 0;
         }
         attackValues.push_back(temp);
         temp = rand()%_b->weight;
-        std::cout << temp << std::endl;
-        probabilityValues.push_back((temp/actorAttacking->totalWeight())*100);
+        float playerAbility = rand()%dexterity;
+        probabilityValues.push_back((int)(((temp/actorAttacking->totalWeight())+playerAbility/dexterity)*100));
     }
+    std::cout << "------------------------------------\n";
     std::stringstream stream;
     sf::Event event;
     while (true){
@@ -220,19 +222,28 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
         while (window.pollEvent(event)){
             if (event.type == sf::Event::KeyPressed){
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))buttonSelected++;
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
-                    bodyPartList[buttonSelected]->damage-=attackValues[buttonSelected];
-                    if (bodyPartList[buttonSelected]->damage<=0){
-                        if (bodyPartList[buttonSelected]->ID == "00"){
-                            localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->col(),actorAttacking->row(),0,"corpse"));
-                            return;
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
+                    if (rand()%100<probabilityValues[buttonSelected]){
+                        announcementList.addAnnouncement("Player hit " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        bodyPartList[buttonSelected]->damage-=totalAttack();
+                        if (bodyPartList[buttonSelected]->damage<=0){
+                            if (bodyPartList[buttonSelected]->ID == "00"){
+                                localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->col(),actorAttacking->row(),0,"corpse"));
+                                return;
+                            }
+                            else{
+                                localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts,0,"limb"));
+                            }
+                            delete bodyPartList[buttonSelected];
                         }
-                        else{
-                            localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts,0,"limb"));
-                        }
-                        delete bodyPartList[buttonSelected];
                     }
+                    else{
+
+                        announcementList.addAnnouncement("Player missed " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        actorAttacking->dodgeAttack(this,_map);
+                    }
+                    return;
                 }
             }
         }

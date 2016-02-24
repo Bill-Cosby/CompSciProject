@@ -32,10 +32,13 @@ public:
     void draw(sf::RenderWindow &window, int x, int y){
         sprite.setPosition(x,y);
         window.draw(sprite);
+
         for (bodyPart * _b : attachedParts){
             _b->draw(window,x,y);
         }
     }
+
+
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);
     void returnParts(std::vector<bodyPart*> &returnBodyParts);

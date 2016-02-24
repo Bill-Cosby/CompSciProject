@@ -57,19 +57,21 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight(),totalAttack(),actorAttacking->totalWeight());
 
     if (bodyPartToHit != NULL){
-        std::cout << bodyPartToHit->name << std::endl;
-        bodyPartToHit->damage-=highestDamage;
-        if (bodyPartToHit->damage <= 0){
-            if (bodyPartToHit->ID == "00"){
-                actorAttacking->makeCorpse(localItems);
-            std::cout << "I've killed him!";
-                return;
+        if (rand()%100<((((rand()%bodyPartToHit->weight)/actorAttacking->totalWeight())*100))){
+            bodyPartToHit->damage-=highestDamage;
+            if (bodyPartToHit->damage <= 0){
+                if (bodyPartToHit->ID == "00"){
+                    actorAttacking->makeCorpse(localItems);
+                    std::cout << "I've killed him!";
+                    return;
+                }
+                else{
+                    localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts, 0, "limb"));
+                }
+                delete bodyPartToHit;
             }
-            else{
-                localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts, 0, "limb"));
-            }
-            delete bodyPartToHit;
         }
+        else actorAttacking->dodgeAttack(this,_map);
 
     }
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;

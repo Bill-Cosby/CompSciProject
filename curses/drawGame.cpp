@@ -49,8 +49,8 @@ void announcements::drawAnnouncements(sf::RenderWindow & window)
     menuText.setFont(font);
 
     int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
-    for (std::string _s : announcementList){
-        menuText.setString(_s);
+    for (int i = announcementList.size()-1; i >-1;i--){
+        menuText.setString(announcementList[i]);
         menuText.setPosition(x,y);
         window.draw(menuText);
         y-=15;
