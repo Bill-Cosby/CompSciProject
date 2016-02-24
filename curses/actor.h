@@ -67,6 +67,7 @@ public:
     int accuracy;
     int defense;
     int counter;
+    float dangerThresh;
 
 
     int totalAttack(){
@@ -99,6 +100,7 @@ public:
 
 //  ENEMY TO FIGHT
     actor* actorAttacking;
+    bool isInDanger(std::vector<actor*> actors);
 
 //  INVENTORY INTERACTION
     bool equipItem(std::vector<item*> &localItems);

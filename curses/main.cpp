@@ -51,6 +51,9 @@ int main()
     Selector* decisionMaker = new Selector;
     //Defining the tree
 
+    Selector * priority = new Selector;
+
+
     Sequence * doorSequence = new Sequence;
             doorSequence->addChild(new findDoorNode);
             doorSequence->addChild(new openDoorNode);

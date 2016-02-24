@@ -77,6 +77,25 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
+bool actor::isInDanger(std::vector<actor*> actors)
+{
+    float threat;
+
+    for(actor* _a : actors)
+    {
+        if(_a->row() - row() <=15 and _a->col() - col() <= 15)
+        {
+            threat +=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+            threat /= 3;
+            if(threat >= dangerThresh)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool actor::decideIfCanAttack(std::vector<actor*> actors)
 {
     int totalDanger = 0;
