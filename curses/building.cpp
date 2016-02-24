@@ -29,7 +29,6 @@ void building::buildStructure(std::string building)
                         continue;
                     }
                     if (typeFound==true){
-                        if (_c == ']'){
                             if (type == building){
                                 buildingName = constructionLine;
                                 buildingFound = true;
@@ -51,7 +50,6 @@ void building::buildStructure(std::string building)
                             typeFound=false;
                             finishedWithType=true;
                             constructionLine.clear();
-                        }
                     }
                     if (constructionBool==true and _c!=']'){
 

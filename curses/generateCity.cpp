@@ -4,7 +4,20 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include <chrono>
+#include <random>
 
+void building::makeHouse(vector<vector<tile*> > tileMap&)
+{
+    divideBox(2,tileMap&,"HOUSE")
+    for(int a=left+1; a<=right-1; a++)
+    {
+        for(int b=bottom; b<=bottom-1; b++)
+        {
+            if(a=)
+        }
+    }
+}
 
 void city:: setTileMap()
 {
@@ -68,25 +81,24 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int
 }
 
 
-void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap)
+void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap, std::string type)
 {
-
-
-if(level==3)
-{
-  srand(time(NULL));
-}
+unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine generator (seed);
+std::uniform_int_distribution<int> halfChance(0,1);
 
         building build_ing;
-        build_ing.buildStructure("HOUSE1");
+        build_ing.buildStructure("[HOUSE1]");
 
 
   if(level!=0)
   {
 
-    if(rand()%2==0 and right-left>level+2) //if line vertical and there is space to draw line
+    if(halfChance(generator)==0 and right-left>level+2) //if line vertical and there is space to draw line
     {
-        int splitPoint=left+level/2+1+rand()%(right-left-level-2);
+        std::uniform_int_distribution<int> findSplitPoint(left+level/2+1, right-level/2-1);
+        int splitPoint=findSplitPoint(generator);
+
         coordinate lowPoint(splitPoint, bottom);
         coordinate highPoint(splitPoint, top);
 
@@ -109,8 +121,8 @@ if(level==3)
         subBox2->top=top;
         subBox2->bottom=bottom;
 
-        subBox1->divideBox(level-1, tileMap);
-        subBox2->divideBox(level-1, tileMap);
+        subBox1->divideBox(level-1, tileMap, type);
+        subBox2->divideBox(level-1, tileMap, type);
         delete subBox1;
         delete subBox2;
 
@@ -140,8 +152,8 @@ if(level==3)
         subBox2->right=right;
         subBox2->top=splitPoint;
         subBox2->bottom=bottom;  //forms 2 new boxes
-        subBox1->divideBox(level-1, tileMap);
-        subBox2->divideBox(level-1, tileMap);
+        subBox1->divideBox(level-1, tileMap, type);
+        subBox2->divideBox(level-1, tileMap, type);
         delete subBox1;
         delete subBox2;
 
@@ -149,14 +161,15 @@ if(level==3)
 
   }
 
-  else if(right-left>13 and top-bottom>13)
+ /* else if(right-left>13 and top-bottom>13)
 
 
     {
       for(int a=0;a<10; a++)
       {
           for(int b=0; b<10; b++)
-          { tile* temp_tile=build_ing.structure[a][b];
+          {  tile* temp_tile=
+          build_ing.structure[0][0];
              tileMap[bottom+2+a][left+2+b]=temp_tile;
           }
 
@@ -164,6 +177,7 @@ if(level==3)
 
     }
 
+*/
 
 
 
@@ -172,10 +186,9 @@ if(level==3)
   void city::generateCity()
 {
     srand(time(NULL));
-        building build_ing;
-        build_ing.buildStructure("HOUSE1");
+
 setTileMap();
-divideBox(4,tileMap); //recursive box dividing and road drawing
+divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
 }
 
 

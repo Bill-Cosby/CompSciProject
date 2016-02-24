@@ -58,12 +58,10 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight,totalAttack(),actorAttacking->totalWeight);
 
     if (bodyPartToHit != NULL){
-        std::cout << bodyPartToHit->name << std::endl;
         bodyPartToHit->damage-=highestDamage;
         if (bodyPartToHit->damage <= 0){
             if (bodyPartToHit->ID == "00"){
                 localItems.push_back(new corpse(actorAttacking->name,actorAttacking->rootPart,actorAttacking->sprite,actorAttacking->col(),actorAttacking->row()));
-            std::cout << "I've killed him!";
                 return;
             }
             else{
@@ -73,7 +71,6 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
         }
 
     }
-    //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
 bool actor::decideIfCanAttack(std::vector<actor*> actors)
@@ -159,7 +156,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
 
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    std::cout << findDistance(goal) << std::endl;
     if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
         _map[goal.y][goal.x]->interactWithDoor(true);
         return true;
