@@ -92,12 +92,11 @@ public:
     void equip(bool equipping){}
     std::string itemDescription(){}
     limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached, int _value, std::string _type);
+
     void draw(sf::RenderWindow &window){
+        window.draw(sprite);
         for (bodyPart * _b : partsAttached){
-            if (_b->name == "torso"){
-                _b->draw(window,sprite.getPosition().x,sprite.getPosition().y);
-                return;
-            }
+            _b->draw(window,sprite.getPosition().x,sprite.getPosition().y);
         }
     }
 };

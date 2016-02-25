@@ -89,7 +89,7 @@ actors.push_back(new monster("human"));
 
     //char ch;
 
-    actors[0]->pos(18,18);
+    actors[0]->pos(1,1);
     actors[1]->pos(2,2);
 
 
@@ -209,6 +209,7 @@ window.setView(view);
 
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList);
     }
+
 
         for (int i=0;i<actors.size();i++){
             delete actors[i];

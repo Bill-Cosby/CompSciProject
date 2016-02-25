@@ -140,7 +140,8 @@ public:
     bool openDoor(std::vector<std::vector<tile*> > &_map);
     coordinate findTile(std::vector<std::vector<tile*> > &_map, bool findDoor, bool findHiddenTile);
     bool findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems);
-    bool decideIfCanAttack(std::vector<actor*> actors);
+    bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<tile*> > &_map);
+    bool canSee(std::vector<std::vector<tile*> >, coordinate);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
@@ -177,7 +178,6 @@ public:
     coordinate memory;
     monster(std::string);
     bool musttouch;
-    bool canSee(std::vector<std::vector<tile*> >, coordinate);
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<tile*> > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
     void moveOnPath();

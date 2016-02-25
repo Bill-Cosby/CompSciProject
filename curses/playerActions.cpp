@@ -171,7 +171,6 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
 
 
     for (bodyPart* _b : bodyPartList){
-        std::cout << _b->damage << std::endl;
         if (_b->armor !=NULL)temp = (_b->damage) - totalAttack()/_b->armor->defense;
         else temp = (_b->damage - totalAttack());
         if (temp < 0){
@@ -182,7 +181,6 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
         float playerAbility = rand()%dexterity;
         probabilityValues.push_back((int)(((temp/actorAttacking->totalWeight())+playerAbility/dexterity)*100));
     }
-    std::cout << "------------------------------------\n";
     std::stringstream stream;
     sf::Event event;
     while (true){
@@ -233,11 +231,9 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                                 return;
                             }
                             else{
-                                std::cout << "Here\n";
                                 localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts,0,"limb"));
                             }
-                            bodyPartList[buttonSelected] = NULL;
-                            actorAttacking->rootPart->clearDeadParts();
+                            actorAttacking->rootPart->clearDeadParts(bodyPartList[buttonSelected]);
                         }
                     }
                     else{

@@ -77,20 +77,31 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 
-bool actor::decideIfCanAttack(std::vector<actor*> actors)
+bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<tile*> > &_map)
 {
     int totalDanger = 0;
     float dangerRatio;
+    bool foundEnemy = false;
+
     for (actor* _a : actors){
-        if (_a == this)continue;
+
+        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+
+        std::cout << _a->col() << "," << _a->row() << std::endl;
+
         totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
         dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
         if (dangerRatio < 1){
             actorAttacking = _a;
+            foundEnemy = true;
         }
+    }
+    if (foundEnemy == false){
+        actorAttacking = NULL;
     }
     if (actorAttacking != NULL){
         goal = coordinate(actorAttacking->col(),actorAttacking->row());
+        memory = goal;
         return true;
     }
     return false;
@@ -132,7 +143,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             for (coordinate* _o : openSet){
                 delete openSet[i];
             }
-            if (!(canSee(_map,memory,*openSet[i]))){
+            if (!(canSee(_map,*openSet[i]))){
                 return temp;
             }
         }
@@ -191,7 +202,7 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
     int positionInVector = 0;
     for (item* _i : localItems){
         if (findDistance(coordinate(_i->x,_i->y)) < 30){
-            if (canSee(_map,coordinate(_i->x,_i->y),coordinate(x,y))){
+            if (canSee(_map,coordinate(_i->x,_i->y))){
 
                 if (_i->attack+attack > totalAttack() or _i->defense+defense > defense){
                     goal = coordinate(_i->x,_i->y);

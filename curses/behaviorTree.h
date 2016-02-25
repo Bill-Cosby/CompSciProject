@@ -111,7 +111,7 @@ public:
         }
 
         if (testingCharacter->path.size()>0)std::cout << testingCharacter->path[0].x << "," << testingCharacter->path[0].y << ":" << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
-
+        std::cout << testingCharacter->memory.x << ", " << testingCharacter->memory.y << std::endl;
         if (testingCharacter->path.size() > 0 and testingCharacter->memory==testingCharacter->goal){
             std::cout << "Continuing on current path...\n";
             return false;
@@ -135,7 +135,10 @@ public:
     {
         std::cout<<testingCharacter->goal.x<<" "<<testingCharacter->goal.y<<std::endl;
         std::cout << "Do I have a path?\n";
-        if (testingCharacter->path.size()>0){
+        if (testingCharacter->path.size()>0 and testingCharacter->path.size()<10){
+            for (coordinate _c : testingCharacter->path){
+                std::cout << _c.x << "," << _c.y << std::endl;
+            }
             std::cout << testingCharacter->path.size() << std::endl;
             std::cout << "Moving On Path...\n";
             testingCharacter->moveOnPath();
@@ -175,6 +178,7 @@ public:
         std::cout << "Opening the door...\n";
         if (testingCharacter->openDoor(_map)){
             std::cout << "Opened the door...\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
         std::cout << "Failed to open door...\n";
@@ -205,6 +209,7 @@ public:
         std::cout << "Trying to pick up items...\n";
         if (testingCharacter->equipItem(localItems)){
             std::cout << "Equipped Item!\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
         return false;
@@ -217,7 +222,7 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         std::cout << "Is that guy too dangerous for me?\n";
-        if (testingCharacter->decideIfCanAttack(actors)){
+        if (testingCharacter->decideIfCanAttack(actors, _map)){
             std::cout << "I think I can take them\n";
             return true;
         }
@@ -233,6 +238,7 @@ public:
     {
         if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
             std::cout << "Take that!\n";
+            testingCharacter->memory = coordinate(-1,-1);
             testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
         }
     }

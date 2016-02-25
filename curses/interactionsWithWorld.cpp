@@ -23,7 +23,8 @@ bool actor::isItemBetter()
     }
     return false;
 }
-bool monster::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
+
+bool actor::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 {
     int x1=col();
     int y1=row();
