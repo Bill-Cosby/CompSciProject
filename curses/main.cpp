@@ -49,24 +49,26 @@ int main()
     announcements announcementList;
 
     Selector* decisionMaker = new Selector;
-    //Defining the tree
+    Selector* actionPerformer = new Selector;
 
     Sequence * doorSequence = new Sequence;
             doorSequence->addChild(new findDoorNode);
-            doorSequence->addChild(new openDoorNode);
 
     Sequence * itemSequence = new Sequence;
             itemSequence->addChild(new lookForItemNode);
             itemSequence->addChild(new isItemBetterNode);
-            itemSequence->addChild(new pickUpItemNode);
 
     Sequence * attackSequence = new Sequence;
             attackSequence->addChild(new decideIfCanAttackNode);
-            attackSequence->addChild(new attackNode);
 
     Selector * movement = new Selector;
             movement->addChild(new moveOnPathNode);
             movement->addChild(new findPathNode);
+
+        actionPerformer->addChild(new attackNode);
+        actionPerformer->addChild(new pickUpItemNode);
+        actionPerformer->addChild(new openDoorNode);
+        actionPerformer->addChild(movement);
 
 
     decisionMaker->addChild(attackSequence);
@@ -74,7 +76,7 @@ int main()
     decisionMaker->addChild(doorSequence);
 
     root->addChild(decisionMaker);
-    root->addChild(movement);
+    root->addChild(actionPerformer);
 
 
     //window.setFramerateLimit(60);
@@ -83,14 +85,13 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
-actors.push_back(new monster("human"));
+//actors.push_back(new monster("human"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(2,2);
 
 
 
@@ -150,7 +151,8 @@ actors.push_back(new monster("human"));
 
 
     //DUNGEON SETUP CODE
-    //_map.resize(map_t.dungeon_grid.size());
+//    dungeon map_t;
+//    _map.resize(map_t.dungeon_grid.size());
 //    _map.resize(map_t.dungeon_grid.size());
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
@@ -159,18 +161,14 @@ actors.push_back(new monster("human"));
 //        {
 //            if (map_t.dungeon_grid[y][x]==1)
 //            {
-//                _map[y][x]= new tile(' ',0,wood);
-//actors[0]->pos(y,x);
+//                _map[y][x]= new tile('0',0,1);
+//                actors[0]->pos(y,x);
 //            }
 //            else
 //            {
-//                _map[y][x]= new tile('#',-1, stone);
+//                _map[y][x]= new tile('1',-1,1);
 //            }
 //        }
-//    }
-
-//    for (int i=0;i<monsters.size();i++){
-//        actors.push_back(&monsters[i]);
 //    }
 
 

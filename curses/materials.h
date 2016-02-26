@@ -5,6 +5,7 @@
 
 #define NUMBER_OF_COLORS 13
 
+#include "RSL.h"
 #include <SFML/Graphics.hpp>
 
 const sf::Color  ironColor  = sf::Color(sf::Color(197,103,41));
@@ -18,6 +19,11 @@ const sf::Color brownSkinColor = sf::Color(sf::Color(109,70,0));
 const sf::Color  tanSkinColor  = sf::Color(sf::Color(173,109,0));
 const sf::Color greenSkinColor = sf::Color(sf::Color(51,109,0));
 const sf::Color blackSkinColor = sf::Color(sf::Color(0,0,0));
+
+const sf::Texture wall = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
+const sf::Texture floor = RSL::getTextureData("data/textures/tiles.raw","floor.texture");
+const sf::Texture openDoor = RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
+const sf::Texture closedDoor = RSL::getTextureData("data/textures/tiles.raw","door.texture");
 
 class material
 {

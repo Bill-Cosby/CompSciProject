@@ -223,7 +223,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
                     if (rand()%100<probabilityValues[buttonSelected]){
-                        announcementList.addAnnouncement("Player hit " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        announcementList.addAnnouncement("You hit " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
                         bodyPartList[buttonSelected]->damage-=totalAttack();
                         if (bodyPartList[buttonSelected]->damage<=0){
                             if (bodyPartList[buttonSelected]->ID == "00"){
@@ -238,7 +238,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                     }
                     else{
 
-                        announcementList.addAnnouncement("Player missed " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        announcementList.addAnnouncement("You missed " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
                         actorAttacking->dodgeAttack(this,_map);
                     }
                     return;

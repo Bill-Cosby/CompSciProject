@@ -59,9 +59,11 @@ class Selector : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        std::cout << "My goal is at " << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
         for (Node* child : getChildren()){
             std::cout << "selecting child...\n";
             if (child->run(testingCharacter, _map, localItems, actors, announcementList)){
+                std::cout << "====THE TREE SHOULD STOP HERE====\n";
                 return true;
             }
         }
@@ -110,8 +112,6 @@ public:
             testingCharacter->noGo.push_back(coordinate(_a->col(),_a->row()));
         }
 
-        if (testingCharacter->path.size()>0)std::cout << testingCharacter->path[0].x << "," << testingCharacter->path[0].y << ":" << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
-        std::cout << testingCharacter->memory.x << ", " << testingCharacter->memory.y << std::endl;
         if (testingCharacter->path.size() > 0 and testingCharacter->memory==testingCharacter->goal){
             std::cout << "Continuing on current path...\n";
             return false;
@@ -123,8 +123,10 @@ public:
             testingCharacter->memory = testingCharacter->goal;
             return true;
         }
-        std::cout << "Failed to find a path...\n";
-        return false;
+        else{
+            std::cout << "Failed to find a path...\n";
+            return false;
+        }
     }
 };
 
@@ -135,17 +137,16 @@ public:
     {
         std::cout<<testingCharacter->goal.x<<" "<<testingCharacter->goal.y<<std::endl;
         std::cout << "Do I have a path?\n";
-        if (testingCharacter->path.size()>0 and testingCharacter->path.size()<10){
-            for (coordinate _c : testingCharacter->path){
-                std::cout << _c.x << "," << _c.y << std::endl;
-            }
+        if (testingCharacter->path.size()>0){
             std::cout << testingCharacter->path.size() << std::endl;
             std::cout << "Moving On Path...\n";
             testingCharacter->moveOnPath();
             return true;
         }
-        std::cout << "It seems I don't\n";
-        return false;
+        else{
+            std::cout << "It seems I don't\n";
+            return false;
+        }
     }
 };
 
@@ -165,8 +166,10 @@ public:
 
             return true;
         }
-        std::cout << "Failed to find a door...\n";
-        return false;
+        else{
+            std::cout << "Failed to find a door...\n";
+            return false;
+        }
     }
 };
 
@@ -181,8 +184,10 @@ public:
             testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
-        std::cout << "Failed to open door...\n";
-        return false;
+        else{
+            std::cout << "Failed to open door...\n";
+            return false;
+        }
     }
 };
 
@@ -196,8 +201,10 @@ public:
             std::cout << "Found item(s)\n";
             return true;
         }
-        std::cout << "Didn't see any items\n";
-        return false;
+        else{
+            std::cout << "Didn't see any items\n";
+            return false;
+        }
     }
 };
 
@@ -212,7 +219,9 @@ public:
             testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 };
 
@@ -226,8 +235,10 @@ public:
             std::cout << "I think I can take them\n";
             return true;
         }
-        std::cout << "No I don't think so...\n";
-        return false;
+        else{
+            std::cout << "No I don't think so...\n";
+            return false;
+        }
     }
 };
 
@@ -236,11 +247,15 @@ class attackNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
-            std::cout << "Take that!\n";
-            testingCharacter->memory = coordinate(-1,-1);
-            testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
+        if (testingCharacter->actorAttacking != NULL){
+            if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
+                std::cout << "Take that!\n";
+                testingCharacter->memory = coordinate(-1,-1);
+                testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
+                return true;
+            }
         }
+        return false;
     }
 };
 

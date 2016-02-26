@@ -57,8 +57,11 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight(),totalAttack(),actorAttacking->totalWeight());
 
     if (bodyPartToHit != NULL){
-        if (rand()%100<((((rand()%bodyPartToHit->weight)/actorAttacking->totalWeight())*100))){
+        int temp = rand()%bodyPartToHit->weight;
+        float playerAbility = rand()%dexterity;
+        if (rand()%100<(((int)(((temp/actorAttacking->totalWeight())+playerAbility/dexterity)*100)))){
             bodyPartToHit->damage-=highestDamage;
+            announcementList.addAnnouncement(name + " hit " + actorAttacking->name + "'s " + bodyPartToHit->name);
             if (bodyPartToHit->damage <= 0){
                 if (bodyPartToHit->ID == "00"){
                     actorAttacking->makeCorpse(localItems);
@@ -71,7 +74,10 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
                 delete bodyPartToHit;
             }
         }
-        else actorAttacking->dodgeAttack(this,_map);
+        else{
+            announcementList.addAnnouncement(name + " missed " + actorAttacking->name + "'s " + bodyPartToHit->name);
+            actorAttacking->dodgeAttack(this,_map);
+        }
 
     }
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
