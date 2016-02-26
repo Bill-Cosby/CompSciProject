@@ -13,7 +13,6 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 #include <random>
-#include "materials.h"
 #include "menu.h"
 
 
@@ -25,7 +24,6 @@ namespace RSL
     int getIntData(std::string fileName, std::string dataToRecieve);
 
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
-    std::vector<material> unloadMaterials(std::string fileName);
 
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
 

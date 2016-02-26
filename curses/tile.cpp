@@ -13,45 +13,42 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     hCost=getDistance(position,goal);
     gCost=cSF;
     isDoor=false;
-    sprite.setColor(woodColor);
 }
 
-door::door(bool _o, short __material)
+void tile::drawTile(sf::RenderWindow &window)
+{
+    sf::Sprite sprite;
+    sprite.setPosition(position.x*16,position.y*16);
+    if (defaultchar == '0')sprite.setTexture(floortex);
+    if (defaultchar == '1')sprite.setTexture(wall);
+
+    sprite.setColor(woodColor);
+
+    window.draw(sprite);
+}
+
+door::door(bool _o, char dc, int mv, short mat) : tile(dc, mv, mat)
 {
     open=_o;
-    texture = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
-    openSymbol=RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
-    closedSymbol=RSL::getTextureData("data/textures/tiles.raw","door.texture");
     isDoor=true;
-    _material=__material;
-    sprite.setColor(woodColor);
 }
 
 void door::drawTile(sf::RenderWindow &window)
 {
+    sf::Sprite sprite;
     if (isOpen()){
-        sprite.setTexture(texture);
-        window.draw(sprite);
-        sprite.setTexture(openSymbol);
+        sprite.setTexture(openDoor);
     }
     else{
-        sprite.setTexture(closedSymbol);
+        sprite.setTexture(closedDoor);
     }
+    sprite.setPosition(position.x,position.y);
     window.draw(sprite);
 }
 
 tile::tile(char dc, int mv, short mat)
 {
-    if (dc == '1'){
-        texture = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
-    }
-    else
-    {
-        texture = RSL::getTextureData("data/textures/tiles.raw","floor.texture");
-    }
     movementCost = mv;
-    sprite.setTexture(texture);
-    sprite.setColor(woodColor);
 }
 
 bool door::interactWithDoor(bool opening)

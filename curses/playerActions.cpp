@@ -171,7 +171,6 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
 
 
     for (bodyPart* _b : bodyPartList){
-        std::cout << _b->damage << std::endl;
         if (_b->armor !=NULL)temp = (_b->damage) - totalAttack()/_b->armor->defense;
         else temp = (_b->damage - totalAttack());
         if (temp < 0){
@@ -182,7 +181,6 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
         float playerAbility = rand()%dexterity;
         probabilityValues.push_back((int)(((temp/actorAttacking->totalWeight())+playerAbility/dexterity)*100));
     }
-    std::cout << "------------------------------------\n";
     std::stringstream stream;
     sf::Event event;
     while (true){
@@ -225,7 +223,7 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8))buttonSelected--;
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){
                     if (rand()%100<probabilityValues[buttonSelected]){
-                        announcementList.addAnnouncement("Player hit " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        announcementList.addAnnouncement("You hit " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
                         bodyPartList[buttonSelected]->damage-=totalAttack();
                         if (bodyPartList[buttonSelected]->damage<=0){
                             if (bodyPartList[buttonSelected]->ID == "00"){
@@ -233,16 +231,14 @@ void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& 
                                 return;
                             }
                             else{
-                                std::cout << "Here\n";
                                 localItems.push_back(new limb(bodyPartList[buttonSelected]->name,bodyPartList[buttonSelected]->armor,bodyPartList[buttonSelected]->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartList[buttonSelected]->sprite, bodyPartList[buttonSelected]->attachedParts,0,"limb"));
                             }
-                            bodyPartList[buttonSelected] = NULL;
-                            actorAttacking->rootPart->clearDeadParts();
+                            actorAttacking->rootPart->clearDeadParts(bodyPartList[buttonSelected]);
                         }
                     }
                     else{
 
-                        announcementList.addAnnouncement("Player missed " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
+                        announcementList.addAnnouncement("You missed " + actorAttacking->name + "'s " + bodyPartList[buttonSelected]->name);
                         actorAttacking->dodgeAttack(this,_map);
                     }
                     return;

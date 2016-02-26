@@ -25,6 +25,7 @@ player::player(std::string speciesToLoad)
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp,material(skinColor).color);
+    name = "player";
 
 }
 
@@ -61,4 +62,5 @@ monster::monster(std::string speciesToLoad)
     memory=coordinate(-1,-1);
     post=coordinate(-1,-1);
     path.resize(0);
+    name = "Monster";
 }

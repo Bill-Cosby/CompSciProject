@@ -57,8 +57,11 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
     actorAttacking->rootPart->findEasiestHit(bodyPartToHit,highestDamage,totalWeight(),totalAttack(),actorAttacking->totalWeight());
 
     if (bodyPartToHit != NULL){
-        if (rand()%100<((((rand()%bodyPartToHit->weight)/actorAttacking->totalWeight())*100))){
+        int temp = rand()%bodyPartToHit->weight;
+        float playerAbility = rand()%dexterity;
+        if (rand()%100<(((int)(((temp/actorAttacking->totalWeight())+playerAbility/dexterity)*100)))){
             bodyPartToHit->damage-=highestDamage;
+            announcementList.addAnnouncement(name + " hit " + actorAttacking->name + "'s " + bodyPartToHit->name);
             if (bodyPartToHit->damage <= 0){
                 if (bodyPartToHit->ID == "00"){
                     actorAttacking->makeCorpse(localItems);
@@ -71,12 +74,14 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
                 delete bodyPartToHit;
             }
         }
-        else actorAttacking->dodgeAttack(this,_map);
+        else{
+            announcementList.addAnnouncement(name + " missed " + actorAttacking->name + "'s " + bodyPartToHit->name);
+            actorAttacking->dodgeAttack(this,_map);
+        }
 
     }
     //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
-
 bool actor::isInDanger(std::vector<actor*> actors)
 {
     float threat;
@@ -95,21 +100,31 @@ bool actor::isInDanger(std::vector<actor*> actors)
     }
     return false;
 }
-
-bool actor::decideIfCanAttack(std::vector<actor*> actors)
+bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<tile*> > &_map)
 {
     int totalDanger = 0;
     float dangerRatio;
+    bool foundEnemy = false;
+
     for (actor* _a : actors){
-        if (_a == this)continue;
+
+        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+
+        std::cout << _a->col() << "," << _a->row() << std::endl;
+
         totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
         dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
         if (dangerRatio < 1){
             actorAttacking = _a;
+            foundEnemy = true;
         }
+    }
+    if (foundEnemy == false){
+        actorAttacking = NULL;
     }
     if (actorAttacking != NULL){
         goal = coordinate(actorAttacking->col(),actorAttacking->row());
+        memory = goal;
         return true;
     }
     return false;
@@ -151,7 +166,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
             for (coordinate* _o : openSet){
                 delete openSet[i];
             }
-            if (!(canSee(_map,memory,*openSet[i]))){
+            if (!(canSee(_map,*openSet[i]))){
                 return temp;
             }
         }
@@ -210,7 +225,7 @@ bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> 
     int positionInVector = 0;
     for (item* _i : localItems){
         if (findDistance(coordinate(_i->x,_i->y)) < 30){
-            if (canSee(_map,coordinate(_i->x,_i->y),coordinate(x,y))){
+            if (canSee(_map,coordinate(_i->x,_i->y))){
 
                 if (_i->attack+attack > totalAttack() or _i->defense+defense > defense){
                     goal = coordinate(_i->x,_i->y);

@@ -45,9 +45,9 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
     currentNode.gCost=0;
 
     openSet.push(currentNode);
-    int timesthroughLoop=0;
     bool dontStep = false;
     while (openSet.size()!=0){
+
 
         if (floor(sqrt(pow((currentNode.position.x - goal.x),2) + pow((currentNode.position.y - goal.y),2)) / .1) * .1 <= 1.4){
             std::vector<coordinate> path;
@@ -95,14 +95,12 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
 
             if (!vectorContains(closedSet, *_n)){
 
-
                 int newCostToMove = currentNode.gCost+getDistance(currentNode.position,_n->position);
                 if (newCostToMove<_n->gCost){
                     _n->gCost=newCostToMove;
                     _n->parent=currentNode.position;
                 }
-                if (heapStorage.size()==0 or !vectorContains(heapStorage,*_n))
-                {
+                if (heapStorage.size()==0 or !vectorContains(heapStorage,*_n)){
                     openSet.push(*_n);
                     heapStorage.push_back(*_n);
                 }
@@ -116,7 +114,10 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
         currentNode.position.x=openSet.top().position.x;
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
-        timesthroughLoop++;
+
+        if (currentNode.position.x > 20 or currentNode.position.y > 20){
+            std::cout << "WHYYYYY";
+        }
 
         if (canSee(_map,currentNode.position,goal)){
             std::vector<coordinate> path;

@@ -18,7 +18,6 @@ void city:: setTileMap()
         {
             tileMap[a][b]=new tile('0',10,10);
             tileMap[a][b]->position = coordinate(b,a);
-            tileMap[a][b]->sprite.setPosition(b*16,a*16);
             tileMap[a][b]->isDoor = false;
         }
     }
