@@ -15,7 +15,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     isDoor=false;
 }
 
-void tile::drawTile(sf::RenderWindow &window)
+void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     sf::Sprite sprite;
     sprite.setPosition(position.x*16,position.y*16);
@@ -33,7 +33,7 @@ door::door(bool _o, char dc, int mv, short mat) : tile(dc, mv, mat)
     isDoor=true;
 }
 
-void door::drawTile(sf::RenderWindow &window)
+void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     sf::Sprite sprite;
     if (isOpen()){
@@ -44,7 +44,7 @@ void door::drawTile(sf::RenderWindow &window)
     }
     sprite.setColor(woodColor);
     sprite.setPosition(position.x*16,position.y*16);
-    window.draw(sprite);
+    window.draw(sprite, renderState);
 }
 
 tile::tile(char dc, int mv, short mat)

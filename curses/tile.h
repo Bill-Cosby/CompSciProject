@@ -29,7 +29,7 @@ public:
     short giveMaterial(){return _material;}
     void find_material();
 
-    virtual void drawTile(sf::RenderWindow &window);
+    virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     virtual bool interactWithDoor(bool opening){}
     virtual bool isOpen(){}
     virtual void openContainer(){}
@@ -42,7 +42,7 @@ public:
     char openSymbol;
     char closedSymbol;
     door(bool _o, char dc, int mv, short mat);
-    void drawTile(sf::RenderWindow &window);
+    void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
 };

@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList)
+void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
 {
 
 
@@ -13,7 +13,7 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 
     window.clear();
 
-    if (actors[0]->controlled == true)do_fov(_map,localItems,actors,actors[0]->col(),actors[0]->row(),15,window);
+    if (actors[0]->controlled == true)do_fov(_map,localItems,actors,actors[0]->col(),actors[0]->row(),15,window, renderState);
 
 
 //    for (int y=0;y<25;y++)

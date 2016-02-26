@@ -2,13 +2,13 @@
 
 
 void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
-                float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window)
+                float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     if (start_slope < end_slope)return;
 
     float next_start_slope = start_slope;
 
-    _map[y][x]->drawTile(window);
+    _map[y][x]->drawTile(window, renderState);
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
         int dy = -i;
@@ -35,7 +35,7 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
             else{
 
                 if ((unsigned int)(dx * dx + dy * dy) < radius2){
-                    _map[ay][ax]->drawTile(window);
+                    _map[ay][ax]->drawTile(window, renderState);
                     for (item* _i : localItems){
                         if (_i->x == ax and _i->y == ay){
                             _i->draw(window);
@@ -59,7 +59,7 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
                     }
                 }else if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isDoor and _map[ay][ax]->isOpen() == false)){
                     blocked = true;
-                    cast_light(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window);
+                    cast_light(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);
                     next_start_slope = r_slope;
                 }
             }
@@ -69,9 +69,9 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
     actors[0]->drawActor(window);
 }
 
-void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window)
+void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     for (unsigned int i = 0; i < 8; i++){
-        cast_light(_map,localItems,actors,x,y,radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window);
+        cast_light(_map,localItems,actors,x,y,radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window, renderState);
     }
 }

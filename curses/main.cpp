@@ -39,6 +39,10 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
+    sf::Shader lightingShader;
+    sf::RenderStates renderState;
+
+
     int counter = 0;
 
     gameWorld gameworld(window);
@@ -107,24 +111,24 @@ actors.push_back(new player("human"));
 
 
     std::vector<std::vector<tile* > > _map;
-//    _map.resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (testarena[y][x]=='2'){
-//                _map[y][x]=new door(0,'2',0,0);
-//            }
-//            else if (testarena[y][x]=='1'){
-//                _map[y][x]=new tile('0',-1,0);
-//                _map[y][x]->isDoor=false;
-//            }
-//            else{
-//                _map[y][x]= new tile('1',0,0);
-//                _map[y][x]->isDoor=false;
-//            }
-//            _map[y][x]->position=coordinate(x,y);
-//        }
-//    }
+    _map.resize(20);
+    for (int y=0;y<20;y++){
+        _map[y].resize(20);
+        for (int x=0;x<20;x++){
+            if (testarena[y][x]=='2'){
+                _map[y][x]=new door(0,'2',0,0);
+            }
+            else if (testarena[y][x]=='1'){
+                _map[y][x]=new tile('0',-1,0);
+                _map[y][x]->isDoor=false;
+            }
+            else{
+                _map[y][x]= new tile('1',0,0);
+                _map[y][x]->isDoor=false;
+            }
+            _map[y][x]->position=coordinate(x,y);
+        }
+    }
 
 
 
@@ -150,31 +154,39 @@ actors.push_back(new player("human"));
 
 
     //DUNGEON SETUP CODE
-    dungeon map_t;
-    _map.resize(map_t.dungeon_grid.size());
-    _map.resize(map_t.dungeon_grid.size());
-    for (int y=0;y<map_t.dungeon_grid.size();y++)
-    {
-        _map[y].resize(map_t.dungeon_grid[0].size());
-        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-        {
-            if (map_t.dungeon_grid[y][x]==1)
-            {
-                _map[y][x]= new tile('1',0,0);
-                actors[0]->pos(y,x);
-            }
-            else
-            {
-                _map[y][x]= new tile('0',-1,0);
-            }
-            _map[y][x]->position = coordinate(x,y);
-        }
-    }
+//    dungeon map_t;
+//    _map.resize(map_t.dungeon_grid.size());
+//    _map.resize(map_t.dungeon_grid.size());
+//    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//    {
+//        _map[y].resize(map_t.dungeon_grid[0].size());
+//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//        {
+//            if (map_t.dungeon_grid[y][x]==1)
+//            {
+//                _map[y][x]= new tile('1',0,0);
+//                actors[0]->pos(y,x);
+//            }
+//            else
+//            {
+//                _map[y][x]= new tile('0',-1,0);
+//            }
+//            _map[y][x]->position = coordinate(x,y);
+//        }
+//    }
 
 
 bool keyrelease = true;
     while (window.isOpen())
-    {
+    {    lightingShader.loadFromFile("lightingShader.frag", sf::Shader::Type::Fragment);
+    lightingShader.setParameter("exposure",0.25f);
+    lightingShader.setParameter("decay", 0.97f);
+    lightingShader.setParameter("density", 0.97f);
+    lightingShader.setParameter("weight", 0.5f);
+    lightingShader.setParameter("lightPositionOnScreen", sf::Vector2f(0.5f, 0.5f));
+    lightingShader.setParameter("myTexture", sf::Shader::CurrentTexture);
+    renderState.shader = &lightingShader;
+
         if (actors[0]->col()*16 - view.getSize().x/2 > 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 > 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 window.setView(view);
@@ -202,7 +214,7 @@ window.setView(view);
             }
         }
 
-        gameworld.drawGameworld(_map, actors, localItems,window,announcementList);
+        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
 

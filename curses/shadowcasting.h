@@ -15,8 +15,8 @@ static int multipliers[4][8] = {
 };
 
 void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*>& actors,  unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
-                float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window);
+                float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState);
 
-void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window);
+void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState);
 
 #endif // SHADOWCASTING_H_INCLUDED
