@@ -42,13 +42,15 @@ void door::drawTile(sf::RenderWindow &window)
     else{
         sprite.setTexture(closedDoor);
     }
-    sprite.setPosition(position.x,position.y);
+    sprite.setColor(woodColor);
+    sprite.setPosition(position.x*16,position.y*16);
     window.draw(sprite);
 }
 
 tile::tile(char dc, int mv, short mat)
 {
     movementCost = mv;
+    defaultchar = dc;
 }
 
 bool door::interactWithDoor(bool opening)
