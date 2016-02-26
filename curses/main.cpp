@@ -107,24 +107,24 @@ actors.push_back(new player("human"));
 
 
     std::vector<std::vector<tile* > > _map;
-    _map.resize(20);
-    for (int y=0;y<20;y++){
-        _map[y].resize(20);
-        for (int x=0;x<20;x++){
-            if (testarena[y][x]=='2'){
-                _map[y][x]=new door(0,'2',0,0);
-            }
-            else if (testarena[y][x]=='1'){
-                _map[y][x]=new tile('0',-1,0);
-                _map[y][x]->isDoor=false;
-            }
-            else{
-                _map[y][x]= new tile('1',0,0);
-                _map[y][x]->isDoor=false;
-            }
-            _map[y][x]->position=coordinate(x,y);
-        }
-    }
+//    _map.resize(20);
+//    for (int y=0;y<20;y++){
+//        _map[y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (testarena[y][x]=='2'){
+//                _map[y][x]=new door(0,'2',0,0);
+//            }
+//            else if (testarena[y][x]=='1'){
+//                _map[y][x]=new tile('0',-1,0);
+//                _map[y][x]->isDoor=false;
+//            }
+//            else{
+//                _map[y][x]= new tile('1',0,0);
+//                _map[y][x]->isDoor=false;
+//            }
+//            _map[y][x]->position=coordinate(x,y);
+//        }
+//    }
 
 
 
@@ -150,28 +150,26 @@ actors.push_back(new player("human"));
 
 
     //DUNGEON SETUP CODE
-//    dungeon map_t;
-//    _map.resize(map_t.dungeon_grid.size());
-//    _map.resize(map_t.dungeon_grid.size());
-//    for (int y=0;y<map_t.dungeon_grid.size();y++)
-//    {
-//        _map[y].resize(map_t.dungeon_grid[0].size());
-//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-//        {
-//            if (map_t.dungeon_grid[y][x]==1)
-//            {
-//                _map[y][x]= new tile('0',0,1);
-//                actors[0]->pos(y,x);
-//            }
-//            else
-//            {
-//                _map[y][x]= new tile('1',-1,1);
-//            }
-//        }
-//    }
-
-
-myCity.generateCity();
+    dungeon map_t;
+    _map.resize(map_t.dungeon_grid.size());
+    _map.resize(map_t.dungeon_grid.size());
+    for (int y=0;y<map_t.dungeon_grid.size();y++)
+    {
+        _map[y].resize(map_t.dungeon_grid[0].size());
+        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+        {
+            if (map_t.dungeon_grid[y][x]==1)
+            {
+                _map[y][x]= new tile('1',0,0);
+                actors[0]->pos(y,x);
+            }
+            else
+            {
+                _map[y][x]= new tile('0',-1,0);
+            }
+            _map[y][x]->position = coordinate(x,y);
+        }
+    }
 
 
 bool keyrelease = true;

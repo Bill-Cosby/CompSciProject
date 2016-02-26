@@ -31,6 +31,7 @@ player::player(std::string speciesToLoad)
 
 monster::monster(std::string speciesToLoad)
 {
+    nodeOn = NULL;
     coolDown=0;
     numberOfLegs=0;
     accuracy=100;

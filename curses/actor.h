@@ -11,6 +11,8 @@
 #include <random>
 #include <string>
 
+class Node;
+
 class announcements
 {
     std::vector<std::string> announcementList;
@@ -31,6 +33,7 @@ public:
     bodyPart * rootPart;
     coordinate memory;
     coordinate goal;
+    Node* nodeOn;
 
     item* itemToPickUp;
 
