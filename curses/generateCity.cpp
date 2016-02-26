@@ -9,14 +9,51 @@
 
 void building::makeHouse(vector<vector<tile*> > tileMap&)
 {
+
     divideBox(2,tileMap&,"HOUSE")
-    for(int a=left+1; a<=right-1; a++)
+    for(int a=left; a<=R; a++)
     {
-        for(int b=bottom; b<=bottom-1; b++)
+        for(int b=low; b<=top; b++)
         {
-            if(a=)
+            if(a==left or a==right or b==bottom or b==top)
+            {
+                tileMap[b][a]=new tile('1',20,wood);
+            }
+            dividebox(1,tileMap,"House");
         }
     }
+
+
+   /* unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator (seed);
+    std::uniform_int_distribution fourthChance(0,4);
+    int side=fourthChance(generator);
+
+    if(side==0)
+    {
+
+        std::normal_distribution<int> findDoor(bottom+1,top-1);
+        doorPlace=findDoor(generator);
+        tileMap[doorPlace][right]=new tile();
+    }
+    if(side==1)
+    {
+         std::normal_distribution<int> findDoor(left+1,right-1);
+         doorPlace=findDoor(generator);
+         tileMap[top][doorPlace];
+    }
+    if(side==2)
+    {
+         std::normal_distribution<int> findDoor(bottom+1,top-1);
+         doorPlace=findDoor(generator);
+         tileMap[doorPlace][];
+    }
+    if(side==3)
+    {
+        std::normal_distribution<int> findDoor(left+1,right-1);
+        doorPlace=findDoor(generator);
+    }
+    */
 }
 
 void city:: setTileMap()
@@ -50,16 +87,31 @@ void city:: deleteTileMap()
     }
 }
 
-void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int level)
+void box::makeLine(road* myLine, std::vector<std::vector<tile*> > & tileMap, int level, std::string type)
 {
+if(type=="House")
+{
+    char dc='1';
+    int mc=10;
+    short mat=wood;
+    int width=1;;
+}
 
- if(myRoad->vertical==true)
+if(type=="RoadBox")
+{
+   char dc='0';
+   int mc=10;
+   short mat=wood;
+   int width=level;
+}
+
+ if(myLine->vertical==true)
  {
-  for(int a=0; a<=(myRoad->Point2->y-myRoad->Point1->y); a++)
+  for(int a=myRoad->Point1->y; a<=myLine->Point2->y); a++)
   {
       for(int b=0; b<level; b++)
       {
-          tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x-level/2+b]=new tile('1',10,10);
+          tileMap[a][myLine->Point1->x-width/2+b]=new tile(dc,mc,mat);
       }
 
   }
@@ -67,11 +119,11 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int
 
   else
   {
-  for(int a=0; a<=myRoad->Point2->x-myRoad->Point1->x; a++)
+  for(int a=myLine->Point1->x; a<=myLine->Point2->x; a++)
    {
        for(int b=0; b<level; b++)
        {
-           tileMap[myRoad->Point1->y-level/2+b][myRoad->Point1->x+a]=new tile('1',10,10);
+           tileMap[myLine->Point1->y-width/2+b][a]=new tile(dc,mc,mat);
        }
 
    }
@@ -87,16 +139,18 @@ unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::default_random_engine generator (seed);
 std::uniform_int_distribution<int> halfChance(0,1);
 
-        building build_ing;
-        build_ing.buildStructure("[HOUSE1]");
+if(level==0 and type="ROADBOX")
+{
+   makeHouse(tileMap);
+}
 
+if(level>0)
+{
+    int half==halfChance(generator);
 
-  if(level!=0)
-  {
-
-    if(halfChance(generator)==0 and right-left>level+2) //if line vertical and there is space to draw line
+    if(half==0 and right-left>level) //if line vertical and there is space to draw line
     {
-        std::uniform_int_distribution<int> findSplitPoint(left+level/2+1, right-level/2-1);
+        std::normal_distribution<int> findSplitPoint(left+level/2, right-level/2);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -111,15 +165,15 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox1=new box;
         subBox2=new box;
 
-        subBox1->left=left;
-        subBox1->right=splitPoint;
-        subBox1->top=top;
-        subBox1->bottom=bottom;
+        subBox1->left=left+1;
+        subBox1->right=splitPoint-1;
+        subBox1->top=top-1;
+        subBox1->bottom=bottom+1;
 
-        subBox2->left=splitPoint;
-        subBox2->right=right;
-        subBox2->top=top;
-        subBox2->bottom=bottom;
+        subBox2->left=splitPoint+1;
+        subBox2->right=right-1;
+        subBox2->top=top-1;
+        subBox2->bottom=bottom+1;
 
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
@@ -128,9 +182,10 @@ std::uniform_int_distribution<int> halfChance(0,1);
 
     }
 
-    else if (top-bottom>level+2)
+    else if (half==1 and top-bottom>level)
     {//line horizontal
-        int splitPoint=bottom+1+level/2+rand()%(top-bottom-level-2);
+        std::normal_distribution<int> findSplitPoint(bottom+level/2, top-level/2);
+        int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
         road tempRoad;
@@ -143,15 +198,15 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox1=new box;
         subBox2=new box;
 
-        subBox1->left=left;
-        subBox1->right=right;
-        subBox1->top=top;
-        subBox1->bottom=splitPoint;
+        subBox1->left=left+1;
+        subBox1->right=right-1;
+        subBox1->top=top-1;
+        subBox1->bottom=splitPoint+1;
 
-        subBox2->left=left;
-        subBox2->right=right;
-        subBox2->top=splitPoint;
-        subBox2->bottom=bottom;  //forms 2 new boxes
+        subBox2->left=left+1;
+        subBox2->right=right-1;
+        subBox2->top=splitPoint-1;
+        subBox2->bottom=bottom+1;  //forms 2 new boxes
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
         delete subBox1;
@@ -159,26 +214,7 @@ std::uniform_int_distribution<int> halfChance(0,1);
 
     }
 
-  }
-
- /* else if(right-left>13 and top-bottom>13)
-
-
-    {
-      for(int a=0;a<10; a++)
-      {
-          for(int b=0; b<10; b++)
-          {  tile* temp_tile=
-          build_ing.structure[0][0];
-             tileMap[bottom+2+a][left+2+b]=temp_tile;
-          }
-
-      }
-
-    }
-
-*/
-
+}
 
 
 }

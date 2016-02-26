@@ -38,9 +38,9 @@ void divideBox(int, std::vector<std::vector<tile*> > &, std::string);
 void makeRoad(road*, std::vector<std::vector<tile*> > &, int);
 };
 
-class building: box
+class Building: box
 {
-    void makebuilding(tileMap&);
+    void makebuilding(std::vector<std::vector<tile*> > & tileMap );
 };
 
 class city: box
