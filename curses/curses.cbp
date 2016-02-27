@@ -58,6 +58,7 @@
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="lib/pdcurses.lib" />
+		<Unit filename="light.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="materials.cpp" />
 		<Unit filename="materials.h" />

@@ -105,12 +105,17 @@ actors.push_back(new player("human"));
     globalItems.push_back(new weapon(5,"Sword",'/',10,18,7,"weapon"));
     localItems.push_back(globalItems[0]);
     localItems.push_back(globalItems[1]);
+    std::vector<lightSource*> lights;
+    lights.push_back(new lightSource);
+    lights[0]->intensity = 1;
+    lights[0]->decreaseBy = .1;
+    lights[0]->position = coordinate(18,18);
 
     //coordinate temp;
 
 
 
-    std::vector<std::vector<tile* > > _map;
+    std::vector<std::vector<tile* > > _map;std::vector<std::vector<tile* > > * lightmap;
     _map.resize(20);
     for (int y=0;y<20;y++){
         _map[y].resize(20);
@@ -178,14 +183,7 @@ actors.push_back(new player("human"));
 
 bool keyrelease = true;
     while (window.isOpen())
-    {    lightingShader.loadFromFile("lightingShader.frag", sf::Shader::Type::Fragment);
-    lightingShader.setParameter("exposure",0.25f);
-    lightingShader.setParameter("decay", 0.97f);
-    lightingShader.setParameter("density", 0.97f);
-    lightingShader.setParameter("weight", 0.5f);
-    lightingShader.setParameter("lightPositionOnScreen", sf::Vector2f(0.5f, 0.5f));
-    lightingShader.setParameter("myTexture", sf::Shader::CurrentTexture);
-    renderState.shader = &lightingShader;
+    {
 
         if (actors[0]->col()*16 - view.getSize().x/2 > 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 > 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
@@ -201,19 +199,25 @@ window.setView(view);
                 keyrelease = true;
             }
         }
+        if (actors[0]->counter == actors[0]->speed()){
 
-        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
-        for (int i=1;i<actors.size();i++){
-            if (actors[i]->counter >= actors[i]->speed()){
+        }
+        if (actors[0]->counter >= actors[0]->speed()){
+            actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
+        }
+
+        for (int i=0;i<actors.size();i++){
+            if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                 std::cout << "_______________________________________\n";
                 root->run(actors[i],_map,localItems,actors,announcementList);
                 actors[i]->resetCounter();
             }
-            else{
                 actors[i]->increaseCounter();
-            }
         }
-
+        lights[0]->renderLight();
+        lightmap = &_map;
+        do_fov(lightmap,localItems,actors,lights[0]->position.x,lights[0]->position.y,10,window,renderState,true,lights[0]->intensity,lights[0]->decreaseBy);
+        _map = (*lightmap);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
@@ -227,6 +231,7 @@ window.setView(view);
             }
         }*/
         myCity.deleteTileMap();
+
 
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];

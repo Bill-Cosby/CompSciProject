@@ -16,6 +16,8 @@ public:
     bool isContainer;
     bool visible;
 
+    float darkenBy;
+
     char defaultchar;
 
     int movementCost;

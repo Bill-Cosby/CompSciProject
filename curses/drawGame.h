@@ -1,7 +1,7 @@
 #ifndef DRAWGAME_H_INCLUDED
 #define DRAWGAME_H_INCLUDED
 #include "actor.h"
-#include "shadowcasting.h"
+#include "light.h"
 #include <SFML/Graphics.hpp>
 
 class gameWorld
