@@ -20,10 +20,13 @@ const sf::Color  tanSkinColor  = sf::Color(sf::Color(173,109,0));
 const sf::Color greenSkinColor = sf::Color(sf::Color(51,109,0));
 const sf::Color blackSkinColor = sf::Color(sf::Color(0,0,0));
 
-const sf::Texture wall = RSL::getTextureData("data/textures/tiles.raw","wall.texture");
-const sf::Texture floortex = RSL::getTextureData("data/textures/tiles.raw","floor.texture");
+const sf::Texture stonewall = RSL::getTextureData("data/textures/tiles.raw","stonewall.texture");
+const sf::Texture stonefloor = RSL::getTextureData("data/textures/tiles.raw","stonefloor.texture");
 const sf::Texture openDoor = RSL::getTextureData("data/textures/tiles.raw","opendoor.texture");
 const sf::Texture closedDoor = RSL::getTextureData("data/textures/tiles.raw","door.texture");
+const sf::Texture woodwall = RSL::getTextureData("data/textures/tiles.raw","woodwall.texture");
+const sf::Texture woodfloor = RSL::getTextureData("data/textures/tiles.raw","woodfloor.texture");
+
 
 class material
 {

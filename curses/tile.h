@@ -17,6 +17,7 @@ public:
     bool visible;
 
     float darkenBy;
+    bool litHere;
 
     char defaultchar;
 

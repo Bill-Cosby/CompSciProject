@@ -150,6 +150,8 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
 
+    std::cout << dataType << std::endl;
+
     std::string line;
     std::ifstream loadFile(fileName);
 
@@ -186,14 +188,15 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
                             continue;
                         }
                         else if(_c == ':'){
-                                if (LINE_READING == "head"){body.push_back(new head("human",weight,id, connectedTo, color));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye("human",weight,id, connectedTo, left, color));}
-                                else if (LINE_READING == "neck"){body.push_back(new neck("human",weight,id, connectedTo, color));}
-                                else if (LINE_READING=="torso"){body.push_back(new torso("human",weight,id, connectedTo, color));}
-                                else if (LINE_READING =="arm"){body.push_back(new arm("human",weight, id, connectedTo, left, color));}
-                                else if (LINE_READING =="leg"){body.push_back(new leg("human",weight, id, connectedTo, left, color));}
-                                else if (LINE_READING == "hand"){body.push_back(new hand("human",weight,id, connectedTo, left, color));}
-                                else if (LINE_READING == "foot"){body.push_back(new foot("human",weight,id, connectedTo, left, color));}
+                                std::cout << LINE_READING << std::endl;
+                                if (LINE_READING == "head"){body.push_back(new head(dataType,weight,id, connectedTo, color));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "neck"){body.push_back(new neck(dataType,weight,id, connectedTo, color));}
+                                else if (LINE_READING=="torso"){body.push_back(new torso(dataType,weight,id, connectedTo, color));}
+                                else if (LINE_READING =="arm"){body.push_back(new arm(dataType,weight, id, connectedTo, left, color));}
+                                else if (LINE_READING =="leg"){body.push_back(new leg(dataType,weight, id, connectedTo, left, color));}
+                                else if (LINE_READING == "hand"){body.push_back(new hand(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "foot"){body.push_back(new foot(dataType,weight,id, connectedTo, left, color));}
                             left = false;
                             LINE_READING.clear();
                             continue;
@@ -257,7 +260,7 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
 
     std::string line;
     std::ifstream loadFile(fileName);
-
+    std::cout << dataType << "." << dataMember << std::endl;
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){

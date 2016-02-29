@@ -1,10 +1,10 @@
 [START]
-[WALL]
+[STONEFLOOR]
 	[NAME]wall;
 	[TEXTURE]tiles.png,0:0:;
 [END]
 [START]
-[FLOOR]
+[STONEWALL]
 	[NAME]floor;
 	[TEXTURE]tiles.png,0:17:;
 [END]
@@ -17,4 +17,19 @@
 [OPENDOOR]
 	[NAME]opendoor;
 	[TEXTURE]tiles.png,0:48:;
+[END]
+[START]
+[WOODWALL]
+	[NAME]wood wall;
+	[TEXTURE]tiles.png,16:16:;
+[END]
+[START]
+[WOODFLOOR]
+	[NAME]wood floor;
+	[TEXTURE]tiles.png,16:0:;
+[END]
+[START]
+[BARREL]
+	[NAME]barrel;
+	[TEXTURE]tiles.png,17:33:;
 [END]

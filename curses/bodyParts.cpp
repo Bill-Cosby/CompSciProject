@@ -89,7 +89,7 @@ torso::torso(std::string species, int _weight,std::string id, std::string connec
     grasps=false;
     armor = NULL;
     damage = weight*2;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humantorso.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "TORSO")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
 
@@ -104,7 +104,7 @@ neck::neck(std::string species, int _weight, std::string id, std::string connect
     name="neck";
     armor = NULL;
     damage = weight*2;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanhead.texture");
+    //texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "NECK")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
 
@@ -112,6 +112,7 @@ neck::neck(std::string species, int _weight, std::string id, std::string connect
 
 head::head(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color)
 {
+    std::cout << species << std::endl;
     ID = id;
     connectedTo = connectedto;
     weight=_weight;
@@ -119,7 +120,8 @@ head::head(std::string species, int _weight, std::string id, std::string connect
     name="head";
     armor = NULL;
     damage = weight*2;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanhead.texture");
+    std::cout << formatForParse(species, "HEAD]") << std::endl;
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "HEAD")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
 
@@ -131,7 +133,7 @@ eye::eye(std::string species, int _weight, std::string id, std::string connected
     connectedTo = connectedto;
     weight=_weight;
     grasps=false;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humaneye.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species,"EYE")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     if (left==true){
@@ -153,7 +155,7 @@ hand::hand(std::string species, int _weight,  std::string id, std::string connec
     connectedTo = connectedto;
     weight=_weight;
     grasps=true;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanhand.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "HAND")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     if (left==true){
@@ -175,7 +177,7 @@ arm::arm(std::string species, int _weight, std::string id, std::string connected
     connectedTo = connectedto;
     weight=_weight;
     grasps=false;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanarm.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "ARM")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     if (left==true){
@@ -199,7 +201,7 @@ foot::foot(std::string species, int _weight, std::string id, std::string connect
     connectedTo = connectedto;
     weight=_weight;
     grasps=false;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanfoot.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "FOOT")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     if (left==true){
@@ -221,7 +223,7 @@ leg::leg(std::string species, int _weight,  std::string id, std::string connecte
     connectedTo = connectedto;
     weight=_weight;
     grasps=false;
-    texture = RSL::getTextureData("data/textures/creature_standard.raw", "humanleg.texture");
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "LEG")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     if (left==true){
@@ -235,4 +237,11 @@ leg::leg(std::string species, int _weight,  std::string id, std::string connecte
     armor = NULL;
     damage = weight*2;
 
+}
+
+std::string formatForParse(std::string species, std::string limb)
+{
+    species.erase(species.begin()+species.size()-1);
+    species.erase(species.begin()+0);
+    return species+limb;
 }

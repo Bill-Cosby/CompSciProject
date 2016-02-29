@@ -12,3 +12,17 @@
 	[TEXTURE]creature_standard.png,0:32:;
 [HUMANEYE]
 	[TEXTURE]creature_standard.png,0:0:;
+[GOBLINTORSO]
+	[TEXTURE]creature_standard.png,16:96:;
+[GOBLINHEAD]
+	[TEXTURE]creature_standard.png,16:16:;
+[GOBLINARM]
+	[TEXTURE]creature_standard.png,16:80:;
+[GOBLINLEG]
+	[TEXTURE]creature_standard.png,16:64:;
+[GOBLINHAND]
+	[TEXTURE]creature_standard.png,16:48:;
+[GOBLINFOOT]
+	[TEXTURE]creature_standard.png,16:32:;
+[GOBLINEYE]
+	[TEXTURE]creature_standard.png,16:0:;

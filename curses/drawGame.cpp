@@ -50,7 +50,8 @@ void announcements::drawAnnouncements(sf::RenderWindow & window)
     menuText.setFont(font);
 
     int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
-    for (int i = announcementList.size()-1; i >-1;i--){
+    for (int i = 29; i >-1;i--){
+        if (i > announcementList.size())return;
         menuText.setString(announcementList[i]);
         menuText.setPosition(x,y);
         window.draw(menuText);

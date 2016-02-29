@@ -71,7 +71,7 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
                 else{
                     localItems.push_back(new limb(bodyPartToHit->name,bodyPartToHit->armor,bodyPartToHit->vanity,actorAttacking->col(),actorAttacking->row(),bodyPartToHit->sprite, bodyPartToHit->attachedParts, 0, "limb"));
                 }
-                delete bodyPartToHit;
+                actorAttacking->rootPart->clearDeadParts(bodyPartToHit);
             }
         }
         else{

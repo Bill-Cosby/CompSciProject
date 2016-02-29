@@ -104,8 +104,16 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
                 continue;
             }
             else{
-                if ((unsigned int)(dx * dx + dy * dy) < radius2){
-                    (*_map)[ay][ax]->darkenBy = temp;
+                if ((unsigned int)(dx * dx + dy * dy) < radius2 and (*_map)[ay][ax]->litHere == false){
+                    if ((*_map)[ay][ax]->darkenBy == 0){
+                        (*_map)[ay][ax]->darkenBy = temp;
+                    }
+                    else{
+                        (*_map)[ay][ax]->darkenBy += temp/50;
+                    }
+
+                    (*_map)[ay][ax]->litHere = true;
+
                 }
 
                 if (blocked) {
@@ -126,7 +134,6 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
         if (blocked)break;
         temp-=decreaseBy;
     }
-    actors[0]->drawActor(window);
 }
 
 void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)

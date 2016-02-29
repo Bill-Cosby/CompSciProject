@@ -129,6 +129,8 @@ public:
     head(){armor = NULL;}
 };
 
+std::string formatForParse(std::string species, std::string limb);
+
 
 
 #endif // BODYPARTS_H_INCLUDED

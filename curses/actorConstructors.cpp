@@ -49,7 +49,6 @@ monster::monster(std::string speciesToLoad)
     std::string fileName = "data/creatures/creature_standard.raw";
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
-    texture = RSL::getTextureData(fileName, speciesToLoad+".texture");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     attack = RSL::getIntData(fileName, speciesToLoad+".strength");
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
