@@ -36,15 +36,13 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    while (counter>=customSpeed and keyrelease == true){
+    if (counter>=customSpeed){
 
-            while (pressedKey == false){
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
                         pressedKey = true;
                     }
                 }
-            }
             pressedKey = false;
 
                  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
@@ -55,7 +53,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
-
+            std::cout << temp.x << "," << temp.y << std::endl;
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){

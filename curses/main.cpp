@@ -89,6 +89,7 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
+actors.push_back(new monster("human"));
 //actors.push_back(new monster("human"));
 
 
@@ -96,6 +97,7 @@ actors.push_back(new player("human"));
     //char ch;
 
     actors[0]->pos(1,1);
+    actors[1]->pos(18,18);
 
 
 
@@ -110,6 +112,18 @@ actors.push_back(new player("human"));
     lights[0]->intensity = 1;
     lights[0]->decreaseBy = .1;
     lights[0]->position = coordinate(18,18);
+    lights.push_back(new lightSource);
+    lights[1]->intensity = 1;
+    lights[1]->decreaseBy = .1;
+    lights[1]->position = coordinate(1,10);
+    lights.push_back(new lightSource);
+    lights[2]->intensity = 1;
+    lights[2]->decreaseBy = .1;
+    lights[2]->position = coordinate(18,14);
+    lights.push_back(new lightSource);
+    lights[3]->intensity = 1;
+    lights[3]->decreaseBy = .1;
+    lights[3]->position = coordinate(12,1);
 
     //coordinate temp;
 
@@ -191,6 +205,24 @@ window.setView(view);
 
         sf::Event event;
 
+        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
+        if (keyrelease == false){
+            for (int i=0;i<actors.size();i++){
+                if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
+                    std::cout << "_______________________________________\n";
+                    root->run(actors[i],_map,localItems,actors,announcementList);
+                    actors[i]->resetCounter();
+                }
+                actors[i]->increaseCounter();
+            }
+        }
+        lightmap = &_map;
+        for (lightSource * _l : lights){
+            _l->renderLight();
+            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,10,window,renderState,true,_l->intensity,_l->decreaseBy);
+        }
+        _map = (*lightmap);
+
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
                 window.close();
@@ -199,25 +231,7 @@ window.setView(view);
                 keyrelease = true;
             }
         }
-        if (actors[0]->counter == actors[0]->speed()){
 
-        }
-        if (actors[0]->counter >= actors[0]->speed()){
-            actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
-        }
-
-        for (int i=0;i<actors.size();i++){
-            if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                std::cout << "_______________________________________\n";
-                root->run(actors[i],_map,localItems,actors,announcementList);
-                actors[i]->resetCounter();
-            }
-                actors[i]->increaseCounter();
-        }
-        lights[0]->renderLight();
-        lightmap = &_map;
-        do_fov(lightmap,localItems,actors,lights[0]->position.x,lights[0]->position.y,10,window,renderState,true,lights[0]->intensity,lights[0]->decreaseBy);
-        _map = (*lightmap);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 

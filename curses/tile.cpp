@@ -23,7 +23,7 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     sprite.setPosition(position.x*16,position.y*16);
     if (defaultchar == '0')sprite.setTexture(floortex);
     if (defaultchar == '1')sprite.setTexture(wall);
-    sf::Color tempColor = sf::Color(woodColor.r*darkenBy,woodColor.g*darkenBy,woodColor.b*darkenBy);
+    sf::Color tempColor = sf::Color(stoneColor.r*darkenBy,stoneColor.g*darkenBy,stoneColor.b*darkenBy);
     sprite.setColor(tempColor);
 
     window.draw(sprite,renderState);
@@ -43,7 +43,6 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     sf::Color tempColor = sf::Color(woodColor.r*darkenBy,woodColor.g*darkenBy,woodColor.b*darkenBy);
     sprite.setColor(tempColor);
     sprite.setPosition(position.x*16,position.y*16);
-    std::cout << darkenBy << std::endl;
     if (isOpen()){
         sprite.setTexture(wall);
         window.draw(sprite);
