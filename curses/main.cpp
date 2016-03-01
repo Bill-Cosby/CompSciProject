@@ -200,8 +200,8 @@ bool keyrelease = true;
     while (window.isOpen())
     {
 
-        if (actors[0]->col()*16 - view.getSize().x/2 > 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
-        if (actors[0]->row()*16 - view.getSize().y/2 > 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
+        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
+        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
         window.setView(view);
 
         sf::Event event;

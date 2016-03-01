@@ -38,6 +38,10 @@ public:
     virtual void draw(sf::RenderWindow &window){window.draw(sprite);}
 };
 
+class container : public item
+{
+    std::vector<item*> contained;
+};
 
 class weapon : public item
 {
