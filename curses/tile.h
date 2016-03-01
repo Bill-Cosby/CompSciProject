@@ -23,13 +23,13 @@ public:
 
     int movementCost;
     double elevation;
-    short _material;
-    tile(char dc,int mc, short mat);
+    std::string _material;
+    tile(char dc,int mc, std::string mat);
     tile(coordinate,coordinate,int);
     tile(int hCost, int costSoFar);
     tile(){isDoor=false;};
 
-    short giveMaterial(){return _material;}
+    std::string giveMaterial(){return _material;}
     void find_material();
 
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
@@ -44,7 +44,7 @@ public:
     bool open;
     char openSymbol;
     char closedSymbol;
-    door(bool _o, char dc, int mv, short mat);
+    door(bool _o, char dc, int mv, std::string mat);
     void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}

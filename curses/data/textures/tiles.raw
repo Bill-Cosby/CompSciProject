@@ -31,5 +31,15 @@
 [START]
 [BARREL]
 	[NAME]barrel;
-	[TEXTURE]tiles.png,17:33:;
+	[TEXTURE]tiles.png,16:32:;
+[END]
+[START]
+[GRASS]
+	[NAME]grass;
+	[TEXTURE]tiles.png,16:48:;
+[END]
+[START]
+[DIRT]
+	[NAME]dirt;
+	[TEXTURE]tiles.png,32:0:;
 [END]

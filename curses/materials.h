@@ -13,6 +13,8 @@ const sf::Color steelColor  = sf::Color(sf::Color(180,184,187));
 const sf::Color  woodColor  = sf::Color(sf::Color(156,94,47));
 const sf::Color copperColor = sf::Color(sf::Color(188,84,31));
 const sf::Color stoneColor  = sf::Color (sf::Color(128,128,128));
+const sf::Color grassColor  = sf::Color(sf::Color(49,99,0));
+const sf::Color  dirtColor  = sf::Color(sf::Color(155,118,83));
 
 const sf::Color whiteSkinColor = sf::Color(sf::Color(242,221,220));
 const sf::Color brownSkinColor = sf::Color(sf::Color(109,70,0));
@@ -26,15 +28,19 @@ const sf::Texture openDoor = RSL::getTextureData("data/textures/tiles.raw","open
 const sf::Texture closedDoor = RSL::getTextureData("data/textures/tiles.raw","door.texture");
 const sf::Texture woodwall = RSL::getTextureData("data/textures/tiles.raw","woodwall.texture");
 const sf::Texture woodfloor = RSL::getTextureData("data/textures/tiles.raw","woodfloor.texture");
+const sf::Texture grassGround = RSL::getTextureData("data/textures/tiles.raw","grass.texture");
+const sf::Texture dirtGround = RSL::getTextureData("data/textures/tiles.raw","dirt.texture");
 
 
 class material
 {
     public:
-    sf::Color color;
     int weight;
-    material(std::string mat_name);
+
 };
+
+sf::Color giveColor(std::string mat_name);
+sf::Texture giveTexture(char dc);
 
 
 

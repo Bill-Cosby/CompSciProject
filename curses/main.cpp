@@ -89,7 +89,6 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("goblin"));
-actors.push_back(new monster("human"));
 //actors.push_back(new monster("human"));
 
 
@@ -97,7 +96,6 @@ actors.push_back(new monster("human"));
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(18,18);
 
 
 
@@ -135,14 +133,14 @@ actors.push_back(new monster("human"));
         _map[y].resize(20);
         for (int x=0;x<20;x++){
             if (testarena[y][x]=='2'){
-                _map[y][x]=new door(0,'2',0,0);
+                _map[y][x]=new door(0,'2',0,"wood");
             }
             else if (testarena[y][x]=='1'){
-                _map[y][x]=new tile('0',-1,0);
+                _map[y][x]=new tile('0',-1,"grass");
                 _map[y][x]->isDoor=false;
             }
             else{
-                _map[y][x]= new tile('1',0,0);
+                _map[y][x]= new tile('1',0,"dirt");
                 _map[y][x]->isDoor=false;
             }
             _map[y][x]->position=coordinate(x,y);
@@ -220,11 +218,6 @@ window.setView(view);
 
         lightmap = &_map;
         for (lightSource * _l : lights){
-            for ( int i = 0; i< _map.size();i++){
-                for (int j = 0; j < _map.size();j++){
-                    _map[i][j]->litHere = false;
-                }
-            }
             //_l->renderLight();
             do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
         }

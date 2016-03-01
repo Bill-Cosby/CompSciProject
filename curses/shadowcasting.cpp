@@ -104,12 +104,13 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
                 continue;
             }
             else{
-                if ((unsigned int)(dx * dx + dy * dy) < radius2 and (*_map)[ay][ax]->litHere == false){
+                if ((unsigned int)(dx * dx + dy * dy) < radius2/* and (*_map)[ay][ax]->litHere == false*/){
                     if ((*_map)[ay][ax]->darkenBy == 0){
                         (*_map)[ay][ax]->darkenBy = temp;
                     }
                     else{
-                        (*_map)[ay][ax]->darkenBy += temp/50;
+                        float temporaryVar = (log10(temp*100))/100;
+                        (*_map)[ay][ax]->darkenBy += temporaryVar;
                     }
 
                     (*_map)[ay][ax]->litHere = true;

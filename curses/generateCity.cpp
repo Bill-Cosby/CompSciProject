@@ -16,7 +16,7 @@ void city:: setTileMap()
         tileMap[a]=blank1;
         for(int b=0; b<tileMapSize; b++)
         {
-            tileMap[a][b]=new tile('0',10,10);
+            tileMap[a][b]=new tile('6',10,"grass");
             tileMap[a][b]->position = coordinate(b,a);
             tileMap[a][b]->isDoor = false;
         }
@@ -45,7 +45,7 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int
   {
       for(int b=0; b<level; b++)
       {
-          tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x-level/2+b]=new tile('1',10,10);
+          tileMap[(myRoad->Point1->y)+a][myRoad->Point1->x-level/2+b]=new tile('7',10,"dirt");
       }
 
   }
@@ -57,7 +57,7 @@ void box::makeRoad(road* myRoad, std::vector<std::vector<tile*> > & tileMap, int
    {
        for(int b=0; b<level; b++)
        {
-           tileMap[myRoad->Point1->y-level/2+b][myRoad->Point1->x+a]=new tile('1',10,10);
+           tileMap[myRoad->Point1->y-level/2+b][myRoad->Point1->x+a]=new tile('7',10,"dirt");
        }
 
    }

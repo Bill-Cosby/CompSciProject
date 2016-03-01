@@ -21,16 +21,16 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 
     sf::Sprite sprite;
     sprite.setPosition(position.x*16,position.y*16);
-    if (defaultchar == '0')sprite.setTexture(woodfloor);
-    if (defaultchar == '1')sprite.setTexture(woodwall);
-    sf::Color tempColor = sf::Color(woodColor.r*darkenBy,woodColor.g*darkenBy,woodColor.b*darkenBy);
+    sf::Color tempColor = giveColor(_material);
+    sprite.setTexture(giveTexture(defaultchar));
+
     sprite.setColor(tempColor);
 
     window.draw(sprite,renderState);
     darkenBy = 0;
 }
 
-door::door(bool _o, char dc, int mv, short mat) : tile(dc, mv, mat)
+door::door(bool _o, char dc, int mv, std::string mat) : tile(dc, mv, mat)
 {
     open=_o;
     isDoor=true;
@@ -39,8 +39,9 @@ door::door(bool _o, char dc, int mv, short mat) : tile(dc, mv, mat)
 
 void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
+    if (darkenBy == 0)return;
     sf::Sprite sprite;
-    sf::Color tempColor = sf::Color(woodColor.r*darkenBy,woodColor.g*darkenBy,woodColor.b*darkenBy);
+    sf::Color tempColor = giveColor(_material);
     sprite.setColor(tempColor);
     sprite.setPosition(position.x*16,position.y*16);
     if (isOpen()){
@@ -49,12 +50,13 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
         sprite.setTexture(openDoor);
     }
     else{
-        sprite.setTexture(closedDoor);
+    sprite.setTexture(giveTexture(defaultchar));
     }
     window.draw(sprite, renderState);
+    darkenBy = 0;
 }
 
-tile::tile(char dc, int mv, short mat)
+tile::tile(char dc, int mv, std::string mat)
 {
     movementCost = mv;
     defaultchar = dc;

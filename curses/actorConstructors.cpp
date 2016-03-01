@@ -24,7 +24,7 @@ player::player(std::string speciesToLoad)
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp,material(skinColor).color);
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor));
     name = "player";
 
 }
@@ -55,7 +55,7 @@ monster::monster(std::string speciesToLoad)
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
-    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, material(skinColor).color);
+    rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor));
     controlled=false;
     sprinting=false;
     goal = coordinate(-1,-1);
