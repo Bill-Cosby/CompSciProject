@@ -7,19 +7,18 @@
 #include <chrono>
 #include <random>
 
-void building::makeHouse(vector<vector<tile*> > tileMap&)
+void box::makeHouse(std::vector<std::vector<tile*> > & tileMap)
 {
 
-    divideBox(2,tileMap&,"HOUSE")
-    for(int a=left; a<=R; a++)
+    for(int a=left; a<=right; a++)
     {
-        for(int b=low; b<=top; b++)
+        for(int b=bottom; b<=top; b++)
         {
             if(a==left or a==right or b==bottom or b==top)
             {
-                tileMap[b][a]=new tile('1',20,wood);
+                tileMap[b][a]=new tile('1',20,0);
             }
-            dividebox(1,tileMap,"House");
+            divideBox(1,tileMap,"HOUSE");
         }
     }
 
@@ -89,29 +88,57 @@ void city:: deleteTileMap()
 
 void box::makeLine(road* myLine, std::vector<std::vector<tile*> > & tileMap, int level, std::string type)
 {
-if(type=="House")
+    int a=0;
+    int b=0;
+    int width;
+    char dc;
+    int mc;
+    short mat;
+    int doorPlace;
+
+if(type=="HOUSE")
 {
-    char dc='1';
-    int mc=10;
-    short mat=wood;
-    int width=1;;
+    dc='1';
+    mc=10;
+    mat=0;
+    width=1;
+    if(myLine->vertical)
+    {
+        a=myLine->Point1->y;
+        b=myLine->Point2->y;
+
+    }
+    else
+    {
+        a=myLine->Point1->x;
+        b=myLine->Point2->x;
+    }
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator (seed);
+    std::uniform_int_distribution<int> doorFinder(a,b);
+    doorPlace=doorFinder(generator);
 }
 
-if(type=="RoadBox")
+if(type=="ROADBOX")
 {
-   char dc='0';
-   int mc=10;
-   short mat=wood;
-   int width=level;
+   dc='0';
+   mc=10;
+   mat=0;
+   width=level;
 }
 
  if(myLine->vertical==true)
  {
-  for(int a=myRoad->Point1->y; a<=myLine->Point2->y); a++)
+  for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
   {
-      for(int b=0; b<level; b++)
+      for(int d=0; d<level; d++)
       {
           tileMap[a][myLine->Point1->x-width/2+b]=new tile(dc,mc,mat);
+          if(type=="HOUSE" and c==doorPlace)
+          {
+              tileMap[c][d]=new tile('2',5,0);
+          }
       }
 
   }
@@ -119,11 +146,20 @@ if(type=="RoadBox")
 
   else
   {
-  for(int a=myLine->Point1->x; a<=myLine->Point2->x; a++)
+  for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
    {
-       for(int b=0; b<level; b++)
+       for(int d=0; d<level; d++)
        {
-           tileMap[myLine->Point1->y-width/2+b][a]=new tile(dc,mc,mat);
+           signed int q=myLine->Point1->y-(width+1)/2+d;
+           if(0<=q<tileMap.size())
+           {
+               tileMap[q][c]=new tile(dc,mc,mat);
+           }
+
+           if(type=="HOUSE" and c==doorPlace)
+          {
+              tileMap[d][c]=new tile('2',5,0);
+          }
        }
 
    }
@@ -136,21 +172,21 @@ if(type=="RoadBox")
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap, std::string type)
 {
 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-std::default_random_engine generator (seed);
+std::default_random_engine generator(seed);
 std::uniform_int_distribution<int> halfChance(0,1);
 
-if(level==0 and type="ROADBOX")
+if(level==0 and type=="ROADBOX")
 {
-   makeHouse(tileMap);
+   makeHouse(tileMap);  //many houses
 }
 
 if(level>0)
 {
-    int half==halfChance(generator);
+    int half = halfChance(generator);
 
     if(half==0 and right-left>level) //if line vertical and there is space to draw line
     {
-        std::normal_distribution<int> findSplitPoint(left+level/2, right-level/2);
+        std::normal_distribution<float> findSplitPoint(left+level/2, right-level/2);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -160,7 +196,7 @@ if(level>0)
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
         tempRoad.Point2=&highPoint;
-        makeRoad(&tempRoad, tileMap, level); //draws road on tile map
+        makeLine(&tempRoad, tileMap, level, type); //draws road on tile map
 
         subBox1=new box;
         subBox2=new box;
@@ -184,7 +220,7 @@ if(level>0)
 
     else if (half==1 and top-bottom>level)
     {//line horizontal
-        std::normal_distribution<int> findSplitPoint(bottom+level/2, top-level/2);
+        std::normal_distribution<float> findSplitPoint(bottom+level/2, top-level/2);
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
@@ -193,7 +229,7 @@ if(level>0)
         tempRoad.Point1=&leftPoint;
         tempRoad.Point2=&rightPoint;
 
-        makeRoad(&tempRoad, tileMap, level); //draws road on tileMap
+        makeLine(&tempRoad, tileMap, level, type); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;

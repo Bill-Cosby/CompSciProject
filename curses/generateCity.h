@@ -35,15 +35,12 @@ std::vector<coordinate *> blank;
 
 box(){blank.resize(2);}
 void divideBox(int, std::vector<std::vector<tile*> > &, std::string);
-void makeRoad(road*, std::vector<std::vector<tile*> > &, int);
+void makeLine(road*, std::vector<std::vector<tile*> > &, int, std::string);
+void makeHouse(std::vector<std::vector<tile*> > & tileMap);
 };
 
-class Building: box
-{
-    void makebuilding(std::vector<std::vector<tile*> > & tileMap );
-};
 
-class city: box
+class city: public box
 {
     public:
 std::vector<std::vector<tile*> > tileMap;
