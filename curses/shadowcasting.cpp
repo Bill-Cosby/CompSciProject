@@ -8,8 +8,8 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
 
     float next_start_slope = start_slope;
 
-    _map[y][x]->drawTile(window,renderState);
 
+    _map[y][x]->drawTile(window,renderState);
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
         int dy = -i;
@@ -35,8 +35,9 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
             }
             else{
 
-                if ((unsigned int)(dx * dx + dy * dy) < radius2){
+                if ((unsigned int)(dx * dx + dy * dy) < radius2 and _map[ay][ax]->litHere == false){
                     _map[ay][ax]->drawTile(window, renderState);
+                    _map[ay][ax]->litHere = true;
                     for (item* _i : localItems){
                         if (_i->x == ax and _i->y == ay){
                             _i->draw(window);
@@ -112,8 +113,6 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
                         float temporaryVar = (log10(temp*100))/100;
                         (*_map)[ay][ax]->darkenBy += temporaryVar;
                     }
-
-                    (*_map)[ay][ax]->litHere = true;
 
                 }
 

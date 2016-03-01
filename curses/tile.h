@@ -6,6 +6,7 @@
 #include "materials.h"
 #include <SFML/Graphics.hpp>
 
+
 class tile : public node
 {
 public:
@@ -19,7 +20,7 @@ public:
     float darkenBy;
     bool litHere;
 
-    char defaultchar;
+    int defaultchar;
 
     int movementCost;
     double elevation;
@@ -44,7 +45,7 @@ public:
     bool open;
     char openSymbol;
     char closedSymbol;
-    door(bool _o, char dc, int mv, std::string mat);
+    door(bool _o, int dc, int mv, std::string mat);
     void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
