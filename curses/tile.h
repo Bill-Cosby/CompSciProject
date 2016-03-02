@@ -51,12 +51,4 @@ public:
     bool isOpen(){return open;}
 };
 
-class container : public tile
-{
-    std::string name;
-public:
-    std::vector<item*> contains;
-    void openContainer();
-};
-
 #endif // TILE_H_INCLUDED
