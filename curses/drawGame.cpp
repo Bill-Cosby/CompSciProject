@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
+void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
 {
 
     renderState = sf::RenderStates::Default;
@@ -21,16 +21,10 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 //    {
 //        for (int x=0;x<25;x++)
 //        {
-//            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
-//                for (item* _i : localItems){
-//                    _i->draw(window);
-//                }
-//                for (actor* _a: actors)
-//                {
-//                    _a->drawActor(window);
-//                }
+//            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0][0].size() and y+charplaced.y<_map[0].size()){
 //                actors[0]->drawActor(window);
-//                //_map[y][x]->drawTile(window);
+//                _map[0][y][x]->drawTile(window,renderState);
+//                if (_map[1][y][x]!=NULL)_map[1][y][x]->drawTile(window,renderState);
 //            }
 //        }
 //    }

@@ -33,7 +33,7 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     tempSprite.setColor(darkenedColor);
 
     window.draw(tempSprite,renderState);
-    darkenBy = 0;
+    darkenBy = 1;
 }
 
 door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
@@ -70,7 +70,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
         tempSprite.setTexture(textures[closeddoor]);
     }
     window.draw(tempSprite, renderState);
-    darkenBy = 0;
+    darkenBy = 1;
 }
 
 tile::tile(char dc, int mv, std::string mat)

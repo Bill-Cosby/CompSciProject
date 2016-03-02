@@ -1,7 +1,7 @@
 #include "shadowcasting.h"
 
 
-void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
+void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     if (start_slope < end_slope)return;
@@ -9,7 +9,7 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
     float next_start_slope = start_slope;
 
 
-    _map[y][x]->drawTile(window,renderState);
+    _map[actors[0]->zReturn()-1][y][x]->drawTile(window,renderState);
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
         int dy = -i;
@@ -30,14 +30,14 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
             }
             unsigned int ax = x + sax;
             unsigned int ay = y + say;
-            if (ax >= _map.size() or ay >= _map.size()){
+            if (ax >= _map[actors[0]->zReturn()].size() or ay >= _map[actors[0]->zReturn()].size()){
                 continue;
             }
             else{
 
-                if ((unsigned int)(dx * dx + dy * dy) < radius2 and _map[ay][ax]->litHere == false){
-                    _map[ay][ax]->drawTile(window, renderState);
-                    _map[ay][ax]->litHere = true;
+                if ((unsigned int)(dx * dx + dy * dy) < radius2 and _map[actors[0]->zReturn()-1][ay][ax]->litHere == false){
+                    _map[actors[0]->zReturn()-1][ay][ax]->drawTile(window, renderState);
+                    _map[actors[0]->zReturn()-1][ay][ax]->litHere = true;
                     for (item* _i : localItems){
                         if (_i->x == ax and _i->y == ay){
                             _i->draw(window);
@@ -50,19 +50,26 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
                         }
                     }
                 }
+                if (_map[actors[0]->zReturn()][ay][ax]!=NULL){
 
-                if (blocked) {
-                    if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isDoor and _map[ay][ax]->isOpen() == false)){
+                    if (blocked) {
+                        if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+                        _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                        _map[actors[0]->zReturn()][ay][ax]->litHere = true;
+                            next_start_slope = r_slope;
+                            continue;
+                        }else{
+                            blocked = false;
+                            start_slope = next_start_slope;
+                        }
+                    }else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+                        _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                        _map[actors[0]->zReturn()][ay][ax]->litHere = true;
+                        blocked = true;
+                        cast_light(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);
                         next_start_slope = r_slope;
-                        continue;
-                    }else{
-                        blocked = false;
-                        start_slope = next_start_slope;
                     }
-                }else if (_map[ay][ax]->movementCost == -1 or (_map[ay][ax]->isDoor and _map[ay][ax]->isOpen() == false)){
-                    blocked = true;
-                    cast_light(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);
-                    next_start_slope = r_slope;
+
                 }
             }
         }
@@ -71,7 +78,7 @@ void cast_light(std::vector<std::vector<tile*> > &_map, std::vector<item*> &loca
     actors[0]->drawActor(window);
 }
 
-void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &localItems, std::vector<actor*> &actors, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
+void castShadow(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vector<item*> &localItems, std::vector<actor*> &actors, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState, float intensity, float decreaseBy)
 {
     float temp = intensity;
@@ -79,7 +86,7 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
 
     float next_start_slope = start_slope;
 
-    (*_map)[y][x]->darkenBy = intensity;
+    (*_map)[actors[0]->zReturn()-1][y][x]->darkenBy = intensity;
 
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
@@ -106,28 +113,30 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
             }
             else{
                 if ((unsigned int)(dx * dx + dy * dy) < radius2/* and (*_map)[ay][ax]->litHere == false*/){
-                    if ((*_map)[ay][ax]->darkenBy == 0){
-                        (*_map)[ay][ax]->darkenBy = temp;
+                    if ((*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy == 1){
+                        (*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy = temp;
                     }
                     else{
                         float temporaryVar = (log10(temp*100))/100;
-                        (*_map)[ay][ax]->darkenBy += temporaryVar;
+                        (*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy += temporaryVar;
                     }
 
                 }
-
+                if ((*_map)[actors[0]->zReturn()][ay][ax]!=NULL){
                 if (blocked) {
-                    if ((*_map)[ay][ax]->movementCost == -1 or ((*_map)[ay][ax]->isDoor and (*_map)[ay][ax]->isOpen() == false)){
+                    if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                         next_start_slope = r_slope;
                         continue;
                     }else{
                         blocked = false;
                         start_slope = next_start_slope;
                     }
-                }else if ((*_map)[ay][ax]->movementCost == -1 or ((*_map)[ay][ax]->isDoor and (*_map)[ay][ax]->isOpen() == false)){
+                }else if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                     blocked = true;
                     castShadow(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState, temp-decreaseBy, decreaseBy);
                     next_start_slope = r_slope;
+                }
+
                 }
             }
         }
@@ -136,14 +145,14 @@ void castShadow(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &loc
     }
 }
 
-void do_fov(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
+void do_fov(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
 {
     for (unsigned int i = 0; i < 8; i++){
         cast_light(_map,localItems,actors,x,y,radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window, renderState);
     }
 }
 
-void do_fov(std::vector<std::vector<tile*> > *&_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
+void do_fov(std::vector<std::vector<std::vector<tile*> > >*&_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
 {
     for (unsigned int i = 0; i < 8; i++){
         if (castingLight) castShadow(_map,localItems,actors,x,y,radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window, renderState, intensity, decreaseBy);

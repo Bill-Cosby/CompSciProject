@@ -12,6 +12,7 @@ player::player(std::string speciesToLoad)
     controlled=true;
     sprinting=false;
     int temp;
+    z = 1;
 
     itemToPickUp = NULL;
 
@@ -42,6 +43,7 @@ monster::monster(std::string speciesToLoad)
     controlled=true;
     sprinting=false;
     int temp;
+    z = 1;
 
     actorAttacking = NULL;
     itemToPickUp = NULL;

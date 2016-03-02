@@ -28,7 +28,7 @@ protected:
     char _symbol;
 
 
-    int x,y;
+    int x,y,z;
 public:
     bodyPart * rootPart;
     coordinate memory;
@@ -59,6 +59,7 @@ public:
 //  RETURN COORDINATES
     int row(){return y;}
     int col(){return x;}
+    int zReturn(){return z;}
 
 //  AMOUNT OF A LIMB FOR SPEED CALCULATION
     int numberOfLegs;

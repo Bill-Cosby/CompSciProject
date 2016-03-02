@@ -10,26 +10,9 @@
 
 using namespace std;
 
-const int testarena[20][20]={{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,1,2,1,1,1,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,1,5,5,5,5,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,1,5,5,5,5,1},
-                              {1,6,6,6,6,6,6,6,6,6,6,6,6,6,1,5,5,5,5,1},
-                              {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+
+
+
 
 
 int main()
@@ -101,6 +84,7 @@ actors.push_back(new player("human"));
 
 
 
+
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     globalItems.push_back(new weapon(10,"Axe",'P',16,18,10,"weapon"));
@@ -129,29 +113,42 @@ actors.push_back(new player("human"));
 
 
 
-    std::vector<std::vector<tile* > > _map;std::vector<std::vector<tile* > > * lightmap;
-//    _map.resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (testarena[y][x]==2){
-//                _map[y][x]=new door(0,closeddoor,0,"wood");
-//            }
-//            else if (testarena[y][x]==1){
-//                _map[y][x]=new tile(stonewall,-1,"stone");
-//                _map[y][x]->isDoor=false;
-//            }
-//            else if (testarena[y][x]==6){
-//                _map[y][x]= new tile(grass,0,"grass");
-//                _map[y][x]->isDoor=false;
-//            }
-//            else if (testarena[y][x]==5){
-//                _map[y][x] = new tile(woodfloor,0,"wood");
-//            }
-//            _map[y][x]->position=coordinate(x,y);
-//        }
-//    }
+    std::vector<std::vector<std::vector<tile* > > > _map;std::vector<std::vector<std::vector<tile* > > > * lightmap;
+    _map.resize(2);
+    _map[0].resize(20);
+    _map[1].resize(20);
+    for (int y=0;y<20;y++){
+        _map[0][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+            else _map[0][y][x] = new tile(grass,0,"grass");
+            _map[0][y][x]->position=coordinate(x,y);
+        }
+    }
 
+    for (int y = 0;y<20;y++){
+        _map[1][y].resize(20);
+        for (int x = 0;x<20;x++){
+            if (x >= 14 and y == 16){
+                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 14 and y >=16){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (y == 0 or y == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 0 or x == 19){
+                    _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else {
+                _map[1][y][x] = NULL;
+                continue;
+            }
+            _map[1][y][x]->position=coordinate(x,y);
+        }
+    }
 
 
     std::default_random_engine ew(time(0));
@@ -176,26 +173,26 @@ actors.push_back(new player("human"));
 
 
     //DUNGEON SETUP CODE
-    dungeon map_t;
-    _map.resize(map_t.dungeon_grid.size());
-    _map.resize(map_t.dungeon_grid.size());
-    for (int y=0;y<map_t.dungeon_grid.size();y++)
-    {
-        _map[y].resize(map_t.dungeon_grid[0].size());
-        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-        {
-            if (map_t.dungeon_grid[y][x]==1)
-            {
-                _map[y][x]= new tile(stonewall,0,"stone");
-                actors[0]->pos(y,x);
-            }
-            else
-            {
-                _map[y][x]= new tile(stonefloor,-1,"stone");
-            }
-            _map[y][x]->position = coordinate(x,y);
-        }
-    }
+//    dungeon map_t;
+//    _map.resize(map_t.dungeon_grid.size());
+//    _map.resize(map_t.dungeon_grid.size());
+//    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//    {
+//        _map[y].resize(map_t.dungeon_grid[0].size());
+//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//        {
+//            if (map_t.dungeon_grid[y][x]==1)
+//            {
+//                _map[y][x]= new tile(stonewall,0,"stone");
+//                actors[0]->pos(y,x);
+//            }
+//            else
+//            {
+//                _map[y][x]= new tile(stonefloor,-1,"stone");
+//            }
+//            _map[y][x]->position = coordinate(x,y);
+//        }
+//    }
 
 
 bool keyrelease = true;
@@ -204,7 +201,6 @@ bool keyrelease = true;
 
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
-        window.setView(view);
 
         sf::Event event;
 
@@ -212,21 +208,21 @@ bool keyrelease = true;
             for (int i=0;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
-                    root->run(actors[i],_map,localItems,actors,announcementList);
+                    root->run(actors[i],_map[0],localItems,actors,announcementList);
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(_map[1], localItems, actors, window, keyrelease, announcementList);
 
 
-        lightmap = &_map;
-        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
-//        for (lightSource * _l : lights){
-//            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-//        }
-        _map = (*lightmap);
+//        lightmap = &_map;
+//        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
+////        for (lightSource * _l : lights){
+////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
+////        }
+//        _map = (*lightmap);
 
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
@@ -243,14 +239,15 @@ bool keyrelease = true;
 
         if (xstart < 0)xstart = 0;
         if (ystart < 0)ystart = 0;
-        if (xend >= _map[0].size())xend = _map[0].size()-1;
-        if (yend >= _map.size())yend = _map.size()-1;
+        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
+        if (yend >= _map[0].size())yend = _map[0].size()-1;
 
         for (ystart;ystart <= yend;ystart++){
             for (int x = xstart;x<=xend;x++){
-                _map[ystart][x]->litHere = false;
+                _map[0][ystart][x]->litHere = false;
             }
         }
+        window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
