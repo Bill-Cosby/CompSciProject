@@ -9,14 +9,20 @@
 
 void box::makeHouse(std::vector<std::vector<tile*> > & tileMap)
 {
-
+    std::cout << "Makin houses\n";
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
             if(a==left or a==right or b==bottom or b==top)
             {
-                tileMap[b][a]=new tile('1',20,0);
+                std::cout << tileMap.size() << ":" << b << "," << tileMap[0].size() << ":" << a << std::endl;
+                std::cout << "Is this the problem?\n";
+                if (a < 100 and b < 100 and a > -1 and b > -1){
+                    tileMap[b][a]=new tile(stonefloor,20,"stone");
+                    tileMap[b][a]->position = coordinate(a*16,b*16);
+                }
+                std::cout << "No it isn't... this time\n";
             }
             divideBox(1,tileMap,"HOUSE");
         }
@@ -66,7 +72,7 @@ void city:: setTileMap()
         for(int b=0; b<tileMapSize; b++)
         {
             tileMap[a][b]=new tile(grass,10,"grass");
-            tileMap[a][b]->position = coordinate(b,a);
+            tileMap[a][b]->position = coordinate(b*16,a*16);
             tileMap[a][b]->isDoor = false;
         }
     }
@@ -87,6 +93,7 @@ void city:: deleteTileMap()
 
 void box::makeLine(road* myLine, std::vector<std::vector<tile*> > & tileMap, int level, std::string type)
 {
+    std::cout << "Make a line\n";
     int a=0;
     int b=0;
     int width;
@@ -99,6 +106,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<tile*> > & tileMap, int
 
 if(type=="HOUSE")
 {
+    std::cout << "house wall\n";
     dc=1;
     mc=10;
     mat="wood";
@@ -138,7 +146,8 @@ if(type=="ROADBOX")
           tileMap[a][myLine->Point1->x-width/2+b]=new tile(dc,mc,mat);
           if(type=="HOUSE" and c==doorPlace)
           {
-              tileMap[c][d]=new tile(2,5,"wood");
+              tileMap[c][d]=new tile(woodfloor,5,"wood");
+              tileMap[c][d]->position = coordinate(d*16,a*16);
           }
       }
 
@@ -152,14 +161,16 @@ if(type=="ROADBOX")
        for(int d=0; d<level; d++)
        {
            signed int q=myLine->Point1->y-(width+1)/2+d;
-           if(0<=q<tileMap.size())
+           if(0<=q and q<tileMap.size())
            {
                tileMap[q][c]=new tile(dc,mc,mat);
+               tileMap[q][c]->position = coordinate(c*16,q*16);
            }
 
            if(type=="HOUSE" and c==doorPlace)
           {
-              tileMap[d][c]=new tile(2,5,"wood");
+              tileMap[d][c]=new tile(woodwall,5,"wood");
+               tileMap[d][c]->position = coordinate(c*16,d*16);
           }
        }
 
@@ -214,8 +225,6 @@ if(level>0)
 
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
-        delete subBox1;
-        delete subBox2;
 
     }
 
@@ -239,16 +248,14 @@ if(level>0)
         subBox1->right=right-1;
         subBox1->top=top-1;
         subBox1->bottom=splitPoint+1;
-
+        std::cout << left << "," << right << std::endl;
         subBox2->left=left+1;
         subBox2->right=right-1;
         subBox2->top=splitPoint-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
+        std::cout << level << std::endl;
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
-        delete subBox1;
-        delete subBox2;
-
     }
 
 }
@@ -263,4 +270,9 @@ divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
 }
 
 
+
+box::~box()
+{
+
+}
 
