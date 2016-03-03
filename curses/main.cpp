@@ -3,7 +3,6 @@
 #include <string>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
-#include "building.h"
 #include "generateCity.h"
 #include "tiles.h"
 #include "behaviorTree.h"
@@ -35,6 +34,7 @@ int main()
     srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
     city myCity;
+    myCity.generateCity();
     announcements announcementList;
 
     Selector* decisionMaker = new Selector;

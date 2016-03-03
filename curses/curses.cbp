@@ -44,8 +44,6 @@
 		<Unit filename="binarySearchStack.h" />
 		<Unit filename="bodyParts.cpp" />
 		<Unit filename="bodyParts.h" />
-		<Unit filename="building.cpp" />
-		<Unit filename="building.h" />
 		<Unit filename="drawGame.cpp" />
 		<Unit filename="drawGame.h" />
 		<Unit filename="generateCity.cpp" />

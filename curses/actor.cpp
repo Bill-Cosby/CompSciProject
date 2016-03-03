@@ -80,7 +80,6 @@ void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announceme
         }
 
     }
-    //std::cout << highestDamage << " : " << totalAttack() << std::endl;
 }
 bool actor::isInDanger(std::vector<actor*> actors)
 {
@@ -188,7 +187,6 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
 
 bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
 {
-    std::cout << findDistance(goal) << std::endl;
     if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
         _map[goal.y][goal.x]->interactWithDoor(true);
         return true;

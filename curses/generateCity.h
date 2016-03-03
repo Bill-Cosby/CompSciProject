@@ -33,17 +33,19 @@ int top;
 std::vector<coordinate *> blank;
 
 box(){blank.resize(2);}
-void divideBox(int, std::vector<std::vector<tile*> > &);
-void makeRoad(road*, std::vector<std::vector<tile*> > &, int);
+void divideBox(int, std::vector<std::vector<tile*> > &, std::string);
+void makeLine(road*, std::vector<std::vector<tile*> > &, int, std::string);
+void makeHouse(std::vector<std::vector<tile*> > & tileMap);
 };
 
-class city: box
+
+class city: public box
 {
     public:
 std::vector<std::vector<tile*> > tileMap;
 int tileMapSize;
 void setTileMap();
-city(){tileMapSize=50; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; }
+city(){tileMapSize=100; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; }
 void generateCity();
 void deleteTileMap();
 };
