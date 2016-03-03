@@ -124,7 +124,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                     actorAttacking = NULL;
                 }
             }
-            else if (_map[temp.y][temp.x]->movementCost!=-1){
+            else if (_map[temp.y][temp.x]->movementCost>-100){
                 if (_map[temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[temp.y][temp.x]->interactWithDoor(true);
                 }

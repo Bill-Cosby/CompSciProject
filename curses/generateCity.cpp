@@ -9,50 +9,46 @@
 
 void box::makeHouse(std::vector<std::vector<tile*> > & tileMap)
 {
+ unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator (seed);
+    std::uniform_int_distribution<int> halfChance(0,1);
+    std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
+    int half=halfChance(generator);
+    int doorPlace=doorFinder(generator);
 
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
-            if(a==left or a==right or b==bottom or b==top)
+            if(b==bottom or a==right)
             {
-                tileMap[b][a]=new tile('1',20,0);
+                if(b+a==doorPlace and half==0)
+                {
+                    tileMap[b][a]=new tile('2',20,0);
+                }
+                else
+                {
+                    tileMap[b][a]=new tile('1',20,0);
+                }
+
+            }
+
+            else if(a==left or b==top)
+            {
+                if(b+a==doorPlace and half==1)
+                {
+                    tileMap[b][a]=new tile('2',20,0);
+                }
+                else
+                {
+                   tileMap[b][a]=new tile ('1',20,0);
+                }
             }
             divideBox(1,tileMap,"HOUSE");
         }
     }
 
 
-   /* unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator (seed);
-    std::uniform_int_distribution fourthChance(0,4);
-    int side=fourthChance(generator);
-
-    if(side==0)
-    {
-
-        std::normal_distribution<int> findDoor(bottom+1,top-1);
-        doorPlace=findDoor(generator);
-        tileMap[doorPlace][right]=new tile();
-    }
-    if(side==1)
-    {
-         std::normal_distribution<int> findDoor(left+1,right-1);
-         doorPlace=findDoor(generator);
-         tileMap[top][doorPlace];
-    }
-    if(side==2)
-    {
-         std::normal_distribution<int> findDoor(bottom+1,top-1);
-         doorPlace=findDoor(generator);
-         tileMap[doorPlace][];
-    }
-    if(side==3)
-    {
-        std::normal_distribution<int> findDoor(left+1,right-1);
-        doorPlace=findDoor(generator);
-    }
-    */
 }
 
 void city:: setTileMap()
@@ -122,7 +118,7 @@ if(type=="HOUSE")
 
 if(type=="ROADBOX")
 {
-   dc='0';
+   dc='1';
    mc=10;
    mat=0;
    width=level;
@@ -144,6 +140,7 @@ if(type=="ROADBOX")
   }
  }
 
+
   else
   {
   for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
@@ -151,8 +148,9 @@ if(type=="ROADBOX")
        for(int d=0; d<level; d++)
        {
            signed int q=myLine->Point1->y-(width+1)/2+d;
-           if(0<=q<tileMap.size())
+           if(0<=q and q <tileMap.size())
            {
+
                tileMap[q][c]=new tile(dc,mc,mat);
            }
 
@@ -186,7 +184,7 @@ if(level>0)
 
     if(half==0 and right-left>level) //if line vertical and there is space to draw line
     {
-        std::normal_distribution<float> findSplitPoint(left+level/2, right-level/2);
+        std::uniform_int_distribution<int> findSplitPoint(left+level/2, right-level/2);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -220,7 +218,10 @@ if(level>0)
 
     else if (half==1 and top-bottom>level)
     {//line horizontal
-        std::normal_distribution<float> findSplitPoint(bottom+level/2, top-level/2);
+        std::uniform_int_distribution<int> findSplitPoint(bottom+level/2,top-level/2);
+        int tempBottom=bottom;
+        int tempLevel=level;
+        int tempTop=top;
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
@@ -243,6 +244,7 @@ if(level>0)
         subBox2->right=right-1;
         subBox2->top=splitPoint-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
+
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
         delete subBox1;
