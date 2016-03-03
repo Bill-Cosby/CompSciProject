@@ -17,6 +17,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
+    if (darkenBy == 0)return;
     sf::Sprite tempSprite;
     tempSprite.setTexture(textures[defaultchar]);
     tempSprite.setPosition(position.x*16,position.y*16);
@@ -33,7 +34,7 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     tempSprite.setColor(darkenedColor);
 
     window.draw(tempSprite,renderState);
-    darkenBy = 1;
+    darkenBy = 0;
 }
 
 door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
@@ -70,7 +71,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
         tempSprite.setTexture(textures[closeddoor]);
     }
     window.draw(tempSprite, renderState);
-    darkenBy = 1;
+    darkenBy = 0;
 }
 
 tile::tile(char dc, int mv, std::string mat)

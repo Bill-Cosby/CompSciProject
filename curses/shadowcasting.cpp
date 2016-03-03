@@ -8,7 +8,6 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
 
     float next_start_slope = start_slope;
 
-
     _map[actors[0]->zReturn()-1][y][x]->drawTile(window,renderState);
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
@@ -54,15 +53,16 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
 
                     if (blocked) {
                         if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
-                        _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
-                        _map[actors[0]->zReturn()][ay][ax]->litHere = true;
+                            _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                            _map[actors[0]->zReturn()][ay][ax]->litHere = true;
                             next_start_slope = r_slope;
                             continue;
                         }else{
                             blocked = false;
                             start_slope = next_start_slope;
                         }
-                    }else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+                    }
+                    else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                         _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
                         _map[actors[0]->zReturn()][ay][ax]->litHere = true;
                         blocked = true;
@@ -108,12 +108,12 @@ void castShadow(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vect
             }
             unsigned int ax = x + sax;
             unsigned int ay = y + say;
-            if (ax >= (*_map).size() or ay >= (*_map).size()){
+            if (ax >= (*_map)[0].size() or ay >= (*_map)[0].size()){
                 continue;
             }
             else{
-                if ((unsigned int)(dx * dx + dy * dy) < radius2/* and (*_map)[ay][ax]->litHere == false*/){
-                    if ((*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy == 1){
+                if ((unsigned int)(dx * dx + dy * dy) < radius2){
+                    if ((*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy == 0){
                         (*_map)[actors[0]->zReturn()-1][ay][ax]->darkenBy = temp;
                     }
                     else{
@@ -123,15 +123,32 @@ void castShadow(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vect
 
                 }
                 if ((*_map)[actors[0]->zReturn()][ay][ax]!=NULL){
-                if (blocked) {
-                    if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+
+                    if (blocked){
+                        if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+
+                        if ((*_map)[actors[0]->zReturn()][ay][ax]->darkenBy == 0){
+                            (*_map)[actors[0]->zReturn()][ay][ax]->darkenBy = temp;
+                        }
+                        else{
+                            float temporaryVar = (log10(temp*100))/100;
+                            (*_map)[actors[0]->zReturn()][ay][ax]->darkenBy += temporaryVar;
+                        }
                         next_start_slope = r_slope;
                         continue;
                     }else{
                         blocked = false;
                         start_slope = next_start_slope;
                     }
-                }else if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+                }
+                else if ((*_map)[actors[0]->zReturn()][ay][ax]->movementCost == -1 or ((*_map)[actors[0]->zReturn()][ay][ax]->isDoor and (*_map)[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
+                    if ((*_map)[actors[0]->zReturn()][ay][ax]->darkenBy == 0){
+                            (*_map)[actors[0]->zReturn()][ay][ax]->darkenBy = temp;
+                        }
+                        else{
+                            float temporaryVar = (log10(temp*100))/100;
+                            (*_map)[actors[0]->zReturn()][ay][ax]->darkenBy += temporaryVar;
+                        }
                     blocked = true;
                     castShadow(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState, temp-decreaseBy, decreaseBy);
                     next_start_slope = r_slope;

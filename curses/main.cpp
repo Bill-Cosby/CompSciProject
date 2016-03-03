@@ -121,7 +121,7 @@ actors.push_back(new player("human"));
         _map[0][y].resize(20);
         for (int x=0;x<20;x++){
             if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-            else _map[0][y][x] = new tile(grass,0,"grass");
+            else _map[0][y][x] = new tile(stonefloor,0,"stone");
             _map[0][y][x]->position=coordinate(x,y);
         }
     }
@@ -217,12 +217,12 @@ bool keyrelease = true;
         else actors[0]->movement(_map[1], localItems, actors, window, keyrelease, announcementList);
 
 
-//        lightmap = &_map;
-//        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
-////        for (lightSource * _l : lights){
-////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-////        }
-//        _map = (*lightmap);
+        lightmap = &_map;
+        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
+//        for (lightSource * _l : lights){
+//            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
+//        }
+        _map = (*lightmap);
 
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
@@ -245,6 +245,7 @@ bool keyrelease = true;
         for (ystart;ystart <= yend;ystart++){
             for (int x = xstart;x<=xend;x++){
                 _map[0][ystart][x]->litHere = false;
+                if (_map[1][ystart][x] !=NULL)_map[0][ystart][x]->litHere = false;
             }
         }
         window.setView(view);
