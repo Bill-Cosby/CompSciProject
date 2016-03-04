@@ -34,7 +34,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
             }
             else{
 
-                if ((unsigned int)(dx * dx + dy * dy) < radius2 and _map[actors[0]->zReturn()-1][ay][ax]->litHere == false){
+                if ((unsigned int)(dx * dx + dy * dy) < radius2 /*and _map[actors[0]->zReturn()-1][ay][ax]->litHere == false*/){
                     _map[actors[0]->zReturn()-1][ay][ax]->drawTile(window, renderState);
                     _map[actors[0]->zReturn()-1][ay][ax]->litHere = true;
                     for (item* _i : localItems){
@@ -53,7 +53,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
 
                     if (blocked) {
                         if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
-                            _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                            //_map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
                             _map[actors[0]->zReturn()][ay][ax]->litHere = true;
                             next_start_slope = r_slope;
                             continue;
@@ -63,7 +63,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                         }
                     }
                     else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
-                        _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                        //_map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
                         _map[actors[0]->zReturn()][ay][ax]->litHere = true;
                         blocked = true;
                         cast_light(_map,localItems,actors,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);

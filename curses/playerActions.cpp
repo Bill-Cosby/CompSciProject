@@ -123,7 +123,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                     actorAttacking = NULL;
                 }
             }
-            else if (_map[temp.y][temp.x] == NULL){
+            else if (_map[temp.y][temp.x]->movementCost != -1){
                 for (actor* _a : actors){
                     if (_a == this)continue;
                     if (coordinate(_a->col(),_a->row()) == temp){

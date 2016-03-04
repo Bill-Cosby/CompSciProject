@@ -33,8 +33,6 @@ int main()
     srand(time(NULL));
     srand(rand()%time(NULL));
     CheckAll * root = new CheckAll;
-    city myCity;
-    myCity.generateCity();
     announcements announcementList;
 
     Selector* decisionMaker = new Selector;
@@ -113,8 +111,21 @@ actors.push_back(new player("human"));
 
 
 
+    city myCity;
+    myCity.generateCity();
     std::vector<std::vector<std::vector<tile* > > > _map;
+    _map.resize(2);
+    _map[0].resize(100);
+    _map[1].resize(100);
+    for (int i = 0;i<100;i++){
+        _map[0][i].resize(100);
+        _map[1][i].resize(100);
+    }
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
+    _map[0]=myCity.tileMap;
+    std::cout << _map[0].size() << std::endl;
+    std::cout << _map[0][0].size() << std::endl;
+
 //    _map.resize(2);
 //    _map[0].resize(20);
 //    _map[1].resize(20);
@@ -150,8 +161,7 @@ actors.push_back(new player("human"));
 //            _map[1][y][x]->position=coordinate(x,y);
 //        }
 //    }
-    std::cout << myCity.tileMap.size() << std::endl;
-
+    std::cout << myCity.tileMap[0].size() << std::endl;
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -215,7 +225,7 @@ bool keyrelease = true;
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(myCity.tileMap, localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(_map[0], localItems, actors, window, keyrelease, announcementList);
 
 
 //        lightmap = &_map;
@@ -230,8 +240,8 @@ bool keyrelease = true;
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-                keyrelease = true;
             }
+                keyrelease = true;
         }
         int ystart = actors[0]->row() - (viewSizeInTiles.y/2);
         int xstart = actors[0]->col() - (viewSizeInTiles.x/2);
@@ -250,7 +260,7 @@ bool keyrelease = true;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
 

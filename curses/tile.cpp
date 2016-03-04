@@ -42,7 +42,7 @@ door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
     _material = mat;
     open=_o;
     isDoor=true;
-    darkenBy = 0;
+    darkenBy = 1;
 }
 
 void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
@@ -79,7 +79,7 @@ tile::tile(char dc, int mv, std::string mat)
     _material = mat;
     movementCost = mv;
     defaultchar = dc;
-    darkenBy = 0;
+    darkenBy = 1;
 }
 
 bool door::interactWithDoor(bool opening)

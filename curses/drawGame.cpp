@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
+void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
 {
 
     renderState = sf::RenderStates::Default;
@@ -13,28 +13,24 @@ void gameWorld::drawGameworld(std::vector<std::vector<tile*> > &_map, std::vecto
 
     window.clear();
 
-//    if (actors[0]->controlled == true){
-//        do_fov(_map, localItems, actors, actors[0]->col(), actors[0]->row(), 15, window, renderState,false,0,0);
-//    }
+    if (actors[0]->controlled == true){
+        //do_fov(_map, localItems, actors, actors[0]->col(), actors[0]->row(), 15, window, renderState,false,0,0);
+    }
 
-    for (int y=0;y<25;y++)
+    for (int y=0;y<100;y++)
     {
-        for (int x=0;x<25;x++)
+        for (int x=0;x<100;x++)
         {
-            std::cout << _map[y][x]->_material << std::endl;
-            std::cout << _map[y][x]->position.x << "," << _map[y][x]->position.y << std::endl;
-            if (x+charplaced.x >=0 and y+charplaced.y >=0 and x+charplaced.x<_map[0].size() and y+charplaced.y<_map.size()){
-                actors[0]->drawActor(window);
-                //_map[y][x]->drawTile(window,renderState);
-                if (_map[y][x]!=NULL)_map[y][x]->drawTile(window,renderState);
-            }
+                _map[0][y][x]->drawTile(window,renderState);
+                //if (_map[y][x]!=NULL)_map[y][x]->drawTile(window,renderState);
         }
     }
+                actors[0]->drawActor(window);
     window.setView(window.getDefaultView());
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
     window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
-    window.display();
+                window.display();
 }
 
 void announcements::drawAnnouncements(sf::RenderWindow & window)
