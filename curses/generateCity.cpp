@@ -141,7 +141,7 @@ if(type=="ROADBOX")
           else if(0<=q and q <tileMap.size())
            {
 
-               //tileMap[c][q]=new tile(dirt,5,"dirt");
+               tileMap[c][q]=new tile(dirt,5,"dirt");
                tileMap[c][q]->position = coordinate(c,q);
            }
       }
@@ -166,7 +166,7 @@ if(type=="ROADBOX")
            else if(0<=q and q <tileMap.size())
            {
 
-               //tileMap[q][c]=new tile(dirt,5,"dirt");
+               tileMap[q][c]=new tile(dirt,5,"dirt");
                tileMap[q][c]->position = coordinate(c,q);
            }
        }
