@@ -37,7 +37,7 @@ void box::makeHouse(std::vector<std::vector<tile*> > & tileMap)
             {
                 if(b+a==doorPlace and half==1)
                 {
-                    tileMap[b][a]=new tile('2',20,0);
+                    tileMap[b][a]=new tile('0',20,0);
                 }
                 else
                 {
@@ -128,38 +128,52 @@ if(type=="ROADBOX")
  {
   for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
   {
-      for(int d=0; d<level; d++)
+      signed int q1=myLine->Point1->x-(width)/2;
+      signed int q2=myLine->Point1->x+(width)/2;
+      if(0<=q1 and q2<tileMap.size())
       {
-          tileMap[a][myLine->Point1->x-width/2+b]=new tile(dc,mc,mat);
+      for(int d=q1; d<q2; d++)
+      {
+
           if(type=="HOUSE" and c==doorPlace)
           {
               tileMap[c][d]=new tile('2',5,0);
           }
+          else
+           {
+               tileMap[c][myLine->Point1->x-(width)/2+d]=new tile(dc,mc,mat);
+           }
       }
-
   }
  }
 
 
-  else
+  else //horizontal
   {
   for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
    {
-       for(int d=0; d<level; d++)
+      signed int q1=myLine->Point1->x-(width)/2;
+      signed int q2=myLine->Point1->x+(width)/2;
+      if(0<=q1 and q2<tileMap.size())
+      {
+
+       for(int d=q1; d<q2; d++)
        {
-           signed int q=myLine->Point1->y-(width+1)/2+d;
-           if(0<=q and q <tileMap.size())
-           {
-
-               tileMap[q][c]=new tile(dc,mc,mat);
-           }
-
            if(type=="HOUSE" and c==doorPlace)
           {
               tileMap[d][c]=new tile('2',5,0);
           }
-       }
 
+          else
+           {
+               tileMap[myLine->Point1->x-(width)/2+d][c]=new tile(dc,mc,mat);
+           }
+          }
+
+
+
+       }
+       }
    }
   }
 
@@ -216,12 +230,9 @@ if(level>0)
 
     }
 
-    else if (half==1 and top-bottom>level)
+    else if (half==1 and top-bottom>level+1)
     {//line horizontal
         std::uniform_int_distribution<int> findSplitPoint(bottom+level/2,top-level/2);
-        int tempBottom=bottom;
-        int tempLevel=level;
-        int tempTop=top;
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
