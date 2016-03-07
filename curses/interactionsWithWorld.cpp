@@ -24,7 +24,7 @@ bool actor::isItemBetter()
     return false;
 }
 
-bool actor::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
+bool actor::canSee(std::vector<std::vector<std::vector<tile*> > > _map, coordinate checkSpot)
 {
     int x1=col();
     int y1=row();
@@ -54,7 +54,7 @@ bool actor::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 
             error += delta_y;
             x1 += ix;
-            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
+            if (_map[1][y1][x1]->movementCost==-1 or (_map[1][y1][x1]->isDoor==true and _map[1][y1][x1]->isOpen()==false)){
                 return false;
             }
         }
@@ -75,7 +75,7 @@ bool actor::canSee(std::vector<std::vector<tile*> > _map, coordinate checkSpot)
 
             error += delta_x;
             y1 += iy;
-            if (_map[y1][x1]->movementCost==-1 or (_map[y1][x1]->isDoor==true and _map[y1][x1]->isOpen()==false)){
+            if (_map[1][y1][x1]->movementCost==-1 or (_map[1][y1][x1]->isDoor==true and _map[1][y1][x1]->isOpen()==false)){
                 return false;
             }
         }

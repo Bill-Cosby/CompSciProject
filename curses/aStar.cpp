@@ -27,7 +27,7 @@ struct comparator {
     }
 };
 
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
+std::vector<coordinate> pathFinder(std::vector<std::vector<std::vector<tile*> > > _map, coordinate start, coordinate goal, std::vector<coordinate> noGo)
 {
 
 
@@ -72,18 +72,18 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
                 if (y==0 and x==0){
                     continue;
                 }
-                if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map.size()){
+                if (currentNode.position.x+x>=0 and currentNode.position.x+x<_map[1][0].size() and currentNode.position.y+y>=0 and currentNode.position.y+y<_map[1].size()){
                     for (coordinate _c : noGo){
                         if (_c == coordinate(currentNode.position.x+x,currentNode.position.y+y)){
                             dontStep = true;
                         }
                     }
-                    if (_map[currentNode.position.y+y][currentNode.position.x+x]->movementCost != -1 and dontStep == false){
-                        _map[currentNode.position.y+y][currentNode.position.x+x]->parent   = currentNode.position;
-                        _map[currentNode.position.y+y][currentNode.position.x+x]->position = coordinate(currentNode.position.x+x,currentNode.position.y+y);
-                        _map[currentNode.position.y+y][currentNode.position.x+x]->hCost    = getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
-                        _map[currentNode.position.y+y][currentNode.position.x+x]->gCost    = currentNode.gCost+10+(4*abs(y)-abs(x)+1);
-                        tempNeighborStorage.push_back(_map[currentNode.position.y+y][currentNode.position.x+x]);
+                    if (_map[1][currentNode.position.y+y][currentNode.position.x+x]->movementCost != -1 and dontStep == false){
+                        _map[1][currentNode.position.y+y][currentNode.position.x+x]->parent   = currentNode.position;
+                        _map[1][currentNode.position.y+y][currentNode.position.x+x]->position = coordinate(currentNode.position.x+x,currentNode.position.y+y);
+                        _map[1][currentNode.position.y+y][currentNode.position.x+x]->hCost    = getDistance(coordinate(currentNode.position.x+x,currentNode.position.y+y),goal);
+                        _map[1][currentNode.position.y+y][currentNode.position.x+x]->gCost    = currentNode.gCost+10+(4*abs(y)-abs(x)+1);
+                        tempNeighborStorage.push_back(_map[1][currentNode.position.y+y][currentNode.position.x+x]);
                     }
                 }
             }
@@ -136,7 +136,7 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > _map, coordi
     }
 }
 
-std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_map, coordinate goal, int costSoFar)
+std::vector<node> getNeighbors(node Node, std::vector<std::vector<std::vector<tile*> > > test_map, coordinate goal, int costSoFar)
 {
     std::vector<node> neighbors;
     for (int x=-1;x<=1;x++){
@@ -148,11 +148,6 @@ std::vector<node> getNeighbors(node Node, std::vector<std::vector<tile> > test_m
 
             int checkX=Node.position.x+x, checkY=Node.position.y+y;
 
-            if (checkX>=0 and checkX<test_map[0].size() and checkY>=0 and checkY<test_map.size() and test_map[Node.position.y+y][Node.position.x+x].movementCost==0)
-            {
-                neighbors.push_back(node(coordinate(checkX,checkY), goal, costSoFar+getDistance(Node.position,coordinate(Node.position.x+x,Node.position.y+y))));
-                neighbors[0].parent=Node.position;
-            }
         }
     }
 
@@ -185,7 +180,7 @@ int getDistance(coordinate nodeA, coordinate nodeB)
     }
 
 }
-bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coordinate spotToSee)
+bool canSee(std::vector<std::vector<std::vector<tile*> > > test_map, coordinate checkSpot, coordinate spotToSee)
 {
     int x1=spotToSee.x;
     int y1=spotToSee.y;
@@ -216,11 +211,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
             error += delta_y;
             x1 += ix;
             if (coordinate(x1,y1) == checkSpot)return true;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (test_map[1][y1][x1]->movementCost==-1){
                 return false;
             }
-            if (test_map[y1][x1]->isDoor){
-                if (test_map[y1][x1]->isOpen())continue;
+            if (test_map[1][y1][x1]->isDoor){
+                if (test_map[1][y1][x1]->isOpen())continue;
                 return false;
             }
         }
@@ -242,11 +237,11 @@ bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coo
             error += delta_x;
             y1 += iy;
             if (coordinate(x1,y1) == checkSpot)return true;
-            if (test_map[y1][x1]->movementCost==-1){
+            if (test_map[1][y1][x1]->movementCost==-1){
                 return false;
             }
-            if (test_map[y1][x1]->isDoor){
-                if (test_map[y1][x1]->isOpen())continue;
+            if (test_map[1][y1][x1]->isDoor){
+                if (test_map[1][y1][x1]->isOpen())continue;
                 return false;
             }
         }

@@ -14,43 +14,43 @@ void actor::makeCorpse(std::vector<item*> &localItems)
     delete this;
 }
 
-void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<tile*> > &_map)
+void actor::dodgeAttack(actor* enemyDodgingFrom, std::vector<std::vector<std::vector<tile*> > > &_map)
 {
     coordinate dodgeDirection(x-enemyDodgingFrom->col(),y-enemyDodgingFrom->row());
     bool dodged=false;
     coordinate temp=coordinate(x,y);
-    if (y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map.size() and _map[y+dodgeDirection.y][x]->movementCost!=-1){
+    if (y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map[1].size() and _map[1][y+dodgeDirection.y][x]->movementCost!=-1){
         y+=dodgeDirection.y;
-        if (x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map.size() and _map[y][x+dodgeDirection.x]->movementCost!=-1){
+        if (x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map[1].size() and _map[1][y][x+dodgeDirection.x]->movementCost!=-1){
             x+=dodgeDirection.x;
         }
         dodged=true;
     }
         dodgeDirection.y*=-1;
         dodgeDirection.x*=-1;
-    if(dodged==false and !(coordinate(x,y+dodgeDirection.y)==coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map.size() and _map[y+dodgeDirection.y][x]->movementCost!=-1){
+    if(dodged==false and !(coordinate(x,y+dodgeDirection.y)==coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and y+dodgeDirection.y>=0 and y+dodgeDirection.y<_map[1].size() and _map[1][y+dodgeDirection.y][x]->movementCost!=-1){
         y+=dodgeDirection.y;
     }
-    else if (dodged==false and !(coordinate(x+dodgeDirection.x,y)!=coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map.size() and _map[y][x+dodgeDirection.x]->movementCost!=-1){
+    else if (dodged==false and !(coordinate(x+dodgeDirection.x,y)!=coordinate(enemyDodgingFrom->col(),enemyDodgingFrom->row())) and x+dodgeDirection.x>=0 and x+dodgeDirection.x<_map[1].size() and _map[1][y][x+dodgeDirection.x]->movementCost!=-1){
         x+=dodgeDirection.x;
     }
     if (temp==coordinate(x,y)){
-        if (dodgeDirection.y==0 and _map[y+1][x]->movementCost!=-1){
+        if (dodgeDirection.y==0 and _map[1][y+1][x]->movementCost!=-1){
             y+=1;
         }
-        else if (dodgeDirection.y==0 and _map[y--][x]->movementCost!=-1){
+        else if (dodgeDirection.y==0 and _map[1][y--][x]->movementCost!=-1){
             y+=-1;
         }
-        else if (dodgeDirection.x==0 and _map[y][x+1]->movementCost!=-1){
+        else if (dodgeDirection.x==0 and _map[1][y][x+1]->movementCost!=-1){
             x+=1;
         }
-        else if (dodgeDirection.x==0 and _map[y][x--]->movementCost!=-1){
+        else if (dodgeDirection.x==0 and _map[1][y][x--]->movementCost!=-1){
             x+=-1;
         }
     }
 }
 
-void actor::simpleAttackEnemy(std::vector<std::vector<tile*> > &_map, announcements & announcementList, std::vector<item*> &localItems)
+void actor::simpleAttackEnemy(std::vector<std::vector<std::vector<tile*> > > &_map, announcements & announcementList, std::vector<item*> &localItems)
 {
     int highestDamage = 999999;
     bodyPart *bodyPartToHit = NULL;
@@ -99,7 +99,7 @@ bool actor::isInDanger(std::vector<actor*> actors)
     }
     return false;
 }
-bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<tile*> > &_map)
+bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map)
 {
     int totalDanger = 0;
     float dangerRatio;
@@ -129,13 +129,14 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vecto
     return false;
 }
 
-coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, bool hiddenFromEnemy)
+coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool isDoor, bool hiddenFromEnemy)
 {
     std::vector<coordinate*> openSet;
     std::vector<coordinate> closedSet;
     coordinate temp;
 
     openSet.push_back(new coordinate(x,y));
+    std::cout << x << "," << y << std::endl;
 
     bool tileWorks;
 
@@ -156,7 +157,8 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
         }
         if (isDoor == true){
             temp = *openSet[i];
-            if (_map[openSet[i]->y][openSet[i]->x]->isDoor == true and _map[openSet[i]->y][openSet[i]->x]->isOpen() == false){
+            if (_map[1][openSet[i]->y][openSet[i]->x]->isDoor == true and _map[1][openSet[i]->y][openSet[i]->x]->isOpen() == false){
+                goal = temp;
                 return temp;
             }
         }
@@ -166,6 +168,7 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
                 delete openSet[i];
             }
             if (!(canSee(_map,*openSet[i]))){
+                goal = temp;
                 return temp;
             }
         }
@@ -185,10 +188,10 @@ coordinate actor::findTile(std::vector<std::vector<tile*> > &_map, bool isDoor, 
     return coordinate(-1,-1);
 }
 
-bool actor::openDoor(std::vector<std::vector<tile*> > &_map)
+bool actor::openDoor(std::vector<std::vector<std::vector<tile*> > > &_map)
 {
-    if (findDistance(goal) <= 1.5 and _map[goal.y][goal.x]->isOpen() == false){
-        _map[goal.y][goal.x]->interactWithDoor(true);
+    if (findDistance(goal) <= 1.5 and _map[1][goal.y][goal.x]->isOpen() == false){
+        _map[1][goal.y][goal.x]->interactWithDoor(true);
         return true;
     }
     else{
@@ -218,7 +221,7 @@ bool actor::equipItem(std::vector<item*> & localItems)
     return false;
 }
 
-bool actor::findItem(std::vector<std::vector<tile*> > &_map, std::vector<item*> &localItems)
+bool actor::findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems)
 {
     int positionInVector = 0;
     for (item* _i : localItems){

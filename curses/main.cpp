@@ -10,10 +10,6 @@
 using namespace std;
 
 
-
-
-
-
 int main()
 {
 
@@ -72,23 +68,22 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
-//actors.push_back(new monster("human"));
+actors.push_back(new monster("human"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
+    actors[1]->pos(18,18);
 
 
 
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(10,"Axe",'P',16,18,10,"weapon"));
     globalItems.push_back(new weapon(5,"Sword",'/',10,18,7,"weapon"));
     localItems.push_back(globalItems[0]);
-    localItems.push_back(globalItems[1]);
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
     lights[0]->intensity = 1;
@@ -111,6 +106,13 @@ actors.push_back(new player("human"));
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
     std::vector<std::vector<std::vector<tile* > > > _map;
+    _map.resize(2);
+
+    //city myCity;
+    //myCity.generateCity();
+
+    //_map[0]=myCity.tileMap;
+
     _map.resize(2);
     _map[0].resize(20);
     _map[1].resize(20);
@@ -135,11 +137,12 @@ actors.push_back(new player("human"));
 //        }
 //    }
 //
+    _map[1].resize(20);
     for (int y = 0;y<20;y++){
         _map[1][y].resize(20);
         for (int x = 0;x<20;x++){
             if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
                 else _map[1][y][x] = new tile(stonewall,-1,"stone");
             }
             else if (x == 14 and y >=16){
@@ -151,9 +154,9 @@ actors.push_back(new player("human"));
             else if (x == 0 or x == 19){
                     _map[1][y][x] = new tile(stonewall,-1,"stone");
             }
-            else {
+            else
+            {
                 _map[1][y][x] = new tile;
-                continue;
             }
             _map[1][y][x]->position=coordinate(x,y);
         }
@@ -213,13 +216,13 @@ bool keyrelease = true;
             for (int i=0;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
-                    root->run(actors[i],_map[0],localItems,actors,announcementList);
+                    root->run(actors[i],_map,localItems,actors,announcementList);
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(_map[0], localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -260,7 +263,7 @@ bool keyrelease = true;
 //        for (ystart;ystart <= yend;ystart++){
 //            for (int x = xstart;x<=xend;x++){
 //                _map[0][ystart][x]->litHere = false;
-//                if (_map[1][ystart][x] !=NULL)_map[0][ystart][x]->litHere = false;
+//                _map[1][ystart][x]->litHere = false;
 //            }
 //        }
         window.setView(view);

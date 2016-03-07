@@ -10,9 +10,9 @@
 #include <sstream>
 
 
-std::vector<node> findNeighbors(std::vector<std::vector<tile> >, node, coordinate);
-std::vector<coordinate> pathFinder(std::vector<std::vector<tile*> > ,coordinate,coordinate, std::vector<coordinate>);
-bool canSee(std::vector<std::vector<tile*> > test_map, coordinate checkSpot, coordinate spotToCheck);
+std::vector<node> findNeighbors(std::vector<std::vector<std::vector<tile*> > >, node, coordinate);
+std::vector<coordinate> pathFinder(std::vector<std::vector<std::vector<tile*> > > ,coordinate,coordinate, std::vector<coordinate>);
+bool canSee(std::vector<std::vector<std::vector<tile*> > > test_map, coordinate checkSpot, coordinate spotToCheck);
 bool vectorContains(std::vector<tile>,tile);
 
 #endif // ASTAR_H_INCLUDED

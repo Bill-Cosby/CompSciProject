@@ -128,11 +128,11 @@ if(type=="ROADBOX")
  {
   for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
   {
-      for(int d=0; d<level; d++)
+      for(int d=0; d<width; d++)
       {
           signed int q=myLine->Point1->x-(level+1)/2+d;
 
-          //tileMap[a][myLine->Point1->x-width/2+b]=new tile(stonefloor,5,"stone");
+          tileMap[a][myLine->Point1->x-width/2+b]=new tile(stonefloor,5,"stone");
           if(type=="HOUSE" and c==doorPlace)
           {
               tileMap[c][d]=new tile(woodfloor,5,"wood");
@@ -141,8 +141,8 @@ if(type=="ROADBOX")
           else if(0<=q and q <tileMap.size())
            {
 
-               //tileMap[c][q]=new tile(dirt,5,"dirt");
-               tileMap[c][q]->position = coordinate(c,q);
+               tileMap[c][q]=new tile(woodwall,5,"wood");
+               tileMap[c][q]->position = coordinate(q,c);
            }
       }
 
@@ -154,19 +154,19 @@ if(type=="ROADBOX")
   {
   for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
    {
-       for(int d=0; d<level; d++)
+       for(int d=0; d<width; d++)
        {
            signed int q=myLine->Point1->y-(width+1)/2+d;
 
            if(type=="HOUSE" and c==doorPlace)
           {
-              tileMap[d][c]=new tile(woodwall,5,"wood");
+               tileMap[d][c]=new tile(woodfloor,5,"wood");
                tileMap[d][c]->position = coordinate(c,d);
           }
            else if(0<=q and q <tileMap.size())
            {
 
-               //tileMap[q][c]=new tile(dirt,5,"dirt");
+               tileMap[q][c]=new tile(woodwall,5,"wood");
                tileMap[q][c]->position = coordinate(c,q);
            }
        }
@@ -191,7 +191,7 @@ if(level==0 and type=="ROADBOX")
 
 if(level>0)
 {
-    int half = 0;
+    int half = halfChance(generator);
 
     if(half==0 and right-left>level) //if line vertical and there is space to draw line
     {

@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
 {
     /*
     0 = NORTH
@@ -71,7 +71,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                         }
                     }
                 }
-                _map[temp.y][temp.x]->interactWithDoor(false);
+                _map[1][temp.y][temp.x]->interactWithDoor(false);
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
@@ -123,7 +123,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
                     actorAttacking = NULL;
                 }
             }
-            else if (_map[temp.y][temp.x]->movementCost != -1){
+            else if (_map[1][temp.y][temp.x]->movementCost != -1){
                 for (actor* _a : actors){
                     if (_a == this)continue;
                     if (coordinate(_a->col(),_a->row()) == temp){
@@ -139,8 +139,8 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
             }
             else{
 
-                if (_map[temp.y][temp.x]->isDoor){
-                    moveThroughDoor = _map[temp.y][temp.x]->interactWithDoor(true);
+                if (_map[1][temp.y][temp.x]->isDoor){
+                    moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }
             }
 
@@ -150,7 +150,7 @@ void player::movement(std::vector<std::vector<tile*> > &_map,std::vector<item*> 
     counter++;
 }
 
-void player::attackEnemy(std::vector<std::vector<tile*> >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)
+void player::attackEnemy(std::vector<std::vector<std::vector<tile*> > >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)
 {
     window.setView(window.getDefaultView());
     if (actorAttacking==NULL)return;
