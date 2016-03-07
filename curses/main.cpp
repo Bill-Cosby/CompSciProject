@@ -109,7 +109,7 @@ actors.push_back(new player("human"));
     city myCity;
     myCity.generateCity();
 
-    _map[0]=myCity.tileMap;
+    _map=myCity.tileMap;
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -135,10 +135,6 @@ actors.push_back(new player("human"));
 //        }
 //    }
 //
-    _map[1].resize(100);
-    for (int y = 0;y<100;y++){
-        _map[1][y].resize(100);
-        for (int x = 0;x<100;x++){
 //            if (x >= 14 and y == 16){
 //                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
 //                else _map[1][y][x] = new tile(stonewall,-1,"stone");
@@ -152,12 +148,6 @@ actors.push_back(new player("human"));
 //            else if (x == 0 or x == 19){
 //                    _map[1][y][x] = new tile(stonewall,-1,"stone");
 //            }
-            {
-                _map[1][y][x] = new tile;
-            }
-            _map[1][y][x]->position=coordinate(x,y);
-        }
-    }
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -219,7 +209,7 @@ bool keyrelease = true;
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(myCity.tileMap, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -264,7 +254,7 @@ bool keyrelease = true;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
     }
 
 

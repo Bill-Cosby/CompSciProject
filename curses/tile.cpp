@@ -56,20 +56,18 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
          darkenedColor = sf::Color(tempColor.r*darkenBy,tempColor.g*darkenBy,tempColor.b*darkenBy);
     }
 
-    tempSprite.setColor(darkenedColor);
-    tempSprite.setTexture(textures[woodfloor]);
     tempSprite.setPosition(position.x*16,position.y*16);
-    window.draw(tempSprite);
+        tempSprite.setColor(darkenedColor);
 
     if (isOpen()){
-        tempSprite.setTexture(textures[opendoor]);
+        tempSprite.setTexture(textures[woodfloor]);
         window.draw(tempSprite);
-        tempSprite.setTexture(textures[2]);
+        tempSprite.setTexture(textures[opendoor]);
     }
     else{
         tempSprite.setTexture(textures[closeddoor]);
     }
-    window.draw(tempSprite, renderState);
+    window.draw(tempSprite);
     darkenBy = 1;
 }
 

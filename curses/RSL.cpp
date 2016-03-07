@@ -150,7 +150,6 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
 
-    std::cout << dataType << std::endl;
 
     std::string line;
     std::ifstream loadFile(fileName);
@@ -260,7 +259,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
 
     std::string line;
     std::ifstream loadFile(fileName);
-    std::cout << dataType << "." << dataMember << std::endl;
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){

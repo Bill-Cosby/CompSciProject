@@ -124,6 +124,9 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 }
             }
             else if (_map[1][temp.y][temp.x]->movementCost != -1){
+                if (_map[1][temp.y][temp.x]->isDoor){
+                    moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
+                }
                 for (actor* _a : actors){
                     if (_a == this)continue;
                     if (coordinate(_a->col(),_a->row()) == temp){
@@ -139,9 +142,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             }
             else{
 
-                if (_map[1][temp.y][temp.x]->isDoor){
-                    moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
-                }
+
             }
 
 

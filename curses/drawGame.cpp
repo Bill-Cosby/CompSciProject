@@ -17,14 +17,6 @@ void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_m
         do_fov(_map, localItems, actors, actors[0]->col(), actors[0]->row(), 15, window, renderState,false,0,0);
     }
 
-//    for (int y=0;y<20;y++)
-//    {
-//        for (int x=0;x<20;x++)
-//        {
-//                _map[0][y][x]->drawTile(window,renderState);
-//                if (_map[1][y][x]!=NULL)_map[1][y][x]->drawTile(window,renderState);
-//        }
-//    }
                 actors[0]->drawActor(window);
     window.setView(window.getDefaultView());
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
