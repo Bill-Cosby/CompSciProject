@@ -247,9 +247,15 @@ bool keyrelease = true;
 //        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 //        for (lightSource * _l : lights){
 //            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 //        }
+=======
+////        for (lightSource * _l : lights){
+////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
+////        }
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 =======
 ////        for (lightSource * _l : lights){
 ////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
