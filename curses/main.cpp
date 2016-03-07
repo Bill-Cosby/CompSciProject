@@ -111,6 +111,7 @@ actors.push_back(new player("human"));
 
 
 
+<<<<<<< HEAD
     city myCity;
     myCity.generateCity();
     std::vector<std::vector<std::vector<tile* > > > _map;
@@ -125,6 +126,20 @@ actors.push_back(new player("human"));
     _map[0]=myCity.tileMap;
     std::cout << _map[0].size() << std::endl;
     std::cout << _map[0][0].size() << std::endl;
+=======
+    std::vector<std::vector<std::vector<tile* > > > _map;std::vector<std::vector<std::vector<tile* > > > * lightmap;
+    _map.resize(2);
+    _map[0].resize(20);
+    _map[1].resize(20);
+    for (int y=0;y<20;y++){
+        _map[0][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+            else _map[0][y][x] = new tile(grass,0,"grass");
+            _map[0][y][x]->position=coordinate(x,y);
+        }
+    }
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -230,9 +245,15 @@ bool keyrelease = true;
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
+<<<<<<< HEAD
 //        for (lightSource * _l : lights){
 //            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 //        }
+=======
+////        for (lightSource * _l : lights){
+////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
+////        }
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 //        _map = (*lightmap);
 
         while (window.pollEvent(event)){
@@ -248,6 +269,7 @@ bool keyrelease = true;
         int yend   = actors[0]->row() + (viewSizeInTiles.y/2);
         int xend   = actors[0]->col() + (viewSizeInTiles.x/2);
 
+<<<<<<< HEAD
 //        if (xstart < 0)xstart = 0;
 //        if (ystart < 0)ystart = 0;
 //        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
@@ -259,6 +281,18 @@ bool keyrelease = true;
 //                if (_map[1][ystart][x] !=NULL)_map[0][ystart][x]->litHere = false;
 //            }
 //        }
+=======
+        if (xstart < 0)xstart = 0;
+        if (ystart < 0)ystart = 0;
+        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
+        if (yend >= _map[0].size())yend = _map[0].size()-1;
+
+        for (ystart;ystart <= yend;ystart++){
+            for (int x = xstart;x<=xend;x++){
+                _map[0][ystart][x]->litHere = false;
+            }
+        }
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
         window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }

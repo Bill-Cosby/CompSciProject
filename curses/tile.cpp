@@ -17,7 +17,6 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
-    if (darkenBy == 0)return;
     sf::Sprite tempSprite;
     tempSprite.setTexture(textures[defaultchar]);
     tempSprite.setPosition(position.x*16,position.y*16);
