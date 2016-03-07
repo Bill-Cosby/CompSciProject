@@ -108,26 +108,9 @@ actors.push_back(new player("human"));
     lights[3]->position = coordinate(12,1);
 
     //coordinate temp;
-
-
-
-<<<<<<< HEAD
-    city myCity;
-    myCity.generateCity();
-    std::vector<std::vector<std::vector<tile* > > > _map;
-    _map.resize(2);
-    _map[0].resize(100);
-    _map[1].resize(100);
-    for (int i = 0;i<100;i++){
-        _map[0][i].resize(100);
-        _map[1][i].resize(100);
-    }
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
-    _map[0]=myCity.tileMap;
-    std::cout << _map[0].size() << std::endl;
-    std::cout << _map[0][0].size() << std::endl;
-=======
-    std::vector<std::vector<std::vector<tile* > > > _map;std::vector<std::vector<std::vector<tile* > > > * lightmap;
+
+    std::vector<std::vector<std::vector<tile* > > > _map;
     _map.resize(2);
     _map[0].resize(20);
     _map[1].resize(20);
@@ -139,7 +122,6 @@ actors.push_back(new player("human"));
             _map[0][y][x]->position=coordinate(x,y);
         }
     }
->>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -153,30 +135,29 @@ actors.push_back(new player("human"));
 //        }
 //    }
 //
-//    for (int y = 0;y<20;y++){
-//        _map[1][y].resize(20);
-//        for (int x = 0;x<20;x++){
-//            if (x >= 14 and y == 16){
-//                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
-//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 14 and y >=16){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (y == 0 or y == 19){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 0 or x == 19){
-//                    _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else {
-//                _map[1][y][x] = NULL;
-//                continue;
-//            }
-//            _map[1][y][x]->position=coordinate(x,y);
-//        }
-//    }
-    std::cout << myCity.tileMap[0].size() << std::endl;
+    for (int y = 0;y<20;y++){
+        _map[1][y].resize(20);
+        for (int x = 0;x<20;x++){
+            if (x >= 14 and y == 16){
+                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 14 and y >=16){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (y == 0 or y == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 0 or x == 19){
+                    _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else {
+                _map[1][y][x] = new tile;
+                continue;
+            }
+            _map[1][y][x]->position=coordinate(x,y);
+        }
+    }
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -225,8 +206,6 @@ bool keyrelease = true;
     while (window.isOpen())
     {
 
-        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
-        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
         sf::Event event;
 
@@ -241,31 +220,23 @@ bool keyrelease = true;
             }
         }
         else actors[0]->movement(_map[0], localItems, actors, window, keyrelease, announcementList);
+        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
+        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 //        for (lightSource * _l : lights){
 //            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 //        }
-=======
+////        for (lightSource * _l : lights){
+////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 ////        for (lightSource * _l : lights){
 ////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 ////        }
->>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
-=======
 ////        for (lightSource * _l : lights){
 ////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 ////        }
->>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
-=======
-////        for (lightSource * _l : lights){
-////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-////        }
->>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 //        _map = (*lightmap);
 
         while (window.pollEvent(event)){
@@ -281,7 +252,6 @@ bool keyrelease = true;
         int yend   = actors[0]->row() + (viewSizeInTiles.y/2);
         int xend   = actors[0]->col() + (viewSizeInTiles.x/2);
 
-<<<<<<< HEAD
 //        if (xstart < 0)xstart = 0;
 //        if (ystart < 0)ystart = 0;
 //        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
@@ -293,18 +263,6 @@ bool keyrelease = true;
 //                if (_map[1][ystart][x] !=NULL)_map[0][ystart][x]->litHere = false;
 //            }
 //        }
-=======
-        if (xstart < 0)xstart = 0;
-        if (ystart < 0)ystart = 0;
-        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
-        if (yend >= _map[0].size())yend = _map[0].size()-1;
-
-        for (ystart;ystart <= yend;ystart++){
-            for (int x = xstart;x<=xend;x++){
-                _map[0][ystart][x]->litHere = false;
-            }
-        }
->>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
         window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
@@ -318,7 +276,6 @@ bool keyrelease = true;
                 delete _map[i][j];
             }
         }*/
-        myCity.deleteTileMap();
 
 
         for (int i=0;i<globalItems.size();i++){
