@@ -92,90 +92,95 @@ void box::makeLine(road* myLine, std::vector<std::vector<tile*> > & tileMap, int
 
     int doorPlace;
 
-if(type=="HOUSE")
-{
-    std::cout << "house wall\n";
-    dc=1;
-    mc=10;
-    mat="wood";
-    width=1;
-    if(myLine->vertical)
+    if(type=="HOUSE")
     {
-        a=myLine->Point1->y;
-        b=myLine->Point2->y;
+        std::cout << "house wall\n";
+        dc=woodwall;
+        mc=-1;
+        mat="wood";
+        width=1;
+        if(myLine->vertical)
+        {
+            a=myLine->Point1->y;
+            b=myLine->Point2->y;
 
+        }
+        else
+        {
+            a=myLine->Point1->x;
+            b=myLine->Point2->x;
+        }
+
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine generator (seed);
+        std::uniform_int_distribution<int> doorFinder(a,b);
+        doorPlace=doorFinder(generator);
     }
-    else
+
+    if(type=="ROADBOX")
     {
-        a=myLine->Point1->x;
-        b=myLine->Point2->x;
+        dc = dirt;
+        mc=10;
+        mat="dirt";
+        width=level;
     }
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator (seed);
-    std::uniform_int_distribution<int> doorFinder(a,b);
-    doorPlace=doorFinder(generator);
+    if(myLine->vertical==true)
+    {
+        signed int q1=myLine->Point1->x-(width)/2;
+        signed int q2=myLine->Point1->x+(width)/2;
+
+
+        if(0<=q1 and q2<tileMap.size())
+        {
+            for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
+            {
+                for(int d=q1; d<q2; d++)
+                {
+                    if(type=="HOUSE" and c==doorPlace)
+                    {
+                        tileMap[c][d]=new tile(woodfloor,5,"wood");
+                    }
+                    else
+                    {
+                        tileMap[c][d]=new tile(dc,mc,mat);
+                    }
+                    tileMap[c][d]->position = coordinate(d,c);
+                }
+            }
+        }
+    }
+
+    else //horizontal
+    {
+        signed int q1=myLine->Point1->x-(width)/2;
+        signed int q2=myLine->Point1->x+(width)/2;
+
+        if(0<=q1 and q2<tileMap.size())
+        {
+            for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
+            {
+
+                for(int d=q1; d<q2; d++)
+                {
+                    if(type=="HOUSE" and c==doorPlace)
+                    {
+                        tileMap[d][c]=new tile(woodfloor,5,"wood");
+                    }
+
+                    else
+                    {
+                        tileMap[d][c]=new tile(dc,mc,mat);
+                    }
+                    tileMap[d][c]->position = coordinate(c,d);
+                }
+            }
+        }
+    }
 }
 
-if(type=="ROADBOX")
-{
-   mc=10;
-   mat="stone";
-   width=level;
-}
-
- if(myLine->vertical==true)
- {
-  for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
-  {
-      for(int d=0; d<width; d++)
-      {
-          signed int q=myLine->Point1->x-(level+1)/2+d;
-
-          tileMap[a][myLine->Point1->x-width/2+b]=new tile(stonefloor,5,"stone");
-          if(type=="HOUSE" and c==doorPlace)
-          {
-              tileMap[c][d]=new tile(woodfloor,5,"wood");
-              tileMap[c][d]->position = coordinate(d,c);
-          }
-          else if(0<=q and q <tileMap.size())
-           {
-
-               tileMap[c][q]=new tile(woodwall,5,"wood");
-               tileMap[c][q]->position = coordinate(q,c);
-           }
-      }
-
-  }
- }
 
 
-  else
-  {
-  for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
-   {
-       for(int d=0; d<width; d++)
-       {
-           signed int q=myLine->Point1->y-(width+1)/2+d;
-
-           if(type=="HOUSE" and c==doorPlace)
-          {
-               tileMap[d][c]=new tile(woodfloor,5,"wood");
-               tileMap[d][c]->position = coordinate(c,d);
-          }
-           else if(0<=q and q <tileMap.size())
-           {
-
-               tileMap[q][c]=new tile(woodwall,5,"wood");
-               tileMap[q][c]->position = coordinate(c,q);
-           }
-       }
-
-   }
-  }
-
-
-}
 
 
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap, std::string type)
@@ -225,12 +230,9 @@ if(level>0)
 
     }
 
-    else if (half==1 and top-bottom>level)
+    else if (half==1 and top-bottom>level+1)
     {//line horizontal
         std::uniform_int_distribution<int> findSplitPoint(bottom+level/2,top-level/2);
-        int tempBottom=bottom;
-        int tempLevel=level;
-        int tempTop=top;
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);

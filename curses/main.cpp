@@ -68,14 +68,12 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
-actors.push_back(new monster("human"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(18,18);
 
 
 
@@ -108,22 +106,22 @@ actors.push_back(new monster("human"));
     std::vector<std::vector<std::vector<tile* > > > _map;
     _map.resize(2);
 
-    //city myCity;
-    //myCity.generateCity();
+    city myCity;
+    myCity.generateCity();
 
-    //_map[0]=myCity.tileMap;
+    _map[0]=myCity.tileMap;
 
-    _map.resize(2);
-    _map[0].resize(20);
-    _map[1].resize(20);
-    for (int y=0;y<20;y++){
-        _map[0][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-            else _map[0][y][x] = new tile(grass,0,"grass");
-            _map[0][y][x]->position=coordinate(x,y);
-        }
-    }
+//    _map.resize(2);
+//    _map[0].resize(20);
+//    _map[1].resize(20);
+//    for (int y=0;y<20;y++){
+//        _map[0][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+//            else _map[0][y][x] = new tile(grass,0,"grass");
+//            _map[0][y][x]->position=coordinate(x,y);
+//        }
+//    }
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -137,24 +135,23 @@ actors.push_back(new monster("human"));
 //        }
 //    }
 //
-    _map[1].resize(20);
-    for (int y = 0;y<20;y++){
-        _map[1][y].resize(20);
-        for (int x = 0;x<20;x++){
-            if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
-                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 14 and y >=16){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (y == 0 or y == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 0 or x == 19){
-                    _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else
+    _map[1].resize(100);
+    for (int y = 0;y<100;y++){
+        _map[1][y].resize(100);
+        for (int x = 0;x<100;x++){
+//            if (x >= 14 and y == 16){
+//                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
+//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 14 and y >=16){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (y == 0 or y == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 0 or x == 19){
+//                    _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
             {
                 _map[1][y][x] = new tile;
             }
