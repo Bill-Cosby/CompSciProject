@@ -146,7 +146,7 @@ if(type=="ROADBOX")
       }
   }
  }
-
+ }
 
   else //horizontal
   {
@@ -178,7 +178,7 @@ if(type=="ROADBOX")
   }
 
 
-}
+
 
 
 void box::divideBox(int level, std::vector<std::vector<tile*> > & tileMap, std::string type)
