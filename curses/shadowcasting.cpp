@@ -55,8 +55,13 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                     if (blocked) {
                         if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
 <<<<<<< HEAD
+<<<<<<< HEAD
                             //_map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
                             _map[actors[0]->zReturn()][ay][ax]->litHere = true;
+=======
+                        _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
+                        _map[actors[0]->zReturn()][ay][ax]->litHere = true;
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
 =======
                         _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
                         _map[actors[0]->zReturn()][ay][ax]->litHere = true;
@@ -68,10 +73,13 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                             start_slope = next_start_slope;
                         }
 <<<<<<< HEAD
+<<<<<<< HEAD
                     }
                     else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                         //_map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
 =======
+=======
+>>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
                     }else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                         _map[actors[0]->zReturn()][ay][ax]->drawTile(window, renderState);
 >>>>>>> parent of 1d5f5ed... Fixed a little bit of the problem but it's not 100%
