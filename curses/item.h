@@ -48,7 +48,7 @@ class weapon : public item
 protected:
 public:
     bool twoHanded;
-    weapon(int _attack, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
+    weapon(std::string _name, char _symbol, int _x, int _y, int _value);
     void equip(bool equipping);
     std::string itemDescription();
 };
@@ -57,8 +57,8 @@ class clothing : public item
 {
 protected:
 public:
-    clothing(int _defence, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
-    void equip(bool equipping);
+    clothing(std::string _name, char _symbol, int _x, int _y, int _value);
+    void equip(bool equipping){}
     std::string itemDescription();
 };
 
@@ -67,7 +67,7 @@ class consumable : public item
 protected:
 public:
     consumable(int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
-    void equip(bool equipping);
+    void equip(bool equipping){}
     std::string itemDescription();
 
 };
@@ -93,7 +93,7 @@ public:
     item* vanity;
     std::vector<bodyPart*> partsAttached;
     void equip(bool equipping){}
-    std::string itemDescription(){}
+    std::string itemDescription();
     limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf::Sprite _sprite, std::vector<bodyPart*> _partsAttached, int _value, std::string _type);
 
     void draw(sf::RenderWindow &window){

@@ -1,8 +1,8 @@
 #include "item.h"
 
-weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y, int _value, std::string type)
+weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
 {
-    attack=_attack;
+    attack=RSL::getIntData("data/items/weapon_type.raw",name+".attack");
     value=_value;
     health=0;
     defense=0;
@@ -23,6 +23,29 @@ weapon::weapon(int _attack, std::string _name, char _symbol, int _x, int _y, int
     sprite.setPosition(x*16,y*16);
 }
 
+clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value)
+{
+    attack = 0;
+    value = _value;
+    health = 0;
+    defense = RSL::getIntData("data/items/armor_type.raw",name+".defense");
+    speed = 0;
+    name = _name;
+    type = RSL::getStringData("data/items/armor_type.raw",name+".type");
+    equipped = false;
+    canEquip = false;
+    canWear = true;
+    canUse = false;
+    x = _x;
+    y = _y;
+    selected = false;
+    texture = RSL::getTextureData("data/items/armor_type.raw",name+".texture");
+
+    sprite.setTexture(texture);
+
+    sprite.setPosition(x*16,y*16);
+}
+
 std::string weapon::itemDescription()
 {
     std::stringstream ss;
@@ -32,6 +55,17 @@ std::string weapon::itemDescription()
 
 
     description+="This " + name + " does " + str + " damage.";
+    return description;
+}
+
+std::string clothing::itemDescription()
+{
+    std::stringstream ss;
+    ss << defense;
+    std::string def = ss.str();
+    std::string description;
+
+    description += "This " + name + "has " + def + " defense.";
     return description;
 }
 
@@ -65,4 +99,9 @@ limb::limb(std::string _name, item * _armor, item * _vanity, int _x, int _y, sf:
     canUse=false;
 
     selected=false;
+}
+
+std::string limb::itemDescription()
+{
+    return "name";
 }

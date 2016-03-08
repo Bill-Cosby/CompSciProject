@@ -23,9 +23,18 @@ bool hand::equip(item* itemToGrasp, bool equipping)
 
 bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
 {
-    if (grasps == true){
-        equip(itemToGrasp, equipping);
-        return true;
+    if (equipping == true){
+        for (std::string _s : equips){
+            if (_s == itemToGrasp->type){
+                if (itemToGrasp->canEquip){
+                    equip(itemToGrasp,true);
+                }
+                else if (itemToGrasp->canWear){
+                    std::cout << name << std::endl;
+                    equip(itemToGrasp,true);
+                }
+            }
+        }
     }
     for (bodyPart* _b : attachedParts){
         if (_b->canEquip(itemToGrasp,equipping)){
@@ -92,7 +101,7 @@ torso::torso(std::string species, int _weight,std::string id, std::string connec
     texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "TORSO")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
-
+    equips.push_back("torso");
 }
 
 neck::neck(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color)
@@ -107,7 +116,6 @@ neck::neck(std::string species, int _weight, std::string id, std::string connect
     //texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "NECK")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
-
 }
 
 head::head(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color)
@@ -124,7 +132,7 @@ head::head(std::string species, int _weight, std::string id, std::string connect
     texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "HEAD")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
-
+    equips.push_back("helm");
 }
 
 eye::eye(std::string species, int _weight, std::string id, std::string connectedto, bool left, sf::Color color)
@@ -168,7 +176,9 @@ hand::hand(std::string species, int _weight,  std::string id, std::string connec
     }
     armor = NULL;
     damage = weight*2;
-
+    equips.push_back("glove");
+    equips.push_back("onehand");
+    equips.push_back("twohand");
 }
 
 arm::arm(std::string species, int _weight, std::string id, std::string connectedto, bool left, sf::Color color)
@@ -191,7 +201,7 @@ arm::arm(std::string species, int _weight, std::string id, std::string connected
     }
     armor = NULL;
     damage = weight*2;
-
+    equips.push_back("arm");
 }
 
 foot::foot(std::string species, int _weight, std::string id, std::string connectedto, bool left, sf::Color color)
@@ -214,7 +224,7 @@ foot::foot(std::string species, int _weight, std::string id, std::string connect
     }
     armor = NULL;
     damage = weight*2;
-
+    equips.push_back("shoe");
 }
 
 leg::leg(std::string species, int _weight,  std::string id, std::string connectedto, bool left, sf::Color color)
@@ -236,7 +246,7 @@ leg::leg(std::string species, int _weight,  std::string id, std::string connecte
     }
     armor = NULL;
     damage = weight*2;
-
+    equips.push_back("legging");
 }
 
 std::string formatForParse(std::string species, std::string limb)

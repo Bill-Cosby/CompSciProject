@@ -19,10 +19,11 @@ public:
     sf::Texture texture;
     sf::Sprite sprite;
     std::string name;
+    std::vector<std::string> equips;
     int weight;
     bool grasps;
     int damage;
-    virtual bool equip(item* itemToGrasp, bool equipping){}
+    virtual bool equip(item* itemToGrasp, bool equipping){armor = itemToGrasp;}
 
     item * armor;
     item * vanity;
@@ -91,7 +92,6 @@ public:
     bool left;
     arm(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasHand(){return true;}
-    item* ARM_ARMOR;
 };
 
 class leg : public bodyPart
@@ -100,7 +100,6 @@ public:
     bool left;
     leg(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasFoot(){return true;}
-    item* LEG_ARMOR;
 };
 
 class torso : public bodyPart

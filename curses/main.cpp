@@ -80,8 +80,10 @@ actors.push_back(new player("human"));
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    globalItems.push_back(new weapon(5,"Sword",'/',10,18,7,"weapon"));
+    globalItems.push_back(new weapon("Sword",'/',10,18,7));
+    globalItems.push_back(new clothing("platearmor",'P',5,5,0));
     localItems.push_back(globalItems[0]);
+    localItems.push_back(globalItems[1]);
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
     lights[0]->intensity = 1;
@@ -104,50 +106,42 @@ actors.push_back(new player("human"));
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
     std::vector<std::vector<std::vector<tile* > > > _map;
+
     _map.resize(2);
+    _map[0].resize(20);
+    _map[1].resize(20);
 
-    city myCity;
-    myCity.generateCity();
+    for (int y=0;y<20;y++){
+        _map[0][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+            else _map[0][y][x] = new tile(grass,0,"grass");
+            _map[0][y][x]->position=coordinate(x,y);
+        }
+    }
 
-    _map=myCity.tileMap;
-
-//    _map.resize(2);
-//    _map[0].resize(20);
-//    _map[1].resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[0][y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-//            else _map[0][y][x] = new tile(grass,0,"grass");
-//            _map[0][y][x]->position=coordinate(x,y);
-//        }
-//    }
-
-//    _map.resize(2);
-//    _map[0].resize(20);
-//    _map[1].resize(20);
-//    for (int y=0;y<20;y++){
-//        _map[0][y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-//            else _map[0][y][x] = new tile(stonefloor,0,"stone");
-//            _map[0][y][x]->position=coordinate(x,y);
-//        }
-//    }
-//
-//            if (x >= 14 and y == 16){
-//                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
-//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 14 and y >=16){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (y == 0 or y == 19){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 0 or x == 19){
-//                    _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
+    for (int y=0;y<20;y++){
+        _map[1][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (x >= 14 and y == 16){
+                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
+                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 14 and y >=16){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (y == 0 or y == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 0 or x == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else{
+                _map[1][y][x] = new tile;
+            }
+            _map[1][y][x]->position = coordinate(x,y);
+        }
+    }
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -209,7 +203,7 @@ bool keyrelease = true;
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(myCity.tileMap, localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -254,7 +248,7 @@ bool keyrelease = true;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
 

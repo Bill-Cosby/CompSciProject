@@ -133,7 +133,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         dc = dirt;
         mc=10;
         mat="dirt";
-        width=level;
+        width=1;
     }
 
     if(myLine->vertical==true)
@@ -142,22 +142,25 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         signed int q2=(myLine->Point1->y+(width))/2;
 
 
-        if(0<=q1 and q2<tileMap.size())
+        if(0<=q1 and q2<tileMap[0].size())
         {
             for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
             {
                 for(int d=q1; d<q2; d++)
                 {
-                    if(type=="HOUSE" and c==doorPlace)
+                    if(type=="HOUSE")
                     {
-                        if (c == myLine->Point1->y)continue;
-                        tileMap[0][c][d]=new tile(woodfloor,5,"wood");
+                        if (doorPlace == c) tileMap[1][c][d] = new door(false,closeddoor,0,mat);
+
+                        else tileMap[1][c][d]=new tile(dc,-1,mat);
+
+                        tileMap[1][c][d]->position = coordinate(d,c);
                     }
                     else
                     {
                         tileMap[0][c][d]=new tile(dc,mc,mat);
+                        tileMap[0][c][d]->position = coordinate(d,c);
                     }
-                    tileMap[0][c][d]->position = coordinate(d,c);
                 }
             }
         }
@@ -168,24 +171,27 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         signed int q1=myLine->Point1->x-(width)/2;
         signed int q2=myLine->Point1->x+(width)/2;
 
-        if(0<=q1 and q2<tileMap.size())
+        if(0<=q1 and q2<tileMap[0].size())
         {
             for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
             {
 
                 for(int d=q1; d<q2; d++)
                 {
-                    if(type=="HOUSE" and c==doorPlace)
+                    if(type=="HOUSE")
                     {
-                        if (c == myLine->Point1->x)continue;
-                        tileMap[0][d][c]=new tile(woodfloor,5,"wood");
+                        if (doorPlace == c)tileMap[1][d][c] = new door(false,closeddoor,0,mat);
+
+                        else tileMap[1][d][c]=new tile(dc,-1,mat);
+
+                        tileMap[1][d][c]->position = coordinate(c,d);
                     }
 
                     else
                     {
                         tileMap[0][d][c]=new tile(dc,mc,mat);
+                        tileMap[0][d][c]->position = coordinate(c,d);
                     }
-                    tileMap[0][d][c]->position = coordinate(c,d);
                 }
             }
         }
@@ -209,10 +215,7 @@ if(level==0 and type=="ROADBOX")
 
 if(level>0)
 {
-    int half;
-    for (int i = 0; i < rand()%10;i++){
-        half = halfChance(generator);
-    }
+    int half = halfChance(generator);
 
 
     if(half==0 and right-left>level) //if line vertical and there is space to draw line
@@ -284,7 +287,7 @@ if(level>0)
   void city::generateCity()
 {
 setTileMap();
-divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
+divideBox(12,tileMap, "ROADBOX"); //recursive box dividing and road drawing
 }
 
 
