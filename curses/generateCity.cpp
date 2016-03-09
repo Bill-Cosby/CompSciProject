@@ -133,20 +133,20 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         dc = dirt;
         mc=10;
         mat="dirt";
-        width=1;
+        width=level;
     }
 
     if(myLine->vertical==true)
     {
-        signed int q1=(myLine->Point1->y-(width))/2;
-        signed int q2=(myLine->Point1->y+(width))/2;
+        signed int q1=myLine->Point1->y-(width)/2;
+        signed int q2=myLine->Point1->y+(width)/2;
 
 
         if(0<=q1 and q2<tileMap[0].size())
         {
             for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
             {
-                for(int d=q1; d<q2; d++)
+                for(int d=q1; d<=q2; d++)
                 {
                     if(type=="HOUSE")
                     {
@@ -176,7 +176,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
             for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
             {
 
-                for(int d=q1; d<q2; d++)
+                for(int d=q1; d<=q2; d++)
                 {
                     if(type=="HOUSE")
                     {
@@ -218,10 +218,10 @@ if(level>0)
     int half = halfChance(generator);
 
 
-    if(half==0 and right-left>level) //if line vertical and there is space to draw line
+    if(half==0 and right-left>level+1) //if line vertical and there is space to draw line
     {
         std::cout << type << std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(left+level/2, right-level/2);
+        std::uniform_int_distribution<int> findSplitPoint(left+level/2, right-level/2-1);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -238,13 +238,13 @@ if(level>0)
 
         subBox1->left=left+1;
         subBox1->right=splitPoint-1;
-        subBox1->top=top-1;
-        subBox1->bottom=bottom+1;
+        subBox1->top=top;
+        subBox1->bottom=bottom;
 
         subBox2->left=splitPoint+1;
         subBox2->right=right-1;
-        subBox2->top=top-1;
-        subBox2->bottom=bottom+1;
+        subBox2->top=top;
+        subBox2->bottom=bottom;
 
         subBox1->divideBox(level-1, tileMap, type);
         subBox2->divideBox(level-1, tileMap, type);
@@ -267,12 +267,12 @@ if(level>0)
         subBox1=new box;
         subBox2=new box;
 
-        subBox1->left=left+1;
-        subBox1->right=right-1;
+        subBox1->left=left;
+        subBox1->right=right;
         subBox1->top=top-1;
         subBox1->bottom=splitPoint+1;
-        subBox2->left=left+1;
-        subBox2->right=right-1;
+        subBox2->left=left;
+        subBox2->right=right;
         subBox2->top=splitPoint-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
         subBox1->divideBox(level-1, tileMap, type);
@@ -287,7 +287,7 @@ if(level>0)
   void city::generateCity()
 {
 setTileMap();
-divideBox(12,tileMap, "ROADBOX"); //recursive box dividing and road drawing
+divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
 }
 
 
