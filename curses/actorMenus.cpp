@@ -158,6 +158,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                         itemToPickUp = itemLookingAt;
                         equipItem(localItems);
 
+
                         equipment.push_back(itemLookingAt);
                         inventory.erase(inventory.begin()+itemSelected);
                         itemSelected = equipment.size()-1;
@@ -189,6 +190,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemSelected = 0;
                 itemLookingAt = NULL;
             }
             else{
@@ -199,6 +201,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemSelected = 0;
                 itemLookingAt = NULL;
             }
             else{

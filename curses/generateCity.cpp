@@ -133,7 +133,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         dc = dirt;
         mc=10;
         mat="dirt";
-        width=1;
+        width=level;
     }
 
     if(myLine->vertical==true)
@@ -287,7 +287,7 @@ if(level>0)
   void city::generateCity()
 {
 setTileMap();
-divideBox(12,tileMap, "ROADBOX"); //recursive box dividing and road drawing
+divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
 }
 
 

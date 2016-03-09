@@ -13,6 +13,7 @@ class bodyPart
 {
 public:
 
+    bool left;
     std::vector<bodyPart*> attachedParts;
     std::string ID;
     std::string connectedTo;
@@ -23,21 +24,14 @@ public:
     int weight;
     bool grasps;
     int damage;
-    virtual bool equip(item* itemToGrasp, bool equipping){armor = itemToGrasp;}
+    virtual bool equip(item* itemToGrasp, bool equipping){if (armor==NULL){armor = itemToGrasp;return true;}return false;}
 
     item * armor;
     item * vanity;
 
     bool wear(item* itemToWear){if (armor==NULL){armor= itemToWear;return true;}return false;}
 
-    void draw(sf::RenderWindow &window, int x, int y){
-        sprite.setPosition(x,y);
-        window.draw(sprite);
-
-        for (bodyPart * _b : attachedParts){
-            _b->draw(window,x,y);
-        }
-    }
+    void draw(sf::RenderWindow &window, int x, int y);
 
     void clearDeadParts(bodyPart* partToCheck)
     {
@@ -70,7 +64,6 @@ public:
 class hand : public bodyPart
 {
 public:
-    bool left;
     item* inHand;
     bool equip(item* itemToGrasp, bool equipping);
     hand(std::string species,int _weight,  std::string id, std::string connectedto, bool Left, sf::Color color);
@@ -80,7 +73,6 @@ public:
 class foot : public bodyPart
 {
 public:
-    bool left;
     item* sock;
     foot(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     foot(){sock = NULL;armor=NULL;}
@@ -89,7 +81,6 @@ public:
 class arm : public bodyPart
 {
 public:
-    bool left;
     arm(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasHand(){return true;}
 };
@@ -97,7 +88,6 @@ public:
 class leg : public bodyPart
 {
 public:
-    bool left;
     leg(std::string species,int _weight, std::string id, std::string connectedto, bool Left, sf::Color color);
     bool hasFoot(){return true;}
 };
