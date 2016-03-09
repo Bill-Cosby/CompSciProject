@@ -31,18 +31,18 @@ bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
                     didEquip = equip(itemToGrasp,true);
                 }
                 else if (itemToGrasp->canWear){
+                    std::cout << name << std::endl;
                     didEquip = equip(itemToGrasp,true);
+                    if (didEquip) return true;
                 }
-                if (didEquip)return true;
             }
         }
     }
     for (bodyPart* _b : attachedParts){
-        if (_b->canEquip(itemToGrasp,equipping)){
-            return true;
-        }
+        didEquip = _b->canEquip(itemToGrasp, equipping);
+        if (didEquip) return true;
     }
-    return false;
+    return didEquip;
 }
 
 void bodyPart::findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight)
@@ -94,16 +94,16 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
     if (vanity != NULL){
         if (left){
             vanity->sprite.scale(-1.0f,1.0f);
-            vanity->sprite.move(16,0);
         }
         vanity->sprite.setPosition(x,y);
         window.draw(vanity->sprite);
     }
     else if (armor != NULL){
-        if (left){
-            armor->sprite.scale(-1.0f,1.0f);
-        }
         armor->sprite.setPosition(x,y);
+        if (left){
+            armor->sprite.move(17,0);
+            armor->sprite.setScale(-1.0f,1.0f);
+        }
         window.draw(armor->sprite);
     }
     else{

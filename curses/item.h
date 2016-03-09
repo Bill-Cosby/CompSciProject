@@ -57,7 +57,7 @@ class clothing : public item
 {
 protected:
 public:
-    clothing(std::string _name, char _symbol, int _x, int _y, int _value);
+    clothing(std::string _name, char _symbol, int _x, int _y, int _value, std::string material);
     void equip(bool equipping){}
     std::string itemDescription();
 };

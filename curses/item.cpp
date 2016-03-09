@@ -23,7 +23,7 @@ weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
     sprite.setPosition(x*16,y*16);
 }
 
-clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value)
+clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value, std::string material)
 {
     attack = 0;
     value = _value;
@@ -40,8 +40,9 @@ clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value)
     y = _y;
     selected = false;
     texture = RSL::getTextureData("data/items/armor_type.raw",name+".texture");
-
+    name = RSL::getStringData("data/items/armor_type.raw",name+".name");
     sprite.setTexture(texture);
+    sprite.setColor(giveColor(material));
 
     sprite.setPosition(x*16,y*16);
 }
