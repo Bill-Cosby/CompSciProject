@@ -1,20 +1,12 @@
 #include <vector>
 #include <string>
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
-class menu_button
-{
-public:
-    std::string name;
-    std::string description; //optional
-    bool clicked;
-    bool selected;
-    int x,y;
-    menu_button(std::string);
-    menu_button(std::string,std::string);
-    menu_button(){}
-    void (*func)();
-};
+#include "actor.h"
+#include "tile.h"
+
+
 
 class custom_menu
 {
@@ -22,11 +14,9 @@ protected:
     sf::SoundBuffer buffer;
     sf::Sound sound;
 public:
-    std::vector<menu_button> listOfButtons;
     bool verticle;
     bool buttonSelected;
     int percentOfScreen;
-    void menuSelection(std::vector<menu_button>);
 };
 
 class mainMenu : custom_menu
@@ -35,3 +25,5 @@ public:
     bool quit_game;
     mainMenu(std::string,bool, int);
 };
+
+actor* characterCreationMenu(sf::RenderWindow &window);

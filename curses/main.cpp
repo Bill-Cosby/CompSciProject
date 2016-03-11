@@ -6,16 +6,17 @@
 #include "generateCity.h"
 #include "tiles.h"
 #include "behaviorTree.h"
+#include "menu.h"
 
 using namespace std;
 
 
 int main()
 {
-
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
+    characterCreationMenu(window);
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 

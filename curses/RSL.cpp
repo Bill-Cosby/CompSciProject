@@ -245,6 +245,46 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
     }
 }
 
+std::vector<std::string> getSpecies(std::string fileName, std::string dataToGet)
+{
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> species;
+
+    bool foundSpecies = false;
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                std::cout << line << std::endl;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+                    if (LINE_READING == dataMember){
+                        foundSpecies = true;
+                        LINE_READING.clear();
+                    }
+                    if (foundSpecies == true){
+                        if (_c == ';'){
+                            species.push_back(LINE_READING);
+                            foundSpecies = false;
+                            break;
+                        }
+                    }
+
+                    LINE_READING+=_c;
+                }
+            }
+        }
+    }
+    return species;
+}
+
 sf::Texture getTextureData(std::string fileName, std::string dataToGet)
 {
     bool foundDatatype = false;
@@ -331,89 +371,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
         }
     }
 }
-
-std::vector<menu_button> getButtons(std::string fileName)
-    {
-        bool startButtonList = false;
-        bool buttonName = false;
-        bool foundButton = false;
-        bool x = false,y=false;
-        std::vector<menu_button> buttons;
-
-        menu_button temp;
-
-        std::string line;
-        std::ifstream loadFile(fileName);
-
-        if ( loadFile.is_open()){
-            while ( !loadFile.eof() ){
-                while ( getline( loadFile,line ) ){
-                    std::string LINE_READING;
-
-                    for (char _c : line){
-                        if (_c == '\t')continue;
-                        if (_c == ':'){
-                            buttonName = true;
-                            continue;
-                        }
-                        if (LINE_READING == "[STARTBUTTONS]"){
-                            LINE_READING.clear();
-                            startButtonList = true;
-                            continue;
-                        }
-                        else if (LINE_READING == "[ENDBUTTONS]"){
-                            LINE_READING.clear();
-                            return buttons;
-                        }
-                        else if (LINE_READING == "[BUTTON]"){
-                            LINE_READING.clear();
-                            continue;
-                        }
-
-                        if (startButtonList == true){
-                            if (buttonName == true){
-                                temp.name = LINE_READING;
-                                buttonName = false;
-                                LINE_READING.clear();
-                            }
-                            else if (x==false){
-                                if (_c == ','){
-                                    std::stringstream ss;
-                                    ss << LINE_READING;
-                                    ss>>temp.x;
-                                    LINE_READING.clear();
-                                    x = true;
-                                    continue;
-                                }
-                            }
-                            else if (y == false){
-                                if (_c == ';'){
-                                    std::stringstream ss;
-                                    ss << LINE_READING;
-                                    ss>>temp.y;
-                                    LINE_READING.clear();
-                                    y = true;
-                                    break;
-                                }
-                            }
-                            if (buttonName == false and x == true and y == true){
-                                x = false;
-                                y = false;
-                                buttons.push_back(temp);
-                            }
-                        }
-                        if (_c == ';'){
-                            LINE_READING.clear();
-                            break;
-                        }
-                        LINE_READING+=_c;
-                    }
-                    if (y == true)break;
-                }
-            }
-        }
-    }
-
 
 
 std::string GET_FORMATTED_TYPE(std::string *typeToFix)
