@@ -71,6 +71,9 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                     menuText.setStyle(sf::Text::Underlined);
                     itemLookingAt = inventory[i];
                 }
+                for (char _c : itemLookingAt->name){
+
+                }
                 menuText.setString(inventory[i]->name);
                 menuText.setPosition(inventoryBlock.getPosition().x+4,22+(4+(i*menuText.getCharacterSize())));
                 window.draw(menuText);
@@ -91,14 +94,36 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
             }
 
         if (itemLookingAt != NULL){
+                int lineLength=0;
+                int wordLength=0;
+
+                std::string formattedDesc;
+                std::string tempStr;
             titleText.setString(itemLookingAt->name);
             titleText.setPosition(descriptionWindow.getPosition().x+4, 4);
             window.draw(titleText);
-            menuText.setString(itemLookingAt->itemDescription());
+            for (char _c : itemLookingAt->itemDescription()){
+                tempStr+=_c;
+                wordLength+=font.getGlyph(_c,12,false).advance;
+                if (_c == ' '){
+                    lineLength+=wordLength;
+                    if (lineLength + descriptionWindow.getPosition().x + 4 < window.getSize().x){
+                        formattedDesc+= tempStr;
+                        tempStr.clear();
+                        wordLength = 0;
+                    }
+                    else{
+                        formattedDesc+= '\n' + tempStr;
+                        lineLength = wordLength;
+                        wordLength = 0;
+                        tempStr.clear();
+                    }
+                }
+            }
+            menuText.setString(formattedDesc);
             menuText.setPosition(descriptionWindow.getPosition().x+4,24);
             window.draw(menuText);
         }
-
 
 
         if (examiningItem == true and buttonSelected == 0){

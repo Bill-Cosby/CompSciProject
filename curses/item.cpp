@@ -2,12 +2,11 @@
 
 weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
 {
-    attack=RSL::getIntData("data/items/weapon_type.raw",name+".attack");
     value=_value;
     health=0;
     defense=0;
     speed=5;
-    name = _name;
+    name = RSL::getStringData("data/items/weapon_type.raw",_name+".name");
     type = _name;
     equipped = false;
     canEquip = true;
@@ -16,7 +15,8 @@ weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
     x = _x;
     y = _y;
     selected=false;
-    texture = RSL::getTextureData("data/items/weapon_type.raw",name+".texture");
+    texture = RSL::getTextureData("data/items/weapon_type.raw",_name+".texture");
+    attack=RSL::getIntData("data/items/weapon_type.raw",_name+".attack");
 
     sprite.setTexture(texture);
 
@@ -28,10 +28,9 @@ clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value, st
     attack = 0;
     value = _value;
     health = 0;
-    defense = RSL::getIntData("data/items/armor_type.raw",name+".defense");
     speed = 0;
     name = _name;
-    type = RSL::getStringData("data/items/armor_type.raw",name+".type");
+    type = RSL::getStringData("data/items/armor_type.raw",_name+".type");
     equipped = false;
     canEquip = false;
     canWear = true;
@@ -39,8 +38,9 @@ clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value, st
     x = _x;
     y = _y;
     selected = false;
-    texture = RSL::getTextureData("data/items/armor_type.raw",name+".texture");
-    name = RSL::getStringData("data/items/armor_type.raw",name+".name");
+    texture = RSL::getTextureData("data/items/armor_type.raw",_name+".texture");
+    name = RSL::getStringData("data/items/armor_type.raw",_name+".name");
+    defense = RSL::getIntData("data/items/armor_type.raw",_name+".defense");
     sprite.setTexture(texture);
     sprite.setColor(giveColor(material));
 
@@ -55,7 +55,7 @@ std::string weapon::itemDescription()
     std::string description;
 
 
-    description+="This " + name + " does " + str + " damage.";
+    description+="This " + name + " does " + str + " damage. ";
     return description;
 }
 
@@ -66,7 +66,7 @@ std::string clothing::itemDescription()
     std::string def = ss.str();
     std::string description;
 
-    description += "This " + name + "has " + def + " defense.";
+    description += "This " + name + " has " + def + " defense. ";
     return description;
 }
 

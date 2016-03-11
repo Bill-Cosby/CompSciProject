@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "materials.h"
+
 #ifndef RSL_H_INCLUDED
 #include "RSL.h"
 #define RSL_H_INCLUDED

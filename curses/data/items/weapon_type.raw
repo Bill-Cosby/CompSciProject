@@ -1,11 +1,11 @@
 [SWORD]
 	[NAME]sword;
-	[STRENGTH]10;
+	[ATTACK]10;
 	[TEXTURE]weapons.png,0:0:;
 	[TYPE]onehand;
 [END]
 [AXE]
 	[NAME]axe;
-	[STRENGTH]15;
+	[ATTACK]15;
 	[TEXTURE]weapons.png,0:16:;
 	[TYPE]twohand;

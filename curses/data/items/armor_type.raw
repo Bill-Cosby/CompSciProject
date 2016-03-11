@@ -28,3 +28,13 @@
 	[DEFENSE]35;
 	[TEXTURE]clothes.png,0:78:;
 	[TYPE]torso;
+[COTTONSHIRT]
+	[NAME]Cotton Shirt;
+	[DEFENSE]0;
+	[TEXTURE]clothes.png,16:78:;
+	[TYPE]torso;
+[COTTONPANTS]
+	[NAME]Cotton pant leg;
+	[DEFENSE]0;
+	[TEXTURE]clothes.png,16:48:;
+	[TYPE]legging;

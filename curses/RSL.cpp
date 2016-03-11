@@ -89,6 +89,8 @@ int getIntData(std::string fileName, std::string dataToGet)
     std::string line;
     std::ifstream loadFile(fileName);
 
+    std::cout << dataType << ":" << dataMember << std::endl;
+
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
