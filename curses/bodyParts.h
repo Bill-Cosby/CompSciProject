@@ -45,6 +45,24 @@ public:
         }
     }
 
+    void setColors(sf::Color color, bool forHair, bool forEyes){
+        if (forHair){
+
+        }
+        if (forEyes){
+            if (name == "right eye" or name == "left eye"){
+                sprite.setColor(color);
+            }
+        }
+        if (!forHair and !forEyes){
+            if (name != "right eye" and name != "left eye" and name != "hair")sprite.setColor(color);
+
+        }
+        for (bodyPart* _b : attachedParts){
+            _b->setColors(color,forHair,forEyes);
+        }
+    }
+
 
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);

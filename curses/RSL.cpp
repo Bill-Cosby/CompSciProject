@@ -89,8 +89,6 @@ int getIntData(std::string fileName, std::string dataToGet)
     std::string line;
     std::ifstream loadFile(fileName);
 
-    std::cout << dataType << ":" << dataMember << std::endl;
-
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
@@ -189,7 +187,6 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
                             continue;
                         }
                         else if(_c == ':'){
-                                std::cout << LINE_READING << std::endl;
                                 if (LINE_READING == "head"){body.push_back(new head(dataType,weight,id, connectedTo, color));}
                                 else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, color));}
                                 else if (LINE_READING == "neck"){body.push_back(new neck(dataType,weight,id, connectedTo, color));}
@@ -260,7 +257,6 @@ std::vector<std::string> getSpecies(std::string fileName, std::string dataToGet)
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
-                std::cout << line << std::endl;
                 for (char _c : line){
                     if (_c == '\t' or _c == '{' or _c == '}'){
                         continue;
@@ -283,6 +279,57 @@ std::vector<std::string> getSpecies(std::string fileName, std::string dataToGet)
         }
     }
     return species;
+}
+
+std::vector<std::string> unloadColors(std::string fileName, std::string dataToGet)
+{
+    std::string dataType = GET_FORMATTED_TYPE(&dataToGet);
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> colors;
+
+    bool foundSpecies = false, foundType = false;
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+
+                    if (LINE_READING == dataType){
+                        foundSpecies = true;
+                        LINE_READING.clear();
+                        continue;
+                    }
+                    if (foundSpecies == true and foundType == false){
+                        if (LINE_READING == dataMember){
+                            foundType = true;
+                            LINE_READING.clear();
+                        }
+                    }
+                    if (foundType == true){
+                        if (_c == ':'){
+                            colors.push_back(LINE_READING);
+                            LINE_READING.clear();
+                            continue;
+                        }
+                        if (_c == ';'){
+                            foundSpecies = false;
+                            foundType = false;
+                        }
+                    }
+
+                    LINE_READING+=_c;
+                }
+            }
+        }
+    }
+    return colors;
 }
 
 sf::Texture getTextureData(std::string fileName, std::string dataToGet)

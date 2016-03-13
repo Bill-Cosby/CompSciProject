@@ -6,6 +6,7 @@
 #include "actor.h"
 #include "tile.h"
 
+#include "materials.h"
 
 
 class custom_menu
@@ -27,3 +28,4 @@ public:
 };
 
 actor* characterCreationMenu(sf::RenderWindow &window);
+actor* speciesChoiceMenu(sf::RenderWindow &window);

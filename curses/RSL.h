@@ -24,6 +24,7 @@ namespace RSL
 
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
     std::vector<std::string> getSpecies(std::string fileName, std::string dataToRecieve);
+    std::vector<std::string> unloadColors(std::string fileName, std::string dataToRecieve);
 
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
 

@@ -11,32 +11,96 @@ actor* characterCreationMenu(sf::RenderWindow &window)
             exampleScreen[y][x]->position = coordinate(x,y);
         }
     }
-
-    bool pickedSpecies = false, keyreleased = false;
+    bool pickedSpecies = false, keyreleased = true;
 
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
     sf::Text text;
+    text.setCharacterSize(12);
     text.setFont(font);
 
     sf::View characterView(sf::FloatRect(0,0,48,48));
     characterView.setViewport(sf::FloatRect(0.75f,0,0.25f,0.25f));
     std::vector<std::string> questions;
+    std::string menuTitles[3] = {"skin colors","hair colors", "eye colors"};
     std::vector<std::vector<std::string> > answers;
 
-    int answerSelected = 0;
+    int answerSelected[3] = {0,0,0}, menuSelected = 0;
     sf::RenderStates renderState;
 
     actor* character;
 
     sf::Event event;
 
-    std::vector<std::string>species = RSL::getSpecies("data/creatures/creature_standard.raw","name");
+    std::vector<std::string> colors;
 
     while (true)
     {
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::KeyReleased)keyreleased = true;
+        }
+        if (pickedSpecies == false){
+            character = speciesChoiceMenu(window);
+            pickedSpecies = true;
+        }
 
-        while (pickedSpecies == false){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true){answerSelected[menuSelected]++; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true){answerSelected[menuSelected]--; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyreleased == true and menuSelected-1!=-1){menuSelected--; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyreleased == true and menuSelected+1!= 3){menuSelected++; keyreleased = false;}
+
+
+        if (menuSelected == 0)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".skincolor");
+        if (menuSelected == 1)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".haircolor");
+        if (menuSelected == 2)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".eyecolor");
+
+        window.clear();
+        window.setView(window.getDefaultView());
+        text.setCharacterSize(12);
+        for (int i = 0; i < 3; i++){
+            if (i == menuSelected){
+                text.setStyle(sf::Text::Underlined);
+                if (i == 0)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]),false,false);
+                if (i == 1)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]),true,false);
+                if (i == 2)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]+"Eye"),false,true);
+            }
+            text.setString(menuTitles[i]);
+            text.setPosition(20 + i*200,30);
+            window.draw(text);
+            text.setStyle(sf::Text::Regular);
+        }
+
+        for (int i = 0; i < colors.size(); i++){
+                text.setCharacterSize(20/((abs(i-answerSelected[menuSelected])+1)));
+                text.setString(colors[i]);
+                text.setPosition(100,100+i*40);
+                window.draw(text);
+        }
+
+        window.setView(characterView);
+        for (int y=0;y<3;y++){
+            for (int x=0;x<3;x++){
+                exampleScreen[y][x]->drawTile(window,renderState);
+            }
+        }
+        character->drawActor(window);
+        window.display();
+    }
+}
+
+actor* speciesChoiceMenu(sf::RenderWindow &window)
+{
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text text;
+    text.setFont(font);
+    actor* character;
+    bool keyreleased= true;
+    int answerSelected = 0;
+    sf::Event event;
+
+    std::vector<std::string>species = RSL::getSpecies("data/creatures/creature_standard.raw","name");
+    while (true){
             window.clear();
             text.setCharacterSize(20);
             text.setString("Of what species were you born?");
@@ -45,7 +109,12 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true){answerSelected++; keyreleased = false;}
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true){answerSelected--; keyreleased = false;}
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true){character = new player(species[answerSelected]); keyreleased = false;pickedSpecies = true;}
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true){
+                character = new player(species[answerSelected]);
+                keyreleased = false;
+                character->pos(1,1);
+                return character;
+            }
 
             if (answerSelected==-1)answerSelected = species.size()-1;
             if (answerSelected == species.size())answerSelected = 0;
@@ -63,16 +132,4 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
             window.display();
         }
-
-        window.setView(characterView);
-        window.clear();
-        for (int y=0;y<3;y++){
-            for (int x=0;x<3;x++){
-                //exampleScreen[y][x]->drawTile(window,renderState);
-            }
-        }
-        character->drawActor(window);
-        window.display();
-    }
-
 }
