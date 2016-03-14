@@ -19,6 +19,8 @@ public:
     std::string connectedTo;
     sf::Texture texture;
     sf::Sprite sprite;
+    sf::Texture hairTex;
+    sf::Sprite hair;
     std::string name;
     std::vector<std::string> equips;
     int weight;
@@ -47,7 +49,7 @@ public:
 
     void setColors(sf::Color color, bool forHair, bool forEyes){
         if (forHair){
-
+            if (name == "head")hair.setColor(color);
         }
         if (forEyes){
             if (name == "right eye" or name == "left eye"){
@@ -63,6 +65,19 @@ public:
         }
     }
 
+    void setHair(sf::Texture tex)
+    {
+        if (name == "head"){
+            hairTex = tex;
+            hair.setTexture(hairTex);
+        }
+        else
+        {
+            for (bodyPart* _b : attachedParts){
+                _b->setHair(tex);
+            }
+        }
+    }
 
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);

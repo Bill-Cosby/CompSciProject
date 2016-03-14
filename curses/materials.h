@@ -42,13 +42,14 @@ const sf::Color  tanSkinColor  = sf::Color(sf::Color(173,109,0));
 const sf::Color greenSkinColor = sf::Color(sf::Color(51,109,0));
 const sf::Color blackSkinColor = sf::Color(sf::Color(0,0,0));
 
+
 const sf::Color blueEye = sf::Color(sf::Color(73,85,165));
 const sf::Color greenEye = sf::Color(sf::Color(39,125,61));
 const sf::Color greyEye = sf::Color(sf::Color(127,129,130));
 const sf::Color blackEye = sf::Color(sf::Color(1,4,7));
 const sf::Color brownEye = sf::Color(sf::Color(90,60,40));
 const sf::Color hazelEye = sf::Color(sf::Color(133,113,64));
-const sf::Color yellowEye = sf::Color(sf::Color(236,132,3));
+const sf::Color yellowEye = sf::Color(sf::Color(180,132,3));
 
 
 class material

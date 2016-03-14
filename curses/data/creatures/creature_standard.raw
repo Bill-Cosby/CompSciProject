@@ -7,6 +7,7 @@
 	[SKINCOLOR]{white:brown:tan:};
 	[HAIRCOLOR]{brown:black:blonde:grey:};
 	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
+	[HAIRTYPES]{short:long:bald:afro:mohawk:};
 	[STRENGTH]5;
 	[DEXTERITY]25;
 	
@@ -24,6 +25,7 @@
 	[SKINCOLOR]{green:};
 	[HAIRCOLOR]{black:};
 	[EYECOLOR]{grey:black:yellow:};
+	[HAIRTYPES]{short:bald:mohawk:};
 	[STRENGTH]3;
 	[DEXTERITY]15;
 	

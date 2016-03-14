@@ -22,10 +22,10 @@ actor* characterCreationMenu(sf::RenderWindow &window)
     sf::View characterView(sf::FloatRect(0,0,48,48));
     characterView.setViewport(sf::FloatRect(0.75f,0,0.25f,0.25f));
     std::vector<std::string> questions;
-    std::string menuTitles[3] = {"skin colors","hair colors", "eye colors"};
+    std::string menuTitles[4] = {"skin colors","hair colors", "eye colors", "hair types"};
     std::vector<std::vector<std::string> > answers;
 
-    int answerSelected[3] = {0,0,0}, menuSelected = 0;
+    int answerSelected[4] = {0,0,0,0}, menuSelected = 0;
     sf::RenderStates renderState;
 
     actor* character;
@@ -46,32 +46,43 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true){answerSelected[menuSelected]++; keyreleased = false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true){answerSelected[menuSelected]--; keyreleased = false;}
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyreleased == true and menuSelected-1!=-1){menuSelected--; keyreleased = false;}
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyreleased == true and menuSelected+1!= 3){menuSelected++; keyreleased = false;}
+
+        if (answerSelected[menuSelected] == colors.size())answerSelected[menuSelected] = 0;
+        if (answerSelected[menuSelected] == -1)answerSelected[menuSelected] = colors.size()-1;
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyreleased == true and menuSelected-1 !=-1){menuSelected--; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyreleased == true and menuSelected+1 != 4){menuSelected++; keyreleased = false;}
 
 
         if (menuSelected == 0)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".skincolor");
         if (menuSelected == 1)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".haircolor");
         if (menuSelected == 2)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".eyecolor");
+        if (menuSelected == 3)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".hairtypes");
 
         window.clear();
         window.setView(window.getDefaultView());
-        text.setCharacterSize(12);
-        for (int i = 0; i < 3; i++){
+        text.setCharacterSize(8);
+        for (int i = 0; i < 4; i++){
             if (i == menuSelected){
                 text.setStyle(sf::Text::Underlined);
                 if (i == 0)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]),false,false);
                 if (i == 1)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]),true,false);
                 if (i == 2)character->rootPart->setColors(giveColor(colors[answerSelected[menuSelected]]+"Eye"),false,true);
+                if (i == 3){
+                    sf::Texture tempTex = RSL::getTextureData("data/textures/hair.raw",colors[answerSelected[menuSelected]]+".texture");
+                    character->rootPart->setHair(tempTex);
+                }
             }
             text.setString(menuTitles[i]);
-            text.setPosition(20 + i*200,30);
+            text.setPosition(15+ i*100,30);
             window.draw(text);
             text.setStyle(sf::Text::Regular);
         }
 
         for (int i = 0; i < colors.size(); i++){
+
                 text.setCharacterSize(20/((abs(i-answerSelected[menuSelected])+1)));
+
                 text.setString(colors[i]);
                 text.setPosition(100,100+i*40);
                 window.draw(text);

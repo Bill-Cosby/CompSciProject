@@ -91,7 +91,6 @@ void bodyPart::returnWeight(int &totalWeight)
 }
 
 void bodyPart::draw(sf::RenderWindow &window, int x, int y){
-    std::cout << name << std::endl;
     if (vanity != NULL){
         if (left){
             vanity->sprite.scale(-1.0f,1.0f);
@@ -110,6 +109,10 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
     else{
         sprite.setPosition(x,y);
         window.draw(sprite);
+        if (name == "head"){
+            hair.setPosition(x,y);
+            window.draw(hair);
+        }
     }
 
     for (bodyPart * _b : attachedParts){

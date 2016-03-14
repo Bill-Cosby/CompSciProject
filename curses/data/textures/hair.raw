@@ -1,0 +1,10 @@
+[BALD]
+	[TEXTURE]hair.png,0:0:;
+[SHORT]
+	[TEXTURE]hair.png,0:16:;
+[LONG]
+	[TEXTURE]hair.png,0:32:;
+[AFRO]
+	[TEXTURE]hair.png,0:48:;
+[MOHAWK]
+	[TEXTURE]hair.png,0:64:;
