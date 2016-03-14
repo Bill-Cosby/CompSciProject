@@ -30,11 +30,11 @@
 	[TYPE]torso;
 [COTTONSHIRT]
 	[NAME]Cotton Shirt;
-	[DEFENSE]0;
+	[DEFENSE]1;
 	[TEXTURE]clothes.png,16:78:;
 	[TYPE]torso;
 [COTTONPANTS]
 	[NAME]Cotton pant leg;
-	[DEFENSE]0;
+	[DEFENSE]1;
 	[TEXTURE]clothes.png,16:48:;
 	[TYPE]legging;

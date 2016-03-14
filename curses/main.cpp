@@ -16,7 +16,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
-    characterCreationMenu(window);
+
+    //characterCreationMenu(window);
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
@@ -69,12 +70,14 @@ int main()
    // bool keyrelease=true;
 std::vector<actor*> actors;
 actors.push_back(new player("human"));
+actors.push_back(new monster("goblin"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
+    actors[1]->pos(8,8);
 
 
 
@@ -82,9 +85,9 @@ actors.push_back(new player("human"));
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
     localItems.push_back(new weapon("Sword",'/',10,18,7));
-    localItems.push_back(new clothing("cottonshirt",'C',5,5,0,"cotton"));
-    localItems.push_back(new clothing("cottonpants",'C',5,5,0,"cotton"));
-    localItems.push_back(new clothing("cottonpants",'C',5,5,0,"cotton"));
+    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
+    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
+    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
     localItems.push_back(new clothing("plateboot",'C',5,5,0,"iron"));
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
@@ -230,8 +233,8 @@ bool keyrelease = true;
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-            }
                 keyrelease = true;
+            }
         }
         int ystart = actors[0]->row() - (viewSizeInTiles.y/2);
         int xstart = actors[0]->col() - (viewSizeInTiles.x/2);

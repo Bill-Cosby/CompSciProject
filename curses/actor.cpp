@@ -202,7 +202,7 @@ bool actor::openDoor(std::vector<std::vector<std::vector<tile*> > > &_map)
 bool actor::equipItem(std::vector<item*> & localItems)
 {
     if (itemToPickUp != NULL){
-        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4 or controlled){
+        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.41 or controlled){
             if (itemToPickUp->canEquip or itemToPickUp->canWear){
                 if (rootPart->canEquip(itemToPickUp,true)){
                     for (int i = 0; i < localItems.size();i++){

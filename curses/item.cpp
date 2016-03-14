@@ -7,7 +7,7 @@ weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
     defense=0;
     speed=5;
     name = RSL::getStringData("data/items/weapon_type.raw",_name+".name");
-    type = _name;
+    type = RSL::getStringData("data/items/weapon_type.raw",_name+".type");
     equipped = false;
     canEquip = true;
     canWear = false;

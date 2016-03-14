@@ -91,10 +91,13 @@ class isItemBetterNode : public Node
 {
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        std::cout << "Is item better?\n";
         if(testingCharacter->isItemBetter())
         {
+            std::cout << "yes it is!\n";
             return true;
         }
+        std::cout << "No\n";
         return false;
     }
 };

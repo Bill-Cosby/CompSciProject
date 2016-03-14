@@ -5,6 +5,7 @@ bool actor::isItemBetter()
 {
     float currentItemStat = 0;
     float newItemStat = 0;
+    bool foundItemOfSameType = false;
     newItemStat = itemToPickUp->attack + itemToPickUp->defense + itemToPickUp->health + itemToPickUp->speed + itemToPickUp->value;
     newItemStat /= 5;
     if(equipment.size() == 0)
@@ -13,6 +14,7 @@ bool actor::isItemBetter()
     }
     for(item* _i : equipment){
         if (_i->type == itemToPickUp->type){
+            foundItemOfSameType = true;
             currentItemStat = _i->attack + _i->defense + _i->health + _i->speed + _i->value;
             currentItemStat /= 5;
             if(currentItemStat > newItemStat)
@@ -21,6 +23,7 @@ bool actor::isItemBetter()
             }
         }
     }
+    if (foundItemOfSameType == false)return true;
     return false;
 }
 
