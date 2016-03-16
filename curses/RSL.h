@@ -14,6 +14,14 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 
+class answers
+{
+public:
+    std::string answer;
+    std::string stat;
+    answers(std::string _q, std::string _s){ answer= _q; stat = _s;}
+};
+
 
 namespace RSL
 {
@@ -29,6 +37,7 @@ namespace RSL
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
 
     bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color);
+    answers getAnswers(std::string fileName, std::string dataToRecieve);
     //MENU FUNCTIONS
 }
 

@@ -17,7 +17,7 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
-    //characterCreationMenu(window);
+    characterCreationMenu(window);
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 

@@ -419,6 +419,64 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
     }
 }
 
+answers getAnswers(std::string fileName, std::string dataToRecieve)
+{
+    std::string species = GET_FORMATTED_TYPE(&dataToRecieve);
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToRecieve);
+    std::string dataType = GET_FORMATTED_TYPE(&dataToRecieve);
+
+    std::string stat;
+    std::string answer;
+
+    bool foundSpecies = false;
+    bool foundDataMember = false;
+    bool foundDataType = false;
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+
+    if (loadFile.is_open()){
+        while (!loadFile.eof()){
+            while ( getline (loadFile,line) ){
+                std::cout << line << std::endl;
+                std::string LINE_READING;
+                for (char _c : line){
+                    std::cout << _c;
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+
+                    if (LINE_READING == species){
+                        foundSpecies = true;
+                        break;
+                    }
+                    if (foundSpecies == true and LINE_READING == dataMember){
+                        foundDataMember = true;
+                        break;
+                    }
+                    if (foundDataMember == true and LINE_READING == dataToRecieve){
+                        foundDataType = true;
+                        LINE_READING.clear();
+                    }
+                    if (foundDataType == true){
+                        if (_c == ':'){
+                            stat = LINE_READING;
+                            LINE_READING.clear();
+                        }
+                        if (_c == ';'){
+                            answer = LINE_READING;
+                            LINE_READING.clear();
+                            return answers(stat,answer);
+                        }
+                    }
+
+                    LINE_READING+=_c;
+                }
+            }
+        }
+    }
+}
+
 
 std::string GET_FORMATTED_TYPE(std::string *typeToFix)
 {

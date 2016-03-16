@@ -11,7 +11,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
             exampleScreen[y][x]->position = coordinate(x,y);
         }
     }
-    bool pickedSpecies = false, keyreleased = true;
+    bool pickedSpecies = false, keyreleased = false;
 
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
@@ -23,7 +23,10 @@ actor* characterCreationMenu(sf::RenderWindow &window)
     characterView.setViewport(sf::FloatRect(0.75f,0,0.25f,0.25f));
     std::vector<std::string> questions;
     std::string menuTitles[4] = {"skin colors","hair colors", "eye colors", "hair types"};
-    std::vector<std::vector<std::string> > answers;
+
+
+    std::string question;
+    std::vector<answers> listOfAnswers;
 
     int answerSelected[4] = {0,0,0,0}, menuSelected = 0;
     sf::RenderStates renderState;
@@ -52,6 +55,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyreleased == true and menuSelected-1 !=-1){menuSelected--; keyreleased = false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyreleased == true and menuSelected+1 != 4){menuSelected++; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true)break;
 
 
         if (menuSelected == 0)colors = RSL::unloadColors("data/creatures/creature_standard.raw", character->species+".skincolor");
@@ -96,6 +100,14 @@ actor* characterCreationMenu(sf::RenderWindow &window)
         }
         character->drawActor(window);
         window.display();
+    }
+
+    while (true){
+
+        question = (RSL::getStringData("data/creatures/creature_questions.raw","human.Q1"));
+        listOfAnswers.push_back(RSL::getAnswers("data/creatures/creature_questions.raw","human.Q1.A1"));
+        std::cout << listOfAnswers[0].answer;
+        std::cin >> question;
     }
 }
 
