@@ -16,7 +16,7 @@ weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
     y = _y;
     selected=false;
     texture = RSL::getTextureData("data/items/weapon_type.raw",_name+".texture");
-    attack=RSL::getIntData("data/items/weapon_type.raw",_name+".attack");
+    attack=RSL::getIntData("data/items/weapon_type.raw",_name+".attack",0);
 
     sprite.setTexture(texture);
 
@@ -40,7 +40,7 @@ clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value, st
     selected = false;
     texture = RSL::getTextureData("data/items/armor_type.raw",_name+".texture");
     name = RSL::getStringData("data/items/armor_type.raw",_name+".name");
-    defense = RSL::getIntData("data/items/armor_type.raw",_name+".defense");
+    defense = RSL::getIntData("data/items/armor_type.raw",_name+".defense",0);
     sprite.setTexture(texture);
     sprite.setColor(giveColor(material));
 

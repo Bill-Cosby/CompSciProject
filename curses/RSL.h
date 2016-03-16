@@ -28,7 +28,7 @@ namespace RSL
     std::string getStringData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
 
-    int getIntData(std::string fileName, std::string dataToRecieve);
+    int getIntData(std::string fileName, std::string dataToRecieve, int positionInArray);
 
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
     std::vector<std::string> getSpecies(std::string fileName, std::string dataToRecieve);

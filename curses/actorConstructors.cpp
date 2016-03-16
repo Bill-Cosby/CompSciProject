@@ -20,9 +20,8 @@ player::player(std::string speciesToLoad)
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
-    //attack = RSL::getIntData(fileName, speciesToLoad+".strength");
-    attack = 8000000;
-    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
+    attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
+    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
@@ -53,8 +52,8 @@ monster::monster(std::string speciesToLoad)
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
-    attack = RSL::getIntData(fileName, speciesToLoad+".strength");
-    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity");
+    attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
+    dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");

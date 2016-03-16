@@ -17,7 +17,7 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
-    characterCreationMenu(window);
+
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
@@ -69,7 +69,7 @@ int main()
 
    // bool keyrelease=true;
 std::vector<actor*> actors;
-actors.push_back(new player("human"));
+actors.push_back(characterCreationMenu(window));
 actors.push_back(new monster("goblin"));
 
 
@@ -192,13 +192,26 @@ actors.push_back(new monster("goblin"));
 
 
 bool keyrelease = true;
+bool waitforplayer = false;
     while (window.isOpen())
     {
 
 
         sf::Event event;
 
-        if (keyrelease == false){
+        std::cout << keyrelease << std::endl;
+
+        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
+        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
+
+
+        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
+        if (actors[0]->counter >= actors[0]->speed())waitforplayer = true;
+        else waitforplayer = false;
+
+
+        if (waitforplayer == false and keyrelease == false){
+
             for (int i=0;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
@@ -208,9 +221,6 @@ bool keyrelease = true;
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
-        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
-        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
 
 //        lightmap = &_map;
@@ -254,6 +264,7 @@ bool keyrelease = true;
 //        }
         window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
+        std::cout << keyrelease << std::endl;
     }
 
 

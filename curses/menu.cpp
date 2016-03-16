@@ -13,6 +13,8 @@ actor* characterCreationMenu(sf::RenderWindow &window)
     }
     bool pickedSpecies = false, keyreleased = false;
 
+    int str = 0, dex=0, intel = 0, acc = 0, def = 0;
+
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
     sf::Text text;
@@ -101,14 +103,94 @@ actor* characterCreationMenu(sf::RenderWindow &window)
         character->drawActor(window);
         window.display();
     }
+    char pos = '1';
+    int counter = 1;
+    answerSelected[0] = 0;
+        window.setView(window.getDefaultView());
+        keyreleased=false;
+    bool answered = false;
+
 
     while (true){
+        std::cout << pos << std::endl;
+        std::string data = character->species + ".Q"+ pos;
+        question = (RSL::getStringData("data/creatures/creature_questions.raw",data));
+        if (question == "no")break;
 
-        question = (RSL::getStringData("data/creatures/creature_questions.raw","human.Q1"));
-        listOfAnswers.push_back(RSL::getAnswers("data/creatures/creature_questions.raw","human.Q1.A1"));
-        std::cout << listOfAnswers[0].answer;
-        std::cin >> question;
+        for (int i = 0; i < 10; i ++){
+            char temppos = pos+i;
+            answers tempString = RSL::getAnswers("data/creatures/creature_questions.raw",character->species+ ".Q"+ pos  + ".A"+ temppos);
+            if (tempString.answer != "no")listOfAnswers.push_back(tempString);
+        }
+
+        while ( answered == false){
+            while (window.pollEvent(event)){
+                if (event.type == sf::Event::KeyReleased)keyreleased = true;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true){answerSelected[0]++; keyreleased = false;}
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true){answerSelected[0]--; keyreleased = false;}
+
+            if (answerSelected[0] == colors.size())answerSelected[0] = 0;
+            if (answerSelected[0] == -1)answerSelected[0] = colors.size()-1;
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true){
+                if (listOfAnswers[answerSelected[0]].stat == "strength")str++;
+                if (listOfAnswers[answerSelected[0]].stat == "intelligence")intel++;
+                if (listOfAnswers[answerSelected[0]].stat == "dexterity")dex++;
+                if (listOfAnswers[answerSelected[0]].stat == "defense")def++;
+                if (listOfAnswers[answerSelected[0]].stat == "accuracy")acc++;
+                answerSelected[0]= 0;
+                answered = true;
+                keyreleased = false;
+            }
+            window.clear();
+            std::string tempstr;
+            std::string formattedQuestion;
+            int lineLength = 0, wordLength = 0;
+            for (char _c : question){
+                tempstr+=_c;
+                wordLength+=font.getGlyph(_c,12,false).advance;
+                if (_c == ' '){
+                    lineLength+=wordLength;
+                    if (lineLength + 20 < window.getSize().x){
+                        formattedQuestion+= tempstr;
+                        tempstr.clear();
+                        wordLength = 0;
+                    }
+                    else{
+                        formattedQuestion+= '\n' + tempstr;
+                        lineLength = wordLength;
+                        wordLength = 0;
+                        tempstr.clear();
+                    }
+                }
+            }
+
+            text.setCharacterSize(12);
+            text.setString(formattedQuestion);
+            text.setPosition(20,30);
+            window.draw(text);
+
+
+            for (int i = 0; i < listOfAnswers.size(); i++){
+
+                    text.setCharacterSize(20/((abs(i-answerSelected[0])+1)));
+
+                    text.setString(listOfAnswers[i].answer);
+                    text.setPosition(80,100+i*40);
+                    window.draw(text);
+            }
+
+            window.display();
+        }
+        listOfAnswers.clear();
+        answered = false;
+        counter++;
+        pos = counter + '0';
     }
+    character->attack = RSL::getIntData("data/creatures/creature_standard.raw",character->species+".strength",str);
+    character->dexterity = RSL::getIntData("data/creatures/creature_standard.raw",character->species+".dexterity",dex);
+    return character;
 }
 
 actor* speciesChoiceMenu(sf::RenderWindow &window)

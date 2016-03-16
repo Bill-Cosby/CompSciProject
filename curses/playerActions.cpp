@@ -36,7 +36,9 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter>=customSpeed){
+    if (counter>=customSpeed and keyrelease == true){
+
+            std::cout << "YO NIGGA\n";
 
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
@@ -147,6 +149,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
 
 
         sprite.setPosition(x*16,y*16);
+        counter = 0;
+        return;
     }
     counter++;
 }

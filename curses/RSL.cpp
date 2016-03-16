@@ -75,9 +75,10 @@ std::string getStringData(std::string fileName, std::string dataToGet)
             }
         }
     }
+    return "no";
 }
 
-int getIntData(std::string fileName, std::string dataToGet)
+int getIntData(std::string fileName, std::string dataToGet,int positionInArray)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -89,6 +90,8 @@ int getIntData(std::string fileName, std::string dataToGet)
     std::string line;
     std::ifstream loadFile(fileName);
 
+    int whatever = 0;
+
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
@@ -99,14 +102,14 @@ int getIntData(std::string fileName, std::string dataToGet)
                         continue;
                     }
 
-                    if (foundDataMember == true and _c == ';'){
+                    if (foundDataMember == true and _c == ':' and whatever == positionInArray){
                         std::stringstream ss;
                         int convertedInt;
                         ss << LINE_READING;
                         ss>>convertedInt;
                         return convertedInt;
                     }
-
+                    if (_c == ':')whatever++;
                     LINE_READING+=_c;
 
                     if (foundDatatype==false){
@@ -424,9 +427,8 @@ answers getAnswers(std::string fileName, std::string dataToRecieve)
     std::string species = GET_FORMATTED_TYPE(&dataToRecieve);
     std::string dataMember = GET_FORMATTED_TYPE(&dataToRecieve);
     std::string dataType = GET_FORMATTED_TYPE(&dataToRecieve);
-
     std::string stat;
-    std::string answer;
+   std::string answer;
 
     bool foundSpecies = false;
     bool foundDataMember = false;
@@ -438,13 +440,23 @@ answers getAnswers(std::string fileName, std::string dataToRecieve)
     if (loadFile.is_open()){
         while (!loadFile.eof()){
             while ( getline (loadFile,line) ){
-                std::cout << line << std::endl;
                 std::string LINE_READING;
                 for (char _c : line){
-                    std::cout << _c;
                     if (_c == '\t' or _c == '{' or _c == '}'){
                         continue;
                     }
+                    if (foundDataType == true){
+                        if (_c == ':'){
+                            stat = LINE_READING;
+                            LINE_READING.clear();
+                        }
+                        if (_c == ';'){
+                            answer = LINE_READING;
+                            return answers(answer,stat);
+                        }
+                    }
+                    if (_c != ':')LINE_READING+=_c;
+
 
                     if (LINE_READING == species){
                         foundSpecies = true;
@@ -454,27 +466,16 @@ answers getAnswers(std::string fileName, std::string dataToRecieve)
                         foundDataMember = true;
                         break;
                     }
-                    if (foundDataMember == true and LINE_READING == dataToRecieve){
+                    if (foundDataMember == true and LINE_READING == dataType){
                         foundDataType = true;
                         LINE_READING.clear();
                     }
-                    if (foundDataType == true){
-                        if (_c == ':'){
-                            stat = LINE_READING;
-                            LINE_READING.clear();
-                        }
-                        if (_c == ';'){
-                            answer = LINE_READING;
-                            LINE_READING.clear();
-                            return answers(stat,answer);
-                        }
-                    }
 
-                    LINE_READING+=_c;
                 }
             }
         }
     }
+    return answers("no","no");
 }
 
 

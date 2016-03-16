@@ -8,8 +8,8 @@
 	[HAIRCOLOR]{brown:black:blonde:grey:};
 	[EYECOLOR]{blue:green:grey:black:brown:hazel:yellow:};
 	[HAIRTYPES]{short:long:bald:afro:mohawk:};
-	[STRENGTH]5;
-	[DEXTERITY]25;
+	[STRENGTH]2:5:7:9:10:;
+	[DEXTERITY]10:15:20:25:30:;
 	
 	[SKIN]10;
 	[FAT]5;
