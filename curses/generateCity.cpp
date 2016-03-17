@@ -48,7 +48,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             else{
                 tileMap[0][b][a]->position = coordinate(a,b);
             }
-            divideBox(1,tileMap,"HOUSE", generator);
+            divideBox(3,tileMap,"HOUSE", generator);
         }
     }
 
@@ -84,11 +84,12 @@ void city:: deleteTileMap()
         for(int b=0; b<tileMap.size(); b++)
         {
             delete tileMap[0][a][b];
+            delete tileMap[1][a][b];
         }
     }
 }
 
-void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int level, std::string type)
+void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int width, std::string type, std::default_random_engine generator)
 {
     if(myLine->vertical==true and type=="ROADBOX")
     {
@@ -102,7 +103,6 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
     int a=0;
     int b=0;
-    int width;
 
     int dc;
     int mc;
@@ -116,7 +116,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         dc=woodwall;
         mc=-1;
         mat="wood";
-        width=1;
+
         if(myLine->vertical)
         {
             a=myLine->Point1->y;
@@ -129,8 +129,6 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
             b=myLine->Point2->x;
         }
 
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::default_random_engine generator (seed);
         std::uniform_int_distribution<int> doorFinder(a,b);
         doorPlace=doorFinder(generator);
     }
@@ -140,18 +138,17 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         dc = dirt;
         mc=10;
         mat="dirt";
-        width=level;
     }
 
     if(myLine->vertical==true)
     {
-        signed int q1=myLine->Point1->y-(width)/2;
-        signed int q2=myLine->Point1->y+(width)/2;
+        signed int q1=myLine->Point1->x-(width)/2;
+        signed int q2=myLine->Point1->x+(width)/2;
 
 
         if(0<=q1 and q2<tileMap[0].size())
         {
-            for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
+            for(int c=myLine->Point1->y-1; c<=myLine->Point2->y+1; c++)
             {
                 for(int d=q1; d<=q2; d++)
                 {
@@ -165,8 +162,14 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                     }
                     else if (type=="ROADBOX")
                     {
-                        tileMap[0][c][d]=new tile(dc,mc,mat);
-                        tileMap[0][c][d]->position = coordinate(d,c);
+                         if(d==q1 or d==q2)
+                        {
+                            tileMap[0][c][d]=new tile(grass,0,"grass");
+                        }
+                        else
+                            {
+                            tileMap[0][c][d]->position = coordinate(d,c);
+                            }
                     }
                 }
             }
@@ -175,12 +178,12 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
     else //horizontal
     {
-        signed int q1=myLine->Point1->x-(width)/2;
-        signed int q2=myLine->Point1->x+(width)/2;
+        signed int q1=myLine->Point1->y-(width)/2;
+        signed int q2=myLine->Point1->y+(width)/2;
 
         if(0<=q1 and q2<tileMap[0].size())
         {
-            for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
+            for(int c=myLine->Point1->x-1; c<=myLine->Point2->x+1; c++)
             {
                 for(int d=q1; d<=q2; d++)
                 {
@@ -195,6 +198,10 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
                     else if (type=="ROADBOX")
                     {
+                        if(d==q1 or d==q2)
+                        {
+                            tileMap[0][d][c]=new tile(grass,0,"grass");
+                        }
                         tileMap[0][d][c]=new tile(dc,mc,mat);
                         tileMap[0][d][c]->position = coordinate(c,d);
                     }
@@ -215,13 +222,22 @@ void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & 
  {
 std::uniform_int_distribution<int> halfChance(0,99);
     int half = halfChance(generator);
+    int width;
+    if(type=="ROADBOX")
+    {
+        width=level;
+    }
+    if(type=="HOUSE")
+    {
+        width=1;
+    }
    // std::cout<<"Half:"<<half<<std::endl;
 
 
-    if(half%2==0 and right-left>level+1) //if line vertical and there is space to draw line
+    if(half%2==0 and right-left>level) //if line vertical and there is space to draw line
     {
         std::cout << type << std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(left+level/2, right-level/2-1);
+        std::uniform_int_distribution<int> findSplitPoint(left+width/2+1, right-level/2-1);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -231,7 +247,8 @@ std::uniform_int_distribution<int> halfChance(0,99);
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
         tempRoad.Point2=&highPoint;
-        makeLine(&tempRoad, tileMap, level, type); //draws road on tile map
+
+        makeLine(&tempRoad, tileMap, width, type, generator); //draws road on tile map
 
         subBox1=new box;
         subBox2=new box;
@@ -253,8 +270,9 @@ std::uniform_int_distribution<int> halfChance(0,99);
 
     else if (half%2==1 and top-bottom>level+1)
     {//line horizontal
-        std::uniform_int_distribution<int> findSplitPoint(bottom+level/2,top-level/2);
+        std::uniform_int_distribution<int> findSplitPoint(bottom+width/2+1,top-width/2-1);
         int splitPoint=findSplitPoint(generator);
+        std::cout<<left<<" "<<right<<" "<<splitPoint<<std::endl;
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
         road tempRoad;
@@ -262,19 +280,19 @@ std::uniform_int_distribution<int> halfChance(0,99);
         tempRoad.Point1=&leftPoint;
         tempRoad.Point2=&rightPoint;
 
-        makeLine(&tempRoad, tileMap, level, type); //draws road on tileMap
+        makeLine(&tempRoad, tileMap, width, type, generator); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;
 
         subBox1->left=left;
         subBox1->right=right;
-        subBox1->top=top-1;
-        subBox1->bottom=splitPoint+1;
+        subBox1->top=top-width/2-1;
+        subBox1->bottom=splitPoint+width/2+1;
         subBox2->left=left;
         subBox2->right=right;
-        subBox2->top=splitPoint-1;
-        subBox2->bottom=bottom+1;  //forms 2 new boxes
+        subBox2->top=splitPoint-width/2-1;
+        subBox2->bottom=bottom+width/2+1;  //forms 2 new boxes
         subBox1->divideBox(level-1, tileMap, type, generator);
         subBox2->divideBox(level-1, tileMap, type, generator);
     }
@@ -282,7 +300,7 @@ std::uniform_int_distribution<int> halfChance(0,99);
 
  else if(level==0 and type=="ROADBOX")
 {
-//   makeHouse(tileMap);  //many houses
+   makeHouse(tileMap, generator);  //many houses
 }
 
  }
@@ -292,7 +310,7 @@ std::uniform_int_distribution<int> halfChance(0,99);
 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 std::default_random_engine generator(seed);
 setTileMap();
-divideBox(1,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
 }
 
 
