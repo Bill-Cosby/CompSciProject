@@ -7,10 +7,9 @@
 #include <chrono>
 #include <random>
 
-void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap)
+
+void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::default_random_engine generator)
 {
- unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator (seed);
     std::uniform_int_distribution<int> halfChance(0,1);
     std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
     int half=halfChance(generator);
@@ -50,7 +49,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap)
             else{
                 tileMap[0][b][a]->position = coordinate(a,b);
             }
-            divideBox(1,tileMap,"HOUSE");
+            divideBox(1,tileMap,"HOUSE", generator);
         }
     }
 
@@ -90,7 +89,7 @@ void city:: deleteTileMap()
     }
 }
 
-void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int level, std::string type)
+void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int level, std::string type, std::default_random_engine generator)
 {
     std::cout << "Make a line\n";
     int a=0;
@@ -122,8 +121,6 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
             b=myLine->Point2->x;
         }
 
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::default_random_engine generator (seed);
         std::uniform_int_distribution<int> doorFinder(a,b);
         doorPlace=doorFinder(generator);
     }
@@ -202,15 +199,13 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
 
 
-void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & tileMap, std::string type)
+void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & tileMap, std::string type, std::default_random_engine generator)
 {
-unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-std::default_random_engine generator(seed);
 std::uniform_int_distribution<int> halfChance(0,1);
 
 if(level==0 and type=="ROADBOX")
 {
-   makeHouse(tileMap);  //many houses
+  // makeHouse(tileMap, generator);  //many houses
 }
 
 if(level>0)
@@ -231,7 +226,7 @@ if(level>0)
         tempRoad.vertical=true;
         tempRoad.Point1=&lowPoint;
         tempRoad.Point2=&highPoint;
-        makeLine(&tempRoad, tileMap, level, type); //draws road on tile map
+        makeLine(&tempRoad, tileMap, level, type, generator); //draws road on tile map
 
         subBox1=new box;
         subBox2=new box;
@@ -246,8 +241,8 @@ if(level>0)
         subBox2->top=top;
         subBox2->bottom=bottom;
 
-        subBox1->divideBox(level-1, tileMap, type);
-        subBox2->divideBox(level-1, tileMap, type);
+        subBox1->divideBox(level-1, tileMap, type, generator);
+        subBox2->divideBox(level-1, tileMap, type, generator);
 
     }
 
@@ -262,7 +257,7 @@ if(level>0)
         tempRoad.Point1=&leftPoint;
         tempRoad.Point2=&rightPoint;
 
-        makeLine(&tempRoad, tileMap, level, type); //draws road on tileMap
+        makeLine(&tempRoad, tileMap, level, type, generator); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;
@@ -275,8 +270,8 @@ if(level>0)
         subBox2->right=right;
         subBox2->top=splitPoint-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
-        subBox1->divideBox(level-1, tileMap, type);
-        subBox2->divideBox(level-1, tileMap, type);
+        subBox1->divideBox(level-1, tileMap, type, generator);
+        subBox2->divideBox(level-1, tileMap, type, generator);
     }
 
 }
@@ -284,16 +279,25 @@ if(level>0)
 
 }
 
+
+city::city()
+{
+tileMapSize=100;
+left=0;
+bottom=0;
+right=tileMapSize-1;
+top=tileMapSize-1;
+complexity=4;
+}
+
   void city::generateCity()
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine generator(seed);
 setTileMap();
-divideBox(4,tileMap, "ROADBOX"); //recursive box dividing and road drawing
+divideBox(complexity, tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
 }
 
 
 
-box::~box()
-{
-
-}
 
