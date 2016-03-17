@@ -38,8 +38,6 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     customSpeed=speed();
     if (counter>=customSpeed and keyrelease == true){
 
-            std::cout << "YO NIGGA\n";
-
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
                         pressedKey = true;

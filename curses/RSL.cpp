@@ -101,15 +101,15 @@ int getIntData(std::string fileName, std::string dataToGet,int positionInArray)
                     if (_c == '\t'){
                         continue;
                     }
-
                     if (foundDataMember == true and _c == ':' and whatever == positionInArray){
+
                         std::stringstream ss;
                         int convertedInt;
                         ss << LINE_READING;
                         ss>>convertedInt;
                         return convertedInt;
                     }
-                    if (_c == ':')whatever++;
+                    if (_c == ':' and foundDataMember == true)whatever++;
                     LINE_READING+=_c;
 
                     if (foundDatatype==false){

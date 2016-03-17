@@ -196,19 +196,31 @@ bool waitforplayer = false;
     while (window.isOpen())
     {
 
-
         sf::Event event;
-
-        std::cout << keyrelease << std::endl;
 
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
+        while (view.getCenter().x != actors[0]->col()*16){
+            view.setCenter(view.getCenter().x-1,view.getCenter().y);
+        }
+        while (view.getCenter().y != actors[0]->row()*16){
+            view.setCenter(view.getCenter().x,view.getCenter().y-1);
+        }
+
+        while (view.getCenter().x - view.getSize().x/2 < 0){
+            view.setCenter(view.getCenter().x+1,view.getCenter().y);
+        }
+        while (view.getCenter().y - view.getSize().y/2 < 0){
+            view.setCenter(view.getCenter().x,view.getCenter().y+1);
+        }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(.5);keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(1.5f);keyrelease=false;}
 
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->counter >= actors[0]->speed())waitforplayer = true;
         else waitforplayer = false;
-
 
         if (waitforplayer == false and keyrelease == false){
 
@@ -264,7 +276,6 @@ bool waitforplayer = false;
 //        }
         window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
-        std::cout << keyrelease << std::endl;
     }
 
 
