@@ -112,13 +112,12 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
 
     while (true){
-        std::cout << pos << std::endl;
         std::string data = character->species + ".Q"+ pos;
         question = (RSL::getStringData("data/creatures/creature_questions.raw",data));
         if (question == "no")break;
 
         for (int i = 0; i < 10; i ++){
-            char temppos = pos+i;
+            char temppos = i + '0';
             answers tempString = RSL::getAnswers("data/creatures/creature_questions.raw",character->species+ ".Q"+ pos  + ".A"+ temppos);
             if (tempString.answer != "no")listOfAnswers.push_back(tempString);
         }
@@ -130,8 +129,8 @@ actor* characterCreationMenu(sf::RenderWindow &window)
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true){answerSelected[0]++; keyreleased = false;}
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true){answerSelected[0]--; keyreleased = false;}
 
-            if (answerSelected[0] == colors.size())answerSelected[0] = 0;
-            if (answerSelected[0] == -1)answerSelected[0] = colors.size()-1;
+            if (answerSelected[0] == listOfAnswers.size())answerSelected[0] = 0;
+            if (answerSelected[0] == -1)answerSelected[0] = listOfAnswers.size()-1;
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true){
                 if (listOfAnswers[answerSelected[0]].stat == "strength")str++;
@@ -173,12 +172,33 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
 
             for (int i = 0; i < listOfAnswers.size(); i++){
+                std::string tempstr;
+                std::string formattedAnswer;
+                for (char _c : listOfAnswers[i].answer){
+                    tempstr+=_c;
+                    wordLength+=font.getGlyph(_c,12/(abs(i-answerSelected[0])+1),false).advance;
+                    if (_c == ' ' or _c == ';'){
+                        lineLength+=wordLength;
+                        if (lineLength + 20 < window.getSize().x){
+                            formattedAnswer+= tempstr;
+                            tempstr.clear();
+                            wordLength = 0;
+                        }
+                        else{
+                            formattedAnswer+= '\n' + tempstr;
+                            lineLength = wordLength;
+                            wordLength = 0;
+                            tempstr.clear();
+                        }
+                    }
+                }
 
-                    text.setCharacterSize(20/((abs(i-answerSelected[0])+1)));
+                text.setCharacterSize(12/((abs(i-answerSelected[0])+1)));
 
-                    text.setString(listOfAnswers[i].answer);
-                    text.setPosition(80,100+i*40);
-                    window.draw(text);
+                text.setString(formattedAnswer);
+                text.setPosition(80,100+i*40);
+                window.draw(text);
+
             }
 
             window.display();
