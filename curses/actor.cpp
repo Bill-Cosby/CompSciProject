@@ -108,10 +108,13 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vecto
     for (actor* _a : actors){
 
         if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+        if (EVIL and _a->EVIL)continue;
 
         std::cout << _a->col() << "," << _a->row() << std::endl;
 
         totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+
+
         dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
         if (dangerRatio < 1){
             actorAttacking = _a;

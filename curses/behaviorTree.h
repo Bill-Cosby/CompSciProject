@@ -176,6 +176,22 @@ public:
     }
 };
 
+class findHidingSpot : public Node
+{
+public:
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        coordinate temp = testingCharacter->findTile(_map,false,true);
+        if (temp!= coordinate(-1,-1)){
+            testingCharacter->goal = temp;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
+
 class openDoorNode : public Node
 {
 public:
@@ -240,6 +256,7 @@ public:
         }
         else{
             std::cout << "No I don't think so...\n";
+            std::cout << "I want to hide\n";
             return false;
         }
     }

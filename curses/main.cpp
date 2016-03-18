@@ -67,9 +67,9 @@ int main()
     //window.setFramerateLimit(60);
 
 
-   // bool keyrelease=true;
 std::vector<actor*> actors;
-actors.push_back(characterCreationMenu(window));
+//actors.push_back(characterCreationMenu(window));
+actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
 
 
@@ -193,18 +193,17 @@ actors.push_back(new monster("goblin"));
 
 bool keyrelease = true;
 bool waitforplayer = false;
+    sf::Event event;
     while (window.isOpen())
     {
-
-        sf::Event event;
 
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
-        while (view.getCenter().x != actors[0]->col()*16){
+        while (view.getCenter().x != (actors[0]->col()*16)){
             view.setCenter(view.getCenter().x-1,view.getCenter().y);
         }
-        while (view.getCenter().y != actors[0]->row()*16){
+        while (view.getCenter().y != (actors[0]->row()*16)){
             view.setCenter(view.getCenter().x,view.getCenter().y-1);
         }
 
@@ -214,17 +213,13 @@ bool waitforplayer = false;
         while (view.getCenter().y - view.getSize().y/2 < 0){
             view.setCenter(view.getCenter().x,view.getCenter().y+1);
         }
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(.5);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(1.5f);keyrelease=false;}
 
-        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
-        if (actors[0]->counter >= actors[0]->speed())waitforplayer = true;
-        else waitforplayer = false;
+        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 
-        if (waitforplayer == false and keyrelease == false){
-
-            for (int i=0;i<actors.size();i++){
+        if (waitforplayer == false){
+            for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
                     root->run(actors[i],_map,localItems,actors,announcementList);
@@ -233,7 +228,6 @@ bool waitforplayer = false;
                 actors[i]->increaseCounter();
             }
         }
-
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
