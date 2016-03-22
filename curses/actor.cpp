@@ -132,7 +132,7 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vecto
     return false;
 }
 
-coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool isDoor, bool hiddenFromEnemy)
+coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool isDoor, bool hiddenFromEnemy, bool socialTile)
 {
     std::vector<coordinate*> openSet;
     std::vector<coordinate> closedSet;
@@ -167,10 +167,14 @@ coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map,
         }
         if (hiddenFromEnemy == true){
             temp = *openSet[i];
-            for (coordinate* _o : openSet){
-                delete openSet[i];
-            }
             if (!(canSee(_map,*openSet[i]))){
+                goal = temp;
+                return temp;
+            }
+        }
+        if (socialTile){
+            temp = *openSet[i];
+            if (_map[1][openSet[i]->y][openSet[i]->x]->isSocial() == true){
                 goal = temp;
                 return temp;
             }
@@ -181,7 +185,7 @@ coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map,
                 if (abs(i) == abs(j)){
                     continue;
                 }
-                if (temp.x+i>0 and temp.x+i < _map.size() and temp.y+j > 0 and temp.y+j < _map.size()){
+                if (temp.x+i>0 and temp.x+i < _map[1].size() and temp.y+j > 0 and temp.y+j < _map[1].size()){
                     openSet.push_back(new coordinate(temp.x+i,temp.y+j));
                 }
             }

@@ -28,40 +28,46 @@ int main()
     int counter = 0;
 
     gameWorld gameworld(window);
+    announcements announcementList;
     srand(time(NULL));
     srand(rand()%time(NULL));
+
+
     CheckAll * root = new CheckAll;
-    announcements announcementList;
 
-    Selector* decisionMaker = new Selector;
-    Selector* actionPerformer = new Selector;
-
-    Sequence * doorSequence = new Sequence;
-            doorSequence->addChild(new findDoorNode);
-
-    Sequence * itemSequence = new Sequence;
-            itemSequence->addChild(new lookForItemNode);
-            itemSequence->addChild(new isItemBetterNode);
-
-    Sequence * attackSequence = new Sequence;
-            attackSequence->addChild(new decideIfCanAttackNode);
-
-    Selector * movement = new Selector;
-            movement->addChild(new moveOnPathNode);
-            movement->addChild(new findPathNode);
-
-        actionPerformer->addChild(new attackNode);
-        actionPerformer->addChild(new pickUpItemNode);
-        actionPerformer->addChild(new openDoorNode);
-        actionPerformer->addChild(movement);
+    Selector * thoughtProcess = new Selector;
 
 
-    decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(itemSequence);
-    decisionMaker->addChild(doorSequence);
+    Sequence * danger = new Sequence;
+        danger->addChild(new lookForEnemiesNode);
+        Selector * fightOrFlight = new Selector;
+            Sequence * tryToAttack = new Sequence;
+                tryToAttack->addChild(new decideIfCanAttackNode);
+                tryToAttack->addChild(new attackNode);
+            fightOrFlight->addChild(tryToAttack);
+            fightOrFlight->addChild(new findHidingSpot);
+        danger->addChild(fightOrFlight);
 
-    root->addChild(decisionMaker);
-    root->addChild(actionPerformer);
+    Sequence * lookForItems = new Sequence;
+        lookForItems->addChild(new lookForItemNode);
+        lookForItems->addChild(new pickUpItemNode);
+
+    Sequence * openDoors = new Sequence;
+        openDoors->addChild(new findDoorNode);
+        openDoors->addChild(new openDoorNode);
+
+    //thoughtProcess->addChild(danger);
+    //thoughtProcess->addChild(lookForItems);
+    //thoughtProcess->addChild(openDoors);
+
+    root->addChild(thoughtProcess);
+    root->addChild(new herdNode);
+    root->addChild(new findPathNode);
+    root->addChild(new moveOnPathNode);
+
+
+
+
 
 
     //window.setFramerateLimit(60);
@@ -71,13 +77,17 @@ std::vector<actor*> actors;
 //actors.push_back(characterCreationMenu(window));
 actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
+actors.push_back(new monster("goblin"));
+actors.push_back(new monster("goblin"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(8,8);
+    actors[1]->pos(3,2);
+    actors[2]->pos(2,2);
+    actors[3]->pos(4,2);
 
 
 
@@ -129,7 +139,7 @@ actors.push_back(new monster("goblin"));
         _map[1][y].resize(20);
         for (int x=0;x<20;x++){
             if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
+                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
                 else _map[1][y][x] = new tile(stonewall,-1,"stone");
             }
             else if (x == 14 and y >=16){
@@ -147,6 +157,10 @@ actors.push_back(new monster("goblin"));
             _map[1][y][x]->position = coordinate(x,y);
         }
     }
+
+    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+    _map[1][10][10]->position = coordinate(10,10);
+
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);

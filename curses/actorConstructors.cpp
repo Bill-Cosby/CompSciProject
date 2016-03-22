@@ -11,6 +11,7 @@ player::player(std::string speciesToLoad)
     sprinting=false;
     controlled=true;
     sprinting=false;
+    inDanger = false;
     int temp;
     z = 1;
 
@@ -20,7 +21,8 @@ player::player(std::string speciesToLoad)
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
-    attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
+    //attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
+    attack = 700000;
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
@@ -30,6 +32,8 @@ player::player(std::string speciesToLoad)
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".SOCIAL") == "true")social = true;
+    else social = false;
 
 }
 
@@ -45,6 +49,7 @@ monster::monster(std::string speciesToLoad)
     sprinting=false;
     controlled=true;
     sprinting=false;
+    inDanger = false;
     int temp;
     z = 1;
 
@@ -67,6 +72,8 @@ monster::monster(std::string speciesToLoad)
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".SOCIAL") == "true")social = true;
+    else social = false;
 
     goal = coordinate(-1,-1);
     memory=coordinate(-1,-1);

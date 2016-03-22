@@ -55,6 +55,7 @@ public:
     int coolDown;
     bool sprinting;
     bool onGround;
+    bool inDanger;
 
 //  RETURN COORDINATES
     int row(){return y;}
@@ -97,6 +98,7 @@ public:
 
 //  TAGS FOR AI
     bool EVIL;
+    bool social;
 
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;
@@ -144,7 +146,7 @@ public:
     bool findPath(std::vector<std::vector<std::vector<tile*> > > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}
     double findDistance(coordinate goal){return floor(sqrt(pow((x-goal.x),2) + pow((y-goal.y),2)) / .1) * .1;}
     bool openDoor(std::vector<std::vector<std::vector<tile*> > > &_map);
-    coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile);
+    coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile, bool socialTile);
     bool findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems);
     bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map);
     bool canSee(std::vector<std::vector<std::vector<tile*> > >, coordinate);

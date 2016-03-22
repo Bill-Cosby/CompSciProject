@@ -37,6 +37,15 @@ public:
     virtual bool interactWithDoor(bool opening){}
     virtual bool isOpen(){}
     virtual void openContainer(){}
+    virtual bool isSocial(){return false;}
+};
+
+class socialTile : public tile
+{
+public:
+    bool emitsLight;
+    virtual bool isSocial(){return true;}
+    socialTile(int dc, int mv, std::string mat){defaultchar = dc;movementCost = mv; _material = mat;}
 };
 
 class door : public tile

@@ -158,7 +158,7 @@ class findDoorNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        coordinate temp = testingCharacter->findTile(_map,true,false);
+        coordinate temp = testingCharacter->findTile(_map,true,false,false);
         std::cout << "Looking for a door...\n";
         if (temp!= coordinate(-1,-1) and !_map[1][temp.y][temp.x]->isOpen()){
             testingCharacter->goal = temp;
@@ -181,7 +181,7 @@ class findHidingSpot : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        coordinate temp = testingCharacter->findTile(_map,false,true);
+        coordinate temp = testingCharacter->findTile(_map,false,true,false);
         if (temp!= coordinate(-1,-1)){
             testingCharacter->goal = temp;
             return true;
@@ -244,6 +244,23 @@ public:
     }
 };
 
+class lookForEnemiesNode : public Node
+{
+public:
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        for (actor* _a : actors){
+            std::cout << _a->EVIL << std::endl;
+            if (!_a->EVIL and testingCharacter->EVIL){
+                testingCharacter->inDanger = true;
+                return true;
+            }
+        }
+        testingCharacter->inDanger = false;
+        return false;
+    }
+};
+
 class decideIfCanAttackNode : public Node
 {
 public:
@@ -257,6 +274,7 @@ public:
         else{
             std::cout << "No I don't think so...\n";
             std::cout << "I want to hide\n";
+            if (testingCharacter->inDanger)return true;
             return false;
         }
     }
@@ -273,6 +291,29 @@ public:
                 testingCharacter->memory = coordinate(-1,-1);
                 testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
                 return true;
+            }
+        }
+        if (testingCharacter->inDanger)return true;
+        return false;
+    }
+};
+
+class herdNode : public Node
+{
+public:
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    {
+        if (testingCharacter->social){
+            testingCharacter->findTile(_map,false,false,true);
+            if (testingCharacter->findDistance(testingCharacter->goal)>5){
+                return false;
+            }
+            else{
+                int temp = rand()%9;
+                if (temp == 8){testingCharacter->goal = coordinate(-1,-1);return false;}
+                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
+                return false;
             }
         }
         return false;
