@@ -736,6 +736,13 @@
 	<vector>
 	"RSL.h"
 	<SFML/Graphics.hpp>
+<<<<<<< HEAD
+
+1456350450 c:\compsciproject\curses\node.h
+
+1459197890 source:c:\compsciproject\curses\bodyparts.cpp
+=======
+>>>>>>> e2d01701627b4ad68bedab6e8179b16cc619044f
 	"bodyParts.h"
 	"RSL.h"
 	"item.h"
@@ -1798,7 +1805,17 @@
 
 1458239264 source:c:\compsciproject\curses\generatecity.cpp
 
+<<<<<<< HEAD
 1459196745 source:c:\compsciproject\curses\actorconstructors.cpp
+=======
+1459191931 source:c:\compsciproject\curses\actorconstructors.cpp
+	"actor.h"
+<<<<<<< HEAD
+
+1459125590 source:c:\compsciproject\curses\playeractions.cpp
+=======
+>>>>>>> e2d01701627b4ad68bedab6e8179b16cc619044f
+>>>>>>> b7f2109a30e8bd0b73f4f4eb24e026e109234183
 	"actor.h"
 
 1459194535 source:c:\compsciproject\curses\playeractions.cpp

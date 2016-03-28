@@ -47,14 +47,13 @@
 	[NAME]bat;
 	[DESCRIPTION]A small, winged mammal.;
 	[TAGS]EVIL;
-	[LIMBS]{};
+	[LIMBS]{01,00,3,head:00,00,3,torso:02,01,0,Leye:03,01,0,eye:04,00,2,Lfoot:05,00,2,foot:06,00,2,Lhand:07,00,2,hand:};
 	[SKINCOLOR]{black:grey:brown:};
-	[HAIRCOLOR]{};
+	[HAIRCOLOR]{:};
 	[EYECOLOR]{red:black:grey:};
-	[HAIRTYPES]{};
+	[HAIRTYPES]{:};
 	[STRENGTH]1;
 	[DEXTERITY]10;
-	
 	[SKIN]5;
 	[FAT]3;
 	[MUSCLE]7;
