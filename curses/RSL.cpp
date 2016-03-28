@@ -23,6 +23,7 @@ std::string getStringData(std::string fileName, std::string dataToGet)
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
                 for (char _c : line){
+
                     if (_c == '\t' or _c == '}'){
                         inArray = false;
                         continue;
@@ -50,6 +51,8 @@ std::string getStringData(std::string fileName, std::string dataToGet)
                     }
 
                     LINE_READING+=_c;
+
+                    if (foundDatatype and LINE_READING == "[ENDSPECIES]")return "no";
 
                     if (foundDatatype==false){
                         if (_c == ']'){
@@ -101,15 +104,15 @@ int getIntData(std::string fileName, std::string dataToGet,int positionInArray)
                     if (_c == '\t'){
                         continue;
                     }
-
                     if (foundDataMember == true and _c == ':' and whatever == positionInArray){
+
                         std::stringstream ss;
                         int convertedInt;
                         ss << LINE_READING;
                         ss>>convertedInt;
                         return convertedInt;
                     }
-                    if (_c == ':')whatever++;
+                    if (_c == ':' and foundDataMember == true)whatever++;
                     LINE_READING+=_c;
 
                     if (foundDatatype==false){

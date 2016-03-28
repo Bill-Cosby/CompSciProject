@@ -22,54 +22,60 @@ int main()
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
     sf::Shader lightingShader;
-    sf::RenderStates renderState;
+    sf::RenderStates renderState;;;;;;;;;;;;;;
 
 
     int counter = 0;
 
     gameWorld gameworld(window);
+    announcements announcementList;
     srand(time(NULL));
     srand(rand()%time(NULL));
+
+
     CheckAll * root = new CheckAll;
-    announcements announcementList;
 
-    Selector* decisionMaker = new Selector;
-    Selector* actionPerformer = new Selector;
-
-    Sequence * doorSequence = new Sequence;
-            doorSequence->addChild(new findDoorNode);
-
-    Sequence * itemSequence = new Sequence;
-            itemSequence->addChild(new lookForItemNode);
-            itemSequence->addChild(new isItemBetterNode);
-
-    Sequence * attackSequence = new Sequence;
-            attackSequence->addChild(new decideIfCanAttackNode);
-
-    Selector * movement = new Selector;
-            movement->addChild(new moveOnPathNode);
-            movement->addChild(new findPathNode);
-
-        actionPerformer->addChild(new attackNode);
-        actionPerformer->addChild(new pickUpItemNode);
-        actionPerformer->addChild(new openDoorNode);
-        actionPerformer->addChild(movement);
+    Selector * thoughtProcess = new Selector;
 
 
-    decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(itemSequence);
-    decisionMaker->addChild(doorSequence);
+    Sequence * danger = new Sequence;
+        danger->addChild(new lookForEnemiesNode);
+        Selector * fightOrFlight = new Selector;
+            Sequence * tryToAttack = new Sequence;
+                tryToAttack->addChild(new decideIfCanAttackNode);
+                tryToAttack->addChild(new attackNode);
+            fightOrFlight->addChild(tryToAttack);
+            fightOrFlight->addChild(new findHidingSpot);
+        danger->addChild(fightOrFlight);
 
-    root->addChild(decisionMaker);
-    root->addChild(actionPerformer);
+    Sequence * lookForItems = new Sequence;
+        lookForItems->addChild(new lookForItemNode);
+        lookForItems->addChild(new pickUpItemNode);
+
+    Sequence * openDoors = new Sequence;
+        openDoors->addChild(new findDoorNode);
+        openDoors->addChild(new openDoorNode);
+
+    //thoughtProcess->addChild(danger);
+    thoughtProcess->addChild(lookForItems);
+    //thoughtProcess->addChild(openDoors);
+
+    root->addChild(thoughtProcess);
+    root->addChild(new herdNode);
+    root->addChild(new findPathNode);
+    root->addChild(new moveOnPathNode);
+
+
+
+
 
 
     //window.setFramerateLimit(60);
 
 
-   // bool keyrelease=true;
 std::vector<actor*> actors;
-actors.push_back(characterCreationMenu(window));
+//actors.push_back(characterCreationMenu(window));
+actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
 
 
@@ -77,18 +83,18 @@ actors.push_back(new monster("goblin"));
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(8,8);
+    actors[1]->pos(4,7);
 
 
 
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    localItems.push_back(new weapon("Sword",'/',10,18,7));
-    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateboot",'C',5,5,0,"iron"));
+//    localItems.push_back(new weapon("Sword",'/',10,18,7));
+//    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateboot",'C',5,5,0,"iron"));
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
     lights[0]->intensity = 1;
@@ -129,7 +135,7 @@ actors.push_back(new monster("goblin"));
         _map[1][y].resize(20);
         for (int x=0;x<20;x++){
             if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(true,closeddoor,0,"wood");
+                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
                 else _map[1][y][x] = new tile(stonewall,-1,"stone");
             }
             else if (x == 14 and y >=16){
@@ -147,6 +153,10 @@ actors.push_back(new monster("goblin"));
             _map[1][y][x]->position = coordinate(x,y);
         }
     }
+
+    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+    _map[1][10][10]->position = coordinate(10,10);
+
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -170,49 +180,62 @@ actors.push_back(new monster("goblin"));
 
     //DUNGEON SETUP CODE
 //    dungeon map_t;
-//    _map.resize(map_t.dungeon_grid.size());
-//    _map.resize(map_t.dungeon_grid.size());
+//    _map.resize(2);
+//    _map[0].resize(map_t.dungeon_grid.size());
+//    _map[1].resize(map_t.dungeon_grid.size());
 //    for (int y=0;y<map_t.dungeon_grid.size();y++)
 //    {
-//        _map[y].resize(map_t.dungeon_grid[0].size());
+//        _map[0][y].resize(map_t.dungeon_grid[0].size());
+//        _map[1][y].resize(map_t.dungeon_grid[0].size());
 //        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
 //        {
 //            if (map_t.dungeon_grid[y][x]==1)
 //            {
-//                _map[y][x]= new tile(stonewall,0,"stone");
-//                actors[0]->pos(y,x);
+//                _map[1][y][x]= new tile(stonewall,0,"stone");
+//                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+//                _map[1][y][x]->position = coordinate(x,y);
+//                _map[0][y][x]->position = coordinate(x,y);
 //            }
 //            else
 //            {
-//                _map[y][x]= new tile(stonefloor,-1,"stone");
+//                _map[1][y][x]= new tile;
+//                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+//                _map[0][y][x]->position = coordinate(x,y);
+//                actors[0]->pos(y,x);
 //            }
-//            _map[y][x]->position = coordinate(x,y);
 //        }
 //    }
 
 
 bool keyrelease = true;
 bool waitforplayer = false;
+    sf::Event event;
     while (window.isOpen())
     {
-
-
-        sf::Event event;
-
-        std::cout << keyrelease << std::endl;
 
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
+        while (view.getCenter().x != (actors[0]->col()*16)){
+            view.setCenter(view.getCenter().x-1,view.getCenter().y);
+        }
+        while (view.getCenter().y != (actors[0]->row()*16)){
+            view.setCenter(view.getCenter().x,view.getCenter().y-1);
+        }
 
-        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList);
-        if (actors[0]->counter >= actors[0]->speed())waitforplayer = true;
-        else waitforplayer = false;
+        while (view.getCenter().x - view.getSize().x/2 < 0){
+            view.setCenter(view.getCenter().x+1,view.getCenter().y);
+        }
+        while (view.getCenter().y - view.getSize().y/2 < 0){
+            view.setCenter(view.getCenter().x,view.getCenter().y+1);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(.5);keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(1.5f);keyrelease=false;}
 
+        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 
-        if (waitforplayer == false and keyrelease == false){
-
-            for (int i=0;i<actors.size();i++){
+        if (waitforplayer == false){
+            for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
                     root->run(actors[i],_map,localItems,actors,announcementList);
@@ -221,7 +244,6 @@ bool waitforplayer = false;
                 actors[i]->increaseCounter();
             }
         }
-
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
@@ -264,7 +286,6 @@ bool waitforplayer = false;
 //        }
         window.setView(view);
         gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
-        std::cout << keyrelease << std::endl;
     }
 
 

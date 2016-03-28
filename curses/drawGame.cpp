@@ -32,14 +32,16 @@ void announcements::drawAnnouncements(sf::RenderWindow & window)
     sf::Text menuText;
     menuText.setCharacterSize(8);
     menuText.setFont(font);
+    int counter = 0;
 
     int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
     for (int i = 29; i >-1;i--){
-        if (i > announcementList.size())return;
-        menuText.setString(announcementList[i]);
+        if (counter > announcementList.size()-1 or announcementList.size() == 0)return;
+        menuText.setString(announcementList[counter]);
         menuText.setPosition(x,y);
         window.draw(menuText);
         y-=15;
+        counter++;
     }
 }
 

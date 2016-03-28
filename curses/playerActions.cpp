@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer)
 {
     /*
     0 = NORTH
@@ -30,12 +30,12 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     char closeDirection;
     char examineDirection;
     std::vector<item*> itemsExamining;
-
     sf::Event event;
 
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
+    if (counter>=customSpeed) waitforplayer = true;
     if (counter>=customSpeed and keyrelease == true){
 
                 while (window.pollEvent(event)){
@@ -53,6 +53,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
@@ -72,6 +74,29 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     }
                 }
                 _map[1][temp.y][temp.x]->interactWithDoor(false);
+            }
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)){
+                while (pressedKey == false){
+                    while (window.pollEvent(event)){
+                        if (event.type == sf::Event::KeyPressed){
+                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            pressedKey = true;
+                        }
+                    }
+                }
+                for (actor* _a : actors){
+                    if (coordinate(_a->col(),_a->row()) == temp){
+                        _a->dialogue(_map,actors,localItems,announcementList,window);
+                    }
+                }
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
@@ -122,8 +147,9 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     attackEnemy(_map,announcementList,localItems,window);
                     actorAttacking = NULL;
                 }
+                waitforplayer = false;
             }
-            else if (_map[1][temp.y][temp.x]->movementCost != -1){
+            else if (_map[1][temp.y][temp.x]->movementCost != -1 and keyrelease == false){
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }
@@ -139,6 +165,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     pos(temp.y,temp.x);
                     counter=0;
                 }
+                waitforplayer = false;
             }
             else{
 
@@ -150,7 +177,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
         counter = 0;
         return;
     }
-    counter++;
+    else counter++;
+
 }
 
 void player::attackEnemy(std::vector<std::vector<std::vector<tile*> > >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)
