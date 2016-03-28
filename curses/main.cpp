@@ -76,12 +76,14 @@ int main()
 std::vector<actor*> actors;
 //actors.push_back(characterCreationMenu(window));
 actors.push_back(new player("human"));
+actors.push_back(new monster("human"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
+    actors[1]->pos(4,7);
 
 
 
@@ -116,44 +118,44 @@ actors.push_back(new player("human"));
 
     std::vector<std::vector<std::vector<tile* > > > _map;
 
-//    _map.resize(2);
-//    _map[0].resize(20);
-//    _map[1].resize(20);
-//
-//    for (int y=0;y<20;y++){
-//        _map[0][y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-//            else _map[0][y][x] = new tile(grass,0,"grass");
-//            _map[0][y][x]->position=coordinate(x,y);
-//        }
-//    }
-//
-//    for (int y=0;y<20;y++){
-//        _map[1][y].resize(20);
-//        for (int x=0;x<20;x++){
-//            if (x >= 14 and y == 16){
-//                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
-//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 14 and y >=16){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (y == 0 or y == 19){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else if (x == 0 or x == 19){
-//                _map[1][y][x] = new tile(stonewall,-1,"stone");
-//            }
-//            else{
-//                _map[1][y][x] = new tile;
-//            }
-//            _map[1][y][x]->position = coordinate(x,y);
-//        }
-//    }
-//
-//    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
-//    _map[1][10][10]->position = coordinate(10,10);
+    _map.resize(2);
+    _map[0].resize(20);
+    _map[1].resize(20);
+
+    for (int y=0;y<20;y++){
+        _map[0][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+            else _map[0][y][x] = new tile(grass,0,"grass");
+            _map[0][y][x]->position=coordinate(x,y);
+        }
+    }
+
+    for (int y=0;y<20;y++){
+        _map[1][y].resize(20);
+        for (int x=0;x<20;x++){
+            if (x >= 14 and y == 16){
+                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 14 and y >=16){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (y == 0 or y == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else if (x == 0 or x == 19){
+                _map[1][y][x] = new tile(stonewall,-1,"stone");
+            }
+            else{
+                _map[1][y][x] = new tile;
+            }
+            _map[1][y][x]->position = coordinate(x,y);
+        }
+    }
+
+    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+    _map[1][10][10]->position = coordinate(10,10);
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -177,32 +179,32 @@ actors.push_back(new player("human"));
 
 
     //DUNGEON SETUP CODE
-    dungeon map_t;
-    _map.resize(2);
-    _map[0].resize(map_t.dungeon_grid.size());
-    _map[1].resize(map_t.dungeon_grid.size());
-    for (int y=0;y<map_t.dungeon_grid.size();y++)
-    {
-        _map[0][y].resize(map_t.dungeon_grid[0].size());
-        _map[1][y].resize(map_t.dungeon_grid[0].size());
-        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-        {
-            if (map_t.dungeon_grid[y][x]==1)
-            {
-                _map[1][y][x]= new tile(stonewall,0,"stone");
-                _map[0][y][x]= new tile(stonefloor,-1,"stone");
-                _map[1][y][x]->position = coordinate(x,y);
-                _map[0][y][x]->position = coordinate(x,y);
-            }
-            else
-            {
-                _map[1][y][x]= new tile;
-                _map[0][y][x]= new tile(stonefloor,-1,"stone");
-                _map[0][y][x]->position = coordinate(x,y);
-                actors[0]->pos(y,x);
-            }
-        }
-    }
+//    dungeon map_t;
+//    _map.resize(2);
+//    _map[0].resize(map_t.dungeon_grid.size());
+//    _map[1].resize(map_t.dungeon_grid.size());
+//    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//    {
+//        _map[0][y].resize(map_t.dungeon_grid[0].size());
+//        _map[1][y].resize(map_t.dungeon_grid[0].size());
+//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//        {
+//            if (map_t.dungeon_grid[y][x]==1)
+//            {
+//                _map[1][y][x]= new tile(stonewall,0,"stone");
+//                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+//                _map[1][y][x]->position = coordinate(x,y);
+//                _map[0][y][x]->position = coordinate(x,y);
+//            }
+//            else
+//            {
+//                _map[1][y][x]= new tile;
+//                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+//                _map[0][y][x]->position = coordinate(x,y);
+//                actors[0]->pos(y,x);
+//            }
+//        }
+//    }
 
 
 bool keyrelease = true;

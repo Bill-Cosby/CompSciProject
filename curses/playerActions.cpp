@@ -76,6 +76,29 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 _map[1][temp.y][temp.x]->interactWithDoor(false);
             }
 
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)){
+                while (pressedKey == false){
+                    while (window.pollEvent(event)){
+                        if (event.type == sf::Event::KeyPressed){
+                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            pressedKey = true;
+                        }
+                    }
+                }
+                for (actor* _a : actors){
+                    if (coordinate(_a->col(),_a->row()) == temp){
+                        _a->dialogue(_map,actors,localItems,announcementList,window);
+                    }
+                }
+            }
+
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
                 while (pressedKey == false){
                     while (window.pollEvent(event)){

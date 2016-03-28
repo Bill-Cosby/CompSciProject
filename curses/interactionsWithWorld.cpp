@@ -88,14 +88,136 @@ bool actor::canSee(std::vector<std::vector<std::vector<tile*> > > _map, coordina
     return true;
 }
 
-void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList)
+void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window)
 {
-
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
 
     sf::Text text;
+    text.setFont(font);
     int questionOn = 0;
+    bool answered = false;
+    bool keyreleased = false;
+
+    std::string questions[4] = {"Can you come with me?","Do you see any items nearby?","Do you see any monsters nearby?","Do you have anything I can buy?"};
+    std::string temp = RSL::getStringData("data/dialogue/dialogue.raw","human.text");
+
+    sf::Event event;
+
+    while (1){
+        text.setCharacterSize(20);
+        text.setPosition(10,10);
+        text.setString(temp);
+        text.setCharacterSize(12);
+
+        window.clear(sf::Color::Black);
+        window.draw(text);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true and answered == false){questionOn++; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8) and keyreleased == true and answered == false){questionOn--; keyreleased = false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true and answered == false){
+            if (questionOn == 0){
+                if ((rand()%100)<10){
+                    temp = "Yes! That sounds like fun!";
+                    for (actor* _a : actors){
+                        if (_a->controlled == true)actorFollowing = _a;
+                    }
+                }
+                else{
+                    temp = "No, that's too dangerous.";
+                }
+            }
+            if (questionOn == 1){
+                    bool helpful = false;
+                    for (actor* _a : actors){
+                        if (_a->controlled == true){
+                            if (actorFollowing == _a){
+                                if (findItem(_map,localItems) == true){
+                                    temp = "I see a few that are interesting";
+                                }
+                                else{
+                                    temp = "No, none that I'd consider interesting.";
+                                }
+                                helpful = true;
+                            }
+                        }
+                    }
+                    if (helpful == false){
+                        temp = "Why would I help you?";
+                    }
+            }
+            if (questionOn == 2){
+                    bool helpful = false;
+                    for (actor* _a : actors){
+                        if (_a->controlled == true){
+                            if (actorFollowing == _a){
+                                if (inDanger == true){
+                                    temp = "Yes I saw something dangerous not too long ago.";
+                                }
+                                else{
+                                    temp = "Last I checked I wasn't in danger.";
+                                }
+                                helpful = true;
+                            }
+                        }
+                    }
+                    if (helpful == false){
+                        temp = "Why would I help you?";
+                    }
+            }
+            if (questionOn == 3){
+                bool selling = false;
+                for (item* _i : inventory){
+                    if (_i->value >= 50){
+                        selling = true;
+                    }
+                }
+                if (selling == false){
+                    temp = "I have nothing of value.";
+                }
+                else{
+                    temp = "I have a few things, maybe.";
+                }
+            }
+            answered = true;
+            keyreleased = false;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyreleased == true and answered == true){return;}
+        if (questionOn == 4)questionOn = 0;
+        if (questionOn < 0)questionOn = 3;
+
+        while (window.pollEvent(event)){
+            if (event.type ==  sf::Event::KeyReleased)keyreleased = true;
+        }
+
+        if (answered == false){
+            for (int i = 0;i<4;i++){
+
+                if (i == questionOn)text.setStyle(sf::Text::Underlined);
+
+                text.setString(questions[i]);
+                text.setPosition(50,50+i*20);
+                window.draw(text);
+                text.setStyle(sf::Text::Regular);
+
+            }
+        }
+        else {
+
+                text.setStyle(sf::Text::Underlined);
+
+                text.setString("Ok.");
+                text.setPosition(50,50);
+                window.draw(text);
+                text.setStyle(sf::Text::Regular);
+        }
+
+
+
+        window.display();
+    }
+
+
 }
 
 void monster::moveOnPath()
