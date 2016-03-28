@@ -26,3 +26,13 @@
 	[TEXTURE]creature_standard.png,16:32:;
 [GOBLINEYE]
 	[TEXTURE]creature_standard.png,16:0:;
+[BATTORSO]
+	[TEXTURE]creature_standard.png,32:96:;
+[BATHEAD]
+	[TEXTURE]creature_standard.png,32:16:;
+[BATEYE]
+	[TEXTURE]creature_standard.png,32:0:;
+[BATHAND]
+	[TEXTURE]creature_standard.png,32:64:;
+[BATFOOT]
+	[TEXTURE]creature_standard.png,32:32:;

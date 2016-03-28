@@ -34,3 +34,21 @@
 	[MUSCLE]15;
 	[BONE]35;
 [ENDSPECIES]
+
+[BAT];
+	[NAME]bat;
+	[DESCRIPTION]A small, winged mammal.;
+	[TAGS]EVIL;
+	[LIMBS]{};
+	[SKINCOLOR]{black:grey:brown:};
+	[HAIRCOLOR]{};
+	[EYECOLOR]{red:black:grey:};
+	[HAIRTYPES]{};
+	[STRENGTH]1;
+	[DEXTERITY]10;
+	
+	[SKIN]5;
+	[FAT]3;
+	[MUSCLE]7;
+	[BONE]10;
+[ENDSPECIES]
