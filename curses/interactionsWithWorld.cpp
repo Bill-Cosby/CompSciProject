@@ -88,6 +88,16 @@ bool actor::canSee(std::vector<std::vector<std::vector<tile*> > > _map, coordina
     return true;
 }
 
+void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList)
+{
+
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+
+    sf::Text text;
+    int questionOn = 0;
+}
+
 void monster::moveOnPath()
 {
     if (path.size()!=0){

@@ -2,16 +2,20 @@
 
 player::player(std::string speciesToLoad)
 {
+    actorFollowing = NULL;
     coolDown=0;
     numberOfLegs=0;
     accuracy=100;
     defense=0;
     counter=0;
+
     onGround = false;
-    sprinting=false;
+    sprinting= false;
     controlled=true;
-    sprinting=false;
+    sprinting= false;
     inDanger = false;
+  equipsArmor= false;
+    opensdoors=false;
     int temp;
     z = 1;
 
@@ -34,11 +38,16 @@ player::player(std::string speciesToLoad)
     else EVIL = false;
     if (RSL::getStringData(fileName,speciesToLoad+".SOCIAL") == "true")social = true;
     else social = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".EQUIPS") == "true")social = true;
+    else social = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".OPENDOORS") == "true")social = true;
+    else social = false;
 
 }
 
 monster::monster(std::string speciesToLoad)
 {
+    actorFollowing = NULL;
     nodeOn = NULL;
     coolDown=0;
     numberOfLegs=0;
@@ -73,6 +82,10 @@ monster::monster(std::string speciesToLoad)
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;
     if (RSL::getStringData(fileName,speciesToLoad+".SOCIAL") == "true")social = true;
+    else social = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".EQUIPS") == "true")social = true;
+    else social = false;
+    if (RSL::getStringData(fileName,speciesToLoad+".OPENDOORS") == "true")social = true;
     else social = false;
 
     goal = coordinate(-1,-1);

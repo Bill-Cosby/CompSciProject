@@ -1,0 +1,9 @@
+[GREETING]
+	[TEXT]{Hey!:Hello:Good day:};
+[END]
+[NEGATIVE]
+	[TEXT]{bad:awful:miserable:depressing:};
+[END]
+[POSITIVE]
+	[TEXT]{good:wonderful:decent:pleasant:}
+[END]

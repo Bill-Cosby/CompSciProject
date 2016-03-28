@@ -162,6 +162,7 @@ public:
         std::cout << "Looking for a door...\n";
         if (temp!= coordinate(-1,-1) and !_map[1][temp.y][temp.x]->isOpen()){
             testingCharacter->goal = temp;
+            testingCharacter->memory = testingCharacter->goal;
             std::cout << "Found a door...\n";
             if (testingCharacter->findDistance(testingCharacter->goal)<=1.4){
                 testingCharacter->openDoor(_map);
@@ -197,6 +198,7 @@ class openDoorNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        if (!testingCharacter->opensdoors)return false;
         std::cout << "Opening the door...\n";
         if (testingCharacter->openDoor(_map)){
             std::cout << "Opened the door...\n";
@@ -216,8 +218,12 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         std::cout << "Looking for new items...\n";
+
         if (testingCharacter->findItem(_map, localItems)){
-            std::cout << "Found item(s)\n";
+            if (testingCharacter->goal!=testingCharacter->memory){
+                testingCharacter->memory = testingCharacter->goal;
+                announcementList.addAnnouncement("I see a " + testingCharacter->itemToPickUp->name);
+            }
             return true;
         }
         else{
@@ -303,9 +309,22 @@ class herdNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        if (testingCharacter->social){
+        if (testingCharacter->actorFollowing != NULL){
+            if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){
+                testingCharacter->goal = coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row());
+                return false;
+            }
+            else{
+                int temp = rand()%9;
+                if (temp == 8){testingCharacter->goal = coordinate(-1,-1);return false;}
+                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
+                return false;
+            }
+        }
+        else if (testingCharacter->social and testingCharacter->memory == coordinate(-1,-1)){
             testingCharacter->findTile(_map,false,false,true);
-            if (testingCharacter->findDistance(testingCharacter->goal)>5){
+            if (testingCharacter->findDistance(testingCharacter->goal)>2){
                 return false;
             }
             else{

@@ -57,7 +57,7 @@ int main()
         openDoors->addChild(new openDoorNode);
 
     //thoughtProcess->addChild(danger);
-    //thoughtProcess->addChild(lookForItems);
+    thoughtProcess->addChild(lookForItems);
     //thoughtProcess->addChild(openDoors);
 
     root->addChild(thoughtProcess);
@@ -76,29 +76,23 @@ int main()
 std::vector<actor*> actors;
 //actors.push_back(characterCreationMenu(window));
 actors.push_back(new player("human"));
-actors.push_back(new monster("goblin"));
-actors.push_back(new monster("goblin"));
-actors.push_back(new monster("goblin"));
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(3,2);
-    actors[2]->pos(2,2);
-    actors[3]->pos(4,2);
 
 
 
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    localItems.push_back(new weapon("Sword",'/',10,18,7));
-    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
-    localItems.push_back(new clothing("plateboot",'C',5,5,0,"iron"));
+//    localItems.push_back(new weapon("Sword",'/',10,18,7));
+//    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
+//    localItems.push_back(new clothing("plateboot",'C',5,5,0,"iron"));
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
     lights[0]->intensity = 1;
@@ -122,44 +116,44 @@ actors.push_back(new monster("goblin"));
 
     std::vector<std::vector<std::vector<tile* > > > _map;
 
-    _map.resize(2);
-    _map[0].resize(20);
-    _map[1].resize(20);
-
-    for (int y=0;y<20;y++){
-        _map[0][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-            else _map[0][y][x] = new tile(grass,0,"grass");
-            _map[0][y][x]->position=coordinate(x,y);
-        }
-    }
-
-    for (int y=0;y<20;y++){
-        _map[1][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
-                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 14 and y >=16){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (y == 0 or y == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 0 or x == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else{
-                _map[1][y][x] = new tile;
-            }
-            _map[1][y][x]->position = coordinate(x,y);
-        }
-    }
-
-    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
-    _map[1][10][10]->position = coordinate(10,10);
+//    _map.resize(2);
+//    _map[0].resize(20);
+//    _map[1].resize(20);
+//
+//    for (int y=0;y<20;y++){
+//        _map[0][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+//            else _map[0][y][x] = new tile(grass,0,"grass");
+//            _map[0][y][x]->position=coordinate(x,y);
+//        }
+//    }
+//
+//    for (int y=0;y<20;y++){
+//        _map[1][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (x >= 14 and y == 16){
+//                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 14 and y >=16){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (y == 0 or y == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 0 or x == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else{
+//                _map[1][y][x] = new tile;
+//            }
+//            _map[1][y][x]->position = coordinate(x,y);
+//        }
+//    }
+//
+//    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+//    _map[1][10][10]->position = coordinate(10,10);
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -183,26 +177,32 @@ actors.push_back(new monster("goblin"));
 
 
     //DUNGEON SETUP CODE
-//    dungeon map_t;
-//    _map.resize(map_t.dungeon_grid.size());
-//    _map.resize(map_t.dungeon_grid.size());
-//    for (int y=0;y<map_t.dungeon_grid.size();y++)
-//    {
-//        _map[y].resize(map_t.dungeon_grid[0].size());
-//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-//        {
-//            if (map_t.dungeon_grid[y][x]==1)
-//            {
-//                _map[y][x]= new tile(stonewall,0,"stone");
-//                actors[0]->pos(y,x);
-//            }
-//            else
-//            {
-//                _map[y][x]= new tile(stonefloor,-1,"stone");
-//            }
-//            _map[y][x]->position = coordinate(x,y);
-//        }
-//    }
+    dungeon map_t;
+    _map.resize(2);
+    _map[0].resize(map_t.dungeon_grid.size());
+    _map[1].resize(map_t.dungeon_grid.size());
+    for (int y=0;y<map_t.dungeon_grid.size();y++)
+    {
+        _map[0][y].resize(map_t.dungeon_grid[0].size());
+        _map[1][y].resize(map_t.dungeon_grid[0].size());
+        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+        {
+            if (map_t.dungeon_grid[y][x]==1)
+            {
+                _map[1][y][x]= new tile(stonewall,0,"stone");
+                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+                _map[1][y][x]->position = coordinate(x,y);
+                _map[0][y][x]->position = coordinate(x,y);
+            }
+            else
+            {
+                _map[1][y][x]= new tile;
+                _map[0][y][x]= new tile(stonefloor,-1,"stone");
+                _map[0][y][x]->position = coordinate(x,y);
+                actors[0]->pos(y,x);
+            }
+        }
+    }
 
 
 bool keyrelease = true;

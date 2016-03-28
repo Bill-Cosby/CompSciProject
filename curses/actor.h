@@ -25,11 +25,14 @@ class actor
 {
 protected:
 
+
     char _symbol;
 
 
     int x,y,z;
 public:
+    std::vector<actor*> followers;
+    actor* actorFollowing;
     bodyPart * rootPart;
     coordinate memory;
     coordinate goal;
@@ -99,6 +102,8 @@ public:
 //  TAGS FOR AI
     bool EVIL;
     bool social;
+    bool equipsArmor;
+    bool opensdoors;
 
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;
@@ -150,6 +155,8 @@ public:
     bool findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems);
     bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map);
     bool canSee(std::vector<std::vector<std::vector<tile*> > >, coordinate);
+
+    void dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
