@@ -707,9 +707,7 @@
 
 1457375697 D
 
-1459191931 source:c:\compsciproject\curses\astar.cpp
-	"aStar.h"
-	<unordered_set>
+1459194419 source:c:\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -881,7 +879,10 @@
 
 1456867120 c:\compsciproject\curses\node.h
 
-1458239264 source:c:\compsciproject\curses\bodyparts.cpp
+1459195501 source:c:\compsciproject\curses\bodyparts.cpp
+	"bodyParts.h"
+	"RSL.h"
+	"item.h"
 
 1459194414 c:\compsciproject\curses\bodyparts.h
 	<string>
@@ -902,8 +903,7 @@
 	<math.h>
 	"tile.h"
 
-1459191931 source:c:\compsciproject\curses\drawgame.cpp
-	"drawGame.h"
+1459194419 source:c:\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1457730374 c:\compsciproject\curses\drawgame.h
@@ -922,7 +922,7 @@
 
 1455056641 c:\compsciproject\curses\window.h
 
-1459194414 c:\compsciproject\curses\rsl.h
+1459196745 c:\compsciproject\curses\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -940,15 +940,20 @@
 
 1455056640 c:\compsciproject\curses\include\dungeon.h
 
-1458239264 source:c:\compsciproject\curses\item.cpp
-	"item.h"
+1459194414 source:c:\compsciproject\curses\item.cpp
 	"item.h"
 
-1458239264 source:c:\compsciproject\curses\menu.cpp
-	"menu.h"
+1459194414 source:c:\compsciproject\curses\menu.cpp
 	"menu.h"
 
-1458239264 c:\compsciproject\curses\menu.h
+1459194414 c:\compsciproject\curses\menu.h
+	<vector>
+	<string>
+	<SFML/Audio.hpp>
+	<SFML/Graphics.hpp>
+	"actor.h"
+	"tile.h"
+	"materials.h"
 
 1455056640 source:c:\compsciproject\curses\noise\latlon.cpp
 	"latlon.h"
@@ -1268,21 +1273,27 @@
 
 1455056641 source:c:\compsciproject\curses\window.cpp
 
-1459191931 source:c:\compsciproject\curses\actor.cpp
-	"actor.h"
-	<cstdlib>
+1459194419 source:c:\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1459191931 source:c:\compsciproject\curses\rsl.cpp
-	"RSL.h"
+1459194419 source:c:\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
 1456175444 source:c:\compsciproject\curses\tiles.cpp
 
 1456175444 c:\compsciproject\curses\tiles.h
 
-1459193191 source:c:\compsciproject\curses\main.cpp
+1459195995 source:c:\compsciproject\curses\main.cpp
+	"drawGame.h"
+	"include/dungeon.h"
+	<string>
+	<cstdlib>
+	<SFML/Graphics.hpp>
+	"generateCity.h"
+	"tiles.h"
+	"behaviorTree.h"
+	"menu.h"
 
 1458239264 c:\compsciproject\curses\generatecity.h
 
@@ -1293,7 +1304,9 @@
 	"actor.h"
 	"actor.h"
 
-1459193756 c:\compsciproject\curses\behaviortree.h
+1459194419 c:\compsciproject\curses\behaviortree.h
+	<list>
+	"actor.h"
 
 1459182903 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
@@ -1302,7 +1315,8 @@
 	<list>
 	"actor.h"
 
-1459191931 source:c:\compsciproject\curses\interactionswithworld.cpp
+1459194419 source:c:\compsciproject\curses\interactionswithworld.cpp
+	"actor.h"
 
 1457375697 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.h
 	"tile.h"
@@ -1776,18 +1790,19 @@
 
 1455051062 source:c:\users\damion\desktop\compsciproject\curses\window.cpp
 
-1458239264 source:c:\compsciproject\curses\materials.cpp
+1459194414 source:c:\compsciproject\curses\materials.cpp
+	"materials.h"
 
 1455831327 source:c:\users\damion\desktop\compsciproject\curses\materials.cpp
 	"materials.h"
 
 1458239264 source:c:\compsciproject\curses\generatecity.cpp
 
-1459191931 source:c:\compsciproject\curses\actorconstructors.cpp
-	"actor.h"
+1459196745 source:c:\compsciproject\curses\actorconstructors.cpp
 	"actor.h"
 
-1459191931 source:c:\compsciproject\curses\playeractions.cpp
+1459194535 source:c:\compsciproject\curses\playeractions.cpp
+	"actor.h"
 
 1456173259 source:c:\users\damion\desktop\compsciproject\curses\generatecity.cpp
 	"generateCity.h"

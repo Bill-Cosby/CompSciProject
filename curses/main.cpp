@@ -74,8 +74,8 @@ int main()
 
 
 std::vector<actor*> actors;
-//actors.push_back(characterCreationMenu(window));
-actors.push_back(new player("human"));
+actors.push_back(characterCreationMenu(window));
+//actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
 
 
@@ -229,8 +229,8 @@ bool waitforplayer = false;
         while (view.getCenter().y - view.getSize().y/2 < 0){
             view.setCenter(view.getCenter().x,view.getCenter().y+1);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(.5);keyrelease=false;}
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(1.5f);keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 

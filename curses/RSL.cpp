@@ -140,7 +140,7 @@ int getIntData(std::string fileName, std::string dataToGet,int positionInArray)
     }
 }
 
-bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, sf::Color color)
+bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, sf::Color color, sf::Color eyeColor)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -194,7 +194,7 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
                         }
                         else if(_c == ':'){
                                 if (LINE_READING == "head"){body.push_back(new head(dataType,weight,id, connectedTo, color));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, eyeColor));}
                                 else if (LINE_READING == "neck"){body.push_back(new neck(dataType,weight,id, connectedTo, color));}
                                 else if (LINE_READING=="torso"){body.push_back(new torso(dataType,weight,id, connectedTo, color));}
                                 else if (LINE_READING =="arm"){body.push_back(new arm(dataType,weight, id, connectedTo, left, color));}
