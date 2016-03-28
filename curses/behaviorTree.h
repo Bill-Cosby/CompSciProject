@@ -32,6 +32,7 @@ class CheckAll : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        std::cout << "bich" << testingCharacter->memory.x << "," << testingCharacter->memory.y << std::endl;
         for (Node* child : getChildren()){
             child->run(testingCharacter,_map,localItems,actors,announcementList);
         }

@@ -22,7 +22,7 @@ int main()
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
     sf::Shader lightingShader;
-    sf::RenderStates renderState;
+    sf::RenderStates renderState;;;;;;;;;;;;;;
 
 
     int counter = 0;
@@ -76,7 +76,7 @@ int main()
 std::vector<actor*> actors;
 //actors.push_back(characterCreationMenu(window));
 actors.push_back(new player("human"));
-actors.push_back(new monster("human"));
+actors.push_back(new monster("goblin"));
 
 
 
