@@ -9,7 +9,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
     float next_start_slope = start_slope;
 
 
-    _map[actors[0]->zReturn()-1][y][x]->drawTile(window,renderState);
+    _map[0][y][x]->drawTile(window,renderState);
     for (unsigned int i = row; i <= radius; i++){
         bool blocked = false;
         int dy = -i;
@@ -36,8 +36,8 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
             else{
 
                 if ((unsigned int)(dx * dx + dy * dy) < radius2 /*and _map[actors[0]->zReturn()-1][ay][ax]->litHere == false*/){
-                    _map[actors[0]->zReturn()-1][ay][ax]->drawTile(window, renderState);
-                    _map[actors[0]->zReturn()-1][ay][ax]->litHere = true;
+                    _map[0][ay][ax]->drawTile(window, renderState);
+                    _map[0][ay][ax]->litHere = true;
                     for (item* _i : localItems){
                         if (_i->x == ax and _i->y == ay){
                             _i->draw(window);
