@@ -52,12 +52,18 @@ class door : public tile
 {
 public:
     bool open;
-    char openSymbol;
-    char closedSymbol;
+    int openSymbol;
+    int closedSymbol;
     door(bool _o, int dc, int mv, std::string mat);
     void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
+};
+
+class container : public tile
+{
+    std::vector<item*> contained;
+    void openContainer();
 };
 
 #endif // TILE_H_INCLUDED
