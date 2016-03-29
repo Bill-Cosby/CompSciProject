@@ -45,6 +45,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 }
             pressedKey = false;
 
+            //if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){keyrelease = false;}
+
                  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}

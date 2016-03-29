@@ -115,20 +115,24 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<std::vector<tile*> > 
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
 
-        if (canSee(_map,currentNode.position,goal)){
-            std::vector<coordinate> path;
-            while (!(currentNode.position==start)){
-
-                for (int i=0;i<closedSet.size();i++){
-                    if (closedSet[i].position==currentNode.parent){
-                        path.push_back(currentNode.position);
-                        currentNode=closedSet[i];
-                        break;
-                    }
-                }
-            }
-            return path;
+        if (currentNode.position.x < 0 or currentNode.position.x > 20 or currentNode.position.y < 0 or currentNode.position.y > 20  ){
+            std::cout << "Why is this happening?\n";
         }
+
+//        if (canSee(_map,currentNode.position,goal)){
+//            std::vector<coordinate> path;
+//            while (!(currentNode.position==start)){
+//
+//                for (int i=0;i<closedSet.size();i++){
+//                    if (closedSet[i].position==currentNode.parent){
+//                        path.push_back(currentNode.position);
+//                        currentNode=closedSet[i];
+//                        break;
+//                    }
+//                }
+//            }
+//            return path;
+//        }
     }
 }
 

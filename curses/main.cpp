@@ -76,14 +76,17 @@ int main()
 std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
 //actors.push_back(new player("human"));
-actors.push_back(new monster("goblin"));
+
+for (int i = 0;i < 8; i++){
+    actors.push_back(new monster("human"));
+    actors[i+1]->pos(4,7);
+}
 
 
 
     //char ch;
 
     actors[0]->pos(1,1);
-    actors[1]->pos(4,7);
 
 
 
@@ -237,7 +240,6 @@ bool waitforplayer = false;
         if (waitforplayer == false){
             for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    std::cout << "_______________________________________\n";
                     root->run(actors[i],_map,localItems,actors,announcementList);
                     actors[i]->resetCounter();
                 }

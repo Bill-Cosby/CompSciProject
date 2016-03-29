@@ -65,7 +65,6 @@ void actor::simpleAttackEnemy(std::vector<std::vector<std::vector<tile*> > > &_m
             if (bodyPartToHit->damage <= 0){
                 if (bodyPartToHit->ID == "00"){
                     actorAttacking->makeCorpse(localItems);
-                    std::cout << "I've killed him!";
                     return;
                 }
                 else{
@@ -110,8 +109,6 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vecto
         if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
         if (EVIL and _a->EVIL)continue;
 
-        std::cout << _a->col() << "," << _a->row() << std::endl;
-
         totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
 
 
@@ -139,7 +136,6 @@ coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map,
     coordinate temp;
 
     openSet.push_back(new coordinate(x,y));
-    std::cout << x << "," << y << std::endl;
 
     bool tileWorks;
 
