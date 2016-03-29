@@ -91,7 +91,7 @@ void bodyPart::returnWeight(int &totalWeight)
 }
 
 void bodyPart::draw(sf::RenderWindow &window, int x, int y){
-    std::cout << name << std::endl;
+    //std::cout << name << std::endl;
     if (vanity != NULL){
         if (left){
             vanity->sprite.scale(-1.0f,1.0f);
