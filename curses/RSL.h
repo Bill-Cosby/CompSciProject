@@ -36,7 +36,7 @@ namespace RSL
 
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
 
-    bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color);
+    bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color, sf::Color eyeColor);
     answers getAnswers(std::string fileName, std::string dataToRecieve);
     //MENU FUNCTIONS
 }
