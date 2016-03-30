@@ -40,5 +40,21 @@
 	[TEXTURE]creature_standard.png,48:96:;
 [SNAKEHEAD]
 	[TEXTURE]creature_standard.png,48:16:;
-[SNAKEHEAD]
-	[TEXTURE]creature_standard.png,48:0
+[SNAKEEYE]
+	[TEXTURE]creature_standard.png,48:0:;
+[SNAKETAIL]
+	[TEXTURE]creature_standard.png,48:64:;
+[ORCHEAD]
+	[TEXTURE]creature_standard.png,64:16:;
+[ORCEYE]
+	[TEXTURE]creature_standard.png,64:0:;
+[ORCARM]
+	[TEXTURE]creature_standard.png,64:80:;
+[ORCHAND]
+	[TEXTURE]creature_standard.png,64:64:;
+[ORCLEG]
+	[TEXTURE]creature_standard.png,64:48:;
+[ORCFOOT]
+	[TEXTURE]creature_standard.png,64:32:;
+[ORCTORSO]
+	[TEXTURE]creature_standard.png,64:96:;
