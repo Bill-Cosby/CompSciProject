@@ -134,6 +134,12 @@ public:
 
 };
 
+class tail : public bodyPart
+{
+public:
+    tail(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color);
+};
+
 class neck : public bodyPart
 {
 public:
