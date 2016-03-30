@@ -155,6 +155,9 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+    if (dataType == "[BAT]"){
+        std::cout << "Yo fuccboi\n";
+    }
 
 
     std::string line;
