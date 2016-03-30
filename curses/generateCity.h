@@ -32,22 +32,24 @@ int right;
 int left;
 int bottom;
 int top;
-std::mt19937 generator;
-box(){left = 0;right =0;top=0;bottom=0; unsigned seed = std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
+
+box(){left = 0;right =0;top=0;bottom=0;}
 ~box();
-void divideBox(int, std::vector<std::vector<std::vector<tile*> > > &, std::string);
-void makeLine(road*, std::vector<std::vector<std::vector<tile*> > > &, int, std::string);
-void makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap);
+void divideBox(int, std::vector<std::vector<std::vector<tile*> > > &, std::string, std::mt19937 &);
+void makeLine(road*, std::vector<std::vector<std::vector<tile*> > > &, int, std::string, std::mt19937 &);
+void makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 &);
 };
 
 
 class city: public box
 {
     public:
+ std::mt19937 generator;
+unsigned seed;
 std::vector<std::vector<std::vector<tile*> > > tileMap;
 int tileMapSize;
 void setTileMap();
-city(){tileMapSize=100; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; }
+city(){tileMapSize=100; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
 void generateCity();
 void deleteTileMap();
 };
