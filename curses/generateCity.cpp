@@ -14,16 +14,23 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
 
+    bool emptyPlot = false;
+
     if ((abs(bottom-top)>20 or abs(left-right)>20) or (abs(bottom-top)<4 or abs(left-right)<4))return;
 
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
-            if (abs(bottom-top)>4 and abs(left-right)>4){
+            if (abs(bottom-top)<6 and abs(left-right)<6){
+                tileMap[0][b][a]= new tile(dirt,0,"dirt");
+                emptyPlot = true;
+            }
+            else{
                 tileMap[0][b][a]= new tile(woodfloor,0,"wood");
             }
-            if(b==bottom or a==right)
+            if (emptyPlot);
+            else if(b==bottom or a==right)
             {
                 if(b+a==doorPlace and half==0)
                 {
@@ -52,10 +59,9 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
 
             tileMap[0][b][a]->position = coordinate(a,b);
 
-            divideBox(3,tileMap,"HOUSE", generator);
         }
     }
-
+    if (!emptyPlot)divideBox(3,tileMap,"HOUSE", generator);
 
 }
 
@@ -227,9 +233,6 @@ std::uniform_int_distribution<int> halfChance(0,1);
     {
         width=1;
     }
-
-//std::cout<<bottom<<" "<<top<<" "<<left<<" "<<right<<" "<<level<<" "
-//std::cout<<half<<std::endl;
 
     if(half==0 and right-left>width+6) //if line vertical and there is space to draw line
     {//std::cout<<"Half0"<<std::endl;
