@@ -8,15 +8,15 @@
 
 void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator)
 {
-    std::cout<<"HMMM"<<std::endl;
+    //std::cout<<"HMMM"<<std::endl;
     std::uniform_int_distribution<int> halfChance(0,1);
     std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
 
-    for(int a=left+1; a<right; a++)
+    for(int a=left; a<=right; a++)
     {
-        for(int b=bottom+1; b<top; b++)
+        for(int b=bottom; b<=top; b++)
         {
             tileMap[0][b][a]= new tile(woodfloor,0,"wood");
             if(b==bottom or a==right)
@@ -49,7 +49,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 tileMap[0][b][a]->position = coordinate(a,b);
             }
 
-            divideBox(3,tileMap,"HOUSE", generator);
+            //divideBox(3,tileMap,"HOUSE", generator);
         }
     }
 
@@ -226,11 +226,11 @@ std::uniform_int_distribution<int> halfChance(0,1);
     }
 
 //std::cout<<bottom<<" "<<top<<" "<<left<<" "<<right<<" "<<level<<" "
-std::cout<<half<<std::endl;
+//std::cout<<half<<std::endl;
 
-    if(half==0 and right-left>width+2) //if line vertical and there is space to draw line
+    if(half==0 and right-left>width+6) //if line vertical and there is space to draw line
     {//std::cout<<"Half0"<<std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(left+width/2+1, right-width/2-1);
+        std::uniform_int_distribution<int> findSplitPoint(left+width/2+3, right-width/2-3);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -265,10 +265,10 @@ std::cout<<half<<std::endl;
         divideBox(level-1, tileMap, type, generator);
     }
 
-    else if (half==1 and top-bottom>width+2)
+    else if (half==1 and top-bottom>width+6)
     {//line horizontal
         //std::cout<<"Half2"<<std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(bottom+(width+1)/2,top-(width+1)/2);
+        std::uniform_int_distribution<int> findSplitPoint(bottom+(width)/2+3,top-(width)/2-3);
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
@@ -311,7 +311,7 @@ std::cout<<half<<std::endl;
   void city::generateCity()
 {
 setTileMap();
-divideBox(4,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
 }
 
 
