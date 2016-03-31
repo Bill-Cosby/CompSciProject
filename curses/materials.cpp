@@ -24,5 +24,6 @@ sf::Color giveColor(std::string mat_name)
     if (mat_name == "blackEye")return blackEye;
     if (mat_name == "brownEye")return brownEye;
     if (mat_name == "hazelEye")return hazelEye;
+    if (mat_name == "redEye")return redEye;
     if (mat_name == "yellowEye" or mat_name == "blonde")return yellowEye;
 }

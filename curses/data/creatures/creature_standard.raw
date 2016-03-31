@@ -45,18 +45,64 @@
 
 [BAT];
 	[NAME]bat;
+	[HOME]cave;
 	[DESCRIPTION]A small, winged mammal.;
 	[TAGS]EVIL;
-	[LIMBS]{};
+	[OPENDOORS]false;
+	[EQUIPS]false;
+	[SOCIAL]false;
+	[LIMBS]{01,00,3,head:00,00,3,torso:02,01,0,Leye:03,01,0,eye:04,00,2,Lfoot:05,00,2,foot:06,00,2,Larm:07,00,2,arm:};
 	[SKINCOLOR]{black:grey:brown:};
-	[HAIRCOLOR]{};
+	[HAIRCOLOR]{:};
 	[EYECOLOR]{red:black:grey:};
-	[HAIRTYPES]{};
+	[HAIRTYPES]{:};
 	[STRENGTH]1;
 	[DEXTERITY]10;
-	
 	[SKIN]5;
 	[FAT]3;
 	[MUSCLE]7;
 	[BONE]10;
+[ENDSPECIES]
+
+[SNAKE];
+	[NAME]snake;
+	[HOME]cave;
+	[DESCRIPTION]Danger noodle.;
+	[TAGS]EVIL;
+	[OPENDOORS]false;
+	[EQUIPS]false;
+	[SOCIAL]false;
+	[LIMBS]{01,00,4,head:00,00,10,torso:02,01,1,eye:03,00,3,tail:}
+	[SKINCOLOR]{brown:};
+	[HAIRCOLOR]{:};
+	[EYECOLOR]{red:black};
+	[HAIRTYPES]{:};
+	[STRENGTH]13;
+	[DEXTERITY]5;
+	[SKIN]5;
+	[FAT]3;
+	[MUSCLE]7;
+	[BONE]10;
+[ENDSPECIES]
+
+[ORC];
+	[HOME]cave;
+	[NAME]orc;
+	[DESCRIPTION]A large, strong, and evil cave dwelling monstrosity.;
+	[EVIL]true;
+	[OPENDOORS]true;
+	[EQUIPS]true;
+	[SOCIAL]true;
+	[LIMBS]{01,02,20,head:02,00,10,neck:03,01,2,Leye:0C,01,2,eye:00,00,200,torso:04,00,16,Larm:05,00,16,arm:06,00,46,Lleg:07,00,46,leg:08,06,6,Lfoot:09,07,6,foot:0A,05,6,Lhand:0B,04,6,hand:};
+	[SKINCOLOR]{green:};
+	[HAIRCOLOR]{black:};
+	[EYECOLOR]{grey:black:yellow:};
+	[HAIRTYPES]{short:bald:mohawk:};
+	[STRENGTH]10:;
+	[DEXTERITY]13:;
+	
+	[SKIN]10;
+	[FAT]5;
+	[MUSCLE]15;
+	[BONE]35;
 [ENDSPECIES]

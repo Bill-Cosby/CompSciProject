@@ -75,15 +75,10 @@ int main()
 
 std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
-//actors.push_back(new player("human"));
-
 for (int i = 0;i < 8; i++){
     actors.push_back(new monster("human"));
     actors[i+1]->pos(4,7);
 }
-
-
-
     //char ch;
 
     actors[0]->pos(1,1);

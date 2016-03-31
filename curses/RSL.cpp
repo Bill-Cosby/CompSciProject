@@ -155,6 +155,9 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+    if (dataType == "[BAT]"){
+        std::cout << "Yo fuccboi\n";
+    }
 
 
     std::string line;
@@ -201,6 +204,7 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
                                 else if (LINE_READING =="leg"){body.push_back(new leg(dataType,weight, id, connectedTo, left, color));}
                                 else if (LINE_READING == "hand"){body.push_back(new hand(dataType,weight,id, connectedTo, left, color));}
                                 else if (LINE_READING == "foot"){body.push_back(new foot(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "tail"){body.push_back(new tail(dataType,weight,id, connectedTo, color));}
                             left = false;
                             LINE_READING.clear();
                             continue;

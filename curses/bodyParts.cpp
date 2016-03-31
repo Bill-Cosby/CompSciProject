@@ -91,6 +91,7 @@ void bodyPart::returnWeight(int &totalWeight)
 }
 
 void bodyPart::draw(sf::RenderWindow &window, int x, int y){
+    //std::cout << name << std::endl;
     if (vanity != NULL){
         if (left){
             vanity->sprite.scale(-1.0f,1.0f);
@@ -122,6 +123,7 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
 
 torso::torso(std::string species, int _weight,std::string id, std::string connectedto, sf::Color color)
 {
+
     left = false;
     ID = id;
     connectedTo = connectedto;
@@ -156,7 +158,6 @@ neck::neck(std::string species, int _weight, std::string id, std::string connect
 head::head(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color)
 {
     left = false;
-    std::cout << species << std::endl;
     ID = id;
     connectedTo = connectedto;
     weight=_weight;
@@ -165,11 +166,26 @@ head::head(std::string species, int _weight, std::string id, std::string connect
     armor = NULL;
     vanity = NULL;
     damage = weight*2;
-    std::cout << formatForParse(species, "HEAD]") << std::endl;
     texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "HEAD")+".texture");
     sprite.setTexture(texture);
     sprite.setColor(color);
     equips.push_back("helm");
+}
+
+tail::tail(std::string species, int _weight, std::string id, std::string connectedto, sf::Color color)
+{
+    left = false;
+    ID = id;
+    connectedTo = connectedto;
+    weight=_weight;
+    grasps=false;
+    name="tail";
+    armor = NULL;
+    vanity = NULL;
+    damage = weight*2;
+    texture = RSL::getTextureData("data/textures/creature_standard.raw", formatForParse(species, "TAIL")+".texture");
+    sprite.setTexture(texture);
+    sprite.setColor(color);
 }
 
 eye::eye(std::string species, int _weight, std::string id, std::string connectedto, bool _left, sf::Color color)
@@ -193,7 +209,6 @@ eye::eye(std::string species, int _weight, std::string id, std::string connected
     armor = NULL;
     vanity = NULL;
     damage = weight*2;
-
 }
 
 hand::hand(std::string species, int _weight,  std::string id, std::string connectedto, bool _left, sf::Color color)

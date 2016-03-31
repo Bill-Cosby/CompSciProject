@@ -24,7 +24,8 @@ const sf::Texture textures[8] = {   RSL::getTextureData("data/textures/tiles.raw
                                     RSL::getTextureData("data/textures/tiles.raw","woodwall.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","woodfloor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","grass.texture"),
-                                    RSL::getTextureData("data/textures/tiles.raw","dirt.texture")};
+                                    RSL::getTextureData("data/textures/tiles.raw","dirt.texture")
+                                };
 
 const sf::Color  ironColor  = sf::Color(sf::Color(197,103,41));
 const sf::Color steelColor  = sf::Color(sf::Color(180,184,187));
@@ -42,7 +43,7 @@ const sf::Color  tanSkinColor  = sf::Color(sf::Color(173,109,0));
 const sf::Color greenSkinColor = sf::Color(sf::Color(51,109,0));
 const sf::Color blackSkinColor = sf::Color(sf::Color(0,0,0));
 
-
+const sf::Color redEye = sf::Color(sf::Color(255,0,0));
 const sf::Color blueEye = sf::Color(sf::Color(73,85,165));
 const sf::Color greenEye = sf::Color(sf::Color(39,125,61));
 const sf::Color greyEye = sf::Color(sf::Color(127,129,130));
@@ -54,7 +55,7 @@ const sf::Color yellowEye = sf::Color(sf::Color(180,132,3));
 
 class material
 {
-    public:
+public:
     int weight;
 
 };
