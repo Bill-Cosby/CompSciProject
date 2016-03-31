@@ -17,8 +17,6 @@ int main()
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
-
-
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
     sf::Shader lightingShader;
@@ -116,44 +114,47 @@ for (int i = 0;i < 8; i++){
 
     std::vector<std::vector<std::vector<tile* > > > _map;
 
-    _map.resize(2);
-    _map[0].resize(20);
-    _map[1].resize(20);
+//    _map.resize(2);
+//    _map[0].resize(20);
+//    _map[1].resize(20);
+//
+//    for (int y=0;y<20;y++){
+//        _map[0][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+//            else _map[0][y][x] = new tile(grass,0,"grass");
+//            _map[0][y][x]->position=coordinate(x,y);
+//        }
+//    }
+//
+//    for (int y=0;y<20;y++){
+//        _map[1][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (x >= 14 and y == 16){
+//                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 14 and y >=16){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (y == 0 or y == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 0 or x == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else{
+//                _map[1][y][x] = new tile;
+//            }
+//            _map[1][y][x]->position = coordinate(x,y);
+//        }
+//    }
+//
+//    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+//    _map[1][10][10]->position = coordinate(10,10);
 
-    for (int y=0;y<20;y++){
-        _map[0][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-            else _map[0][y][x] = new tile(grass,0,"grass");
-            _map[0][y][x]->position=coordinate(x,y);
-        }
-    }
-
-    for (int y=0;y<20;y++){
-        _map[1][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
-                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 14 and y >=16){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (y == 0 or y == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 0 or x == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else{
-                _map[1][y][x] = new tile;
-            }
-            _map[1][y][x]->position = coordinate(x,y);
-        }
-    }
-
-    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
-    _map[1][10][10]->position = coordinate(10,10);
+    city myCity;
+    myCity.generateCity();
 
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
@@ -282,7 +283,7 @@ bool waitforplayer = false;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
     }
 
 
@@ -294,7 +295,7 @@ bool waitforplayer = false;
                 delete _map[i][j];
             }
         }*/
-
+     myCity.deleteTileMap();
 
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];

@@ -101,7 +101,6 @@ public:
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
         }
-
         if (testingCharacter->canSee(_map,testingCharacter->goal)){
             coordinate temp;
             if (testingCharacter->col()>testingCharacter->goal.x){temp.x = testingCharacter->col()-1;temp.y = testingCharacter->row();}
@@ -113,7 +112,6 @@ public:
             testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
-
         for (actor* _a : actors){
             testingCharacter->noGo.push_back(coordinate(_a->col(),_a->row()));
         }
