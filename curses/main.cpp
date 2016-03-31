@@ -19,6 +19,10 @@ int main()
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
+    city myCity;
+    myCity.generateCity();
+
+
     sf::Shader lightingShader;
     sf::RenderStates renderState;
 
@@ -73,10 +77,6 @@ int main()
 
 std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
-for (int i = 0;i < 8; i++){
-    actors.push_back(new monster("human"));
-    actors[i+1]->pos(4,7);
-}
     //char ch;
 
     actors[0]->pos(1,1);
@@ -113,6 +113,7 @@ for (int i = 0;i < 8; i++){
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
     std::vector<std::vector<std::vector<tile* > > > _map;
+    _map = myCity.tileMap;
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -152,10 +153,6 @@ for (int i = 0;i < 8; i++){
 //
 //    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
 //    _map[1][10][10]->position = coordinate(10,10);
-
-    city myCity;
-    myCity.generateCity();
-
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -283,7 +280,7 @@ bool waitforplayer = false;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
     }
 
 
