@@ -14,11 +14,15 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
 
+    if ((abs(bottom-top)>20 or abs(left-right)>20) or (abs(bottom-top)<4 or abs(left-right)<4))return;
+
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
-            tileMap[0][b][a]= new tile(woodfloor,0,"wood");
+            if (abs(bottom-top)>4 and abs(left-right)>4){
+                tileMap[0][b][a]= new tile(woodfloor,0,"wood");
+            }
             if(b==bottom or a==right)
             {
                 if(b+a==doorPlace and half==0)
@@ -45,11 +49,14 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
                 tileMap[1][b][a]->position = coordinate(a,b);
             }
-            else{
-                tileMap[0][b][a]->position = coordinate(a,b);
-            }
 
+<<<<<<< HEAD
 
+=======
+            tileMap[0][b][a]->position = coordinate(a,b);
+
+            divideBox(3,tileMap,"HOUSE", generator);
+>>>>>>> origin/Toby
         }
     }
     top--;
@@ -223,7 +230,11 @@ std::uniform_int_distribution<int> halfChance(0,1);
     int width;
     if(type=="ROADBOX")
     {
+<<<<<<< HEAD
         width=1;//level;
+=======
+        width=3;
+>>>>>>> origin/Toby
     }
     if(type=="HOUSE")
     {
@@ -316,7 +327,11 @@ std::uniform_int_distribution<int> halfChance(0,1);
   void city::generateCity()
 {
 setTileMap();
+<<<<<<< HEAD
 divideBox(6,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+=======
+divideBox(10,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+>>>>>>> origin/Toby
 }
 
 
