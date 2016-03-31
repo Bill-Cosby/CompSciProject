@@ -56,12 +56,16 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
                 tileMap[1][b][a]->position = coordinate(a,b);
             }
-
             tileMap[0][b][a]->position = coordinate(a,b);
 
         }
     }
+    top--;
+    bottom++;
+    left++;
+    right--;
     if (!emptyPlot)divideBox(3,tileMap,"HOUSE", generator);
+
 
 }
 
@@ -147,7 +151,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
         if(0<=q1 and q2<tileMap[0].size())
         {
-            for(int c=myLine->Point1->y-1; c<=myLine->Point2->y+1; c++)
+            for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
             {
                 if(0<=c and c<tileMap[0].size())
                 {
@@ -186,7 +190,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
         if(0<=q1 and q2<tileMap[0].size())
         {
-            for(int c=myLine->Point1->x-1; c<=myLine->Point2->x+1; c++)
+            for(int c=myLine->Point1->x; c<=myLine->Point2->x; c++)
             {
                 for(int d=q1; d<=q2; d++)
                 {
@@ -227,7 +231,8 @@ std::uniform_int_distribution<int> halfChance(0,1);
     int width;
     if(type=="ROADBOX")
     {
-        width=3;
+
+        width=level;
     }
     if(type=="HOUSE")
     {
@@ -253,11 +258,11 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox2=new box;
 
         subBox1->left=left;
-        subBox1->right=splitPoint-(width+1)/2;
+        subBox1->right=splitPoint-width/2-1;
         subBox1->top=top;
         subBox1->bottom=bottom;
 
-        subBox2->left=splitPoint+(width+1)/2;
+        subBox2->left=splitPoint+width/2+1;
         subBox2->right=right;
         subBox2->top=top;
         subBox2->bottom=bottom;
@@ -317,7 +322,8 @@ std::uniform_int_distribution<int> halfChance(0,1);
   void city::generateCity()
 {
 setTileMap();
-divideBox(10,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+divideBox(6,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+
 }
 
 
