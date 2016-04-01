@@ -25,7 +25,7 @@ void tiles::fillMap()
 
         for(int b=0; b<width; b++)
         {
-            tileMap[a][b]= new tile('P',0, grass);
+            tileMap[a][b]= new tile(grass,0, "grass");
         }
     }
     //fills tileMap with blanks
@@ -87,8 +87,8 @@ srand(time(NULL));
     finalTerrain.SetEdgeFalloff(0.5);
     //generate ma
 
-//utils::NoiseMap heightMap;
-  //  utils::NoiseMapBuilderPlane heightMapBuilder;
+utils::NoiseMap heightMap;
+    utils::NoiseMapBuilderPlane heightMapBuilder;
   //heightMapBuilder.SetSourceModule(finalTerrain);
  // heightMapBuilder.SetDestNoiseMap(heightMap);
  // heightMapBuilder.SetDestSize (100, 100);
@@ -99,13 +99,13 @@ srand(time(NULL));
     {
         for(int b=0; b<width; b++)
         {
-            //tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
-            tileMap[a][b]->elevation = finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y);
-            std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
+            tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
+            //tileMap[a][b]->elevation = finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y);
+            std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y,.3) << std::endl;
         }
     }
 
-   heightMapBuilder.Build ();
+   heightMapBuilder.Build();
     utils::RendererImage renderer;
   utils::Image image;
   renderer.SetSourceNoiseMap (heightMap);

@@ -1,4 +1,4 @@
-ifndef TILES_H_INCLUDED
+#ifndef TILES_H_INCLUDED
 #define TILES_H_INCLUDED
 #include <vector>
 #include "tile.h"

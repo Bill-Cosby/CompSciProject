@@ -20,7 +20,7 @@ public:
     bool isContainer;
     bool visible;
 
-    vector<double> color;
+    std::vector<double> color;
     float darkenBy;
     bool litHere;
 
@@ -38,7 +38,7 @@ public:
     std::string giveMaterial(){return _material;}
     void find_material();
     void SetColor();
-    findPerlin(coordinate position)
+    void findPerlin(coordinate position);
 
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     virtual bool interactWithDoor(bool opening){}
