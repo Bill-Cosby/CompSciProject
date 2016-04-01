@@ -73,6 +73,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 
 tile::tile(char dc, int mv, std::string mat)
 {
+    elevation=finalTerrain2.GetValue(p.x,p.y);
     _material = mat;
     movementCost = mv;
     defaultchar = dc;

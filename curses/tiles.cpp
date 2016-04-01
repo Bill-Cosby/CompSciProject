@@ -1,4 +1,3 @@
-/*
 #include <iostream>
 #include "tiles.h"
 #include <stdlib.h>
@@ -10,7 +9,6 @@ tiles::tiles()
 {
     height=100;
     width=100;
-    double temp_height;
     fillMap();
     setPositions();
     makeTileMap();
@@ -27,7 +25,7 @@ void tiles::fillMap()
 
         for(int b=0; b<width; b++)
         {
-            //tileMap[a][b]= new tile('P',0, grass);
+            tileMap[a][b]= new tile('P',0, grass);
         }
     }
     //fills tileMap with blanks
@@ -39,9 +37,7 @@ void tiles::setPositions()
  {
      for(int b=0; b<width; b++)
      {
-        tileMap[a][b]->position.y=10*a/height;
-        tileMap[a][b]->position.x=10*b/width;
-          //tileMap[a][b]->position=coordinate(a,b);
+        tileMap[b][a]->position=coordinate(10*a/height,10*b/width);
      }
  }
 }
@@ -91,12 +87,12 @@ srand(time(NULL));
     finalTerrain.SetEdgeFalloff(0.5);
     //generate ma
 
-utils::NoiseMap heightMap;
-    utils::NoiseMapBuilderPlane heightMapBuilder;
-  heightMapBuilder.SetSourceModule(finalTerrain);
-  heightMapBuilder.SetDestNoiseMap(heightMap);
-  heightMapBuilder.SetDestSize (100, 100);
-  heightMapBuilder.SetBounds (0,1 , 0, 1);
+//utils::NoiseMap heightMap;
+  //  utils::NoiseMapBuilderPlane heightMapBuilder;
+  //heightMapBuilder.SetSourceModule(finalTerrain);
+ // heightMapBuilder.SetDestNoiseMap(heightMap);
+ // heightMapBuilder.SetDestSize (100, 100);
+  //heightMapBuilder.SetBounds (0,1 , 0, 1);
 
     double temp_height;
     for(int a=0; a<height; a++)
@@ -104,8 +100,8 @@ utils::NoiseMap heightMap;
         for(int b=0; b<width; b++)
         {
             //tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
-            tileMap[a][b]->elevation = heightMap.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y);
-            std::cout << heightMap.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
+            tileMap[a][b]->elevation = finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y);
+            std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
         }
     }
 
@@ -151,27 +147,4 @@ utils::NoiseMap heightMap;
 
 // double perlin_map_width=2;
 // double perlin_map_height=2;
-/*
 
-
-class Tile
-{
-public:
-    double elevation;
-    coordinate position;
-
-    char defaultchar;
-    int movementCost;
-    void SetColor();
-    vector<double> color;
-};
-
-Tile(char dc,int mc)
-{
-    defaultchar=dc;movementCost=mc;elevation=finalTerrain2.GetValue(p.x,p.y);
-    corner=false;
-}
-findPerlin(coordinate position)
-class grass:Tile
-{
-*/

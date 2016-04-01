@@ -6,7 +6,10 @@
 #include "materials.h"
 #include <SFML/Graphics.hpp>
 
-
+/*
+class grass:Tile
+{
+*/
 class tile : public node
 {
 public:
@@ -17,8 +20,10 @@ public:
     bool isContainer;
     bool visible;
 
+    vector<double> color;
     float darkenBy;
     bool litHere;
+
 
     int defaultchar;
 
@@ -32,6 +37,8 @@ public:
 
     std::string giveMaterial(){return _material;}
     void find_material();
+    void SetColor();
+    findPerlin(coordinate position)
 
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     virtual bool interactWithDoor(bool opening){}
