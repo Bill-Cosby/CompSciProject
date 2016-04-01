@@ -1,4 +1,4 @@
-/*#ifndef TILES_H_INCLUDED
+ifndef TILES_H_INCLUDED
 #define TILES_H_INCLUDED
 #include <vector>
 #include "tile.h"
@@ -16,11 +16,7 @@ class tiles
         void fillMap();
         void setPositions();
         void makeTileMap();
-        void setColors();
-
-
     };
 
 
 #endif //TILES_H_INCLUDE
-*/
