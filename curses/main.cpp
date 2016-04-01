@@ -74,8 +74,8 @@ int main()
 
 
 std::vector<actor*> actors;
-actors.push_back(characterCreationMenu(window));
-//actors.push_back(new player("human"));
+//actors.push_back(characterCreationMenu(window));
+actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
 actors.push_back(new monster("snake"));
 actors[2]->pos(4,4);
