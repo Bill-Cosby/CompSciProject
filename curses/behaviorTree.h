@@ -32,6 +32,13 @@ class CheckAll : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
+        for (actor* _a : actors){
+            if (_a->controlled){
+                if (testingCharacter->findDistance(coordinate(_a->col(),_a->row()))>15){
+                    return false;
+                }
+            }
+        }
         for (Node* child : getChildren()){
             child->run(testingCharacter,_map,localItems,actors,announcementList);
         }
@@ -137,7 +144,7 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         if (testingCharacter->path.size()>0){
-            testingCharacter->moveOnPath();
+            testingCharacter->moveOnPath(_map);
             return true;
         }
         else{
@@ -298,20 +305,38 @@ public:
                 int temp = rand()%12;
                 if (temp >= 8){testingCharacter->goal = coordinate(-1,-1);return false;}
                 coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
+                if (testingCharacter->row()+directions[temp].y < 0)directions[temp].y = 0;
+                if (testingCharacter->row()+directions[temp].y >= _map[0].size())directions[temp].y = 0;
+                if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
                 return false;
             }
         }
-        else if (testingCharacter->social and testingCharacter->memory == coordinate(-1,-1)){
+        else if (testingCharacter->social and testingCharacter->goal == coordinate(-1,-1)){
             testingCharacter->findTile(_map,false,false,true);
-            if (testingCharacter->findDistance(testingCharacter->goal)>10){
+            int dist;
+            if (testingCharacter->goal != coordinate(-1,-1)){
+                dist = testingCharacter->findDistance(testingCharacter->goal);
+            }
+            else dist = 0;
+            if (dist>10){
                 return false;
             }
-            else{
+            else if (dist < 10 or dist == 0){
                 int temp = rand()%9;
                 if (temp == 8){testingCharacter->goal = coordinate(-1,-1);return false;}
-                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
+                if (testingCharacter->row()+directions[temp].y < 0)directions[temp].y = 0;
+                if (testingCharacter->row()+directions[temp].y >= _map[0].size())directions[temp].y = 0;
+                if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
+
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
+                std::cout << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
                 return false;
             }
         }

@@ -32,6 +32,7 @@ protected:
 
     int x,y,z;
 public:
+    bool interactedWithDoor;
     std::vector<actor*> followers;
     actor* actorFollowing;
     bodyPart * rootPart;
@@ -173,7 +174,7 @@ do not forget to "delete" every pointer at the end of the program.
     virtual void setPost(int x, int y){}
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
-    virtual void moveOnPath(){}
+    virtual void moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map){}
 };
 
 class player: public actor
@@ -196,7 +197,7 @@ public:
     bool musttouch;
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<std::vector<tile*> > > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
-    void moveOnPath();
+    void moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map);
 };
 
 

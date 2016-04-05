@@ -42,7 +42,7 @@ public:
 
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     virtual bool interactWithDoor(bool opening){}
-    virtual bool isOpen(){}
+    virtual bool isOpen(){return true;}
     virtual void openContainer(){}
     virtual bool isSocial(){return false;}
 };

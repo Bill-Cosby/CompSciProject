@@ -6,9 +6,8 @@
 #include <vector>
 #include <random>
 
-void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator)
+void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator,std::vector<actor*> &actors)
 {
-    //std::cout<<"HMMM"<<std::endl;
     std::uniform_int_distribution<int> halfChance(0,1);
     std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
     int half=halfChance(generator);
@@ -28,6 +27,10 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             }
             else{
                 tileMap[0][b][a]= new tile(woodfloor,0,"wood");
+                if (rand()%5001 < 100){
+                    actors.push_back(new monster("human"));
+                    actors[actors.size()-1]->pos(b,a);
+                }
             }
             if (emptyPlot);
             else if(b==bottom or a==right)
@@ -64,7 +67,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
     bottom++;
     left++;
     right--;
-    if (!emptyPlot)divideBox(3,tileMap,"HOUSE", generator);
+    if (!emptyPlot)divideBox(3,tileMap,"HOUSE", generator,actors);
 
 
 }
@@ -167,13 +170,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                     }
                     else if (type=="ROADBOX")
                     {
-                         if(d==q1 or d==q2)
-                        {
-                            tileMap[0][c][d]=new tile(grass,0,"grass");
-                        }
-                         else{
                             tileMap[0][c][d]=new tile(dc,mc,mat);
-                        }
                             tileMap[0][c][d]->position = coordinate(d,c);
                     }
                 }
@@ -205,13 +202,11 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
                     else if (type=="ROADBOX")
                     {
-                        if(d==q1 or d==q2)
-                        {
-                            tileMap[0][d][c]=new tile(grass,0,"grass");
-                        }
-                        else{
+//                        if(d==q1 or d==q2)
+//                        {
+//                            tileMap[0][d][c]=new tile(grass,0,"grass");
+//                        }
                             tileMap[0][d][c]=new tile(dc,mc,mat);
-                        }
 
                         tileMap[0][d][c]->position = coordinate(c,d);
                     }
@@ -222,7 +217,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 }
 
 
-void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & tileMap, std::string type, std::mt19937 & generator)
+void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & tileMap, std::string type, std::mt19937 & generator,std::vector<actor*> &actors)
 {
  if(level>0)
  {
@@ -232,7 +227,7 @@ std::uniform_int_distribution<int> halfChance(0,1);
     if(type=="ROADBOX")
     {
 
-        width=level;
+        width=3;
     }
     if(type=="HOUSE")
     {
@@ -267,13 +262,13 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox2->top=top;
         subBox2->bottom=bottom;
 
-        subBox1->divideBox(level-1, tileMap, type, generator);
-        subBox2->divideBox(level-1, tileMap, type, generator);
+        subBox1->divideBox(level-1, tileMap, type, generator,actors);
+        subBox2->divideBox(level-1, tileMap, type, generator,actors);
     }
 
     else if(half==0)
     {
-        divideBox(level-1, tileMap, type, generator);
+        divideBox(level-1, tileMap, type, generator,actors);
     }
 
     else if (half==1 and top-bottom>width+6)
@@ -302,27 +297,27 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox2->right=right;
         subBox2->top=splitPoint-width/2-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
-        subBox1->divideBox(level-1, tileMap, type, generator);
-        subBox2->divideBox(level-1, tileMap, type, generator);
+        subBox1->divideBox(level-1, tileMap, type, generator,actors);
+        subBox2->divideBox(level-1, tileMap, type, generator,actors);
     }
     else if(half==1)
     {
-        divideBox(level-1, tileMap, type, generator);
+        divideBox(level-1, tileMap, type, generator,actors);
     }
  }
 
  else if(level==0 and type=="ROADBOX")
 {
-   makeHouse(tileMap, generator);
+   makeHouse(tileMap, generator,actors);
      //many houses
 }
 
  }
 
-  void city::generateCity()
+  void city::generateCity(std::vector<actor*> &actors)
 {
 setTileMap();
-divideBox(6,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+divideBox(8,tileMap, "ROADBOX", generator,actors); //recursive box dividing and road drawing
 }
 
 

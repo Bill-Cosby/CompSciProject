@@ -23,8 +23,6 @@ int main()
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
-    city myCity;
-    myCity.generateCity();
 
 
     sf::Shader lightingShader;
@@ -61,7 +59,7 @@ int main()
         openDoors->addChild(new openDoorNode);
 
     //thoughtProcess->addChild(danger);
-    thoughtProcess->addChild(lookForItems);
+    //thoughtProcess->addChild(lookForItems);
     //thoughtProcess->addChild(openDoors);
 
     root->addChild(thoughtProcess);
@@ -79,9 +77,12 @@ int main()
 
 std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
-    //char ch;
-
     actors[0]->pos(1,1);
+    city myCity;
+    myCity.generateCity(actors);
+    //char ch;
+    std::cout << actors.size() << std::endl;
+
 
 
 
@@ -210,7 +211,6 @@ bool waitforplayer = false;
     sf::Event event;
     while (window.isOpen())
     {
-
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -233,13 +233,15 @@ bool waitforplayer = false;
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 
         if (waitforplayer == false){
+            int activeAI =0;
             for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    root->run(actors[i],_map,localItems,actors,announcementList);
+                    if (root->run(actors[i],_map,localItems,actors,announcementList))activeAI++;
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();
             }
+            std::cout << "Active AI this frame: " << activeAI << std::endl;
         }
 
 //        lightmap = &_map;
