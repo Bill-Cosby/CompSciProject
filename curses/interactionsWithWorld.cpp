@@ -229,8 +229,6 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
 
 void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
 {
-    std::cout << "YHOOOOO\n";
-    std::cout << goal.x << "," << goal.y << std::endl;
     if (path.size()!=0){
         if (!_map[1][path[path.size()-1].y][path[path.size()-1].x]->isOpen()){
             _map[1][path[path.size()-1].y][path[path.size()-1].x]->interactWithDoor(true);

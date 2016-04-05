@@ -236,7 +236,7 @@ bool waitforplayer = false;
         if (waitforplayer == false){
             for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    if (root->run(actors[i],_map,localItems,actors,announcementList))activeAI++;
+                    root->run(actors[i],_map,localItems,actors,announcementList);
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();

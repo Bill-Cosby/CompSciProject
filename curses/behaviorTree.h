@@ -108,12 +108,17 @@ public:
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
         }
+
+
         if (testingCharacter->canSee(_map,testingCharacter->goal)){
             coordinate temp;
-            if (testingCharacter->col()>testingCharacter->goal.x){temp.x = testingCharacter->col()-1;temp.y = testingCharacter->row();}
-            if (testingCharacter->col()<testingCharacter->goal.x){temp.x = testingCharacter->col()+1;temp.y = testingCharacter->row();}
-            if (testingCharacter->row()>testingCharacter->goal.y){temp.x = testingCharacter->col();temp.y = testingCharacter->row()-1;}
-            if (testingCharacter->row()<testingCharacter->goal.y){temp.x = testingCharacter->col();temp.y = testingCharacter->row()+1;}
+            if (testingCharacter->col()>testingCharacter->goal.x){temp.x =-1;temp.y= 0;}
+            if (testingCharacter->col()<testingCharacter->goal.x){temp.x =1;temp.y = 0;}
+            if (testingCharacter->row()>testingCharacter->goal.y){temp.x =0;temp.y = -1;}
+            if (testingCharacter->row()<testingCharacter->goal.y){temp.x =0;temp.y = 1;}
+
+            testingCharacter->path.clear();
+            testingCharacter->path.push_back(coordinate(testingCharacter->col()+temp.x,testingCharacter->row()+temp.y));
 
             testingCharacter->memory = coordinate(-1,-1);
             return true;
@@ -315,6 +320,7 @@ public:
             }
         }
         else if (testingCharacter->social and testingCharacter->goal == coordinate(-1,-1)){
+            std::cout << "Yoooooo\n";
             testingCharacter->findTile(_map,false,false,true);
             int dist;
             if (testingCharacter->goal != coordinate(-1,-1)){
