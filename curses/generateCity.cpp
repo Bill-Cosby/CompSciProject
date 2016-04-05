@@ -27,6 +27,9 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             }
             else{
                 tileMap[0][b][a]= new tile(woodfloor,0,"wood");
+
+
+
                 if (rand()%5001 < 100){
                     actors.push_back(new monster("human"));
                     actors[actors.size()-1]->pos(b,a);

@@ -33,7 +33,6 @@ player::player(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
     name = giveName();
-    std::cout << name << std::endl;
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;
@@ -92,7 +91,5 @@ monster::monster(std::string speciesToLoad)
 
     goal = coordinate(-1,-1);
     memory=coordinate(-1,-1);
-    post=coordinate(-1,-1);
-    path.resize(0);
     interactedWithDoor = false;
 }
