@@ -105,12 +105,19 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
     sf::Event event;
 
     while (1){
-        text.setCharacterSize(20);
+
+        window.clear(sf::Color::Black);
+
+        text.setCharacterSize(18);
         text.setPosition(10,10);
+        text.setString(name);
+        window.draw(text);
+
+
+        text.setPosition(10,50);
         text.setString(temp);
         text.setCharacterSize(12);
 
-        window.clear(sf::Color::Black);
         window.draw(text);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2) and keyreleased == true and answered == false){questionOn++; keyreleased = false;}
@@ -196,7 +203,7 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
                 if (i == questionOn)text.setStyle(sf::Text::Underlined);
 
                 text.setString(questions[i]);
-                text.setPosition(50,50+i*20);
+                text.setPosition(50,80+i*20);
                 window.draw(text);
                 text.setStyle(sf::Text::Regular);
 
@@ -207,7 +214,7 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
                 text.setStyle(sf::Text::Underlined);
 
                 text.setString("Ok.");
-                text.setPosition(50,50);
+                text.setPosition(50,80);
                 window.draw(text);
                 text.setStyle(sf::Text::Regular);
         }
@@ -220,10 +227,21 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
 
 }
 
-void monster::moveOnPath()
+void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
 {
     if (path.size()!=0){
-        pos(path[path.size()-1].y,path[path.size()-1].x);
-        path.erase(path.begin()+path.size()-1);
+        if (!_map[1][path[path.size()-1].y][path[path.size()-1].x]->isOpen()){
+            _map[1][path[path.size()-1].y][path[path.size()-1].x]->interactWithDoor(true);
+            memory = coordinate(path[path.size()-1].x,path[path.size()-1].y);
+            interactedWithDoor = true;
+        }
+        else{
+            pos(path[path.size()-1].y,path[path.size()-1].x);
+            path.erase(path.begin()+path.size()-1);
+//            if (memory != coordinate(x,y) and interactedWithDoor){
+//                _map[1][memory.y][memory.x]->interactWithDoor(false);
+//                interactedWithDoor = false;
+//            }
+        }
     }
 }

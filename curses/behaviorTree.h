@@ -32,7 +32,13 @@ class CheckAll : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "bich" << testingCharacter->memory.x << "," << testingCharacter->memory.y << std::endl;
+        for (actor* _a : actors){
+            if (_a->controlled){
+                if (testingCharacter->findDistance(coordinate(_a->col(),_a->row()))>15){
+                    return false;
+                }
+            }
+        }
         for (Node* child : getChildren()){
             child->run(testingCharacter,_map,localItems,actors,announcementList);
         }
@@ -46,7 +52,6 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         for (Node* child : getChildren()){
-            std::cout << "selecting child...\n";
             if (child->run(testingCharacter, _map, localItems, actors, announcementList) == false){
                 return true;
             }
@@ -60,11 +65,8 @@ class Selector : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "My goal is at " << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
         for (Node* child : getChildren()){
-            std::cout << "selecting child...\n";
             if (child->run(testingCharacter, _map, localItems, actors, announcementList)){
-                std::cout << "====THE TREE SHOULD STOP HERE====\n";
                 return true;
             }
         }
@@ -77,13 +79,11 @@ class Sequence : public compositNode
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Running through sequence...\n";
         for (Node* child : getChildren()){
             if (!(child->run(testingCharacter,_map, localItems, actors, announcementList))){
                 return false;
             }
         }
-        std::cout << "Sequence successful...\n";
         return true;
     }
 };
@@ -92,13 +92,10 @@ class isItemBetterNode : public Node
 {
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Is item better?\n";
         if(testingCharacter->isItemBetter())
         {
-            std::cout << "yes it is!\n";
             return true;
         }
-        std::cout << "No\n";
         return false;
     }
 };
@@ -111,24 +108,31 @@ public:
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
         }
-
+        if (testingCharacter->canSee(_map,testingCharacter->goal)){
+            coordinate temp;
+            if (testingCharacter->col()>testingCharacter->goal.x){temp.x = testingCharacter->col()-1;temp.y = testingCharacter->row();}
+            if (testingCharacter->col()<testingCharacter->goal.x){temp.x = testingCharacter->col()+1;temp.y = testingCharacter->row();}
+            if (testingCharacter->row()>testingCharacter->goal.y){temp.x = testingCharacter->col();temp.y = testingCharacter->row()-1;}
+            if (testingCharacter->row()<testingCharacter->goal.y){temp.x = testingCharacter->col();temp.y = testingCharacter->row()+1;}
+            testingCharacter->path.clear();
+            testingCharacter->path.push_back(temp);
+            testingCharacter->memory = coordinate(-1,-1);
+            return true;
+        }
         for (actor* _a : actors){
             testingCharacter->noGo.push_back(coordinate(_a->col(),_a->row()));
         }
 
-        if (testingCharacter->path.size() > 0 and testingCharacter->memory==testingCharacter->goal){
-            std::cout << "Continuing on current path...\n";
+        if (testingCharacter->path.size() > 0 and testingCharacter->memory == testingCharacter->goal){
             return false;
         }
 
-        std::cout << "Finding path...\n";
         if (testingCharacter->findPath(_map)){
-            std::cout << "Found a path...\n";
             testingCharacter->memory = testingCharacter->goal;
             return true;
         }
         else{
-            std::cout << "Failed to find a path...\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return false;
         }
     }
@@ -139,16 +143,11 @@ class moveOnPathNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout<<testingCharacter->goal.x<<" "<<testingCharacter->goal.y<<std::endl;
-        std::cout << "Do I have a path?\n";
         if (testingCharacter->path.size()>0){
-            std::cout << testingCharacter->path.size() << std::endl;
-            std::cout << "Moving On Path...\n";
-            testingCharacter->moveOnPath();
+            testingCharacter->moveOnPath(_map);
             return true;
         }
         else{
-            std::cout << "It seems I don't\n";
             return false;
         }
     }
@@ -160,11 +159,9 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         coordinate temp = testingCharacter->findTile(_map,true,false,false);
-        std::cout << "Looking for a door...\n";
         if (temp!= coordinate(-1,-1) and !_map[1][temp.y][temp.x]->isOpen()){
             testingCharacter->goal = temp;
             testingCharacter->memory = testingCharacter->goal;
-            std::cout << "Found a door...\n";
             if (testingCharacter->findDistance(testingCharacter->goal)<=1.4){
                 testingCharacter->openDoor(_map);
             }
@@ -172,7 +169,7 @@ public:
             return true;
         }
         else{
-            std::cout << "Failed to find a door...\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return false;
         }
     }
@@ -200,14 +197,12 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         if (!testingCharacter->opensdoors)return false;
-        std::cout << "Opening the door...\n";
         if (testingCharacter->openDoor(_map)){
-            std::cout << "Opened the door...\n";
             testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
         else{
-            std::cout << "Failed to open door...\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return false;
         }
     }
@@ -218,7 +213,6 @@ class lookForItemNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Looking for new items...\n";
 
         if (testingCharacter->findItem(_map, localItems)){
             if (testingCharacter->goal!=testingCharacter->memory){
@@ -228,7 +222,7 @@ public:
             return true;
         }
         else{
-            std::cout << "Didn't see any items\n";
+            testingCharacter->memory = coordinate(-1,-1);
             return false;
         }
     }
@@ -239,9 +233,7 @@ class pickUpItemNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Trying to pick up items...\n";
         if (testingCharacter->equipItem(localItems)){
-            std::cout << "Equipped Item!\n";
             testingCharacter->memory = coordinate(-1,-1);
             return true;
         }
@@ -257,7 +249,6 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
         for (actor* _a : actors){
-            std::cout << _a->EVIL << std::endl;
             if (!_a->EVIL and testingCharacter->EVIL){
                 testingCharacter->inDanger = true;
                 return true;
@@ -273,14 +264,10 @@ class decideIfCanAttackNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
     {
-        std::cout << "Is that guy too dangerous for me?\n";
         if (testingCharacter->decideIfCanAttack(actors, _map)){
-            std::cout << "I think I can take them\n";
             return true;
         }
         else{
-            std::cout << "No I don't think so...\n";
-            std::cout << "I want to hide\n";
             if (testingCharacter->inDanger)return true;
             return false;
         }
@@ -294,7 +281,6 @@ public:
     {
         if (testingCharacter->actorAttacking != NULL){
             if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
-                std::cout << "Take that!\n";
                 testingCharacter->memory = coordinate(-1,-1);
                 testingCharacter->simpleAttackEnemy(_map, announcementList, localItems);
                 return true;
@@ -316,23 +302,41 @@ public:
                 return false;
             }
             else{
-                int temp = rand()%9;
-                if (temp == 8){testingCharacter->goal = coordinate(-1,-1);return false;}
+                int temp = rand()%12;
+                if (temp >= 8){testingCharacter->goal = coordinate(-1,-1);return false;}
                 coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
+                if (testingCharacter->row()+directions[temp].y < 0)directions[temp].y = 0;
+                if (testingCharacter->row()+directions[temp].y >= _map[0].size())directions[temp].y = 0;
+                if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
                 return false;
             }
         }
-        else if (testingCharacter->social and testingCharacter->memory == coordinate(-1,-1)){
+        else if (testingCharacter->social and testingCharacter->goal == coordinate(-1,-1)){
             testingCharacter->findTile(_map,false,false,true);
-            if (testingCharacter->findDistance(testingCharacter->goal)>2){
+            int dist;
+            if (testingCharacter->goal != coordinate(-1,-1)){
+                dist = testingCharacter->findDistance(testingCharacter->goal);
+            }
+            else dist = 0;
+            if (dist>10){
                 return false;
             }
-            else{
+            else if (dist < 10 or dist == 0){
                 int temp = rand()%9;
                 if (temp == 8){testingCharacter->goal = coordinate(-1,-1);return false;}
-                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};
+                coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
+                if (testingCharacter->row()+directions[temp].y < 0)directions[temp].y = 0;
+                if (testingCharacter->row()+directions[temp].y >= _map[0].size())directions[temp].y = 0;
+                if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
+
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
+                std::cout << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
                 return false;
             }
         }

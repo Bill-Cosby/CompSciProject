@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include "generateCity.h"
-#include "tiles.h"
+//#include "tiles.h"
 #include "behaviorTree.h"
 #include "menu.h"
 
@@ -13,13 +13,17 @@ using namespace std;
 
 int main()
 {
+    std::mt19937 generator(time(NULL));
+    std::uniform_int_distribution<int> temp (0,time(NULL));
+
+    srand(temp(generator));
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
 
-
-
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
+
+
 
     sf::Shader lightingShader;
     sf::RenderStates renderState;
@@ -29,8 +33,6 @@ int main()
 
     gameWorld gameworld(window);
     announcements announcementList;
-    srand(time(NULL));
-    srand(rand()%time(NULL));
 
 
     CheckAll * root = new CheckAll;
@@ -57,7 +59,7 @@ int main()
         openDoors->addChild(new openDoorNode);
 
     //thoughtProcess->addChild(danger);
-    thoughtProcess->addChild(lookForItems);
+    //thoughtProcess->addChild(lookForItems);
     //thoughtProcess->addChild(openDoors);
 
     root->addChild(thoughtProcess);
@@ -74,16 +76,22 @@ int main()
 
 
 std::vector<actor*> actors;
+<<<<<<< HEAD
 //actors.push_back(characterCreationMenu(window));
 actors.push_back(new player("human"));
 actors.push_back(new monster("goblin"));
 actors.push_back(new monster("snake"));
 actors[2]->pos(4,4);
 
-    //char ch;
-
+=======
+actors.push_back(characterCreationMenu(window));
     actors[0]->pos(1,1);
-    actors[1]->pos(4,7);
+    city myCity;
+    myCity.generateCity(actors);
+>>>>>>> david
+    //char ch;
+    std::cout << actors.size() << std::endl;
+
 
 
 
@@ -117,46 +125,46 @@ actors[2]->pos(4,4);
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
     std::vector<std::vector<std::vector<tile* > > > _map;
+    _map = myCity.tileMap;
 
-    _map.resize(2);
-    _map[0].resize(20);
-    _map[1].resize(20);
-
-    for (int y=0;y<20;y++){
-        _map[0][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
-            else _map[0][y][x] = new tile(grass,0,"grass");
-            _map[0][y][x]->position=coordinate(x,y);
-        }
-    }
-
-    for (int y=0;y<20;y++){
-        _map[1][y].resize(20);
-        for (int x=0;x<20;x++){
-            if (x >= 14 and y == 16){
-                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
-                else _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 14 and y >=16){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (y == 0 or y == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else if (x == 0 or x == 19){
-                _map[1][y][x] = new tile(stonewall,-1,"stone");
-            }
-            else{
-                _map[1][y][x] = new tile;
-            }
-            _map[1][y][x]->position = coordinate(x,y);
-        }
-    }
-
-    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
-    _map[1][10][10]->position = coordinate(10,10);
-
+//    _map.resize(2);
+//    _map[0].resize(20);
+//    _map[1].resize(20);
+//
+//    for (int y=0;y<20;y++){
+//        _map[0][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (y>=16 and x>=14)_map[0][y][x] = new tile(woodfloor,0,"wood");
+//            else _map[0][y][x] = new tile(grass,0,"grass");
+//            _map[0][y][x]->position=coordinate(x,y);
+//        }
+//    }
+//
+//    for (int y=0;y<20;y++){
+//        _map[1][y].resize(20);
+//        for (int x=0;x<20;x++){
+//            if (x >= 14 and y == 16){
+//                if (x == 17)_map[1][y][x] = new door(false,closeddoor,0,"wood");
+//                else _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 14 and y >=16){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (y == 0 or y == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else if (x == 0 or x == 19){
+//                _map[1][y][x] = new tile(stonewall,-1,"stone");
+//            }
+//            else{
+//                _map[1][y][x] = new tile;
+//            }
+//            _map[1][y][x]->position = coordinate(x,y);
+//        }
+//    }
+//
+//    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
+//    _map[1][10][10]->position = coordinate(10,10);
     std::default_random_engine ew(time(0));
     std::uniform_int_distribution<int> numberOfEnemies(2,10);
     std::uniform_int_distribution<int> enemyPos(1,17);
@@ -212,7 +220,6 @@ bool waitforplayer = false;
     sf::Event event;
     while (window.isOpen())
     {
-
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -235,14 +242,15 @@ bool waitforplayer = false;
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 
         if (waitforplayer == false){
+            int activeAI =0;
             for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    std::cout << "_______________________________________\n";
-                    root->run(actors[i],_map,localItems,actors,announcementList);
+                    if (root->run(actors[i],_map,localItems,actors,announcementList))activeAI++;
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();
             }
+            std::cout << "Active AI this frame: " << activeAI << std::endl;
         }
 
 //        lightmap = &_map;
@@ -297,7 +305,7 @@ bool waitforplayer = false;
                 delete _map[i][j];
             }
         }*/
-
+     myCity.deleteTileMap();
 
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];

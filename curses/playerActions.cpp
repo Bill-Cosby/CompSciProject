@@ -45,6 +45,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 }
             pressedKey = false;
 
+            //if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){keyrelease = false;}
+
                  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
@@ -54,7 +56,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
-
+                  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)){temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){temp.x--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
@@ -69,6 +74,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
                             pressedKey = true;
                         }
                     }
@@ -112,6 +121,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
                             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
                             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                             pressedKey = true;
 
@@ -136,6 +149,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)){temp.x++;keyrelease=false;}
+                        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){temp.x--;keyrelease=false;}
+                        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
+                        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                         pressedKey = true;
                     }

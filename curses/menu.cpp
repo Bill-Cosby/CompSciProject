@@ -67,7 +67,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
 
         window.clear();
         window.setView(window.getDefaultView());
-        text.setCharacterSize(8);
+        text.setCharacterSize(10);
         for (int i = 0; i < 4; i++){
             if (i == menuSelected){
                 text.setStyle(sf::Text::Underlined);
@@ -80,7 +80,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
                 }
             }
             text.setString(menuTitles[i]);
-            text.setPosition(15+ i*100,30);
+            text.setPosition(15+ i*150,30);
             window.draw(text);
             text.setStyle(sf::Text::Regular);
         }
