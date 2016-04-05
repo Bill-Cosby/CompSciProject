@@ -67,6 +67,12 @@ public:
     bool isOpen(){return open;}
 };
 
+class furniture : public tile
+{
+public:
+    furniture(int dc, int movementCost, std::string material);
+};
+
 class container : public tile
 {
     std::vector<item*> contained;

@@ -4,6 +4,26 @@
 	[TEXTURE]tiles.png,0:0:;
 [END]
 [START]
+[CHAIR]
+	[NAME]chair;
+	[TEXTURE]furniture.png,0:16:;
+[END]
+[START]
+[BIGCHAIR]
+	[NAME]bigchair;
+	[TEXTURE]furniture.png,0:0:;
+[END]
+[START]
+[BED]
+	[NAME]bed;
+	[TEXTURE]furniture.png,0:32:;
+[END]
+[START]
+[WOODCHAIR]
+	[NAME]woodchair;
+	[TEXTURE]furniture.png,0:48:;
+[END]
+[START]
 [STONEWALL]
 	[NAME]floor;
 	[TEXTURE]tiles.png,0:17:;

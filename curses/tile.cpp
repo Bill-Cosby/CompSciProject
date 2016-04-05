@@ -15,6 +15,11 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     isDoor=false;
 }
 
+furniture::furniture(int dc, int movementCost, std::string material) : tile(dc,movementCost,material)
+{
+
+}
+
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     sf::Sprite tempSprite;

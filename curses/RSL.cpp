@@ -397,7 +397,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
                     if (foundDataMember == true and _c == ';'){
                         sf::Texture temp;
                         temp.loadFromFile(fileName,sf::IntRect(intRectangle[1],intRectangle[0],16,16));
-
                         return temp;
                     }
 
