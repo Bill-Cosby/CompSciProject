@@ -9,8 +9,7 @@ tiles::tiles()
 {
     height=100;
     width=100;
-    fillMap();
-    setPositions();
+fillMap();
     makeTileMap();
 
 
@@ -18,28 +17,15 @@ tiles::tiles()
 
 void tiles::fillMap()
 {
-    tileMap.resize(height);
-    for(int a=0; a<height; a++)
+    tileMap.resize(2);
+    for(int a=0; a<2; a++)
+    {tileMap[a].resize(height);
+        for(int b=0; b<height; b++)
     {
-        tileMap[a].resize(width);
-
-        for(int b=0; b<width; b++)
-        {
-            tileMap[a][b]= new tile('P',0, grass);
-        }
+        tileMap[a][b].resize(width);
+    }
     }
     //fills tileMap with blanks
-}
-
-void tiles::setPositions()
-{
- for(int a=0; a<height; a++)
- {
-     for(int b=0; b<width; b++)
-     {
-        tileMap[b][a]->position=coordinate(10*a/height,10*b/width);
-     }
- }
 }
 
 
@@ -99,9 +85,25 @@ srand(time(NULL));
     {
         for(int b=0; b<width; b++)
         {
+            for(int c=0; c<2; c++)
+            {
+              if(c==0)
+              {
+            double y=a*10/height;
+            double x=b*10/width;
+            double elevation = finalTerrain.GetValue(x,y, 0.5);
+            tileMap[c][a][b]=new tile(grass,0,findTileType(elevation));
+            tileMap[c][a][b].elevation=elevation;
+            tile[c][a][b].position.x=x;
+            tile[c][a][b].position.y=y;
+            }
+            else if(c==1)
+            {
+                tileMap[c][a][b]=new tile();
+            }
             //tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
-            tileMap[a][b]->elevation = finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y);
-            std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
+
+           //std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
         }
     }
 
@@ -130,6 +132,46 @@ srand(time(NULL));
   std::cout << "Here\n";
     //sets elevations
 }
+
+tiles::~tiles()
+{
+    for(int a=0; a<tileMap.size(); a++)
+    {
+        for(int b=0; b<tileMap[a].size())
+        {
+            delete tileMap[a][b];
+        }
+    }
+}
+
+std::string tile findTileType(double elevation)
+{
+     if(elevation<0)
+    {
+       return "water";
+    }
+    else if(elevation<.2)
+    {
+        return "sand";
+    }
+    else if(elevation<.4)
+    {
+        return "grass";
+    }
+    else if(elevation<.6)
+    {
+        return "dirt"'
+    }
+    else if(elevation<.8)
+    {
+        return "stone";
+    }
+    else
+    {
+        return "white";//snow
+    }
+}
+
    /* module::Turbulence turbulence;
     turbulence.SetSourceModule(0,turbulence);
     turbulence.SetFrequency(4.0);

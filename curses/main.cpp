@@ -251,7 +251,8 @@ bool keyrelease = true;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(myCity.tileMap, actors, localItems,window,announcementList, renderState);
+        tiles myWorld;
+        gameworld.drawGameworld(myWorld.tileMap, actors, localItems,window,announcementList, renderState);
     }
 
 
@@ -263,7 +264,7 @@ bool keyrelease = true;
                 delete _map[i][j];
             }
         }*/
-     myCity.deleteTileMap();
+
 
         for (int i=0;i<globalItems.size();i++){
             delete globalItems[i];

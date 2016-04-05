@@ -17,6 +17,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
+
     sf::Sprite tempSprite;
     tempSprite.setTexture(textures[defaultchar]);
     tempSprite.setPosition(position.x*16,position.y*16);
@@ -73,7 +74,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 
 tile::tile(char dc, int mv, std::string mat)
 {
-    elevation=finalTerrain2.GetValue(p.x,p.y);
+    //elevation=finalTerrain2.GetValue(p.x,p.y);
     _material = mat;
     movementCost = mv;
     defaultchar = dc;
