@@ -81,7 +81,6 @@ actors.push_back(characterCreationMenu(window));
     city myCity;
     myCity.generateCity(actors);
     //char ch;
-    std::cout << actors.size() << std::endl;
 
 
 

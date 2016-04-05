@@ -152,6 +152,7 @@ public:
             return true;
         }
         else{
+            testingCharacter->goal = coordinate(-1,-1);
             return false;
         }
     }
@@ -316,11 +317,10 @@ public:
                 if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
                 if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
-                return false;
+                return true;
             }
         }
-        else if (testingCharacter->social and testingCharacter->goal == coordinate(-1,-1)){
-            std::cout << "Yoooooo\n";
+        else if (testingCharacter->social){
             testingCharacter->findTile(_map,false,false,true);
             int dist;
             if (testingCharacter->goal != coordinate(-1,-1)){
@@ -341,8 +341,9 @@ public:
                 if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
                 if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
 
+
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
-                return false;
+                return true;
             }
         }
         return false;
