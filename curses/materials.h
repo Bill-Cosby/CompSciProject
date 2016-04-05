@@ -13,18 +13,26 @@
 #define woodfloor 5
 #define grass 6
 #define dirt 7
+#define woodchair 8
+#define bed 9
+#define chair 10
+#define bigchair 11
 
 #include "RSL.h"
 #include <SFML/Graphics.hpp>
 
-const sf::Texture textures[8] = {   RSL::getTextureData("data/textures/tiles.raw","stonewall.texture"),
+const sf::Texture textures[12] = {   RSL::getTextureData("data/textures/tiles.raw","stonewall.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","stonefloor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","opendoor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","door.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","woodwall.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","woodfloor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","grass.texture"),
-                                    RSL::getTextureData("data/textures/tiles.raw","dirt.texture")
+                                    RSL::getTextureData("data/textures/tiles.raw","dirt.texture"),
+                                    RSL::getTextureData("data/textures/tiles.raw","woodchair.texture"),
+                                    RSL::getTextureData("data/textures/tiles.raw","bed.texture"),
+                                    RSL::getTextureData("data/textures/tiles.raw","chair.texture"),
+                                    RSL::getTextureData("data/textures/tiles.raw","bigchair.texture")
                                 };
 
 const sf::Color  ironColor  = sf::Color(sf::Color(197,103,41));

@@ -76,19 +76,10 @@ int main()
 
 
 std::vector<actor*> actors;
-<<<<<<< HEAD
-//actors.push_back(characterCreationMenu(window));
-actors.push_back(new player("human"));
-actors.push_back(new monster("goblin"));
-actors.push_back(new monster("snake"));
-actors[2]->pos(4,4);
-
-=======
 actors.push_back(characterCreationMenu(window));
     actors[0]->pos(1,1);
     city myCity;
     myCity.generateCity(actors);
->>>>>>> david
     //char ch;
     std::cout << actors.size() << std::endl;
 
@@ -250,7 +241,6 @@ bool waitforplayer = false;
                 }
                 actors[i]->increaseCounter();
             }
-            std::cout << "Active AI this frame: " << activeAI << std::endl;
         }
 
 //        lightmap = &_map;

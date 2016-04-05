@@ -31,6 +31,22 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     actors.push_back(new monster("human"));
                     actors[actors.size()-1]->pos(b,a);
                 }
+                if (rand()%201 < 5){
+                    tileMap[1][b][a]= new furniture(woodchair,-1,"wood");
+                    tileMap[1][b][a]->position=coordinate(a,b);
+                }
+                if (rand()%201 < 5){
+                    tileMap[1][b][a]= new furniture(chair,-1,"blueEye");
+                    tileMap[1][b][a]->position=coordinate(a,b);
+                }
+                if (rand()%201 < 2){
+                    tileMap[1][b][a]= new furniture(bigchair,-1,"redEye");
+                    tileMap[1][b][a]->position=coordinate(a,b);
+                }
+                if (rand()%201 < 4){
+                    tileMap[1][b][a]= new furniture(bed,-1,"wood");
+                    tileMap[1][b][a]->position=coordinate(a,b);
+                }
             }
             if (emptyPlot);
             else if(b==bottom or a==right)

@@ -707,7 +707,7 @@
 
 1459191931 D
 
-1459198304 source:c:\compsciproject\curses\astar.cpp
+1459886905 source:c:\compsciproject\curses\astar.cpp
 	"aStar.h"
 	<unordered_set>
 
@@ -789,7 +789,7 @@
 
 1456350450 c:\compsciproject\curses\node.h
 
-1459217965 source:c:\compsciproject\curses\bodyparts.cpp
+1459886905 source:c:\compsciproject\curses\bodyparts.cpp
 	"bodyParts.h"
 	"RSL.h"
 	"item.h"
@@ -923,14 +923,14 @@
 	"shadowcasting.h"
 	"actor.h"
 
-1459198304 c:\compsciproject\curses\tile.h
+1459888588 c:\compsciproject\curses\tile.h
 	"item.h"
 	"node.h"
 	"RSL.h"
 	"materials.h"
 	<SFML/Graphics.hpp>
 
-1458242128 c:\compsciproject\curses\item.h
+1459886905 c:\compsciproject\curses\item.h
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
@@ -938,12 +938,12 @@
 	"materials.h"
 	"RSL.h"
 
-1459200182 c:\compsciproject\curses\materials.h
+1459888572 c:\compsciproject\curses\materials.h
 	<vector>
 	"RSL.h"
 	<SFML/Graphics.hpp>
 
-1459215223 c:\compsciproject\curses\bodyparts.h
+1459886905 c:\compsciproject\curses\bodyparts.h
 	<string>
 	<SFML/Graphics.hpp>
 	<iostream>
@@ -962,7 +962,7 @@
 	<math.h>
 	"tile.h"
 
-1459198304 source:c:\compsciproject\curses\drawgame.cpp
+1459886905 source:c:\compsciproject\curses\drawgame.cpp
 	"drawGame.h"
 
 1457035518 c:\compsciproject\curses\drawgame.h
@@ -970,7 +970,7 @@
 	"light.h"
 	<SFML/Graphics.hpp>
 
-1459198304 c:\compsciproject\curses\actor.h
+1459886905 c:\compsciproject\curses\actor.h
 	"window.h"
 	<stdlib.h>
 	<time.h>
@@ -979,6 +979,7 @@
 	<cctype>
 	"bodyParts.h"
 	"aStar.h"
+	"CRandomName.h"
 	<random>
 	<string>
 
@@ -991,7 +992,7 @@
 	<vector>
 	<SFML/Graphics.hpp>
 
-1459214444 c:\compsciproject\curses\rsl.h
+1459541410 c:\compsciproject\curses\rsl.h
 	"bodyParts.h"
 	<string>
 	<fstream>
@@ -1016,7 +1017,7 @@
 1458242137 source:c:\compsciproject\curses\item.cpp
 	"item.h"
 
-1458242137 source:c:\compsciproject\curses\menu.cpp
+1459886905 source:c:\compsciproject\curses\menu.cpp
 	"menu.h"
 
 1458242137 c:\compsciproject\curses\menu.h
@@ -1293,24 +1294,19 @@
 	<string>
 	<noise/noise.h>
 
-1458242128 source:c:\compsciproject\curses\tile.cpp
+1459888188 source:c:\compsciproject\curses\tile.cpp
 	"tile.h"
 
 1456350482 source:c:\compsciproject\curses\window.cpp
 
-1459198304 source:c:\compsciproject\curses\actor.cpp
+1459886905 source:c:\compsciproject\curses\actor.cpp
 	"actor.h"
 	<cstdlib>
 
-1459215281 source:c:\compsciproject\curses\rsl.cpp
+1459889263 source:c:\compsciproject\curses\rsl.cpp
 	"RSL.h"
 
-1456350482 source:c:\compsciproject\curses\tiles.cpp
-	<iostream>
-	"tiles.h"
-	<stdlib.h>
-	<time.h>
-	<vector>
+1459886905 source:c:\compsciproject\curses\tiles.cpp
 
 1456350482 c:\compsciproject\curses\tiles.h
 	<vector>
@@ -1318,32 +1314,32 @@
 	<noise/noise.h>
 	"noiseutils.h"
 
-1459372107 source:c:\compsciproject\curses\main.cpp
+1459889185 source:c:\compsciproject\curses\main.cpp
 	"drawGame.h"
 	"include/dungeon.h"
 	<string>
 	<cstdlib>
 	<SFML/Graphics.hpp>
 	"generateCity.h"
-	"tiles.h"
 	"behaviorTree.h"
 	"menu.h"
 
-1458242128 c:\compsciproject\curses\generatecity.h
+1459886905 c:\compsciproject\curses\generatecity.h
 	"tile.h"
 	<time.h>
 	<random>
 	<vector>
 	"actor.h"
 	<SFML/Graphics.hpp>
+	<chrono>
 
 1457721878 source:c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
-1458242128 source:c:\compsciproject\curses\actormenus.cpp
+1459886905 source:c:\compsciproject\curses\actormenus.cpp
 	"actor.h"
 
-1459198304 c:\compsciproject\curses\behaviortree.h
+1459886905 c:\compsciproject\curses\behaviortree.h
 	<list>
 	"actor.h"
 
@@ -1354,7 +1350,7 @@
 	<list>
 	"actor.h"
 
-1459198304 source:c:\compsciproject\curses\interactionswithworld.cpp
+1459886905 source:c:\compsciproject\curses\interactionswithworld.cpp
 	"actor.h"
 
 1457375697 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\shadowcasting.h
@@ -1376,7 +1372,7 @@
 	<SFML/Graphics.hpp>
 	"actor.h"
 
-1459198304 source:c:\compsciproject\curses\shadowcasting.cpp
+1459541411 source:c:\compsciproject\curses\shadowcasting.cpp
 	"shadowcasting.h"
 
 1455593312 c:\of_v0.8.4_win_cb_release\apps\myapps\compsciproject\curses\tissue.h
@@ -1835,26 +1831,25 @@
 
 1455051062 source:c:\users\damion\desktop\compsciproject\curses\window.cpp
 
-1459217158 source:c:\compsciproject\curses\materials.cpp
+1459541411 source:c:\compsciproject\curses\materials.cpp
 	"materials.h"
 
 1455831327 source:c:\users\damion\desktop\compsciproject\curses\materials.cpp
 	"materials.h"
 
-1458242128 source:c:\compsciproject\curses\generatecity.cpp
+1459890189 source:c:\compsciproject\curses\generatecity.cpp
 	"generateCity.h"
 	<vector>
 	"drawGame.h"
 	<time.h>
 	<stdlib.h>
 	<vector>
-	<chrono>
 	<random>
 
-1459214444 source:c:\compsciproject\curses\actorconstructors.cpp
+1459886905 source:c:\compsciproject\curses\actorconstructors.cpp
 	"actor.h"
 
-1459198304 source:c:\compsciproject\curses\playeractions.cpp
+1459886905 source:c:\compsciproject\curses\playeractions.cpp
 	"actor.h"
 
 1459198304 
@@ -1900,4 +1895,26 @@
 
 1457035465 c:\compsciproject\curses\light.h
 	"shadowcasting.h"
+
+1459886905 c:\compsciproject\curses\crandomname.h
+	<fstream>
+	<map>
+	<string>
+	<cstdlib>
+	<ctime>
+	<vector>
+	<algorithm>
+	"CWordFrequency.h"
+
+1459886905 c:\compsciproject\curses\cwordfrequency.h
+
+1459886905 source:c:\compsciproject\curses\crandomname.cpp
+	<iostream>
+	<string>
+	<set>
+	<iterator>
+	"CRandomName.h"
+
+1459886905 source:c:\compsciproject\curses\cwordfrequency.cpp
+	"CWordFrequency.h"
 
