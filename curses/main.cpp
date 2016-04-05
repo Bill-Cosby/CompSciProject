@@ -232,8 +232,8 @@ bool waitforplayer = false;
 
         actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
 
+        int activeAI =0;
         if (waitforplayer == false){
-            int activeAI =0;
             for (int i=1;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     if (root->run(actors[i],_map,localItems,actors,announcementList))activeAI++;
@@ -241,7 +241,6 @@ bool waitforplayer = false;
                 }
                 actors[i]->increaseCounter();
             }
-            std::cout << "Active AI this frame: " << activeAI << std::endl;
         }
 
 //        lightmap = &_map;

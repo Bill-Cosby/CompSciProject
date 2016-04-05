@@ -33,6 +33,7 @@ player::player(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
     name = giveName();
+    std::cout << name << std::endl;
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;

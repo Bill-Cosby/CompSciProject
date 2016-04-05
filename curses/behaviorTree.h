@@ -314,7 +314,7 @@ public:
                 return false;
             }
         }
-        else if (testingCharacter->social and testingCharacter->memory == coordinate(-1,-1)){
+        else if (testingCharacter->social and testingCharacter->goal == coordinate(-1,-1)){
             testingCharacter->findTile(_map,false,false,true);
             int dist;
             if (testingCharacter->goal != coordinate(-1,-1)){

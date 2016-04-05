@@ -13,7 +13,7 @@ std::string giveName()
    std::ifstream inFile("data/names/names.txt");
 
    name.inputFile(inFile);
-   name.processFile(true);
+   name.processFile(false);
 
    std::string tempName = name.outputName(3,9);
 
