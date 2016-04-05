@@ -32,6 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="CRandomName.cpp" />
+		<Unit filename="CRandomName.h" />
+		<Unit filename="CWordFrequency.cpp" />
+		<Unit filename="CWordFrequency.h" />
 		<Unit filename="RSL.cpp" />
 		<Unit filename="RSL.h" />
 		<Unit filename="aStar.cpp" />

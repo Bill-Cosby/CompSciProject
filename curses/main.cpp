@@ -13,6 +13,10 @@ using namespace std;
 
 int main()
 {
+    std::mt19937 generator(time(NULL));
+    std::uniform_int_distribution<int> temp (0,time(NULL));
+
+    srand(temp(generator));
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
@@ -31,8 +35,6 @@ int main()
 
     gameWorld gameworld(window);
     announcements announcementList;
-    srand(time(NULL));
-    srand(rand()%time(NULL));
 
 
     CheckAll * root = new CheckAll;

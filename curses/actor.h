@@ -8,6 +8,7 @@
 #include <cctype>
 #include "bodyParts.h"
 #include "aStar.h"
+#include "CRandomName.h"
 #include <random>
 #include <string>
 
