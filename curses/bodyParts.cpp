@@ -21,6 +21,17 @@ bool hand::equip(item* itemToGrasp, bool equipping)
     return false;
 }
 
+bool bodyPart::findItem(item* itemToRemove)
+{
+    if (armor == itemToRemove){
+        return true;
+    }
+    for (bodyPart* _b : attachedParts){
+        _b->findItem(itemToRemove);
+    }
+    return false;
+}
+
 bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
 {
     bool didEquip = false;

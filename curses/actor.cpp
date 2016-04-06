@@ -214,6 +214,14 @@ bool actor::equipItem(std::vector<item*> & localItems)
                             localItems.erase(localItems.begin() + i);
                         }
                     }
+                    int counter = 0;
+                    for (item* _b : equipment){
+                        if (!rootPart->findItem(_b)){
+                            equipment.erase(equipment.begin()+counter);
+                            inventory.push_back(_b);
+                        }
+                        counter++;
+                    }
                     return true;
                 }
 

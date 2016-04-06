@@ -33,7 +33,12 @@ player::player(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
     name = giveName();
-    std::cout << name << std::endl;
+    equipment.push_back(new clothing("cottonshirt",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cottonpants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("cottonpants",'C',0,0,5,"cotton"));
+    rootPart->equip(equipment[0],true);
+    rootPart->equip(equipment[1],true);
+    rootPart->equip(equipment[2],true);
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;
@@ -77,6 +82,12 @@ monster::monster(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
     name = giveName();
+    equipment.push_back(new clothing("cottonshirt",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cottonpants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("cottonpants",'C',0,0,5,"cotton"));
+    rootPart->equip(equipment[0],true);
+    rootPart->equip(equipment[1],true);
+    rootPart->equip(equipment[2],true);
 
     controlled=false;
     sprinting=false;
