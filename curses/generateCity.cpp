@@ -9,24 +9,47 @@
 void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator,std::vector<actor*> &actors)
 {
     std::uniform_int_distribution<int> halfChance(0,1);
-    std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
+    std::uniform_int_distribution<int> doorFinder((bottom-1)+(left+1),(top+1)+(right-1));
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
 
+    int wallTex;
+    int floorTex;
+    int mc;
+    std::string wallmat;
+    std::string floormat;
+
+    int width = abs(right-left), height = abs(bottom-top);
+
+    if (width < 5 or height < 5)return;
+    else if (width < 15 and height > 10 and height <15){
+        wallTex = stonewall;
+        floorTex = stonefloor;
+        wallmat = "stone";
+        floormat = "stone";
+    }
+    else if (width<15 and height < 15){
+        wallTex = woodwall;
+        floorTex = woodfloor;
+        wallmat = "wood";
+        floormat = "wood";
+    }
+    else if (width < 20 and height < 20){
+        wallTex = stonewall;
+        floorTex = woodfloor;
+        wallmat = "stone";
+        floormat = "wood";
+    }
+    else return;
+
     bool emptyPlot = false;
 
-    if ((abs(bottom-top)>20 or abs(left-right)>20) or (abs(bottom-top)<4 or abs(left-right)<4))return;
 
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
-            if (abs(bottom-top)<6 and abs(left-right)<6){
-                tileMap[0][b][a]= new tile(dirt,0,"dirt");
-                emptyPlot = true;
-            }
-            else{
-                tileMap[0][b][a]= new tile(woodfloor,0,"wood");
+                tileMap[0][b][a]= new tile(floorTex,0,floormat);
 
 
 
@@ -35,11 +58,11 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     actors[actors.size()-1]->pos(b,a);
                 }
                 if (rand()%201 < 5){
-                    tileMap[1][b][a]= new furniture(woodchair,-1,"wood");
+                    tileMap[1][b][a]= new furniture(woodchair,0,"wood");
                     tileMap[1][b][a]->position=coordinate(a,b);
                 }
                 if (rand()%201 < 5){
-                    tileMap[1][b][a]= new furniture(chair,-1,"blueEye");
+                    tileMap[1][b][a]= new furniture(chair,0,"blueEye");
                     tileMap[1][b][a]->position=coordinate(a,b);
                 }
                 if (rand()%201 < 2){
@@ -47,10 +70,9 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     tileMap[1][b][a]->position=coordinate(a,b);
                 }
                 if (rand()%201 < 4){
-                    tileMap[1][b][a]= new furniture(bed,-1,"wood");
+                    tileMap[1][b][a]= new furniture(bed,0,"wood");
                     tileMap[1][b][a]->position=coordinate(a,b);
                 }
-            }
             if (emptyPlot);
             else if(b==bottom or a==right)
             {
@@ -60,7 +82,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
                 else
                 {
-                    tileMap[1][b][a]=new tile(stonewall,-1,"stone");
+                    tileMap[1][b][a]=new tile(wallTex,-1,wallmat);
                 }
 
                 tileMap[1][b][a]->position = coordinate(a,b);
@@ -74,7 +96,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
                 else
                 {
-                    tileMap[1][b][a]=new tile(stonewall,-1,"stone");
+                    tileMap[1][b][a]=new tile(wallTex,-1,wallmat);
                 }
                 tileMap[1][b][a]->position = coordinate(a,b);
             }

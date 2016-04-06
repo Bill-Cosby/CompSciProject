@@ -1,0 +1,40 @@
+[PLATEHELM]
+	[NAME]Plate Helm;
+	[DEFENSE]20:;
+	[TEXTURE]clothes.png,0:0:;
+	[TYPE]helm;
+[PLATEBOOT]
+	[NAME]Plate Boot;
+	[DEFENSE]10:;
+	[TEXTURE]clothes.png,0:16:;
+	[TYPE]boot;
+[PLATEGLOVE]
+	[NAME]Plate Glove;
+	[DEFENSE]10:;
+	[TEXTURE]clothes.png,0:32:;
+	[TYPE]glove;
+[PLATELEG]
+	[NAME]Plate Legging;
+	[DEFENSE]15:;
+	[TEXTURE]clothes.png,0:48:;
+	[TYPE]legging;
+[PLATEARM]
+	[NAME]Plate Arm;
+	[DEFENSE]15:;
+	[TEXTURE]clothes.png,0:62:;
+	[TYPE]arm;
+[PLATEARMOR]
+	[NAME]Plate Armor;
+	[DEFENSE]35:;
+	[TEXTURE]clothes.png,0:78:;
+	[TYPE]torso;
+[COTTONSHIRT]
+	[NAME]Cotton Shirt;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:78:;
+	[TYPE]torso;
+[COTTONPANTS]
+	[NAME]Cotton pant leg;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:48:;
+	[TYPE]legging;

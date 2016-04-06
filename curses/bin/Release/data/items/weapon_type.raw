@@ -1,0 +1,11 @@
+[SWORD]
+	[NAME]sword;
+	[ATTACK]10:;
+	[TEXTURE]weapons.png,0:0:;
+	[TYPE]onehand;
+[END]
+[AXE]
+	[NAME]axe;
+	[ATTACK]15:;
+	[TEXTURE]weapons.png,0:16:;
+	[TYPE]twohand;

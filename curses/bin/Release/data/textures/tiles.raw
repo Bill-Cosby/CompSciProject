@@ -1,0 +1,65 @@
+[START]
+[STONEFLOOR]
+	[NAME]wall;
+	[TEXTURE]tiles.png,0:0:;
+[END]
+[START]
+[CHAIR]
+	[NAME]chair;
+	[TEXTURE]furniture.png,0:16:;
+[END]
+[START]
+[BIGCHAIR]
+	[NAME]bigchair;
+	[TEXTURE]furniture.png,0:0:;
+[END]
+[START]
+[BED]
+	[NAME]bed;
+	[TEXTURE]furniture.png,0:32:;
+[END]
+[START]
+[WOODCHAIR]
+	[NAME]woodchair;
+	[TEXTURE]furniture.png,0:48:;
+[END]
+[START]
+[STONEWALL]
+	[NAME]floor;
+	[TEXTURE]tiles.png,0:17:;
+[END]
+[START]
+[DOOR]
+	[NAME]door;
+	[TEXTURE]tiles.png,0:33:;
+[END]
+[START]
+[OPENDOOR]
+	[NAME]opendoor;
+	[TEXTURE]tiles.png,0:48:;
+[END]
+[START]
+[WOODWALL]
+	[NAME]wood wall;
+	[TEXTURE]tiles.png,16:16:;
+[END]
+[START]
+[WOODFLOOR]
+	[NAME]wood floor;
+	[TEXTURE]tiles.png,16:0:;
+[END]
+[START]
+[BARREL]
+	[NAME]barrel;
+	[TEXTURE]tiles.png,16:32:;
+[END]
+[START]
+[GRASS]
+	[NAME]grass;
+	[TEXTURE]tiles.png,16:48:;
+[END]
+[START]
+[DIRT]
+	[NAME]dirt;
+	[TEXTURE]tiles.png,32:0:;
+[END]

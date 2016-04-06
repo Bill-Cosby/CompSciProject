@@ -33,7 +33,7 @@ public:
     tile(char dc,int mc, std::string mat);
     tile(coordinate,coordinate,int);
     tile(int hCost, int costSoFar);
-    tile(){isDoor=false;movementCost = 0;_material = "NULL";};
+    tile(){defaultchar = -1;isDoor=false;movementCost = 0;_material = "NULL";};
 
     std::string giveMaterial(){return _material;}
     void find_material();

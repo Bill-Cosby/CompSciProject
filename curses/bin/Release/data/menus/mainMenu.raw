@@ -1,0 +1,5 @@
+[TITLE]mainmenu;
+[STARTBUTTONS];
+	[BUTTON] new game:30,30;
+	[BUTTON] load game:30,45;
+[ENDBUTTONS];

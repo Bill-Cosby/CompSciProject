@@ -22,6 +22,7 @@ furniture::furniture(int dc, int movementCost, std::string material) : tile(dc,m
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
+    if (defaultchar == -1)return;
     sf::Sprite tempSprite;
     tempSprite.setTexture(textures[defaultchar]);
     tempSprite.setPosition(position.x*16,position.y*16);
