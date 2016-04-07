@@ -15,10 +15,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     isDoor=false;
 }
 
-furniture::furniture(int dc, int movementCost, std::string material) : tile(dc,movementCost,material)
-{
-
-}
+furniture::furniture(int dc, int movementCost, std::string material) : tile(dc,movementCost,material){}
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
@@ -84,6 +81,8 @@ tile::tile(char dc, int mv, std::string mat)
     defaultchar = dc;
     darkenBy = 1;
 }
+
+container(int dc, int mov, std::string mat) : tile(dc,mov,mat){}
 
 bool door::interactWithDoor(bool opening)
 {

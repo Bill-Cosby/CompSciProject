@@ -14,31 +14,57 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
     int doorPlace=doorFinder(generator);
 
     int wallTex;
+    int innerwallTex;
     int floorTex;
     int mc;
     std::string wallmat;
+    std::string innerwallmat;
     std::string floormat;
+
+    int type = -1; //1 = blacksmith
+                   //2 = house
+                   //3 = store
+                   //4 = armorer
 
     int width = abs(right-left), height = abs(bottom-top);
 
     if (width < 5 or height < 5)return;
+
     else if (width < 15 and height > 10 and height <15){
         wallTex = stonewall;
         floorTex = stonefloor;
         wallmat = "stone";
         floormat = "stone";
+        innerwallTex = stonewall;
+        innerwallmat = "stone";
+        type = 1;
     }
     else if (width<15 and height < 15){
         wallTex = woodwall;
         floorTex = woodfloor;
         wallmat = "wood";
         floormat = "wood";
+        innerwallTex = woodwall;
+        innerwallmat = "wood";
+        type = 2;
     }
     else if (width < 20 and height < 20){
         wallTex = stonewall;
         floorTex = woodfloor;
         wallmat = "stone";
         floormat = "wood";
+        innerwallTex = woodwall;
+        innerwallmat = "wood";
+        type = 3;
+    }
+    else if (height < 15 and width > 10 and width <15){
+        wallTex = stonewall;
+        floorTex = stonefloor;
+        wallmat = "stone";
+        floormat = "stone";
+        innerwallTex = stonewall;
+        innerwallmat = "stone";
+        type = 4;
     }
     else return;
 
@@ -51,27 +77,19 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
         {
                 tileMap[0][b][a]= new tile(floorTex,0,floormat);
 
-
-
-                if (rand()%5001 < 100){
-                    actors.push_back(new monster("human"));
-                    actors[actors.size()-1]->pos(b,a);
-                }
-                if (rand()%201 < 5){
-                    tileMap[1][b][a]= new furniture(woodchair,0,"wood");
-                    tileMap[1][b][a]->position=coordinate(a,b);
-                }
-                if (rand()%201 < 5){
-                    tileMap[1][b][a]= new furniture(chair,0,"blueEye");
-                    tileMap[1][b][a]->position=coordinate(a,b);
-                }
-                if (rand()%201 < 2){
-                    tileMap[1][b][a]= new furniture(bigchair,-1,"redEye");
-                    tileMap[1][b][a]->position=coordinate(a,b);
-                }
-                if (rand()%201 < 4){
-                    tileMap[1][b][a]= new furniture(bed,0,"wood");
-                    tileMap[1][b][a]->position=coordinate(a,b);
+                switch(type){
+                case 1:
+                    if (rand()%5001 < 100){
+                        actors.push_back(new monster("human"));
+                        actors[actors.size()-1]->pos(b,a);
+                    }
+                    if (rand()%201 < 5){
+                        tileMap[1][b][a]= new furniture(woodchair,0,"wood");
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%501< 50){
+                        tileMap[1][b][a] = new container(chest,-1,"wood");
+                    }
                 }
             if (emptyPlot);
             else if(b==bottom or a==right)

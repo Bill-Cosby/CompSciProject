@@ -79,7 +79,7 @@ std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
     actors[0]->pos(1,1);
     city myCity;
-    //myCity.generateCity(actors);
+    myCity.generateCity(actors);
     //char ch;
 
 
@@ -115,7 +115,7 @@ actors.push_back(characterCreationMenu(window));
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
     std::vector<std::vector<std::vector<tile* > > > _map;
-    //_map = myCity.tileMap;
+    _map = myCity.tileMap;
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -177,35 +177,35 @@ actors.push_back(characterCreationMenu(window));
 
 
     //DUNGEON SETUP CODE
-    dungeon map_t;
-    int whatever = 0;
-    _map.resize(2);
-    _map[0].resize(map_t.dungeon_grid.size());
-    _map[1].resize(map_t.dungeon_grid.size());
-    for (int y=0;y<map_t.dungeon_grid.size();y++)
-    {
-        _map[0][y].resize(map_t.dungeon_grid[0].size());
-        _map[1][y].resize(map_t.dungeon_grid[0].size());
-        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-        {
-            if (map_t.dungeon_grid[y][x])
-            {
-                whatever++;
-                _map[1][y][x]= new tile;
-                _map[0][y][x]= new tile(stonefloor,0,"stone");
-                _map[0][y][x]->position = coordinate(x,y);
-                actors[0]->pos(y,x);
-            }
-            else
-            {
-
-                _map[1][y][x]= new tile(stonewall,-1,"stone");
-                _map[0][y][x]= new tile(stonefloor,0,"stone");
-                _map[1][y][x]->position = coordinate(x,y);
-                _map[0][y][x]->position = coordinate(x,y);
-            }
-        }
-    }
+//////    dungeon map_t;
+//////    int whatever = 0;
+//////    _map.resize(2);
+//////    _map[0].resize(map_t.dungeon_grid.size());
+//////    _map[1].resize(map_t.dungeon_grid.size());
+//////    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//////    {
+//////        _map[0][y].resize(map_t.dungeon_grid[0].size());
+//////        _map[1][y].resize(map_t.dungeon_grid[0].size());
+//////        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//////        {
+//////            if (map_t.dungeon_grid[y][x])
+//////            {
+//////                whatever++;
+//////                _map[1][y][x]= new tile;
+//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
+//////                _map[0][y][x]->position = coordinate(x,y);
+//////                actors[0]->pos(y,x);
+//////            }
+//////            else
+//////            {
+//////
+//////                _map[1][y][x]= new tile(stonewall,-1,"stone");
+//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
+//////                _map[1][y][x]->position = coordinate(x,y);
+//////                _map[0][y][x]->position = coordinate(x,y);
+//////            }
+//////        }
+//////    }
 
 bool keyrelease = true;
 bool waitforplayer = false;

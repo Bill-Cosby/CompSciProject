@@ -18,6 +18,9 @@
 	[NAME]bed;
 	[TEXTURE]furniture.png,0:32:;
 [END]
+[CHEST]
+	[NAME]chest;
+	[TEXTURE]furniture.png,80:0:;
 [START]
 [WOODCHAIR]
 	[NAME]woodchair;

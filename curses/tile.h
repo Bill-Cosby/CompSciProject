@@ -45,6 +45,7 @@ public:
     virtual bool isOpen(){return true;}
     virtual void openContainer(){}
     virtual bool isSocial(){return false;}
+    virtual void fillWithItems(){}
 };
 
 class socialTile : public tile
@@ -77,6 +78,8 @@ class container : public tile
 {
     std::vector<item*> contained;
     void openContainer();
+    container(int dc,int movement, std::string material);
+    void fillWithItems();
 };
 
 #endif // TILE_H_INCLUDED

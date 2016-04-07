@@ -17,6 +17,7 @@
 #define bed 9
 #define chair 10
 #define bigchair 11
+#define chest 12
 
 #include "RSL.h"
 #include <SFML/Graphics.hpp>
@@ -33,6 +34,7 @@ const sf::Texture textures[12] = {   RSL::getTextureData("data/textures/tiles.ra
                                     RSL::getTextureData("data/textures/tiles.raw","bed.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","chair.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","bigchair.texture")
+                                    RSL::getTextureData("data/textures/tiles.raw","chest.texture")
                                 };
 
 const sf::Color  ironColor  = sf::Color(sf::Color(197,103,41));
