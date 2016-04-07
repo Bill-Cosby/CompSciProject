@@ -79,7 +79,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
 
                 switch(type){
                 case 1:
-                    if (rand()%5001 < 100){
+                    if (rand()%501 < 10){
                         actors.push_back(new monster("human"));
                         actors[actors.size()-1]->pos(b,a);
                     }
@@ -89,6 +89,10 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     }
                     if (rand()%501< 50){
                         tileMap[1][b][a] = new container(chest,-1,"wood");
+                    }
+                case 2:
+                    if (rand()%4000 < 50){
+                        tileMap[1][b][a] = new furniture(bed,0,"redEye");
                     }
                 }
             if (emptyPlot);

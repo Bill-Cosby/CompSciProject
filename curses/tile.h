@@ -20,7 +20,6 @@ public:
     bool isContainer;
     bool visible;
 
-    std::vector<double> color;
     float darkenBy;
     bool litHere;
 
@@ -37,11 +36,10 @@ public:
 
     std::string giveMaterial(){return _material;}
     void find_material();
-    void SetColor();
     void findPerlin(coordinate position);
 
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
-    virtual bool interactWithDoor(bool opening){}
+    virtual bool interactWithDoor(bool opening){return false;}
     virtual bool isOpen(){return true;}
     virtual void openContainer(){}
     virtual bool isSocial(){return false;}
@@ -76,6 +74,7 @@ public:
 
 class container : public tile
 {
+public:
     std::vector<item*> contained;
     void openContainer();
     container(int dc,int movement, std::string material);

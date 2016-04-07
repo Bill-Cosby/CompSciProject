@@ -22,7 +22,7 @@
 #include "RSL.h"
 #include <SFML/Graphics.hpp>
 
-const sf::Texture textures[12] = {   RSL::getTextureData("data/textures/tiles.raw","stonewall.texture"),
+const sf::Texture textures[13] = {   RSL::getTextureData("data/textures/tiles.raw","stonewall.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","stonefloor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","opendoor.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","door.texture"),
@@ -33,7 +33,7 @@ const sf::Texture textures[12] = {   RSL::getTextureData("data/textures/tiles.ra
                                     RSL::getTextureData("data/textures/tiles.raw","woodchair.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","bed.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","chair.texture"),
-                                    RSL::getTextureData("data/textures/tiles.raw","bigchair.texture")
+                                    RSL::getTextureData("data/textures/tiles.raw","bigchair.texture"),
                                     RSL::getTextureData("data/textures/tiles.raw","chest.texture")
                                 };
 
