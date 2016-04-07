@@ -84,7 +84,13 @@ tile::tile(char dc, int mv, std::string mat)
 
 container::container(int dc, int mov, std::string mat) : tile(dc,mov,mat){}
 
-void container::fillWithItems(){
+void container::openContainer()
+{
+
+}
+
+void container::fillWithItems()
+{
 
 }
 

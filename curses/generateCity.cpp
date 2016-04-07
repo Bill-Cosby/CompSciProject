@@ -89,10 +89,12 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     }
                     if (rand()%501< 50){
                         tileMap[1][b][a] = new container(chest,-1,"wood");
+                        tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 case 2:
                     if (rand()%4000 < 50){
                         tileMap[1][b][a] = new furniture(bed,0,"redEye");
+                        tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 }
             if (emptyPlot);

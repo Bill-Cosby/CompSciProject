@@ -77,7 +77,7 @@ class container : public tile
 public:
     std::vector<item*> contained;
     void openContainer();
-    container(int dc,int movement, std::string material);
+    container(int dc, int movementCost, std::string material);
     void fillWithItems();
 };
 

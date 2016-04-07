@@ -8,7 +8,7 @@ public:
     coordinate(){x=0;y=0;}
     coordinate(int _x,int _y){x=_x;y=_y;}
 
-    bool operator ==(coordinate t){return t.x==x and t.y==y;};
+    bool operator ==(coordinate t){return t.x==x and t.y==y;}
     bool operator !=(coordinate t){return x!=t.x and y!=t.y;}
 };
 

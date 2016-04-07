@@ -24,6 +24,7 @@ public:
     bool canWield;
     bool canGrasp;
     bool canUse;
+    bool possessed;
     int speed;
     int attack;
     int defense;
