@@ -107,8 +107,8 @@ actors.push_back(new player("human"));
 
     std::vector<std::vector<std::vector<tile* > > > _map;
 
-    city myCity;
-    myCity.generateCity();
+//    city myCity;
+//    myCity.generateCity();
 
     _map.resize(2);
 //    _map[0].resize(20);
@@ -188,7 +188,7 @@ actors.push_back(new player("human"));
 //        }
 //    }
 
-
+tiles myWorld;
 bool keyrelease = true;
     while (window.isOpen())
     {
@@ -200,13 +200,13 @@ bool keyrelease = true;
             for (int i=0;i<actors.size();i++){
                 if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
                     std::cout << "_______________________________________\n";
-                    root->run(actors[i],myCity.tileMap,localItems,actors,announcementList);
+                    root->run(actors[i],myWorld.tileMap,localItems,actors,announcementList);
                     actors[i]->resetCounter();
                 }
                 actors[i]->increaseCounter();
             }
         }
-        else actors[0]->movement(myCity.tileMap, localItems, actors, window, keyrelease, announcementList);
+        else actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -251,7 +251,6 @@ bool keyrelease = true;
 //            }
 //        }
         window.setView(view);
-        tiles myWorld;
         gameworld.drawGameworld(myWorld.tileMap, actors, localItems,window,announcementList, renderState);
     }
 

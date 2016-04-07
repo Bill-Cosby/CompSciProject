@@ -8,11 +8,13 @@
 class tiles
     {
         public:
-        std::vector<std::vector<tile*> > tileMap;
+        std::vector<std::vector<std::vector<tile*> > > tileMap;
         int height;
         int width;
+        int x-rad;
+        int y-rad;
         tiles();
-
+        ~tiles();
         void fillMap();
         void makeTileMap();
         std::string findTileType(double elevation);

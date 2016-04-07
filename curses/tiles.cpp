@@ -7,9 +7,11 @@
 using namespace noise;
 tiles::tiles()
 {
-    height=100;
-    width=100;
-fillMap();
+    height=5000;
+    width=5000;
+    x-rad=500;
+    y-rad=500;
+    fillMap();
     makeTileMap();
 
 
@@ -19,7 +21,8 @@ void tiles::fillMap()
 {
     tileMap.resize(2);
     for(int a=0; a<2; a++)
-    {tileMap[a].resize(height);
+    {
+        tileMap[a].resize(height);
         for(int b=0; b<height; b++)
     {
         tileMap[a][b].resize(width);
@@ -73,41 +76,40 @@ srand(time(NULL));
     finalTerrain.SetEdgeFalloff(0.5);
     //generate ma
 
-//utils::NoiseMap heightMap;
-  //  utils::NoiseMapBuilderPlane heightMapBuilder;
-  //heightMapBuilder.SetSourceModule(finalTerrain);
- // heightMapBuilder.SetDestNoiseMap(heightMap);
- // heightMapBuilder.SetDestSize (100, 100);
-  //heightMapBuilder.SetBounds (0,1 , 0, 1);
-
+/*utils::NoiseMap heightMap;
+    utils::NoiseMapBuilderPlane heightMapBuilder;
+  heightMapBuilder.SetSourceModule(finalTerrain);
+  heightMapBuilder.SetDestNoiseMap(heightMap);
+  heightMapBuilder.SetDestSize (100, 100);
+  heightMapBuilder.SetBounds (0,1 , 0, 1);
+*/
     double temp_height;
-    for(int a=0; a<height; a++)
+    for(double a=0; a<height; a++)
     {
-        for(int b=0; b<width; b++)
+        for(double b=0; b<width; b++)
         {
             for(int c=0; c<2; c++)
             {
               if(c==0)
               {
-            double y=a*10/height;
-            double x=b*10/width;
-            double elevation = finalTerrain.GetValue(x,y, 0.5);
+            double elevation = finalTerrain.GetValue(b/width,a/height, 0.5);
             tileMap[c][a][b]=new tile(grass,0,findTileType(elevation));
-            tileMap[c][a][b].elevation=elevation;
-            tile[c][a][b].position.x=x;
-            tile[c][a][b].position.y=y;
+            tileMap[c][a][b]->elevation=elevation;
+            tileMap[c][a][b]->position.x=b;
+            tileMap[c][a][b]->position.y=a;
             }
             else if(c==1)
             {
                 tileMap[c][a][b]=new tile();
             }
+        }
             //tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
 
            //std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
         }
     }
 
-   heightMapBuilder.Build ();
+ /*  heightMapBuilder.Build ();
     utils::RendererImage renderer;
   utils::Image image;
   renderer.SetSourceNoiseMap (heightMap);
@@ -130,23 +132,27 @@ srand(time(NULL));
   writer.SetDestFilename ("tutorial.bmp");
   writer.WriteDestFile ();
   std::cout << "Here\n";
-    //sets elevations
+    //sets elevations*/
 }
 
 tiles::~tiles()
 {
     for(int a=0; a<tileMap.size(); a++)
     {
-        for(int b=0; b<tileMap[a].size())
+        for(int b=0; b<tileMap[a].size(); b++)
         {
-            delete tileMap[a][b];
+            for(int c=0; c<2; c++)
+            {
+                delete tileMap[c][a][b];
+            }
+
         }
     }
 }
 
-std::string tile findTileType(double elevation)
+std::string tiles::findTileType(double elevation)
 {
-     if(elevation<0)
+     if(elevation<-.2)
     {
        return "water";
     }
@@ -160,7 +166,7 @@ std::string tile findTileType(double elevation)
     }
     else if(elevation<.6)
     {
-        return "dirt"'
+        return "dirt";
     }
     else if(elevation<.8)
     {
