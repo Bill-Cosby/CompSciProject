@@ -1,40 +1,59 @@
-[PLATEHELM]
-	[NAME]Plate Helm;
+[NUMBEROFITEMS]
+	[NUMBER]8:;
+[END]
+[PLATE HELM]
+	[NAME]plate helm;
 	[DEFENSE]20:;
 	[TEXTURE]clothes.png,0:0:;
 	[TYPE]helm;
-[PLATEBOOT]
-	[NAME]Plate Boot;
+	[VALUE]100:;
+[END]
+[PLATE BOOT]
+	[NAME]plate boot;
 	[DEFENSE]10:;
 	[TEXTURE]clothes.png,0:16:;
 	[TYPE]boot;
-[PLATEGLOVE]
-	[NAME]Plate Glove;
+	[VALUE]100:;
+[END]
+[PLATE GLOVE]
+	[NAME]plate glove;
 	[DEFENSE]10:;
 	[TEXTURE]clothes.png,0:32:;
 	[TYPE]glove;
-[PLATELEG]
-	[NAME]Plate Legging;
+	[VALUE]100:;
+[END]
+[PLATE LEG]
+	[NAME]plate leg;
 	[DEFENSE]15:;
 	[TEXTURE]clothes.png,0:48:;
 	[TYPE]legging;
-[PLATEARM]
-	[NAME]Plate Arm;
+	[VALUE]100:;
+[END]
+[PLATE ARM]
+	[NAME]plate arm;
 	[DEFENSE]15:;
 	[TEXTURE]clothes.png,0:62:;
 	[TYPE]arm;
-[PLATEARMOR]
-	[NAME]Plate Armor;
+	[VALUE]100:;
+[END]
+[PLATE ARMOR]
+	[NAME]plate armor;
 	[DEFENSE]35:;
 	[TEXTURE]clothes.png,0:78:;
 	[TYPE]torso;
-[COTTONSHIRT]
-	[NAME]Cotton Shirt;
+	[VALUE]100:;
+[END]
+[COTTON SHIRT]
+	[NAME]cotton shirt;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:78:;
 	[TYPE]torso;
-[COTTONPANTS]
-	[NAME]Cotton pant leg;
+	[VALUE]100:;
+[END]
+[COTTON PANTS]
+	[NAME]cotton pants;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:48:;
 	[TYPE]legging;
+	[VALUE]100:;
+[END]

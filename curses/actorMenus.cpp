@@ -248,7 +248,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
     window.clear();
 }
 
-void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList)
+void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList, tile* &tempTile)
 {
     window.setView(window.getDefaultView());
     sf::Event event;
@@ -287,6 +287,14 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
     for (int i=0;i<itemsExamining.size();i++){
         if (coordinate((itemsExamining[i]->x),itemsExamining[i]->y)==spotExamining){
             itemsYouFound.push_back(itemsExamining[i]);
+        }
+    }
+    if (tempTile!=NULL){
+        std::vector<item*> tempItems = tempTile->openContainer();
+        std::cout << tempItems.size() << std::endl;
+        for (item* _i : tempItems){
+                std::cout << _i->name << std::endl;
+            itemsYouFound.push_back(_i);
         }
     }
 

@@ -15,7 +15,7 @@ std::string giveName()
    name.inputFile(inFile);
    name.processFile(false);
 
-   std::string tempName = name.outputName(3,9);
+   std::string tempName = name.outputName(3,7);
 
    return tempName;
 }

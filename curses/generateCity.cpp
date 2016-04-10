@@ -291,7 +291,6 @@ std::uniform_int_distribution<int> halfChance(0,1);
     int width;
     if(type=="ROADBOX")
     {
-
         width=3;
     }
     if(type=="HOUSE")

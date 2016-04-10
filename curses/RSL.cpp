@@ -290,6 +290,51 @@ std::vector<std::string> getSpecies(std::string fileName, std::string dataToGet)
     }
     return species;
 }
+std::string returnRandomItem(std::string fileName, int placeInIndex)
+{
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> species;
+    bool foundObject = false;
+
+    bool inObject = false;
+    int numberOfObjects = -1;
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+
+                    if (_c == ';' and foundObject)return LINE_READING;
+                    std::cout << _c << std::endl;
+                    LINE_READING+=_c;
+                        if (LINE_READING == "[NAME]" and foundObject){
+                                std::cout << "Here\n";
+                                LINE_READING.clear();
+                                continue;
+                        }
+
+                    if (_c == ']'){
+                        if (inObject == false){
+                            inObject = true;
+                            numberOfObjects++;
+                            if (numberOfObjects == placeInIndex){
+                                foundObject = true;
+                            }
+                        }
+                        else if (inObject and LINE_READING == "[END]"){
+                            inObject = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 std::vector<std::string> unloadColors(std::string fileName, std::string dataToGet)
 {

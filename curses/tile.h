@@ -41,9 +41,10 @@ public:
     virtual void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
     virtual bool interactWithDoor(bool opening){return false;}
     virtual bool isOpen(){return true;}
-    virtual void openContainer(){}
+    virtual std::vector<item*> openContainer(){}
     virtual bool isSocial(){return false;}
-    virtual void fillWithItems(){}
+    virtual void fillWithArmor(){}
+    virtual void setItems(std::vector<item*> items){}
 };
 
 class socialTile : public tile
@@ -76,9 +77,10 @@ class container : public tile
 {
 public:
     std::vector<item*> contained;
-    void openContainer();
+    std::vector<item*> openContainer(){return contained;}
     container(int dc, int movementCost, std::string material);
-    void fillWithItems();
+    void fillWithArmor();
+    void setItems(std::vector<item*> items){contained = items;}
 };
 
 #endif // TILE_H_INCLUDED

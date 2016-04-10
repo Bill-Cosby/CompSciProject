@@ -21,7 +21,7 @@
 [START]
 [CHEST]
 	[NAME]chest;
-	[TEXTURE]furniture.png,80:0:;
+	[TEXTURE]furniture.png,64:0:;
 [START]
 [WOODCHAIR]
 	[NAME]woodchair;

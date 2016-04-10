@@ -131,7 +131,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         }
                     }
                 }
-                examineGround(window,localItems,temp, announcementList);
+                tile* tempTile;
+                if (_map[1][temp.y][temp.x]->isContainer)tempTile = _map[1][temp.y][temp.x];
+                else tempTile = NULL;
+                examineGround(window,localItems,temp, announcementList,tempTile);
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){

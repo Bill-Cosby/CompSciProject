@@ -66,7 +66,7 @@ std::string clothing::itemDescription()
     std::string def = ss.str();
     std::string description;
 
-    description += "This " + name + " has " + def + " defense. Man fuck the poliece sodnt you just hate the fuck out of thomse mofuckus ";
+    description += "This " + name + " has " + def + " defense. ";
     return description;
 }
 

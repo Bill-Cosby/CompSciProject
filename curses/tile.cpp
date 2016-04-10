@@ -4,6 +4,7 @@ tile::tile(int hC, int cSF)
 {
     hCost=hC;
     gCost=cSF;
+    isContainer = false;
     isDoor=false;
 }
 
@@ -12,6 +13,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     position=pos;
     hCost=getDistance(position,goal);
     gCost=cSF;
+    isContainer = false;
     isDoor=false;
 }
 
@@ -45,6 +47,7 @@ door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
     open=_o;
     isDoor=true;
     darkenBy = 1;
+    isContainer = false;
 }
 
 void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
@@ -80,18 +83,23 @@ tile::tile(char dc, int mv, std::string mat)
     movementCost = mv;
     defaultchar = dc;
     darkenBy = 1;
+    isContainer = false;
 }
 
-container::container(int dc, int mov, std::string mat) : tile(dc,mov,mat){}
+container::container(int dc, int mov, std::string mat) : tile(dc,mov,mat){isContainer = true;fillWithArmor();}
 
-void container::openContainer()
+void container::fillWithArmor()
 {
+    int dumbNumber = rand()%11;
+    int randomNumber = RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0);
 
-}
 
-void container::fillWithItems()
-{
+    for (int i =0; i<dumbNumber;i++){
+        std::string name = RSL::returnRandomItem("data/items/armor_type.raw",rand()%randomNumber+1);
+        int value = RSL::getIntData("data/items/armor_type.raw",name+".value",0);
 
+        contained.push_back(new clothing(name,'p',0,0,value,"iron"));
+    }
 }
 
 bool door::interactWithDoor(bool opening)

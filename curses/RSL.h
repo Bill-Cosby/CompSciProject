@@ -35,6 +35,7 @@ namespace RSL
     std::vector<std::string> unloadColors(std::string fileName, std::string dataToRecieve);
 
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
+    std::string returnRandomItem(std::string fileName, int placeInIndex);
 
     bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color, sf::Color eyeColor);
     answers getAnswers(std::string fileName, std::string dataToRecieve);
