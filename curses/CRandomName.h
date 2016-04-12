@@ -36,6 +36,6 @@ class CRandomName
 
 };
 
-std::string giveName();
+std::string giveName(std::string fileName);
 
 #endif CRANDOMNAME_H_INCLUDED

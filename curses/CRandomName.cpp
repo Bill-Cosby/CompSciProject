@@ -6,11 +6,11 @@
 #include "CRandomName.h"
 using namespace std;
 
-std::string giveName()
+std::string giveName(std::string fileName)
 {
     CRandomName name;
 
-   std::ifstream inFile("data/names/names.txt");
+   std::ifstream inFile(fileName);
 
    name.inputFile(inFile);
    name.processFile(false);

@@ -111,7 +111,9 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
         window.draw(vanity->sprite);
     }
     else if (armor != NULL){
-        armor->sprite.setOrigin(sprite.getPosition().x,sprite.getPosition().y);
+        if (name == "head"){
+            std::cout << "Here\n";
+        }
         armor->sprite.setPosition(x,y);
         if (left){
             armor->sprite.setOrigin(sprite.getPosition().x+17,sprite.getPosition().y);
@@ -120,6 +122,7 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
         window.draw(armor->sprite);
         if (left){
             armor->sprite.setScale(1.0f,1.0f);
+        armor->sprite.setOrigin(sprite.getPosition().x,sprite.getPosition().y);
         }
     }
     else{

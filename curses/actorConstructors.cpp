@@ -32,7 +32,7 @@ player::player(std::string speciesToLoad)
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
-    name = giveName();
+    name = giveName("data/names/firstnames.txt") + " " + giveName("data/names/lastnames.txt");
     std::cout << name << std::endl;
 
     equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
@@ -86,7 +86,7 @@ monster::monster(std::string speciesToLoad)
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
-    name = giveName();
+    name = giveName("data/names/firstnames.txt") + " " + giveName("data/names/firstnames.txt");
     equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
