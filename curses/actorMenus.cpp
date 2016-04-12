@@ -174,6 +174,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                 if (buttonSelected == 0){
                     if (itemLookingAt->equipped == true){
                             itemLookingAt->equipped = false;
+                        rootPart->findItem(itemLookingAt,true);
                         inventory.push_back(itemLookingAt);
                         equipment.erase(equipment.begin()+itemSelected);
                         itemSelected = inventory.size()-1;
@@ -183,7 +184,6 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                         itemToPickUp = itemLookingAt;
                         equipItem(localItems);
 
-                        rootPart->findItem(itemLookingAt,true);
                         equipment.push_back(itemLookingAt);
                         inventory.erase(inventory.begin()+itemSelected);
                         itemSelected = equipment.size()-1;

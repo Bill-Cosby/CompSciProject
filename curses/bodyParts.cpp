@@ -111,12 +111,16 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
         window.draw(vanity->sprite);
     }
     else if (armor != NULL){
+        armor->sprite.setOrigin(sprite.getPosition().x,sprite.getPosition().y);
         armor->sprite.setPosition(x,y);
         if (left){
-            armor->sprite.move(17,0);
+            armor->sprite.setOrigin(sprite.getPosition().x+17,sprite.getPosition().y);
             armor->sprite.setScale(-1.0f,1.0f);
         }
         window.draw(armor->sprite);
+        if (left){
+            armor->sprite.setScale(1.0f,1.0f);
+        }
     }
     else{
         sprite.setPosition(x,y);
