@@ -21,13 +21,15 @@ bool hand::equip(item* itemToGrasp, bool equipping)
     return false;
 }
 
-bool bodyPart::findItem(item* itemToRemove)
+bool bodyPart::findItem(item* itemToRemove, bool unequipping)
 {
+    std::cout << name << ": " << itemToRemove->name << std::endl;
     if (armor == itemToRemove){
+        if (unequipping)armor = NULL;
         return true;
     }
     for (bodyPart* _b : attachedParts){
-        _b->findItem(itemToRemove);
+        _b->findItem(itemToRemove,unequipping);
     }
     return false;
 }
@@ -41,17 +43,15 @@ bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
                 if (itemToGrasp->canEquip){
                     didEquip = equip(itemToGrasp,true);
                 }
-                else if (itemToGrasp->canWear){
-                    std::cout << name << std::endl;
-                    didEquip = equip(itemToGrasp,true);
-                    if (didEquip) return true;
+                else if (itemToGrasp->canWear and armor == NULL){
+                    armor = itemToGrasp;
+                    return true;
                 }
             }
         }
     }
     for (bodyPart* _b : attachedParts){
-        didEquip = _b->canEquip(itemToGrasp, equipping);
-        if (didEquip) return true;
+        _b->canEquip(itemToGrasp, equipping);
     }
     return didEquip;
 }

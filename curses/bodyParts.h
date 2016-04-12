@@ -79,7 +79,7 @@ public:
         }
     }
 
-    bool findItem(item* itemToRemove);
+    bool findItem(item* itemToRemove, bool unequipping);
 
     void findEasiestHit(bodyPart *&bodyPartToHit, int &highestDamage, int probability, int attack, int myTotalWeight);
     bool canEquip(item* itemToGrasp, bool equipping);

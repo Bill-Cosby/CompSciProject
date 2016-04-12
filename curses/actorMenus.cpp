@@ -183,7 +183,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                         itemToPickUp = itemLookingAt;
                         equipItem(localItems);
 
-
+                        rootPart->findItem(itemLookingAt,true);
                         equipment.push_back(itemLookingAt);
                         inventory.erase(inventory.begin()+itemSelected);
                         itemSelected = equipment.size()-1;

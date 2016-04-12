@@ -83,17 +83,27 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                         actors.push_back(new monster("human"));
                         actors[actors.size()-1]->pos(b,a);
                     }
-                    if (rand()%201 < 5){
+                    if (rand()%201 < 50){
                         tileMap[1][b][a]= new furniture(woodchair,0,"wood");
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
-                    if (rand()%501< 50){
+                    if (rand()%400< 50){
                         tileMap[1][b][a] = new container(chest,-1,"wood");
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 case 2:
-                    if (rand()%4000 < 50){
-                        tileMap[1][b][a] = new furniture(bed,0,"redEye");
+                    if (rand()%400< 50){
+                        tileMap[1][b][a] = new container(chest,-1,"wood");
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                case 3:
+                    if (rand()%400< 50){
+                        tileMap[1][b][a] = new container(chest,-1,"wood");
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                case 4:
+                    if (rand()%400< 50){
+                        tileMap[1][b][a] = new container(chest,-1,"wood");
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 }

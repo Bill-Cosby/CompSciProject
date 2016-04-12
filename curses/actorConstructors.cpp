@@ -38,9 +38,12 @@ player::player(std::string speciesToLoad)
     equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
-    rootPart->equip(equipment[0],true);
-    rootPart->equip(equipment[1],true);
-    rootPart->equip(equipment[2],true);
+    equipment[0]->equipped = true;
+    equipment[1]->equipped = true;
+    equipment[2]->equipped = true;
+    rootPart->canEquip(equipment[0],true);
+    rootPart->canEquip(equipment[1],true);
+    rootPart->canEquip(equipment[2],true);
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;

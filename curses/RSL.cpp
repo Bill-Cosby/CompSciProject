@@ -155,9 +155,6 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
 
     std::string dataType = GET_FORMATTED_TYPE(&dataToGet); // GET OBJECT NAME (eg: human, goblin)
     std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
-    if (dataType == "[BAT]"){
-        std::cout << "Yo fuccboi\n";
-    }
 
 
     std::string line;
@@ -310,10 +307,8 @@ std::string returnRandomItem(std::string fileName, int placeInIndex)
                     }
 
                     if (_c == ';' and foundObject)return LINE_READING;
-                    std::cout << _c << std::endl;
                     LINE_READING+=_c;
                         if (LINE_READING == "[NAME]" and foundObject){
-                                std::cout << "Here\n";
                                 LINE_READING.clear();
                                 continue;
                         }

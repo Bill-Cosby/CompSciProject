@@ -210,15 +210,18 @@ bool actor::equipItem(std::vector<item*> & localItems)
                 if (rootPart->canEquip(itemToPickUp,true)){
                     for (int i = 0; i < localItems.size();i++){
                         if (localItems[i]==itemToPickUp){
-                            equipment.push_back(itemToPickUp);
                             localItems.erase(localItems.begin() + i);
                         }
                     }
                     int counter = 0;
                     for (item* _b : equipment){
-                        if (!rootPart->findItem(_b)){
+                        std::cout << _b->name << "!" << std::endl;
+                        if (!rootPart->findItem(_b,false)){
                             equipment.erase(equipment.begin()+counter);
                             inventory.push_back(_b);
+                        }
+                        else{
+                            break;
                         }
                         counter++;
                     }
