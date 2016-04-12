@@ -58,6 +58,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
 
+
+
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){

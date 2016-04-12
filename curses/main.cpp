@@ -9,10 +9,9 @@
 
 using namespace std;
 
-
+void updateTileMap(int,int,int,int,vector<vector<tile*> >)
 int main()
 {
-
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
@@ -193,7 +192,6 @@ bool keyrelease = true;
     while (window.isOpen())
     {
 
-
         sf::Event event;
 
         if (keyrelease == false){
@@ -205,7 +203,8 @@ bool keyrelease = true;
                 }
                 actors[i]->increaseCounter();
             }
-        }
+        }actors[0].row()
+        if((actors[0].col()/100)!=gridx or (actors[0].row()/100)!=gridy;) {updateTileMap(gridx,gridy,actors[0].col()/100, actors[0].row()/100, myWorld.tileMap, myWorld.finalTerrain) gridx=actors[0].col()/100; gridy=actors[0].row()/100;}
         else actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
@@ -272,4 +271,45 @@ bool keyrelease = true;
 
 
     return 0;
+}
+
+void updateTileMap(int gridx,int gridy,int newGridx,int newGridy,vector<vector<tile*> > & tileMap, module::select finalTerrain)
+{
+    int mesh=100;
+
+   int deltay=newGridy-gridy;
+
+  ;
+     int gridyDelete=gridy-deltay;
+
+   //delete x stuff
+   if(deltax!=0)
+   {
+       int deltax=newGridx-gridx;
+
+   }
+  for(signed int c=-1; c<=1; c++)
+  {
+      for(int a=0; a<mesh; a++)
+      {
+          for(int b=0; b<mesh; b++)
+      {
+         if(deltax!=0)
+         {tileMap[0][(gridy+c)*mesh+a][(gridx-deltax)*mesh+b]=NULL;
+          double elevation = finalTerrain.GetValue(b/width,a/height, 0.5);
+            tileMap[c][a][b]=new tile(grass,0,findTileType(elevation));
+            tileMap[c][a][b]->elevation=elevation;
+            tileMap[c][a][b]->position.x=b;
+            tileMap[c][a][b]->position.y=a;
+         }
+         if(deltay!=0)
+         {
+             tileMap[0][gridy-deltay][gridy+c]
+         }
+      }
+      }
+
+
+  }
+  for
 }

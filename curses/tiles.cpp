@@ -9,8 +9,6 @@ tiles::tiles()
 {
     height=5000;
     width=5000;
-    x-rad=500;
-    y-rad=500;
     fillMap();
     makeTileMap();
 
@@ -26,6 +24,10 @@ void tiles::fillMap()
         for(int b=0; b<height; b++)
     {
         tileMap[a][b].resize(width);
+        for(int c=0; c<tileMap[a][b][c].size())
+        {
+            tileMap[a][b][c]=NULL:
+        }
     }
     }
     //fills tileMap with blanks
@@ -68,7 +70,6 @@ srand(time(NULL));
     finalTerrain_.SetBounds(-100.0,-.7);
 
 
-    module::Select finalTerrain;
     finalTerrain.SetSourceModule(0,finalTerrain_);
     finalTerrain.SetSourceModule(1,landTerrain2);
     finalTerrain.SetControlModule(landTerrain2);
@@ -92,11 +93,8 @@ srand(time(NULL));
             {
               if(c==0)
               {
-            double elevation = finalTerrain.GetValue(b/width,a/height, 0.5);
-            tileMap[c][a][b]=new tile(grass,0,findTileType(elevation));
-            tileMap[c][a][b]->elevation=elevation;
-            tileMap[c][a][b]->position.x=b;
-            tileMap[c][a][b]->position.y=a;
+            tileMap[c][a][b]=NULL;
+
             }
             else if(c==1)
             {
