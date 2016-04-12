@@ -139,9 +139,9 @@ tiles::~tiles()
     {
         for(int b=0; b<tileMap[a].size(); b++)
         {
-            for(int c=0; c<2; c++)
+            for(int c=0; c<tileMap[a][b].size(); c++)
             {
-                delete tileMap[c][a][b];
+                delete tileMap[a][b][c];
             }
 
         }

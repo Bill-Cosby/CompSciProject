@@ -12,7 +12,6 @@ class tiles
         int height;
         int width;
 
-
         tiles();
         ~tiles();
         void fillMap();

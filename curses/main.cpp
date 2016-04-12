@@ -9,9 +9,11 @@
 
 using namespace std;
 
-void updateTileMap(int,int,int,int,vector<vector<tile*> >)
+void updateTileMap(int,int,int,int,vector<vector<tile*> >);
+
 int main()
 {
+    int gridx=0;
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
@@ -203,9 +205,14 @@ bool keyrelease = true;
                 }
                 actors[i]->increaseCounter();
             }
-        }actors[0].row()
-        if((actors[0].col()/100)!=gridx or (actors[0].row()/100)!=gridy;) {updateTileMap(gridx,gridy,actors[0].col()/100, actors[0].row()/100, myWorld.tileMap, myWorld.finalTerrain) gridx=actors[0].col()/100; gridy=actors[0].row()/100;}
-        else actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
+        }
+
+        else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
+        if((actors[0].col()/100)!=gridx or (actors[0].row()/100)!=gridy;)
+        {
+                updateTileMap(gridx,gridy,actors[0].col()/100, actors[0].row()/100, myWorld.tileMap, myWorld.finalTerrain) {gridx=actors[0].col()/100; gridy=actors[0].row()/100;}
+        }
+             }
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
         if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
 
@@ -277,17 +284,12 @@ void updateTileMap(int gridx,int gridy,int newGridx,int newGridy,vector<vector<t
 {
     int mesh=100;
 
+int deltax=newGridx-gridx
    int deltay=newGridy-gridy;
-
-  ;
      int gridyDelete=gridy-deltay;
 
    //delete x stuff
-   if(deltax!=0)
-   {
-       int deltax=newGridx-gridx;
 
-   }
   for(signed int c=-1; c<=1; c++)
   {
       for(int a=0; a<mesh; a++)
@@ -295,16 +297,33 @@ void updateTileMap(int gridx,int gridy,int newGridx,int newGridy,vector<vector<t
           for(int b=0; b<mesh; b++)
       {
          if(deltax!=0)
-         {tileMap[0][(gridy+c)*mesh+a][(gridx-deltax)*mesh+b]=NULL;
-          double elevation = finalTerrain.GetValue(b/width,a/height, 0.5);
-            tileMap[c][a][b]=new tile(grass,0,findTileType(elevation));
-            tileMap[c][a][b]->elevation=elevation;
-            tileMap[c][a][b]->position.x=b;
-            tileMap[c][a][b]->position.y=a;
+         {
+             tileMap[0][(gridy+c)*mesh+a][(gridx-deltax)*mesh+b]=NULL;
+
+             int x=(newGridx+deltax)*mesh+b;
+             int y=(newGridy+c)*mesh+a;
+         tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+          double elevation = finalTerrain.GetValue(x/width,y/height, 0.5);
+            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][y][x]->elevation=elevation;
+            tileMap[0][y][x]->position.x=x;
+            tileMap[0][y][x]->position.y=y;
+
+
+
          }
          if(deltay!=0)
          {
-             tileMap[0][gridy-deltay][gridy+c]
+             tileMap[0][(gridy-deltay)*100+a][(gridx+c)*100+b]=NULL;
+
+             int x=(newGridy+c)*100+b;
+             int y=(newGridy+deltay)*100+a;
+             double elevation=finalTerrain.GetValue(x/width,y/height, 0.5);
+             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+             tileMap[0][y][x].elevation=elevation;
+             tileMap[0][y][x]->position.x=x;
+             tileMap[0][y][x]->position.y=y;
+
          }
       }
       }
