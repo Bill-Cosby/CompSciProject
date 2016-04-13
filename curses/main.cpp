@@ -16,6 +16,7 @@ int main()
     std::mt19937 generator(time(NULL));
     std::uniform_int_distribution<int> temp (0,time(NULL));
 
+
     srand(temp(generator));
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
@@ -68,18 +69,21 @@ int main()
     root->addChild(new moveOnPathNode);
 
 
+    std::vector<std::vector<std::vector<tile* > > > _map;
+    city myCity;
+    myCity.generateCity();
+    _map = myCity.tileMap;
 
+    actor* controlledActor = characterCreationMenu(window);
+    _map[1][1][1]->occupied = controlledActor;
+
+    std::vector<item*> localItems;;
 
 
 
     //window.setFramerateLimit(60);
 
 
-std::vector<actor*> actors;
-actors.push_back(characterCreationMenu(window));
-    actors[0]->pos(1,1);
-    city myCity;
-    myCity.generateCity(actors);
     //char ch;
 
 
@@ -87,7 +91,6 @@ actors.push_back(characterCreationMenu(window));
 
 
     std::vector<item*> globalItems;
-    std::vector<item*> localItems;
 //    localItems.push_back(new weapon("Sword",'/',10,18,7));
 //    localItems.push_back(new clothing("platearmor",'C',5,5,0,"iron"));
 //    localItems.push_back(new clothing("plateleg",'C',5,5,0,"iron"));
@@ -114,8 +117,6 @@ actors.push_back(characterCreationMenu(window));
     //coordinate temp;
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
-    std::vector<std::vector<std::vector<tile* > > > _map;
-    _map = myCity.tileMap;
 
 //    _map.resize(2);
 //    _map[0].resize(20);
@@ -194,7 +195,7 @@ actors.push_back(characterCreationMenu(window));
 //////                _map[1][y][x]= new tile;
 //////                _map[0][y][x]= new tile(stonefloor,0,"stone");
 //////                _map[0][y][x]->position = coordinate(x,y);
-//////                actors[0]->pos(y,x);
+//////                controlledActor->pos(y,x);
 //////            }
 //////            else
 //////            {
@@ -212,13 +213,13 @@ bool waitforplayer = false;
     sf::Event event;
     while (window.isOpen())
     {
-        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
-        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
+        if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
+        if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
-        while (view.getCenter().x != (actors[0]->col()*16)){
+        while (view.getCenter().x != (controlledActor->col()*16)){
             view.setCenter(view.getCenter().x-1,view.getCenter().y);
         }
-        while (view.getCenter().y != (actors[0]->row()*16)){
+        while (view.getCenter().y != (controlledActor->row()*16)){
             view.setCenter(view.getCenter().x,view.getCenter().y-1);
         }
 
@@ -231,21 +232,12 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
-        actors[0]->movement(_map, localItems, actors, window, keyrelease, announcementList, waitforplayer);
+        controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
 
         int activeAI =0;
-        if (waitforplayer == false){
-            for (int i=1;i<actors.size();i++){
-                if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    root->run(actors[i],_map,localItems,actors,announcementList);
-                    actors[i]->resetCounter();
-                }
-                actors[i]->increaseCounter();
-            }
-        }
 
 //        lightmap = &_map;
-//        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
+//        do_fov(lightmap,localItems,actors,controlledActor->col(),controlledActor->row(),1/.1,window,renderState,true,1,.1);
 //        for (lightSource * _l : lights){
 //            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
 //        }
@@ -267,10 +259,10 @@ bool waitforplayer = false;
                 keyrelease = true;
             }
         }
-        int ystart = actors[0]->row() - (viewSizeInTiles.y/2);
-        int xstart = actors[0]->col() - (viewSizeInTiles.x/2);
-        int yend   = actors[0]->row() + (viewSizeInTiles.y/2);
-        int xend   = actors[0]->col() + (viewSizeInTiles.x/2);
+        int ystart = controlledActor->row() - (viewSizeInTiles.y/2);
+        int xstart = controlledActor->col() - (viewSizeInTiles.x/2);
+        int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
+        int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
 
 //        if (xstart < 0)xstart = 0;
 //        if (ystart < 0)ystart = 0;
@@ -284,13 +276,8 @@ bool waitforplayer = false;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(_map, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(_map, localItems,window,announcementList, renderState,controlledActor);
     }
-
-
-        for (int i=0;i<actors.size();i++){
-            delete actors[i];
-        }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){
                 delete _map[i][j];

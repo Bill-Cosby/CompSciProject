@@ -2,6 +2,7 @@
 
 player::player(std::string speciesToLoad)
 {
+
     actorFollowing = NULL;
     coolDown=0;
     numberOfLegs=0;
@@ -58,6 +59,9 @@ player::player(std::string speciesToLoad)
 
 monster::monster(std::string speciesToLoad)
 {
+    x = 0;
+    y = 0;
+
     actorFollowing = NULL;
     nodeOn = NULL;
     coolDown=0;

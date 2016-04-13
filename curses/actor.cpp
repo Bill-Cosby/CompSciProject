@@ -255,7 +255,7 @@ bool actor::findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::
     return false;
 }
 
-void actor::drawActor(sf::RenderWindow& window)
+void actor::drawActor(sf::RenderWindow& window,int _x, int _y)
 {
-    rootPart->draw(window,col()*16,row()*16);
+    rootPart->draw(window,_x*16,_y*16);
 }

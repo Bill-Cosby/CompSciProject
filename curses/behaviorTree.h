@@ -1,12 +1,13 @@
 #ifndef BEHAVIORTREE_H_INCLUDED
 #define BEHAVIORTREE_H_INCLUDED
 #include <list>
+#include <pthread.h>
 #include "actor.h"
 
 class Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList){}
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid){}
 };
 
 class compositNode : public Node
@@ -30,18 +31,20 @@ public:
 class CheckAll : public compositNode
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         for (actor* _a : actors){
             if (_a->controlled){
                 if (testingCharacter->findDistance(coordinate(_a->col(),_a->row()))>15){
+                    pthread_exit(NULL);
                     return false;
                 }
             }
         }
         for (Node* child : getChildren()){
-            child->run(testingCharacter,_map,localItems,actors,announcementList);
+            child->run(testingCharacter,_map,localItems,actors,announcementList,threadid);
         }
+        pthread_exit(NULL);
         return true;
     }
 };
@@ -49,10 +52,10 @@ public:
 class ifFalse : public compositNode
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         for (Node* child : getChildren()){
-            if (child->run(testingCharacter, _map, localItems, actors, announcementList) == false){
+            if (child->run(testingCharacter, _map, localItems, actors, announcementList,threadid) == false){
                 return true;
             }
         }
@@ -63,10 +66,10 @@ public:
 class Selector : public compositNode
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         for (Node* child : getChildren()){
-            if (child->run(testingCharacter, _map, localItems, actors, announcementList)){
+            if (child->run(testingCharacter, _map, localItems, actors, announcementList,threadid)){
                 return true;
             }
         }
@@ -77,10 +80,10 @@ public:
 class Sequence : public compositNode
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         for (Node* child : getChildren()){
-            if (!(child->run(testingCharacter,_map, localItems, actors, announcementList))){
+            if (!(child->run(testingCharacter,_map, localItems, actors, announcementList,threadid))){
                 return false;
             }
         }
@@ -90,7 +93,7 @@ public:
 
 class isItemBetterNode : public Node
 {
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if(testingCharacter->isItemBetter())
         {
@@ -103,7 +106,7 @@ class isItemBetterNode : public Node
 class findPathNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
@@ -145,7 +148,7 @@ public:
 class moveOnPathNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->path.size()>0){
             testingCharacter->moveOnPath(_map);
@@ -161,7 +164,7 @@ public:
 class findDoorNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         coordinate temp = testingCharacter->findTile(_map,true,false,false);
         if (temp!= coordinate(-1,-1) and !_map[1][temp.y][temp.x]->isOpen()){
@@ -183,7 +186,7 @@ public:
 class findHidingSpot : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         coordinate temp = testingCharacter->findTile(_map,false,true,false);
         if (temp!= coordinate(-1,-1)){
@@ -199,7 +202,7 @@ public:
 class openDoorNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (!testingCharacter->opensdoors)return false;
         if (testingCharacter->openDoor(_map)){
@@ -216,7 +219,7 @@ public:
 class lookForItemNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
 
         if (testingCharacter->findItem(_map, localItems)){
@@ -236,7 +239,7 @@ public:
 class pickUpItemNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->equipItem(localItems)){
             testingCharacter->memory = coordinate(-1,-1);
@@ -251,7 +254,7 @@ public:
 class lookForEnemiesNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         for (actor* _a : actors){
             if (!_a->EVIL and testingCharacter->EVIL){
@@ -267,7 +270,7 @@ public:
 class decideIfCanAttackNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->decideIfCanAttack(actors, _map)){
             return true;
@@ -282,7 +285,7 @@ public:
 class attackNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->actorAttacking != NULL){
             if (testingCharacter->findDistance(testingCharacter->goal) <= 1.4){
@@ -299,7 +302,7 @@ public:
 class herdNode : public Node
 {
 public:
-    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList) override
+    virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> & actors, announcements & announcementList,void *threadid) override
     {
         if (testingCharacter->actorFollowing != NULL){
             if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){

@@ -2,9 +2,9 @@
 
 actor* characterCreationMenu(sf::RenderWindow &window)
 {
-    tile* exampleScreen[3][3] = {{new tile(grass,0,"grass"),new tile(grass,0,"grass"),new tile(grass,0,"grass")},
-                                 {new tile(grass,0,"grass"),new tile(grass,0,"grass"),new tile(grass,0,"grass")},
-                                 {new tile(grass,0,"grass"),new tile(grass,0,"grass"),new tile(grass,0,"grass")},};
+    tile* exampleScreen[3][3] = {{new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0)},
+                                 {new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0)},
+                                 {new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0),new tile(grass,0,"grass",0,0)},};
 
     for (int y = 0;y<3;y++){
         for (int x = 0;x<3;x++){
@@ -46,6 +46,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
         }
         if (pickedSpecies == false){
             character = speciesChoiceMenu(window);
+            character->pos(1,1);
             pickedSpecies = true;
         }
 
@@ -100,7 +101,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
                 exampleScreen[y][x]->drawTile(window,renderState);
             }
         }
-        character->drawActor(window);
+        character->drawActor(window,1,1);
         window.display();
     }
     char pos = '1';

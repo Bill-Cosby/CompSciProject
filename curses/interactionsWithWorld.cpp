@@ -88,7 +88,7 @@ bool actor::canSee(std::vector<std::vector<std::vector<tile*> > > _map, coordina
     return true;
 }
 
-void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window)
+void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window,actor* controlledActor)
 {
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
@@ -126,9 +126,7 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
             if (questionOn == 0){
                 if ((rand()%100)<10){
                     temp = "Yes! That sounds like fun!";
-                    for (actor* _a : actors){
-                        if (_a->controlled == true)actorFollowing = _a;
-                    }
+                    actorFollowing = controlledActor;
                 }
                 else{
                     temp = "No, that's too dangerous.";
@@ -136,18 +134,14 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
             }
             if (questionOn == 1){
                     bool helpful = false;
-                    for (actor* _a : actors){
-                        if (_a->controlled == true){
-                            if (actorFollowing == _a){
-                                if (findItem(_map,localItems) == true){
-                                    temp = "I see a few that are interesting";
-                                }
-                                else{
-                                    temp = "No, none that I'd consider interesting.";
-                                }
-                                helpful = true;
-                            }
+                    if (actorFollowing == controlledActor){
+                        if (findItem(_map,localItems) == true){
+                            temp = "I see a few that are interesting";
                         }
+                        else{
+                            temp = "No, none that I'd consider interesting.";
+                        }
+                        helpful = true;
                     }
                     if (helpful == false){
                         temp = "Why would I help you?";
@@ -155,19 +149,6 @@ void actor::dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::
             }
             if (questionOn == 2){
                     bool helpful = false;
-                    for (actor* _a : actors){
-                        if (_a->controlled == true){
-                            if (actorFollowing == _a){
-                                if (inDanger == true){
-                                    temp = "Yes I saw something dangerous not too long ago.";
-                                }
-                                else{
-                                    temp = "Last I checked I wasn't in danger.";
-                                }
-                                helpful = true;
-                            }
-                        }
-                    }
                     if (helpful == false){
                         temp = "Why would I help you?";
                     }
@@ -236,7 +217,8 @@ void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
             interactedWithDoor = true;
         }
         else{
-            pos(path[path.size()-1].y,path[path.size()-1].x);
+            _map[1][y][x]->occupied = NULL;
+            _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
             path.erase(path.begin()+path.size()-1);
 
             if (memory != coordinate(x,y) and interactedWithDoor){

@@ -14,13 +14,13 @@ static int multipliers[4][8] = {
     {1, 0, 0, 1, -1, 0, 0, -1}
 };
 
-void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*>& actors,  unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
+void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState);
 
-void castShadow(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vector<item*> &localItems, std::vector<actor*>& actors,  unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
+void castShadow(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState, float intensity, float decreaseBy);
 
-void do_fov(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy);
-void do_fov(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vector<item*> &localItems, std::vector<actor*> &actors,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy);
+void do_fov(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy);
+void do_fov(std::vector<std::vector<std::vector<tile*> > > *&_map, std::vector<item*> &localItems,  unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy);
 
 #endif // SHADOWCASTING_H_INCLUDED

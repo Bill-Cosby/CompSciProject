@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer)
+void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer)
 {
     /*
     0 = NORTH
@@ -101,10 +101,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         }
                     }
                 }
-                for (actor* _a : actors){
-                    if (coordinate(_a->col(),_a->row()) == temp){
-                        _a->dialogue(_map,actors,localItems,announcementList,window);
-                    }
+                if (_map[1][temp.y][temp.x]->occupied){
+                    _map[1][temp.y][temp.x]->occupied->dialogue(_map,localItems,announcementList,window,this);
                 }
             }
 
@@ -159,10 +157,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                         pressedKey = true;
                     }
-                    for (actor* _a : actors){
-                        if (coordinate(_a->col(),_a->row()) == temp){
-                            actorAttacking = _a;
-                        }
+                    if (_map[1][temp.y][temp.x]->occupied){
+                        actorAttacking = _map[1][temp.y][temp.x]->occupied;
                     }
                     attackEnemy(_map,announcementList,localItems,window);
                     actorAttacking = NULL;
@@ -173,16 +169,17 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }
-                for (actor* _a : actors){
-                    if (_a == this)continue;
-                    if (coordinate(_a->col(),_a->row()) == temp){
-                        actorAttacking = _a;
+                if (temp != coordinate(x,y)){
+                    if (_map[1][temp.y][temp.x]->occupied!=NULL){
+                        actorAttacking = _map[1][temp.y][temp.x]->occupied;
                         simpleAttackEnemy(_map,announcementList,localItems);
-                        return;
                     }
+                    return;
                 }
+
                 if (moveThroughDoor == true){
-                    pos(temp.y,temp.x);
+                    _map[1][y][x]->occupied = NULL;
+                    _map[1][temp.y][temp.x]->occupied = this;
                     counter=0;
                 }
                 waitforplayer = false;

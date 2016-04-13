@@ -1,4 +1,5 @@
 #include "tile.h"
+#include "actor.h"
 
 tile::tile(int hC, int cSF)
 {
@@ -17,31 +18,39 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     isDoor=false;
 }
 
-furniture::furniture(int dc, int movementCost, std::string material) : tile(dc,movementCost,material){}
+furniture::furniture(int dc, int movementCost, std::string material,int x, int y) : tile(dc,movementCost,material,x,y){}
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
-    if (defaultchar == -1)return;
-    sf::Sprite tempSprite;
-    tempSprite.setTexture(textures[defaultchar]);
-    tempSprite.setPosition(position.x*16,position.y*16);
-    sf::Color tempColor = giveColor(_material);
-    sf::Color darkenedColor;
+    if (defaultchar != -1){
+        sf::Sprite tempSprite;
+        tempSprite.setTexture(textures[defaultchar]);
+        tempSprite.setPosition(position.x*16,position.y*16);
+        sf::Color tempColor = giveColor(_material);
+        sf::Color darkenedColor;
 
-    if (darkenBy <=.1){
-        darkenedColor = sf::Color(30,30,30);
+        if (darkenBy <=.1){
+            darkenedColor = sf::Color(30,30,30);
+        }
+        else{
+            darkenedColor = sf::Color(tempColor.r*darkenBy,tempColor.g*darkenBy,tempColor.b*darkenBy);
+        }
+
+
+        tempSprite.setColor(darkenedColor);
+
+        window.draw(tempSprite,renderState);
     }
-    else{
-         darkenedColor = sf::Color(tempColor.r*darkenBy,tempColor.g*darkenBy,tempColor.b*darkenBy);
+
+    else if (occupied!=NULL){
+        std::cout << "We here\n";
+        occupied->drawActor(window,position.x,position.y);
     }
 
-    tempSprite.setColor(darkenedColor);
-
-    window.draw(tempSprite,renderState);
     darkenBy = 1;
 }
 
-door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
+door::door(bool _o, int dc, int mv, std::string mat,int x, int y) : tile(dc, mv, mat,x,y)
 {
     _material = mat;
     open=_o;
@@ -50,7 +59,7 @@ door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
     isContainer = false;
 }
 
-void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
+void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState,int x,int y)
 {
     sf::Sprite tempSprite;
     sf::Color tempColor = giveColor(_material);
@@ -77,13 +86,16 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     darkenBy = 1;
 }
 
-tile::tile(char dc, int mv, std::string mat)
+tile::tile(coordinate pos){position = pos;}
+
+tile::tile(char dc, int mv, std::string mat, int x, int y) : tile(coordinate(x,y))
 {
     _material = mat;
     movementCost = mv;
     defaultchar = dc;
     darkenBy = 1;
     isContainer = false;
+    occupied = NULL;
 }
 
 container::container(int dc, int mov, std::string mat) : tile(dc,mov,mat){isContainer = true;fillWithArmor();}

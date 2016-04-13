@@ -133,7 +133,7 @@ public:
         for(bodyPart * _b : body){_b->sprite.setPosition(_x*16,_y*16);}
     }
 
-    void drawActor(sf::RenderWindow &window);
+    void drawActor(sf::RenderWindow &window,int _x, int _y);
 
 
 //  METHODS FOR INTERACTING WITH COUNTERS
@@ -158,7 +158,7 @@ public:
     bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map);
     bool canSee(std::vector<std::vector<std::vector<tile*> > >, coordinate);
 
-    void dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window);
+    void dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window,actor* controlledActor);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
@@ -170,7 +170,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<std::vector<tile*> > >& _map,std::vector<item*>&localItems,std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer){}
+    virtual void movement(std::vector<std::vector<std::vector<tile*> > >& _map,std::vector<item*>&localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &temptile){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
@@ -181,7 +181,7 @@ class player: public actor
 {
     bool keyIsPressed;
 public:
-    void movement(std::vector<std::vector<std::vector<tile*> > >& _map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer);
+    void movement(std::vector<std::vector<std::vector<tile*> > >& _map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer);
     void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &tempTile);
     void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems, bool & keyrelease);
     virtual void attackEnemy(std::vector<std::vector<std::vector<tile*> > > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window);

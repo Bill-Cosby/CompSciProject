@@ -6,13 +6,13 @@
 #include "materials.h"
 #include <SFML/Graphics.hpp>
 
-/*
-class grass:Tile
-{
-*/
+class actor;
+
 class tile : public node
 {
 public:
+
+    actor* occupied;
 
     int width, height;
 
@@ -29,9 +29,10 @@ public:
     int movementCost;
     double elevation;
     std::string _material;
-    tile(char dc,int mc, std::string mat);
+    tile(char dc,int mc, std::string mat, int x, int y);
     tile(coordinate,coordinate,int);
     tile(int hCost, int costSoFar);
+    tile(coordinate pos);
     tile(){defaultchar = -1;isDoor=false;movementCost = 0;_material = "NULL";};
 
     std::string giveMaterial(){return _material;}
@@ -61,8 +62,8 @@ public:
     bool open;
     int openSymbol;
     int closedSymbol;
-    door(bool _o, int dc, int mv, std::string mat);
-    void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState);
+    door(bool _o, int dc, int mv, std::string mat,int x, int y);
+    void drawTile(sf::RenderWindow &window, sf::RenderStates &renderState, int x,int y);
     bool interactWithDoor(bool opening);
     bool isOpen(){return open;}
 };
@@ -70,7 +71,7 @@ public:
 class furniture : public tile
 {
 public:
-    furniture(int dc, int movementCost, std::string material);
+    furniture(int dc, int movementCost, std::string material,int x, int y);
 };
 
 class container : public tile
@@ -78,7 +79,7 @@ class container : public tile
 public:
     std::vector<item*> contained;
     std::vector<item*> openContainer(){return contained;}
-    container(int dc, int movementCost, std::string material);
+    container(int dc, int movementCost, std::string material,int x, int y);
     void fillWithArmor();
     void setItems(std::vector<item*> items){contained = items;}
 };

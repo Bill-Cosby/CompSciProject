@@ -4,7 +4,7 @@ namespace RSL
 {
 std::string getStringData(std::string fileName, std::string dataToGet)
 {
-    std::mt19937 generator(rand()%rand()%1000000);
+    std::mt19937 generator(rand()%100000);
     bool foundDatatype = false;
     bool foundDataMember = false;
     bool inArray = false;

@@ -1,9 +1,9 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
+void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor)
 {
 
     renderState = sf::RenderStates::Default;
-    startingposition=coordinate((actors[0])->col(),(actors[0])->row());
+    startingposition=coordinate(controlledActor->col(),controlledActor->row());
 
 
     bool drawActor=false;
@@ -11,17 +11,13 @@ void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_m
     actor* actorToDraw;
     item* itemToDraw;
 
-    window.clear();
+    do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
 
-    if (actors[0]->controlled == true){
-        do_fov(_map, localItems, actors, actors[0]->col(), actors[0]->row(), 15, window, renderState,false,0,0);
-    }
-
-                actors[0]->drawActor(window);
     window.setView(window.getDefaultView());
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
     window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
+    window.clear();
                 window.display();
 }
 
