@@ -1,7 +1,7 @@
 #ifndef BEHAVIORTREE_H_INCLUDED
 #define BEHAVIORTREE_H_INCLUDED
 #include <list>
-#include <pthread.h>
+#include <thread>
 #include "actor.h"
 
 class Node
@@ -9,6 +9,13 @@ class Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList){}
 };
+
+void run(Node* root, actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList)
+{
+    if (testingCharacter == NULL)return;
+    std::cout << testingCharacter->name << std::endl;
+    root->run(testingCharacter,_map,localItems,announcementList);
+}
 
 class compositNode : public Node
 {

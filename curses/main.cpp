@@ -212,6 +212,7 @@ int main()
 bool keyrelease = true;
 bool waitforplayer = false;
     sf::Event event;
+    actor* actorProcessing = NULL;
     while (window.isOpen())
     {
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
@@ -227,14 +228,15 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
         controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
+        std::thread AI(run,root,actorProcessing,std::ref(_map),std::ref(localItems),std::ref(announcementList));
         for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
             for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
-                std::cout << "Is this the bottleneck";
+                if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
                 if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
-                if (_map[1][y][x]->occupied)root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
+                if(_map[1][y][x]->occupied)actorProcessing = _map[1][y][x]->occupied;
             }
         }
-
+        AI.join();
         int activeAI =0;
 
 //        lightmap = &_map;
