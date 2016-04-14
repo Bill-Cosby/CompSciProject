@@ -188,7 +188,7 @@ public:
     player(std::string speciesToLoad);
 };
 
-class monster: public actor
+class monster : public actor
 {
     coordinate post;
 public:
