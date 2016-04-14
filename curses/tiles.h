@@ -11,6 +11,8 @@ class tiles
         std::vector<std::vector<std::vector<tile*> > > tileMap;
         int height;
         int width;
+        void updateTileMap(int,int,int,int);
+        int mod(signed int, int);
 
         tiles();
         ~tiles();

@@ -11,8 +11,25 @@ tiles::tiles()
     width=5000;
     fillMap();
     makeTileMap();
+}
 
-
+int tiles::mod(signed int a, int b)
+{
+    if(a<0)
+    {
+        while(a<0)
+        {
+            a+=b;
+        }
+    }
+    else if (a>=0)
+    {
+        while(a>=b)
+        {
+        a-=b;
+        }
+    }
+    return a;
 }
 
 void tiles::fillMap()
@@ -24,12 +41,13 @@ void tiles::fillMap()
         for(int b=0; b<height; b++)
     {
         tileMap[a][b].resize(width);
-        for(int c=0; c<tileMap[a][b][c].size())
+        for(int c=0; c<tileMap[a][b].size(); c++)
         {
-            tileMap[a][b][c]=NULL:
+            tileMap[a][b][c]=NULL;
         }
     }
     }
+    updateTileMap(2,2,1,1);
     //fills tileMap with blanks
 }
 
@@ -174,6 +192,59 @@ std::string tiles::findTileType(double elevation)
     {
         return "white";//snow
     }
+}
+void tiles::updateTileMap(signed int gridx,signed int gridy,signed int newGridx,signed int newGridy)
+{
+    int mesh=100;
+gridx=mod(gridx,width);
+gridy=mod(gridy,height);
+
+signed int deltax=newGridx-gridx;
+signed int deltay=newGridy-gridy;
+signed int gridyDelete=gridy-deltay;
+
+   //delete x stuff
+
+  for(signed int c=-1; c<=1; c++)
+  {
+      for(int a=0; a<mesh; a++)
+      {
+          for(int b=0; b<mesh; b++)
+      {
+         if(deltax!=0)
+         {
+             tileMap[0][mod((gridy+c),height)*mesh+a][mod((gridx-deltax),width)*mesh+b]=NULL;
+
+             int x=(newGridx+deltax)*mesh+b;
+             int y=(newGridy+c)*mesh+a;
+             double elevation = finalTerrain.GetValue(x/width,y/height, 0.5);
+            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][y][x]->elevation=elevation;
+            tileMap[0][y][x]->position.x=x;
+            tileMap[0][y][x]->position.y=y;
+
+
+
+         }
+         if(deltay!=0)
+         {
+             tileMap[0][mod((gridy-deltay),100)*100+a][(gridx+c)*100+b]=NULL;
+
+             int x=mod((newGridy+c),width)*100+b;
+             int y=mod((newGridy+deltay),height)*100+a;
+             double elevation=finalTerrain.GetValue(x/width,y/height, 0.5);
+             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+             tileMap[0][y][x]->elevation=elevation;
+             tileMap[0][y][x]->position.x=x;
+             tileMap[0][y][x]->position.y=y;
+
+         }
+      }
+      }
+
+
+  }
 }
 
    /* module::Turbulence turbulence;
