@@ -17,7 +17,7 @@ class tiles
         tiles();
         ~tiles();
         void fillMap();
-        void makeTileMap();
+        void makeElevationMap();
         std::string findTileType(double elevation);
         module::Select finalTerrain;
     };

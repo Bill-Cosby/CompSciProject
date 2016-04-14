@@ -9,8 +9,9 @@ tiles::tiles()
 {
     height=5000;
     width=5000;
+    makeElevationMap();
     fillMap();
-    makeTileMap();
+
 }
 
 int tiles::mod(signed int a, int b)
@@ -47,13 +48,13 @@ void tiles::fillMap()
         }
     }
     }
-    updateTileMap(2,2,1,1);
+    updateTileMap(1,1,0,0);
     //fills tileMap with blanks
 }
 
 
 
-void tiles::makeTileMap()
+void tiles::makeElevationMap()
 {
 srand(time(NULL));
     module::Perlin preLandTerrain1;
@@ -94,38 +95,17 @@ srand(time(NULL));
     finalTerrain.SetBounds(-0.7,100);
     finalTerrain.SetEdgeFalloff(0.5);
     //generate ma
-
-/*utils::NoiseMap heightMap;
+/*
+utils::NoiseMap heightMap;
     utils::NoiseMapBuilderPlane heightMapBuilder;
   heightMapBuilder.SetSourceModule(finalTerrain);
   heightMapBuilder.SetDestNoiseMap(heightMap);
   heightMapBuilder.SetDestSize (100, 100);
   heightMapBuilder.SetBounds (0,1 , 0, 1);
-*/
-    double temp_height;
-    for(double a=0; a<height; a++)
-    {
-        for(double b=0; b<width; b++)
-        {
-            for(int c=0; c<2; c++)
-            {
-              if(c==0)
-              {
-            tileMap[c][a][b]=NULL;
 
-            }
-            else if(c==1)
-            {
-                tileMap[c][a][b]=new tile();
-            }
-        }
-            //tileMap[a][b]->elevation=finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.x,.3);
 
-           //std::cout << finalTerrain.GetValue(tileMap[a][b]->position.x,tileMap[a][b]->position.y) << std::endl;
-        }
-    }
 
- /*  heightMapBuilder.Build ();
+   heightMapBuilder.Build ();
     utils::RendererImage renderer;
   utils::Image image;
   renderer.SetSourceNoiseMap (heightMap);
@@ -148,6 +128,7 @@ srand(time(NULL));
   writer.SetDestFilename ("tutorial.bmp");
   writer.WriteDestFile ();
   std::cout << "Here\n";
+  std::cout<<finalTerrain.GetValue(0,0,0.5);
     //sets elevations*/
 }
 
@@ -215,9 +196,10 @@ signed int gridyDelete=gridy-deltay;
          {
              tileMap[0][mod((gridy+c),height)*mesh+a][mod((gridx-deltax),width)*mesh+b]=NULL;
 
-             int x=(newGridx+deltax)*mesh+b;
-             int y=(newGridy+c)*mesh+a;
-             double elevation = finalTerrain.GetValue(x/width,y/height, 0.5);
+             double x=(newGridx+deltax)*mesh+b;
+             double y=(newGridy+c)*mesh+a;//x/widthy/heightdouble elevation =
+              std::cout<<finalTerrain.GetValue(1,1, 1);
+              double elevation=0;
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]->elevation=elevation;

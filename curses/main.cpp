@@ -211,9 +211,9 @@ bool keyrelease = true;
         }
 
         else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
-        if((actors[0]->col()/100)!=gridx or (actors[0]->row()/100)!=gridy)
+        if(actors[0]->col()/100!=gridx or (actors[0]->row())/100!=gridy)
         {
-                myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/100, (actors[0]->row())/100);
+                myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/100,(actors[0]->row())/100);
                 gridx=(actors[0]->col())/100; gridy=(actors[0]->row())/100;
         }
              }
