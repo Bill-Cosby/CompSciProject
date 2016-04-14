@@ -157,7 +157,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                         pressedKey = true;
                     }
-                    if (_map[1][temp.y][temp.x]->occupied){
+                    if (_map[1][temp.y][temp.x]->occupied != NULL and _map[1][temp.y][temp.x]->occupied!=this){
                         actorAttacking = _map[1][temp.y][temp.x]->occupied;
                     }
                     attackEnemy(_map,announcementList,localItems,window);
@@ -170,11 +170,11 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }
                 if (temp != coordinate(x,y)){
-                    if (_map[1][temp.y][temp.x]->occupied!=NULL){
+                    if (_map[1][temp.y][temp.x]->occupied!=NULL and _map[1][temp.y][temp.x]->occupied!=this){
                         actorAttacking = _map[1][temp.y][temp.x]->occupied;
                         simpleAttackEnemy(_map,announcementList,localItems);
+                        return;
                     }
-                    return;
                 }
 
                 if (moveThroughDoor == true){
@@ -184,13 +184,6 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 }
                 waitforplayer = false;
             }
-            else{
-
-
-            }
-
-
-        sprite.setPosition(x*16,y*16);
         counter = 0;
         return;
     }

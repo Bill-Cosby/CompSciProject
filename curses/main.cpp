@@ -74,7 +74,8 @@ int main()
     myCity.generateCity();
     _map = myCity.tileMap;
 
-    actor* controlledActor = characterCreationMenu(window);
+    //actor* controlledActor = characterCreationMenu(window);
+    actor* controlledActor = new player("human");
     _map[1][1][1]->occupied = controlledActor;
 
     std::vector<item*> localItems;;
@@ -216,23 +217,23 @@ bool waitforplayer = false;
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
         if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
-        while (view.getCenter().x != (controlledActor->col()*16)){
+        while (view.getCenter().x != (controlledActor->col()*16) and view.getCenter().x - view.getSize().x/2 < 0){
             view.setCenter(view.getCenter().x-1,view.getCenter().y);
         }
-        while (view.getCenter().y != (controlledActor->row()*16)){
+        while (view.getCenter().y != (controlledActor->row()*16) and view.getCenter().y - view.getSize().y/2 < 0){
             view.setCenter(view.getCenter().x,view.getCenter().y-1);
-        }
-
-        while (view.getCenter().x - view.getSize().x/2 < 0){
-            view.setCenter(view.getCenter().x+1,view.getCenter().y);
-        }
-        while (view.getCenter().y - view.getSize().y/2 < 0){
-            view.setCenter(view.getCenter().x,view.getCenter().y+1);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
         controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
+        for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
+            for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
+                std::cout << "Is this the bottleneck";
+                if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
+                if (_map[1][y][x]->occupied)root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
+            }
+        }
 
         int activeAI =0;
 

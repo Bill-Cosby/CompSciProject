@@ -30,7 +30,7 @@ protected:
     char _symbol;
 
 
-    int x,y,z;
+    int x = 0,y = 0,z = 0;
 public:
     bool interactedWithDoor;
     std::vector<actor*> followers;
@@ -155,7 +155,7 @@ public:
     bool openDoor(std::vector<std::vector<std::vector<tile*> > > &_map);
     coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile, bool socialTile);
     bool findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems);
-    bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map);
+    bool decideIfCanAttack(std::vector<std::vector<std::vector<tile*> > > &_map);
     bool canSee(std::vector<std::vector<std::vector<tile*> > >, coordinate);
 
     void dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window,actor* controlledActor);

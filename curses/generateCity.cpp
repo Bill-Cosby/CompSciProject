@@ -76,31 +76,17 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
         for(int b=bottom; b<=top; b++)
         {
                 tileMap[0][b][a]= new tile(floorTex,0,floormat,a,b);
-
-                switch(type){
-                case 1:
-                    if (rand()%501 < 10){
+                if (type == 1){
+                    if (rand()%50 < 10){
                         tileMap[1][b][a]->occupied = new monster("human");
+                        std::cout << "New person!\n";
                     }
                     if (rand()%201 < 50){
                         tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
-                    if (rand()%400< 50){
-                        tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
-                        tileMap[1][b][a]->position=coordinate(a,b);
-                    }
-                case 2:
-                    if (rand()%400< 50){
-                        tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
-                        tileMap[1][b][a]->position=coordinate(a,b);
-                    }
-                case 3:
-                    if (rand()%400< 50){
-                        tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
-                        tileMap[1][b][a]->position=coordinate(a,b);
-                    }
-                case 4:
+                }
+                if (type == 2){
                     if (rand()%400< 50){
                         tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);

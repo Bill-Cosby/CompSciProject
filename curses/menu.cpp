@@ -101,7 +101,7 @@ actor* characterCreationMenu(sf::RenderWindow &window)
                 exampleScreen[y][x]->drawTile(window,renderState);
             }
         }
-        character->drawActor(window,1,1);
+        character->rootPart->draw(window,1*16,1*16);
         window.display();
     }
     char pos = '1';

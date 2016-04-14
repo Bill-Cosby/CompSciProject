@@ -98,26 +98,26 @@ bool actor::isInDanger(std::vector<actor*> actors)
     }
     return false;
 }
-bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map)
+bool actor::decideIfCanAttack(std::vector<std::vector<std::vector<tile*> > > &_map)
 {
     int totalDanger = 0;
     float dangerRatio;
     bool foundEnemy = false;
 
-    for (actor* _a : actors){
-
-        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
-        if (EVIL and _a->EVIL)continue;
-
-        totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
-
-
-        dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
-        if (dangerRatio < 1){
-            actorAttacking = _a;
-            foundEnemy = true;
-        }
-    }
+//    for (actor* _a : actors){
+//
+//        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+//        if (EVIL and _a->EVIL)continue;
+//
+//        totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+//
+//
+//        dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
+//        if (dangerRatio < 1){
+//            actorAttacking = _a;
+//            foundEnemy = true;
+//        }
+//    }
     if (foundEnemy == false){
         actorAttacking = NULL;
     }
@@ -257,5 +257,7 @@ bool actor::findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::
 
 void actor::drawActor(sf::RenderWindow& window,int _x, int _y)
 {
-    rootPart->draw(window,_x*16,_y*16);
+    x= _x;
+    y = _y;
+    rootPart->draw(window,x*16,y*16);
 }

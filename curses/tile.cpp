@@ -42,8 +42,7 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
         window.draw(tempSprite,renderState);
     }
 
-    else if (occupied!=NULL){
-        std::cout << "We here\n";
+    if (occupied!=NULL){
         occupied->drawActor(window,position.x,position.y);
     }
 
@@ -98,7 +97,7 @@ tile::tile(char dc, int mv, std::string mat, int x, int y) : tile(coordinate(x,y
     occupied = NULL;
 }
 
-container::container(int dc, int mov, std::string mat) : tile(dc,mov,mat){isContainer = true;fillWithArmor();}
+container::container(int dc, int mov, std::string mat,int x, int y) : tile(dc,mov,mat,x,y){isContainer = true;fillWithArmor();}
 
 void container::fillWithArmor()
 {

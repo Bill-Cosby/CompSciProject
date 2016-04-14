@@ -11,14 +11,14 @@ void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_m
     actor* actorToDraw;
     item* itemToDraw;
 
+    window.clear();
     do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
 
     window.setView(window.getDefaultView());
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
     window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
-    window.clear();
-                window.display();
+    window.display();
 }
 
 void announcements::drawAnnouncements(sf::RenderWindow & window)

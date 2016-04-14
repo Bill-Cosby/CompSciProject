@@ -102,7 +102,6 @@ void bodyPart::returnWeight(int &totalWeight)
 }
 
 void bodyPart::draw(sf::RenderWindow &window, int x, int y){
-    //std::cout << name << std::endl;
     if (vanity != NULL){
         if (left){
             vanity->sprite.scale(-1.0f,1.0f);
@@ -111,9 +110,6 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
         window.draw(vanity->sprite);
     }
     else if (armor != NULL){
-        if (name == "head"){
-            std::cout << "Here\n";
-        }
         armor->sprite.setPosition(x,y);
         if (left){
             armor->sprite.setOrigin(sprite.getPosition().x+17,sprite.getPosition().y);

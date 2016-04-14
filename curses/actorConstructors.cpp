@@ -18,7 +18,6 @@ player::player(std::string speciesToLoad)
   equipsArmor= false;
     opensdoors=false;
     int temp;
-    z = 1;
 
     itemToPickUp = NULL;
 
@@ -59,8 +58,6 @@ player::player(std::string speciesToLoad)
 
 monster::monster(std::string speciesToLoad)
 {
-    x = 0;
-    y = 0;
 
     actorFollowing = NULL;
     nodeOn = NULL;
@@ -75,7 +72,6 @@ monster::monster(std::string speciesToLoad)
     sprinting=false;
     inDanger = false;
     int temp;
-    z = 1;
 
     actorAttacking = NULL;
     itemToPickUp = NULL;

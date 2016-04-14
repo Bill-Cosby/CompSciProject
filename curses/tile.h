@@ -12,7 +12,7 @@ class tile : public node
 {
 public:
 
-    actor* occupied;
+    actor* occupied = NULL;
 
     int width, height;
 
@@ -24,7 +24,7 @@ public:
     bool litHere;
 
 
-    int defaultchar;
+    int defaultchar = -1;
 
     int movementCost;
     double elevation;
