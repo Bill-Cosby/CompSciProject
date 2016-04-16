@@ -19,7 +19,7 @@ class tiles
         void fillMap();
         void makeElevationMap();
         std::string findTileType(double elevation);
-        module::Select finalTerrain;
+        noise::module::Select finalTerrain;
     };
 
 

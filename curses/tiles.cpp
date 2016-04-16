@@ -11,6 +11,7 @@ tiles::tiles()
     width=5000;
     makeElevationMap();
     fillMap();
+    updateTileMap(1,1,0,0);
 
 }
 
@@ -48,7 +49,7 @@ void tiles::fillMap()
         }
     }
     }
-    updateTileMap(1,1,0,0);
+
     //fills tileMap with blanks
 }
 
