@@ -7,9 +7,9 @@
 using namespace noise;
 tiles::tiles()
 {
-    height=50;
-    width=50;
-    mesh==100;
+    height=20;
+    width=20;
+    mesh=100;
     makeElevationMap();
     fillMap();
     updateTileMap(-1,-1,0,0);
@@ -40,7 +40,7 @@ void tiles::fillMap()
     for(int a=0; a<2; a++)
     {
         tileMap[a].resize(height*mesh);
-        for(int b=0; b<height; b++)
+        for(int b=0; b<tileMap[a].size(); b++)
     {
         tileMap[a][b].resize(width*mesh);
         for(int c=0; c<tileMap[a][b].size(); c++)
@@ -49,6 +49,7 @@ void tiles::fillMap()
         }
     }
     }
+
     //fills tileMap with blanks
 }
 
@@ -196,7 +197,8 @@ int gridyc=mod(gridy+c,height);
           for(int b=0; b<mesh; b++)
       {
          if(deltax!=0)//horizontal movement
-         {
+         {int test1=gridyc*mesh+a;
+         int test2=gridxDelete*mesh+b;
              tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
 
             double x=mod(newGridx+deltax,width)*mesh+b;
@@ -229,6 +231,8 @@ int gridyc=mod(gridy+c,height);
 
 
   }
+  std::cout<<tileMap[0][1][1];
+
 }
 
    /* module::Turbulence turbulence;
