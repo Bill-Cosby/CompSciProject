@@ -59,8 +59,8 @@ int main()
         openDoors->addChild(new findDoorNode);
         openDoors->addChild(new openDoorNode);
 
-    //thoughtProcess->addChild(danger);
-    //thoughtProcess->addChild(lookForItems);
+    thoughtProcess->addChild(danger);
+    thoughtProcess->addChild(lookForItems);
     //thoughtProcess->addChild(openDoors);
 
     root->addChild(thoughtProcess);
@@ -77,7 +77,6 @@ int main()
     //actor* controlledActor = characterCreationMenu(window);
     actor* controlledActor = new player("human");
     _map[1][1][1]->occupied = controlledActor;
-    _map[1][1][2]->occupied = new monster("human");
 
     std::vector<item*> localItems;;
 
@@ -211,9 +210,6 @@ bool waitforplayer = false;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
-<<<<<<< HEAD
-
-        std::thread AI(run,root,actorProcessing,std::ref(_map),std::ref(localItems),std::ref(announcementList),generator);
 
         if (controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer)){
             for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
@@ -221,25 +217,15 @@ bool waitforplayer = false;
                     if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
                     if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
                     if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
-                            actorProcessing = _map[1][y][x]->occupied;
+                            _map[1][y][x]->occupied->increaseCounter();
+                            if (_map[1][y][x]->occupied->counter == _map[1][y][x]->occupied->speed()){
+                                _map[1][y][x]->occupied->resetCounter();
+                                root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
+                            }
                     }
                 }
             }
         }
-
-        AI.join();
-=======
-        controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
-        for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
-            for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
-                if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
-                if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
-                    std::cout << _map[1][y][x]->occupied->name << " : x=" << _map[1][y][x]->occupied->col() << "\t y = " <<_map[1][y][x]->occupied->row() << std::endl;
-                    root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
-                }
-            }
-        }
->>>>>>> bc88a49235b35c6678e3bfeae261519d7934c4b3
         int activeAI =0;
 
 //        lightmap = &_map;
@@ -262,8 +248,8 @@ bool waitforplayer = false;
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-            }
                 keyrelease = true;
+            }
         }
         int ystart = controlledActor->row() - (viewSizeInTiles.y/2);
         int xstart = controlledActor->col() - (viewSizeInTiles.x/2);
@@ -282,7 +268,7 @@ bool waitforplayer = false;
 //            }
 //        }
         window.setView(view);
-        gameworld.drawGameworld(_map, localItems,window,announcementList, renderState,controlledActor);
+                gameworld.drawGameworld(_map, localItems,window,announcementList, renderState,controlledActor);
     }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){

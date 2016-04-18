@@ -10,15 +10,12 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList){}
 };
 
-<<<<<<< HEAD
 void run(Node* root, actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList)
 {
     if (testingCharacter == NULL)return;
     root->run(testingCharacter,_map,localItems,announcementList);
 }
 
-=======
->>>>>>> bc88a49235b35c6678e3bfeae261519d7934c4b3
 class compositNode : public Node
 {
 protected:
@@ -295,7 +292,6 @@ class herdNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
-        srand(time(NULL));
         if (testingCharacter->actorFollowing != NULL){
             if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){
                 testingCharacter->goal = coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row());
@@ -327,7 +323,6 @@ public:
             }
             else if (dist < 10 or dist == 0){
                 int temp = rand()%12;
-                std::cout << temp << std::endl;
                 if (temp >= 8){testingCharacter->goal = coordinate(-1,-1);return false;}
                 coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
                 if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
@@ -338,7 +333,7 @@ public:
                 if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
 
 
-                //testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
+                testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
                 return true;
             }
         }

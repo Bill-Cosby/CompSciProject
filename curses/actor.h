@@ -149,7 +149,7 @@ public:
     void makeCorpse(std::vector<item*> &localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
-    bool findPath(std::vector<std::vector<std::vector<tile*> > > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){path.clear();return false;}if (path.size()>0){return true;}}
+    bool findPath(std::vector<std::vector<std::vector<tile*> > > &_map);
     double findDistance(coordinate goal){return floor(sqrt(pow((x-goal.x),2) + pow((y-goal.y),2)) / .1) * .1;}
     bool openDoor(std::vector<std::vector<std::vector<tile*> > > &_map);
     coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile, bool socialTile);

@@ -244,7 +244,6 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
 
         window.display();
     }
-    std::cout << "Here\n";
     window.clear();
 }
 

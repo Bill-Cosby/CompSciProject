@@ -87,6 +87,10 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                     }
                 }
                 if (type == 2){
+                    if (rand()%50 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        std::cout << "New person!\n";
+                    }
                     if (rand()%400< 50){
                         tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
