@@ -177,35 +177,48 @@ actors.push_back(characterCreationMenu(window));
 
 
     //DUNGEON SETUP CODE
-//////    dungeon map_t;
-//////    int whatever = 0;
-//////    _map.resize(2);
-//////    _map[0].resize(map_t.dungeon_grid.size());
-//////    _map[1].resize(map_t.dungeon_grid.size());
-//////    for (int y=0;y<map_t.dungeon_grid.size();y++)
-//////    {
-//////        _map[0][y].resize(map_t.dungeon_grid[0].size());
-//////        _map[1][y].resize(map_t.dungeon_grid[0].size());
-//////        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-//////        {
-//////            if (map_t.dungeon_grid[y][x])
-//////            {
-//////                whatever++;
-//////                _map[1][y][x]= new tile;
-//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
-//////                _map[0][y][x]->position = coordinate(x,y);
-//////                actors[0]->pos(y,x);
-//////            }
-//////            else
-//////            {
-//////
-//////                _map[1][y][x]= new tile(stonewall,-1,"stone");
-//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
-//////                _map[1][y][x]->position = coordinate(x,y);
-//////                _map[0][y][x]->position = coordinate(x,y);
-//////            }
-//////        }
-//////    }
+    dungeon map_t;
+    int whatever = 0;
+    _map.resize(2);
+    _map[0].resize(map_t.dungeon_grid.size());
+    _map[1].resize(map_t.dungeon_grid.size());
+    for (int y=0;y<map_t.dungeon_grid.size();y++)
+    {
+        _map[0][y].resize(map_t.dungeon_grid[0].size());
+        _map[1][y].resize(map_t.dungeon_grid[0].size());
+        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+        {
+            if (map_t.dungeon_grid[y][x])
+            {
+                whatever++;
+                _map[1][y][x]= new tile;
+                _map[0][y][x]= new tile(stonefloor,0,"stone");
+                _map[0][y][x]->position = coordinate(x,y);
+                if(rand()%500+1 <= 10)
+                {
+                    int num = rand()%2 +1;
+                    if(num == 1){
+                        actors.push_back(new monster("bat"));
+                    }
+                    else if(num == 2){
+                        actors.push_back(new monster("snake"));
+                    }
+                    actors[actors.size()-1]->pos(y,x);
+                }
+                actors[0]->pos(y,x);
+            }
+            else
+            {
+
+                _map[1][y][x]= new tile(stonewall,-1,"stone");
+                _map[0][y][x]= new tile(stonefloor,0,"stone");
+                _map[1][y][x]->position = coordinate(x,y);
+                _map[0][y][x]->position = coordinate(x,y);
+            }
+        }
+    }
+
+    localItems.push_back(new consumable(0,0,0,"health",'x',actors[0]->col(),actors[0]->row(),0,"null"));
 
 bool keyrelease = true;
 bool waitforplayer = false;

@@ -1,5 +1,24 @@
 #include "item.h"
 
+consumable::consumable(int _speed, int _defense, int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type)
+{
+    value=_value;
+    health=_health;
+    defense=_defense;
+    speed=_speed;
+    name = RSL::getStringData("data/items/item_type.raw",_name+".name");
+    equipped = false;
+    canEquip = false;
+    canWear = false;
+    canUse = true;
+    x = _x;
+    y = _y;
+    selected = false;
+    texture = RSL::getTextureData("data/items/item_type.raw",_name+".texture");
+    sprite.setTexture(texture);
+    sprite.setPosition(x*16,y*16);
+}
+
 weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
 {
     value=_value;

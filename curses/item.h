@@ -64,9 +64,9 @@ class consumable : public item
 {
 protected:
 public:
-    consumable(int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
+    consumable(int _speed, int _defense, int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping){}
-    std::string itemDescription();
+    std::string itemDescription(){return "This " + name + " heals you";}
 
 };
 
