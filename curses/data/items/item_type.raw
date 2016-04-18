@@ -1,0 +1,17 @@
+[NUMBEROFITEMS]
+	[NUMBER]3:;
+[HEALTH]
+	[NAME]health potion;
+	[TEXTURE]items.png,0:0:;
+	[HEALTH]20;
+[END]
+[SPEED]
+	[NAME]speed potion;
+	[TEXTURE]items.png,0:16:;
+	[SPEED]20;
+[END]
+[DEFENSE]
+	[NAME]defense potion;
+	[TEXTURE]items.png,0:32:;
+	[DEFENSE]20;
+[END]
