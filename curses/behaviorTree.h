@@ -10,12 +10,15 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList){}
 };
 
+<<<<<<< HEAD
 void run(Node* root, actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList)
 {
     if (testingCharacter == NULL)return;
     root->run(testingCharacter,_map,localItems,announcementList);
 }
 
+=======
+>>>>>>> bc88a49235b35c6678e3bfeae261519d7934c4b3
 class compositNode : public Node
 {
 protected:

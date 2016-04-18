@@ -3,7 +3,7 @@
 
 bool actor::isItemBetter()
 {
-    float currentItemStat = 0;
+    float currentItemStat = NULL+1;
     float newItemStat = 0;
     bool foundItemOfSameType = false;
     newItemStat = itemToPickUp->attack + itemToPickUp->defense + itemToPickUp->health + itemToPickUp->speed + itemToPickUp->value;
@@ -217,10 +217,15 @@ void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
             interactedWithDoor = true;
         }
         else{
+<<<<<<< HEAD
             std::cout << "Here\n";
             _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
             _map[1][y][x]->occupied = NULL;
             pos(path[path.size()-1].y,path[path.size()-1].x);
+=======
+            _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
+            _map[1][y][x]->occupied = nullptr;
+>>>>>>> bc88a49235b35c6678e3bfeae261519d7934c4b3
             path.erase(path.begin()+path.size()-1);
 
             if (memory != coordinate(x,y) and interactedWithDoor){

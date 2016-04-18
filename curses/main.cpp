@@ -157,26 +157,11 @@ int main()
 //    }
 //
 //    _map[1][10][10] = new socialTile(closeddoor,-1,"wood");
-//    _map[1][10][10]->position = coordinate(10,10);
-    std::default_random_engine ew(time(0));
-    std::uniform_int_distribution<int> numberOfEnemies(2,10);
-    std::uniform_int_distribution<int> enemyPos(1,17);
+////    _map[1][10][10]->position = coordinate(10,10);
+//    std::default_random_engine ew(time(0));
+//    std::uniform_int_distribution<int> numberOfEnemies(2,10);
+//    std::uniform_int_distribution<int> enemyPo(1,17);
 
-    //RANDOM GUARDS CODE
-
-//    for (int i=0;i<numberOfEnemies(ew);i++){
-//        while (true){
-//            temp=coordinate(enemyPos(ew),enemyPos(ew));
-//            if (_map[temp.y][temp.x].movementCost!=-1){
-//                monsters.push_back(monster(5,'G'));
-//                monsters[i].pos(temp.y,temp.x);
-//                monsters[i].setPost(temp.x,temp.y);
-//                break;
-//            }
-//
-//        }
-//
-//    }
 
 
     //DUNGEON SETUP CODE
@@ -197,7 +182,6 @@ int main()
 //////                _map[1][y][x]= new tile;
 //////                _map[0][y][x]= new tile(stonefloor,0,"stone");
 //////                _map[0][y][x]->position = coordinate(x,y);
-//////                controlledActor->pos(y,x);
 //////            }
 //////            else
 //////            {
@@ -227,6 +211,7 @@ bool waitforplayer = false;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
+<<<<<<< HEAD
 
         std::thread AI(run,root,actorProcessing,std::ref(_map),std::ref(localItems),std::ref(announcementList),generator);
 
@@ -243,6 +228,18 @@ bool waitforplayer = false;
         }
 
         AI.join();
+=======
+        controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
+        for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
+            for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
+                if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
+                if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
+                    std::cout << _map[1][y][x]->occupied->name << " : x=" << _map[1][y][x]->occupied->col() << "\t y = " <<_map[1][y][x]->occupied->row() << std::endl;
+                    root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
+                }
+            }
+        }
+>>>>>>> bc88a49235b35c6678e3bfeae261519d7934c4b3
         int activeAI =0;
 
 //        lightmap = &_map;
