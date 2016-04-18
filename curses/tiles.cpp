@@ -7,12 +7,12 @@
 using namespace noise;
 tiles::tiles()
 {
-    height=5000;
-    width=5000;
+    height=50;
+    width=50;
+    mesh==100;
     makeElevationMap();
     fillMap();
-    updateTileMap(1,1,0,0);
-
+    updateTileMap(-1,-1,0,0);
 }
 
 int tiles::mod(signed int a, int b)
@@ -39,17 +39,16 @@ void tiles::fillMap()
     tileMap.resize(2);
     for(int a=0; a<2; a++)
     {
-        tileMap[a].resize(height);
+        tileMap[a].resize(height*mesh);
         for(int b=0; b<height; b++)
     {
-        tileMap[a][b].resize(width);
+        tileMap[a][b].resize(width*mesh);
         for(int c=0; c<tileMap[a][b].size(); c++)
         {
             tileMap[a][b][c]=NULL;
         }
     }
     }
-
     //fills tileMap with blanks
 }
 
@@ -58,32 +57,33 @@ void tiles::fillMap()
 void tiles::makeElevationMap()
 {
 srand(time(NULL));
-    module::Perlin preLandTerrain1;
+
     preLandTerrain1.SetFrequency(1);
     preLandTerrain1.SetSeed(rand());
-    module::ScaleBias landTerrain1;
+
+
     landTerrain1.SetSourceModule(0,preLandTerrain1);
     landTerrain1.SetBias(-0.1);
 
-    module::Perlin preLandTerrain2;
+
     preLandTerrain2.SetFrequency(2);
     preLandTerrain2.SetSeed(rand());
 
-    module::ScaleBias landTerrain2;
+
     landTerrain2.SetSourceModule(0,preLandTerrain2);
     landTerrain2.SetScale(1.2);
     landTerrain2.SetBias(-0.2);
 
-    module::RidgedMulti preOceanTerrain;
+
     preOceanTerrain.SetFrequency(32);
 
-    module::ScaleBias oceanTerrain;
+
     oceanTerrain.SetSourceModule(0,preOceanTerrain);
     oceanTerrain.SetScale(1.2);
     oceanTerrain.SetBias(-0.2);
     //preTerrainType.SetFrequency();
 
-    module::Select finalTerrain_;
+
     finalTerrain_.SetSourceModule(0,oceanTerrain);
     finalTerrain_.SetSourceModule(1,landTerrain1);
     finalTerrain_.SetControlModule(landTerrain2);
@@ -178,29 +178,30 @@ std::string tiles::findTileType(double elevation)
 void tiles::updateTileMap(signed int gridx,signed int gridy,signed int newGridx,signed int newGridy)
 {
     int mesh=100;
-gridx=mod(gridx,width);
-gridy=mod(gridy,height);
 
 signed int deltax=newGridx-gridx;
 signed int deltay=newGridy-gridy;
-signed int gridyDelete=gridy-deltay;
+signed int gridxDelete=mod(gridx-deltax,width);
+signed int gridyDelete=mod(gridy-deltay,height);
 
    //delete x stuff
 
   for(signed int c=-1; c<=1; c++)
   {
+int gridxc=mod(gridx+c,width);
+int gridyc=mod(gridy+c,height);
+
       for(int a=0; a<mesh; a++)
       {
           for(int b=0; b<mesh; b++)
       {
-         if(deltax!=0)
+         if(deltax!=0)//horizontal movement
          {
-             tileMap[0][mod((gridy+c),height)*mesh+a][mod((gridx-deltax),width)*mesh+b]=NULL;
+             tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
 
-             double x=(newGridx+deltax)*mesh+b;
-             double y=(newGridy+c)*mesh+a;//x/widthy/heightdouble elevation =
-              std::cout<<finalTerrain.GetValue(1,1, 1);
-              double elevation=0;
+            double x=mod(newGridx+deltax,width)*mesh+b;
+            double y=gridyc*mesh+a;
+            double elevation=finalTerrain.GetValue(x/(width*mesh), y/(height*mesh), 0.5);
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]->elevation=elevation;
@@ -210,13 +211,13 @@ signed int gridyDelete=gridy-deltay;
 
 
          }
-         if(deltay!=0)
+         if(deltay!=0) //vertical movement
          {
-             tileMap[0][mod((gridy-deltay),100)*100+a][(gridx+c)*100+b]=NULL;
+             tileMap[0][gridyDelete*100+a][gridxc*100+b]=NULL;
 
-             int x=mod((newGridy+c),width)*100+b;
-             int y=mod((newGridy+deltay),height)*100+a;
-             double elevation=finalTerrain.GetValue(x/width,y/height, 0.5);
+             int x=gridxc*mesh+b;
+             int y=mod(newGridy+deltay,height)*mesh+a;
+             double elevation=finalTerrain.GetValue(x/(width*mesh),y/(height*mesh), 0.5);
              tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;

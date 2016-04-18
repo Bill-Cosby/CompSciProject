@@ -6,21 +6,33 @@
 #include "noiseutils.h"
 
 class tiles
-    {
-        public:
-        std::vector<std::vector<std::vector<tile*> > > tileMap;
-        int height;
-        int width;
-        void updateTileMap(int,int,int,int);
-        int mod(signed int, int);
+{
+public:
+    std::vector<std::vector<std::vector<tile*> > > tileMap;
+    int height;
+    int width;
+    int mesh;
+    noise::module::Perlin preLandTerrain1;
+    noise::module::ScaleBias landTerrain1;
+    noise::module::Perlin preLandTerrain2;
+    noise::module::ScaleBias landTerrain2;
+    noise::module::RidgedMulti preOceanTerrain;
+    noise::module::ScaleBias oceanTerrain;
+    noise::module::Select finalTerrain_;
+    noise::module::Select finalTerrain;
 
-        tiles();
-        ~tiles();
-        void fillMap();
-        void makeElevationMap();
-        std::string findTileType(double elevation);
-        noise::module::Select finalTerrain;
-    };
+   void fillMap();
+   void makeElevationMap();
+    int mod(signed int, int);
+ std::string findTileType(double elevation);
+void updateTileMap(int,int,int,int);
+
+
+
+tiles();
+
+~tiles();
+};
 
 
 #endif //TILES_H_INCLUDE
