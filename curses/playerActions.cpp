@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer)
+bool player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer)
 {
     /*
     0 = NORTH
@@ -35,9 +35,11 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter>=customSpeed) waitforplayer = true;
-    if (counter>=customSpeed and keyrelease == true){
+    if (counter>=customSpeed){
+        waitforplayer = true;
+    }
 
+    if (counter>=customSpeed and keyrelease == true){
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
                         pressedKey = true;
@@ -165,6 +167,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 }
                 waitforplayer = false;
             }
+
             else if (_map[1][temp.y][temp.x]->movementCost != -1 and keyrelease == false){
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
@@ -173,7 +176,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     if (_map[1][temp.y][temp.x]->occupied!=NULL and _map[1][temp.y][temp.x]->occupied!=this){
                         actorAttacking = _map[1][temp.y][temp.x]->occupied;
                         simpleAttackEnemy(_map,announcementList,localItems);
-                        return;
+                        return true;
                     }
                 }
 
@@ -181,14 +184,14 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     _map[1][y][x]->occupied = NULL;
                     _map[1][temp.y][temp.x]->occupied = this;
                     counter=0;
+                    return true;
                 }
                 waitforplayer = false;
             }
-        counter = 0;
-        return;
+        return false;
     }
     else counter++;
-
+    return true;
 }
 
 void player::attackEnemy(std::vector<std::vector<std::vector<tile*> > >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)

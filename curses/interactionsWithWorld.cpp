@@ -217,8 +217,10 @@ void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
             interactedWithDoor = true;
         }
         else{
-            _map[1][y][x]->occupied = NULL;
+            std::cout << "Here\n";
             _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
+            _map[1][y][x]->occupied = NULL;
+            pos(path[path.size()-1].y,path[path.size()-1].x);
             path.erase(path.begin()+path.size()-1);
 
             if (memory != coordinate(x,y) and interactedWithDoor){

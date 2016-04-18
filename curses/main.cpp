@@ -13,11 +13,11 @@ using namespace std;
 
 int main()
 {
-    std::mt19937 generator(time(NULL));
+    std::default_random_engine generator(time(NULL));
     std::uniform_int_distribution<int> temp (0,time(NULL));
 
 
-    srand(temp(generator));
+    srand(rand()%temp(generator));
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
@@ -77,6 +77,7 @@ int main()
     //actor* controlledActor = characterCreationMenu(window);
     actor* controlledActor = new player("human");
     _map[1][1][1]->occupied = controlledActor;
+    _map[1][1][2]->occupied = new monster("human");
 
     std::vector<item*> localItems;;
 
@@ -227,15 +228,20 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
-        controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer);
-        std::thread AI(run,root,actorProcessing,std::ref(_map),std::ref(localItems),std::ref(announcementList));
-        for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
-            for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
-                if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
-                if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
-                if(_map[1][y][x]->occupied)actorProcessing = _map[1][y][x]->occupied;
+        std::thread AI(run,root,actorProcessing,std::ref(_map),std::ref(localItems),std::ref(announcementList),generator);
+
+        if (controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer)){
+            for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
+                for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
+                    if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
+                    if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
+                    if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
+                            actorProcessing = _map[1][y][x]->occupied;
+                    }
+                }
             }
         }
+
         AI.join();
         int activeAI =0;
 
@@ -259,8 +265,8 @@ bool waitforplayer = false;
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-                keyrelease = true;
             }
+                keyrelease = true;
         }
         int ystart = controlledActor->row() - (viewSizeInTiles.y/2);
         int xstart = controlledActor->col() - (viewSizeInTiles.x/2);

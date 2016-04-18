@@ -46,7 +46,6 @@
 //
 //void tiles::makeTileMap()
 //{
-//srand(time(NULL));
 //    module::Perlin preLandTerrain1;
 //    preLandTerrain1.SetFrequency(1);
 //    preLandTerrain1.SetSeed(rand());
