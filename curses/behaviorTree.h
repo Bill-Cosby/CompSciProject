@@ -331,6 +331,9 @@ public:
                 if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
                 if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
                 if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp] = coordinate(0,0);
+                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()+directions[temp].x]->occupied)directions[temp] = coordinate(0,0);
+
 
 
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);

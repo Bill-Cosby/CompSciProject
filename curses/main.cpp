@@ -74,6 +74,7 @@ int main()
     myCity.generateCity();
     _map = myCity.tileMap;
 
+
     //actor* controlledActor = characterCreationMenu(window);
     actor* controlledActor = new player("human");
     _map[1][1][1]->occupied = controlledActor;
@@ -211,22 +212,24 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
+        int activeAI =0;
         if (controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer)){
             for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
                 for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
                     if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
-                    if (y < 0 or x < 0 or y > _map[0].size() or x > _map[0].size())continue;
+                    if (y < 0 or x < 0 or y > _map[0].size()-1 or x > _map[0].size()-1)continue;
                     if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
                             _map[1][y][x]->occupied->increaseCounter();
                             if (_map[1][y][x]->occupied->counter == _map[1][y][x]->occupied->speed()){
                                 _map[1][y][x]->occupied->resetCounter();
+                                activeAI++;
                                 root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
                             }
                     }
                 }
             }
         }
-        int activeAI =0;
+        if (activeAI > 0)std::cout << activeAI << std::endl;
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,controlledActor->col(),controlledActor->row(),1/.1,window,renderState,true,1,.1);
