@@ -12,7 +12,7 @@ tiles::tiles()
     mesh=100;
     makeElevationMap();
     fillMap();
-    updateTileMap(-1,-1,0,0);
+
 }
 
 int tiles::mod(signed int a, int b)
@@ -37,18 +37,35 @@ int tiles::mod(signed int a, int b)
 void tiles::fillMap()
 {
     tileMap.resize(2);
-    for(int a=0; a<2; a++)
+
+        tileMap[0].resize(height*mesh);
+        tileMap[1].resize(height*mesh);
+        for(int b=0; b<tileMap[0].size(); b++)
     {
-        tileMap[a].resize(height*mesh);
-        for(int b=0; b<tileMap[a].size(); b++)
-    {
-        tileMap[a][b].resize(width*mesh);
-        for(int c=0; c<tileMap[a][b].size(); c++)
+        tileMap[0][b].resize(width*mesh);
+        tileMap[1][b].resize(width*mesh);
+        for(int c=0; c<tileMap[0][b].size(); c++)
         {
-            tileMap[a][b][c]=NULL;
+            if((b>mesh*(height-1) or b<200) and (c>mesh*(width-1) or b<2*mesh))
+               {
+                   int Y=mod(c,mesh*height);
+                   int X=mod(b,mesh*width);
+            double elevation=finalTerrain.GetValue(X/(width*mesh), Y/(height*mesh), 0.5);
+            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][b][c]->elevation=elevation;
+            tileMap[0][b][c]->position.y=b;
+            tileMap[0][b][c]->position.x=c;
+            tileMap[1][b][c]=new tile();
+               }
+               else
+                {
+                tileMap[0][b][c]=NULL;
+                tileMap[1][b][c]=NULL;
+               }
         }
     }
-    }
+
 
     //fills tileMap with blanks
 }
@@ -200,6 +217,7 @@ int gridyc=mod(gridy+c,height);
          {int test1=gridyc*mesh+a;
          int test2=gridxDelete*mesh+b;
              tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
+             tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
 
             double x=mod(newGridx+deltax,width)*mesh+b;
             double y=gridyc*mesh+a;
@@ -209,6 +227,7 @@ int gridyc=mod(gridy+c,height);
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
             tileMap[0][y][x]->position.y=y;
+            tileMap[1][y][x]=new tile();
 
 
 
