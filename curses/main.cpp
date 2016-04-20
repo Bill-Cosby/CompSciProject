@@ -211,10 +211,10 @@ bool keyrelease = true;
         }
 
         else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
-        if(actors[0]->col()/100!=gridx or (actors[0]->row())/100!=gridy)
+        if(actors[0]->col()/myWorld.mesh!=gridx or actors[0]->row()/myWorld.mesh!=gridy)
         {
-                myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/100,(actors[0]->row())/100);
-                gridx=(actors[0]->col())/100; gridy=(actors[0]->row())/100;
+                myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/myWorld.mesh,(actors[0]->row())/myWorld.mesh);
+                gridx=(actors[0]->col())/myWorld.mesh; gridy=(actors[0]->row())/myWorld.mesh;
         }
              }
         if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);

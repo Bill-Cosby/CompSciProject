@@ -9,7 +9,7 @@ tiles::tiles()
 {
     height=20;
     width=20;
-    mesh=100;
+    mesh=50;
     makeElevationMap();
     fillMap();
 
@@ -44,13 +44,12 @@ void tiles::fillMap()
     {
         tileMap[0][b].resize(width*mesh);
         tileMap[1][b].resize(width*mesh);
-        for(int c=0; c<tileMap[0][b].size(); c++)
+        for(int c=0; c<=tileMap[0][b].size(); c++)
         {
-            if((b>mesh*(height-1) or b<200) and (c>mesh*(width-1) or b<2*mesh))
+            if((b>=mesh*(height-1) or b<2*mesh) and (c>mesh*(width-1) or b<2*mesh))
                {
-                   int Y=mod(c,mesh*height);
-                   int X=mod(b,mesh*width);
-            double elevation=finalTerrain.GetValue(X/(width*mesh), Y/(height*mesh), 0.5);
+
+            double elevation=finalTerrain.GetValue(c/(width*mesh), b/(height*mesh), 0.5);
             tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
             tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
             tileMap[0][b][c]->elevation=elevation;
@@ -168,7 +167,7 @@ tiles::~tiles()
 
 std::string tiles::findTileType(double elevation)
 {
-     if(elevation<-.2)
+     if(elevation<-.1)
     {
        return "water";
     }
@@ -184,7 +183,7 @@ std::string tiles::findTileType(double elevation)
     {
         return "dirt";
     }
-    else if(elevation<.8)
+    else if(elevation<.9)
     {
         return "stone";
     }
@@ -195,13 +194,11 @@ std::string tiles::findTileType(double elevation)
 }
 void tiles::updateTileMap(signed int gridx,signed int gridy,signed int newGridx,signed int newGridy)
 {
-    int mesh=100;
 
 signed int deltax=newGridx-gridx;
 signed int deltay=newGridy-gridy;
 signed int gridxDelete=mod(gridx-deltax,width);
 signed int gridyDelete=mod(gridy-deltay,height);
-
    //delete x stuff
 
   for(signed int c=-1; c<=1; c++)
@@ -214,8 +211,8 @@ int gridyc=mod(gridy+c,height);
           for(int b=0; b<mesh; b++)
       {
          if(deltax!=0)//horizontal movement
-         {int test1=gridyc*mesh+a;
-         int test2=gridxDelete*mesh+b;
+         {
+
              tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
              tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
 
@@ -234,7 +231,8 @@ int gridyc=mod(gridy+c,height);
          }
          if(deltay!=0) //vertical movement
          {
-             tileMap[0][gridyDelete*100+a][gridxc*100+b]=NULL;
+             tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
+             tileMap[1][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
 
              int x=gridxc*mesh+b;
              int y=mod(newGridy+deltay,height)*mesh+a;
@@ -243,6 +241,7 @@ int gridyc=mod(gridy+c,height);
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;
              tileMap[0][y][x]->position.y=y;
+             tileMap[1][y][x]=new tile();
 
          }
       }
@@ -250,7 +249,6 @@ int gridyc=mod(gridy+c,height);
 
 
   }
-  std::cout<<tileMap[0][1][1];
 
 }
 

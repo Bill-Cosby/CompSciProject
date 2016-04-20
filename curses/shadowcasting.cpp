@@ -36,6 +36,9 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
             else{
 
                 if ((unsigned int)(dx * dx + dy * dy) < radius2 /*and _map[actors[0]->zReturn()-1][ay][ax]->litHere == false*/){
+                        int k=actors[0]->zReturn()-1;
+                        int l=ay;
+                        int m=ax;
                     _map[actors[0]->zReturn()-1][ay][ax]->drawTile(window, renderState);
                     _map[actors[0]->zReturn()-1][ay][ax]->litHere = true;
                     for (item* _i : localItems){
