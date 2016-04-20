@@ -51,7 +51,6 @@ void tiles::fillMap()
 
             double elevation=finalTerrain.GetValue(c/(width*mesh), b/(height*mesh), 0.5);
             tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
-            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
             tileMap[0][b][c]->position.x=c;
@@ -170,10 +169,11 @@ std::string tiles::findTileType(double elevation)
      if(elevation<-.1)
     {
        return "water";
+
     }
     else if(elevation<.2)
     {
-        return "sand";
+        return "sand";std::cout<<elevation<<std::endl;
     }
     else if(elevation<.4)
     {
@@ -219,7 +219,6 @@ int gridyc=mod(gridy+c,height);
             double x=mod(newGridx+deltax,width)*mesh+b;
             double y=gridyc*mesh+a;
             double elevation=finalTerrain.GetValue(x/(width*mesh), y/(height*mesh), 0.5);
-            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
