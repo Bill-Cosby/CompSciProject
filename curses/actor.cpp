@@ -176,13 +176,13 @@ coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map,
             }
         }
         closedSet.push_back(*openSet[i]);
-        for (int i=-1;i<2;i++){
-            for (int j=-1;j<2;j++){
-                if (abs(i) == abs(j)){
+        for (int y=-1;y<2;y++){
+            for (int x=-1;x<2;x++){
+                if (abs(x) == abs(y)){
                     continue;
                 }
-                if (temp.x+i>0 and temp.x+i < _map[1].size() and temp.y+j > 0 and temp.y+j < _map[1].size()){
-                    openSet.push_back(new coordinate(temp.x+i,temp.y+j));
+                if (temp.x+x>0 and temp.x+x < _map[1].size() and temp.y+y > 0 and temp.y+y < _map[1].size()){
+                    openSet.push_back(new coordinate(temp.x+x,temp.y+y));
                 }
             }
         }

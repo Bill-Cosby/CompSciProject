@@ -322,19 +322,13 @@ public:
                 return false;
             }
             else if (dist < 10 or dist == 0){
-                int temp = rand()%12;
+                int temp = rand()%8;
                 if (temp >= 8){testingCharacter->goal = coordinate(-1,-1);return false;}
                 coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
                 if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
                 if (testingCharacter->row()+directions[temp].y < 0)directions[temp].y = 0;
                 if (testingCharacter->row()+directions[temp].y >= _map[0].size())directions[temp].y = 0;
                 if (testingCharacter->col()+directions[temp].x >= _map[0].size())directions[temp].x = 0;
-                if (_map[1][testingCharacter->row()][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp].x = 0;
-                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()]->movementCost == -1)directions[temp].y = 0;
-                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()+directions[temp].x]->movementCost == -1)directions[temp] = coordinate(0,0);
-                if (_map[1][testingCharacter->row()+directions[temp].y][testingCharacter->col()+directions[temp].x]->occupied)directions[temp] = coordinate(0,0);
-
-
 
                 testingCharacter->goal = coordinate(testingCharacter->col()+directions[temp].x,testingCharacter->row()+directions[temp].y);
                 return true;

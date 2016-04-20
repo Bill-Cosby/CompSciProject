@@ -219,10 +219,10 @@ bool waitforplayer = false;
                     if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
                     if (y < 0 or x < 0 or y > _map[0].size()-1 or x > _map[0].size()-1)continue;
                     if(_map[1][y][x]->occupied and _map[1][y][x]->occupied!=controlledActor){
+                                activeAI++;
                             _map[1][y][x]->occupied->increaseCounter();
                             if (_map[1][y][x]->occupied->counter == _map[1][y][x]->occupied->speed()){
                                 _map[1][y][x]->occupied->resetCounter();
-                                activeAI++;
                                 root->run(_map[1][y][x]->occupied,_map,localItems,announcementList);
                             }
                     }
@@ -251,8 +251,8 @@ bool waitforplayer = false;
                 window.close();
             }
             if (event.type == sf::Event::KeyReleased){
-                keyrelease = true;
             }
+                keyrelease = true;
         }
         int ystart = controlledActor->row() - (viewSizeInTiles.y/2);
         int xstart = controlledActor->col() - (viewSizeInTiles.x/2);
