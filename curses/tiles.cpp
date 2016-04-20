@@ -9,7 +9,7 @@ tiles::tiles()
 {
     height=20;
     width=20;
-    mesh=50;
+    mesh=30;
     makeElevationMap();
     fillMap();
 
@@ -40,11 +40,11 @@ void tiles::fillMap()
 
         tileMap[0].resize(height*mesh);
         tileMap[1].resize(height*mesh);
-        for(int b=0; b<tileMap[0].size(); b++)
+        for(double b=0; b<tileMap[0].size(); b++)
     {
         tileMap[0][b].resize(width*mesh);
         tileMap[1][b].resize(width*mesh);
-        for(int c=0; c<=tileMap[0][b].size(); c++)
+        for(double c=0; c<=tileMap[0][b].size(); c++)
         {
             if((b>=mesh*(height-1) or b<2*mesh) and (c>mesh*(width-1) or b<2*mesh))
                {
@@ -166,20 +166,20 @@ tiles::~tiles()
 
 std::string tiles::findTileType(double elevation)
 {
-     if(elevation<-.1)
+     if(elevation<-.2)
     {
-       return "water";
+      return "water";
 
     }
-    else if(elevation<.2)
+    else if(elevation<.1)
     {
-        return "sand";std::cout<<elevation<<std::endl;
+        return "sand";
     }
     else if(elevation<.4)
     {
         return "grass";
     }
-    else if(elevation<.6)
+    else if(elevation<.7)
     {
         return "dirt";
     }
@@ -233,8 +233,8 @@ int gridyc=mod(gridy+c,height);
              tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
              tileMap[1][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
 
-             int x=gridxc*mesh+b;
-             int y=mod(newGridy+deltay,height)*mesh+a;
+             double x=gridxc*mesh+b;
+             double y=mod(newGridy+deltay,height)*mesh+a;
              double elevation=finalTerrain.GetValue(x/(width*mesh),y/(height*mesh), 0.5);
              tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
              tileMap[0][y][x]->elevation=elevation;
