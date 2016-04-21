@@ -13,6 +13,7 @@ tiles::tiles()
     makeElevationMap();
     fillMap();
 
+
 }
 
 int tiles::mod(signed int a, int b)
@@ -44,7 +45,7 @@ void tiles::fillMap()
     {
         tileMap[0][b].resize(width*mesh);
         tileMap[1][b].resize(width*mesh);
-        for(double c=0; c<=tileMap[0][b].size(); c++)
+        for(double c=0; c<tileMap[0][b].size(); c++)
         {
             if((b>=mesh*(height-1) or b<2*mesh) and (c>mesh*(width-1) or b<2*mesh))
                {
@@ -171,7 +172,7 @@ std::string tiles::findTileType(double elevation)
       return "water";
 
     }
-    else if(elevation<.1)
+    else if(elevation<-.1)
     {
         return "sand";
     }
