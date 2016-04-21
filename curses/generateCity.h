@@ -47,11 +47,12 @@ class city: public box
  std::mt19937 generator;
 unsigned seed;
 std::vector<std::vector<std::vector<tile*> > > tileMap;
-int tileMapSize;
 void setTileMap();
-city(){tileMapSize=100; left=0; bottom=0; right=tileMapSize-1; top=tileMapSize-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
+city(){width=100; height=100; left=0; bottom=0; right=width-1; top=height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
 void generateCity();
 void deleteTileMap();
+int width;
+int height;
 };
 
 

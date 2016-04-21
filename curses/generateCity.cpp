@@ -72,13 +72,13 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
 void city:: setTileMap()
 {
     tileMap.resize(2);
-    tileMap[0].resize(tileMapSize);
-    tileMap[1].resize(tileMapSize);
+    tileMap[0].resize(height);
+    tileMap[1].resize(height);
   for(int a=0; a<tileMapSize; a++)
     {
-        tileMap[0][a].resize(tileMapSize);
-        tileMap[1][a].resize(tileMapSize);
-        for(int b=0; b<tileMapSize; b++)
+        tileMap[0][a].resize(width);
+        tileMap[1][a].resize(width);
+        for(int b=0; b<tileMap[0][a].size(); b++)
         {
             tileMap[0][a][b]=new tile(grass,10,"grass");
             tileMap[0][a][b]->position = coordinate(b,a);
@@ -93,9 +93,9 @@ void city:: setTileMap()
 
 void city:: deleteTileMap()
 {
-    for(int a=0; a<tileMap.size(); a++)
+    for(int a=0; a<tileMap[0].size(); a++)
     {
-        for(int b=0; b<tileMap.size(); b++)
+        for(int b=0; b<tileMap[0][a].size(); b++)
         {
             delete tileMap[0][a][b];
             delete tileMap[1][a][b];
@@ -103,7 +103,7 @@ void city:: deleteTileMap()
     }
 }
 
-void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int width, std::string type, std::mt19937 & generator)
+void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > & tileMap, int Lwidth, std::string type, std::mt19937 & generator)
 {
     int a=0;
     int b=0;
@@ -232,11 +232,11 @@ std::uniform_int_distribution<int> halfChance(0,1);
     if(type=="ROADBOX")
     {
 
-        width=level;
+        Lwidth=level;
     }
     if(type=="HOUSE")
     {
-        width=1;
+        Lwidth=1;
     }
 
     if(half==0 and right-left>width+6) //if line vertical and there is space to draw line
@@ -252,17 +252,17 @@ std::uniform_int_distribution<int> halfChance(0,1);
         tempRoad.Point1=&lowPoint;
         tempRoad.Point2=&highPoint;
 
-        makeLine(&tempRoad, tileMap, width, type, generator); //draws road on tile map
+        makeLine(&tempRoad, tileMap, Lwidth, type, generator); //draws road on tile map
 
         subBox1=new box;
         subBox2=new box;
 
         subBox1->left=left;
-        subBox1->right=splitPoint-width/2-1;
+        subBox1->right=splitPoint-Lwidth/2-1;
         subBox1->top=top;
         subBox1->bottom=bottom;
 
-        subBox2->left=splitPoint+width/2+1;
+        subBox2->left=splitPoint+Lwidth/2+1;
         subBox2->right=right;
         subBox2->top=top;
         subBox2->bottom=bottom;
@@ -289,7 +289,7 @@ std::uniform_int_distribution<int> halfChance(0,1);
         tempRoad.Point2=&rightPoint;
 
 
-        makeLine(&tempRoad, tileMap, width, type, generator); //draws road on tileMap
+        makeLine(&tempRoad, tileMap, Lwidth, type, generator); //draws road on tileMap
 
         subBox1=new box;
         subBox2=new box;
@@ -297,10 +297,10 @@ std::uniform_int_distribution<int> halfChance(0,1);
         subBox1->left=left;
         subBox1->right=right;
         subBox1->top=top-1;
-        subBox1->bottom=splitPoint+width/2+1;
+        subBox1->bottom=splitPoint+Lwidth/2+1;
         subBox2->left=left;
         subBox2->right=right;
-        subBox2->top=splitPoint-width/2-1;
+        subBox2->top=splitPoint-Lwidth/2-1;
         subBox2->bottom=bottom+1;  //forms 2 new boxes
         subBox1->divideBox(level-1, tileMap, type, generator);
         subBox2->divideBox(level-1, tileMap, type, generator);
