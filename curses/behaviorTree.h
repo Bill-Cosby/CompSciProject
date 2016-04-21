@@ -322,7 +322,7 @@ public:
                 return false;
             }
             else if (dist < 10 or dist == 0){
-                int temp = rand()%8;
+                int temp = rand()%20;
                 if (temp >= 8){testingCharacter->goal = coordinate(-1,-1);return false;}
                 coordinate directions[8] = {{coordinate(0,-1)},{coordinate(1,0)},{coordinate(0,1)},{coordinate(-1,0)},{coordinate(1,-1)},{coordinate(1,1)},{coordinate(-1,1)},{coordinate(-1,-1)}};                if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
                 if (testingCharacter->col()+directions[temp].x < 0)directions[temp].x = 0;
