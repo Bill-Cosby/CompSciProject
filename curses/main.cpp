@@ -231,6 +231,11 @@ bool waitforplayer = false;
     actor* actorProcessing = NULL;
     while (window.isOpen())
     {
+
+        if (controlledActor->embarking){
+
+        }
+
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
         if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 

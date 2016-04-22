@@ -64,6 +64,11 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
 
+            if (temp.y < 0 or temp.x < 0 or temp.y > _map[1].size() or temp.x > _map[1][1].size()){
+                embarking = true;
+                return true;
+            }
+
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
                 while (pressedKey == false){
                     while (window.pollEvent(event)){

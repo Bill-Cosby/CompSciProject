@@ -33,6 +33,7 @@ protected:
 
     int x = 0,y = 0,z = 0;
 public:
+    bool embarking = false;
     short direction = 0;
     bool interactedWithDoor;
     std::vector<actor*> followers;
