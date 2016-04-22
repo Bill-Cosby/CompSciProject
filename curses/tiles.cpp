@@ -7,12 +7,13 @@
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=1;
-    height=10;
-    width=10;
+    zoomOut=10;
+    height=20;
+    width=20;
     mesh=30;
     makeElevationMap();
     fillMap();
+    placeCities();
 
 
 }
@@ -168,24 +169,24 @@ tiles::~tiles()
 
 std::string tiles::findTileType(double elevation)
 {
-     if(elevation<-.2)
+     if(elevation<-waterBelow)
     {
       return "water";
 
     }
-    else if(elevation<-.15)
+    else if(elevation<sandBelow)
     {
         return "sand";
     }
-    else if(elevation<.3)
+    else if(elevation<grassBelow)
     {
         return "grass";
     }
-    else if(elevation<.6)
+    else if(elevation<dirtBelow)
     {
         return "dirt";
     }
-    else if(elevation<.9)
+    else if(elevation<rockBelow)
     {
         return "stone";
     }
@@ -215,8 +216,9 @@ int gridyc=mod(gridy+c,height);
          if(deltax!=0)//horizontal movement
          {
 
-             tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
-             tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;
+             if(tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]!=NULL){if(tile[0][gridyc*mesh+a][gridxDelete*mesh+b]->isCity==false)tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;}
+            if(tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]!=NULL) {if(tile[1][gridyc*mesh+a][gridxDelete*mesh+b]->isCity==false)tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;}
+
 
             double x=mod(newGridx+deltax,width)*mesh+b;
             double y=gridyc*mesh+a;
@@ -251,6 +253,42 @@ int gridyc=mod(gridy+c,height);
 
   }
 
+}
+
+void city::placeCities()
+{
+    unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
+     std::mt19937 generator(seed);
+     std::uniform_int_distribution<int> chooseTestx(0,mesh*width);
+     std:uniform_int_distribution<int> chooseTesty(0, mesh*height);
+ int cityWidth=100;
+ int cityHeight=100;
+ bool goodSpot;
+ double elevationHere;
+    for(int a=0; a<20; a++)
+    {
+    x=chooseTestx(generator);
+    y=chooseTesty(generator);
+    goodSpot=true;
+    for(double b=0; b<100; b++)
+    {
+        for(double c=0; c<100; c++)
+        {
+            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height));
+           if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
+           {
+               goodSpot=false;
+               goto stopCheck;
+           }
+        }
+    }
+              stopCheck;
+              if(goodSpot==true)
+              {
+                  new city(x,y,100,100);
+              }
+
+    }
 }
 
    /* module::Turbulence turbulence;

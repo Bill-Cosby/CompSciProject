@@ -13,6 +13,11 @@ public:
     int width;
     int mesh;
     double zoomOut;
+    const double waterBelow =-.2;
+    const double sandBelow =-.15;
+    const double grassBelow =.3;
+    const double dirtBelow = .6;
+    const double rockBelow = .9;
     noise::module::Perlin preLandTerrain1;
     noise::module::ScaleBias landTerrain1;
     noise::module::Perlin preLandTerrain2;

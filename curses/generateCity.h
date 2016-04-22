@@ -49,8 +49,8 @@ unsigned seed;
 int width;
 int height;
 std::vector<std::vector<std::vector<tile*> > > tileMap;
+city(xZero, yZero, int w, int h){width=w; height=h; left=xZero; bottom=yZero; right=xZero+width-1; top=yZero+height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
 void setTileMap();
-city(){width=100; height=100; left=0; bottom=0; right=width-1; top=height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
 void generateCity();
 ~city();
 
