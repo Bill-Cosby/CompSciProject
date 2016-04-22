@@ -42,7 +42,6 @@ int main()
 
 
     Sequence * danger = new Sequence;
-        danger->addChild(new lookForEnemiesNode);
         Selector * fightOrFlight = new Selector;
             Sequence * tryToAttack = new Sequence;
                 tryToAttack->addChild(new decideIfCanAttackNode);
@@ -229,7 +228,6 @@ bool waitforplayer = false;
                 }
             }
         }
-        if (activeAI > 0)std::cout << activeAI << std::endl;
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,controlledActor->col(),controlledActor->row(),1/.1,window,renderState,true,1,.1);

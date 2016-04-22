@@ -220,6 +220,7 @@ bool actor::findPath(std::vector<std::vector<std::vector<tile*> > > &_map)
     }
     else path = pathFinder(_map,coordinate(x,y),goal,noGo);
     if (path.size()==0){
+        goal = coordinate(-1,-1);
     path.clear();
     return false;
     }
@@ -237,11 +238,23 @@ void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
             interactedWithDoor = true;
         }
         else{
+            coordinate dir[8] = {coordinate(-1,-1),coordinate(0,-1),coordinate(1,-1),coordinate(1,0),coordinate(1,1),coordinate(0,1),coordinate(-1,1),coordinate(-1,0)};
             if (path[path.size()-1].y < 0 or path[path.size()-1].x < 0 or path[path.size()-1].y >= _map[1][0].size() or path[path.size()-1].x >= _map[1][0].size()){path.erase(path.begin()+path.size()-1);return;}
             if ((row() == path[path.size()-1].y and col() == path[path.size()-1].x) or _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied or _map[1][path[path.size()-1].y][path[path.size()-1].x]->movementCost == -1){path.erase(path.begin()+path.size()-1);return;}
             _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
             _map[1][y][x]->occupied = NULL;
+            std::cout << name << std::endl;
+            for (int i = 0; i < 8; i++){
+                std::cout << x-path[path.size()-1].x << "," << y-path[path.size()-1].y << std::endl;
+                if (coordinate(x-path[path.size()-1].x,y-path[path.size()-1].y) == dir[i]){
+                        direction = i;
+                        std::cout << direction << std::endl;
+                        break;
+                }
+            }
             pos(path[path.size()-1].y,path[path.size()-1].x);
+
+
             path.erase(path.begin()+path.size()-1);
 
             if (memory != coordinate(x,y) and interactedWithDoor){

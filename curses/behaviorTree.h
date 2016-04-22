@@ -105,23 +105,29 @@ class findPathNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
+        if (testingCharacter->actorAttacking){
+            testingCharacter->goal = coordinate(testingCharacter->actorAttacking->col(),testingCharacter->actorAttacking->row());
+        }
+
         if (testingCharacter->goal == coordinate(-1,-1)){
             return false;
         }
 
-        if (testingCharacter->canSee(_map,testingCharacter->goal)){
-            coordinate temp;
-            if (testingCharacter->col()>testingCharacter->goal.x){temp.x =-1;temp.y= 0;}
-            if (testingCharacter->col()<testingCharacter->goal.x){temp.x =1;temp.y = 0;}
-            if (testingCharacter->row()>testingCharacter->goal.y){temp.x =0;temp.y = -1;}
-            if (testingCharacter->row()<testingCharacter->goal.y){temp.x =0;temp.y = 1;}
-
-            testingCharacter->path.clear();
-            testingCharacter->path.push_back(coordinate(testingCharacter->col()+temp.x,testingCharacter->row()+temp.y));
-
-            testingCharacter->memory = coordinate(-1,-1);
-            return true;
-        }
+//        if (testingCharacter->canSee(_map,testingCharacter->goal)){
+//
+//
+//            coordinate temp;
+//            if (testingCharacter->col()>testingCharacter->goal.x){temp.x =-1;}
+//            if (testingCharacter->col()<testingCharacter->goal.x){temp.x =1;}
+//            if (testingCharacter->row()>testingCharacter->goal.y){temp.y = -1;}
+//            if (testingCharacter->row()<testingCharacter->goal.y){temp.y = 1;}
+//
+//            testingCharacter->path.clear();
+//            testingCharacter->path.push_back(coordinate(testingCharacter->col()+temp.x,testingCharacter->row()+temp.y));
+//
+//            testingCharacter->memory = coordinate(-1,-1);
+//            return true;
+//        }
 
         if (testingCharacter->path.size() > 0 and testingCharacter->memory == testingCharacter->goal){
             return false;
@@ -292,6 +298,7 @@ class herdNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
+        std::cout << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
         if (testingCharacter->actorFollowing != NULL){
             if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){
                 testingCharacter->goal = coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row());
@@ -311,7 +318,7 @@ public:
                 return true;
             }
         }
-        else if (testingCharacter->social){
+        else if (testingCharacter->social and testingCharacter->memory==coordinate(-1,-1) and testingCharacter->goal==coordinate(-1,-1)){
             testingCharacter->findTile(_map,false,false,true);
             int dist;
             if (testingCharacter->goal != coordinate(-1,-1)){
