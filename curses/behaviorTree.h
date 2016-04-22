@@ -128,7 +128,6 @@ public:
         }
 
         if (testingCharacter->findPath(_map)){
-            std::cout << testingCharacter->path.size() << std::endl;
             testingCharacter->memory = testingCharacter->goal;
             return true;
         }
@@ -251,6 +250,8 @@ public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
 
+        testingCharacter->inDanger = false;
+        return false;
     }
 };
 
@@ -259,7 +260,7 @@ class decideIfCanAttackNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
-        if (testingCharacter->decideIfCanAttack(_map)){
+        if (testingCharacter->decideIfCanAttack( _map)){
             return true;
         }
         else{
@@ -291,7 +292,6 @@ class herdNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
-        if (testingCharacter->goal != coordinate(-1,-1)) return false;
         if (testingCharacter->actorFollowing != NULL){
             if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){
                 testingCharacter->goal = coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row());

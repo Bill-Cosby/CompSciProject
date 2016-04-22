@@ -104,20 +104,20 @@ bool actor::decideIfCanAttack(std::vector<std::vector<std::vector<tile*> > > &_m
     float dangerRatio;
     bool foundEnemy = false;
 
-    std::vector<coordinate> enemyPos = findEnemiesAtAngle(direction,_map,x,y,15);
-
-    for (coordinate _c : enemyPos){
-        if (EVIL == _map[1][_c.y][_c.x]->occupied->EVIL)continue;
-
-        totalDanger+=(_map[1][_c.y][_c.x]->occupied->totalAttack()+_map[1][_c.y][_c.x]->occupied->totalDefense() + _map[1][_c.y][_c.x]->occupied->dexterity);
-
-
-        dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
-        if (dangerRatio < 1){
-            actorAttacking = _map[1][_c.y][_c.x]->occupied;
-            foundEnemy = true;
-        }
-    }
+//    for (actor* _a : actors){
+//
+//        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+//        if (EVIL and _a->EVIL)continue;
+//
+//        totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+//
+//
+//        dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
+//        if (dangerRatio < 1){
+//            actorAttacking = _a;
+//            foundEnemy = true;
+//        }
+//    }
     if (foundEnemy == false){
         actorAttacking = NULL;
     }

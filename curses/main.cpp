@@ -42,6 +42,7 @@ int main()
 
 
     Sequence * danger = new Sequence;
+        danger->addChild(new lookForEnemiesNode);
         Selector * fightOrFlight = new Selector;
             Sequence * tryToAttack = new Sequence;
                 tryToAttack->addChild(new decideIfCanAttackNode);
@@ -58,12 +59,12 @@ int main()
         openDoors->addChild(new findDoorNode);
         openDoors->addChild(new openDoorNode);
 
-    //thoughtProcess->addChild(danger);
+    thoughtProcess->addChild(danger);
     thoughtProcess->addChild(lookForItems);
     //thoughtProcess->addChild(openDoors);
 
     root->addChild(thoughtProcess);
-    //root->addChild(new herdNode);
+    root->addChild(new herdNode);
     root->addChild(new findPathNode);
     root->addChild(new moveOnPathNode);
 
@@ -228,6 +229,7 @@ bool waitforplayer = false;
                 }
             }
         }
+        if (activeAI > 0)std::cout << activeAI << std::endl;
 
 //        lightmap = &_map;
 //        do_fov(lightmap,localItems,actors,controlledActor->col(),controlledActor->row(),1/.1,window,renderState,true,1,.1);

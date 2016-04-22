@@ -26,7 +26,7 @@ player::player(std::string speciesToLoad)
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     //attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
-    attack = 0;
+    attack = 700000;
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
@@ -45,7 +45,8 @@ player::player(std::string speciesToLoad)
     rootPart->canEquip(equipment[1],true);
     rootPart->canEquip(equipment[2],true);
 
-    EVIL = false;
+    if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
+    else EVIL = false;
     if (RSL::getStringData(fileName,speciesToLoad+".SOCIAL") == "true")social = true;
     else social = false;
     if (RSL::getStringData(fileName,speciesToLoad+".EQUIPS") == "true")social = true;
