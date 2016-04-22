@@ -9,6 +9,7 @@
 #include "bodyParts.h"
 #include "aStar.h"
 #include "CRandomName.h"
+#include "shadowcasting.h"
 #include <random>
 #include <string>
 
@@ -32,6 +33,7 @@ protected:
 
     int x = 0,y = 0,z = 0;
 public:
+    short direction = 0;
     bool interactedWithDoor;
     std::vector<actor*> followers;
     actor* actorFollowing;
