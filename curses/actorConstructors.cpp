@@ -26,7 +26,7 @@ player::player(std::string speciesToLoad)
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
     //attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
-    attack = 700000;
+    attack = 10;
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");
@@ -38,12 +38,16 @@ player::player(std::string speciesToLoad)
     equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
     equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
-    equipment[0]->equipped = true;
-    equipment[1]->equipped = true;
-    equipment[2]->equipped = true;
-    rootPart->canEquip(equipment[0],true);
-    rootPart->canEquip(equipment[1],true);
-    rootPart->canEquip(equipment[2],true);
+    equipment.push_back(new clothing("cotton hood",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cotton glove",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cotton glove",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cotton shoe",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("cotton shoe",'C',0,0,10,"cotton"));
+
+    for (item* _i : equipment){
+        _i->equipped = true;
+        rootPart->canEquip(_i,true);
+    }
 
     if (RSL::getStringData(fileName, speciesToLoad+".EVIL") == "true")EVIL = true;
     else EVIL = false;

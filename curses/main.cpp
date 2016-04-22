@@ -28,7 +28,6 @@ int main()
     sf::Shader lightingShader;
     sf::RenderStates renderState;
 
-
     int counter = 0;
 
     gameWorld gameworld(window);
@@ -67,13 +66,31 @@ int main()
     root->addChild(new findPathNode);
     root->addChild(new moveOnPathNode);
 
-
-
-
-
-
     //window.setFramerateLimit(60);
 
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text title;
+    title.setFont(font);
+    title.setCharacterSize(50);
+    title.setPosition(220,100);
+    title.setString("Curses!");
+
+    sf::Text subtitle;
+    subtitle.setFont(font);
+    subtitle.setCharacterSize(10);
+    subtitle.setPosition(275,300);
+    subtitle.setString("Press 'ENTER' to begin!");
+
+    while(sf::Keyboard::isKeyPressed(sf::Keyboard::Return) == false)
+    {
+        window.clear(sf::Color::Black);
+
+        window.draw(title);
+        window.draw(subtitle);
+
+        window.display();
+    }
 
 std::vector<actor*> actors;
 actors.push_back(characterCreationMenu(window));
@@ -218,7 +235,7 @@ actors.push_back(characterCreationMenu(window));
         }
     }
 
-    localItems.push_back(new consumable(0,0,0,"health",'x',actors[0]->col(),actors[0]->row(),0,"null"));
+    //localItems.push_back(new consumable(0,0,0,"bighealth",'x',actors[0]->col(),actors[0]->row(),0,"null"));
 
 bool keyrelease = true;
 bool waitforplayer = false;

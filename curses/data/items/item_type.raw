@@ -1,17 +1,17 @@
 [NUMBEROFITEMS]
 	[NUMBER]3:;
-[HEALTH]
+[MEDHEALTH]
 	[NAME]health potion;
 	[TEXTURE]items.png,0:0:;
-	[HEALTH]20;
+	[HEALTH]15;
 [END]
-[SPEED]
-	[NAME]speed potion;
+[SMALLHEALTH]
+	[NAME]small health potion;
 	[TEXTURE]items.png,0:16:;
-	[SPEED]20;
+	[HEALTH]7;
 [END]
-[DEFENSE]
-	[NAME]defense potion;
+[BIGHEALTH]
+	[NAME]large health potion;
 	[TEXTURE]items.png,0:32:;
-	[DEFENSE]20;
+	[HEALTH]25;
 [END]

@@ -93,12 +93,10 @@ void container::fillWithArmor()
     int dumbNumber = rand()%11;
     int randomNumber = RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0);
 
-
     for (int i =0; i<dumbNumber;i++){
         std::string name = RSL::returnRandomItem("data/items/armor_type.raw",rand()%randomNumber+1);
         int value = RSL::getIntData("data/items/armor_type.raw",name+".value",0);
 
-        contained.push_back(new clothing(name,'p',0,0,value,"iron"));
     }
 }
 

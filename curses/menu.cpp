@@ -210,6 +210,18 @@ actor* characterCreationMenu(sf::RenderWindow &window)
     }
     character->attack = RSL::getIntData("data/creatures/creature_standard.raw",character->species+".strength",str);
     character->dexterity = RSL::getIntData("data/creatures/creature_standard.raw",character->species+".dexterity",dex);
+
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+
+    sf::Text loading;
+    loading.setFont(font);
+    loading.setCharacterSize(15);
+    loading.setPosition(650,575);
+    loading.setString("Loading...");
+    window.clear(sf::Color::Black);
+    window.draw(loading);
+    window.display();
+
     return character;
 }
 

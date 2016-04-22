@@ -1,5 +1,5 @@
 [NUMBEROFITEMS]
-	[NUMBER]8:;
+	[NUMBER]12:;
 [END]
 [PLATE HELM]
 	[NAME]plate helm;
@@ -55,5 +55,33 @@
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:48:;
 	[TYPE]legging;
+	[VALUE]100:;
+[END]
+[COTTON ARMS]
+	[NAME]cotton sleeves;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:56:;
+	[TYPE]arm;
+	[VALUE]100:;
+[END]
+[COTTON HOOD]
+	[NAME]cotton hood;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:0:;
+	[TYPE]helm;
+	[VALUE]100:;
+[END]
+[COTTON SHOE]
+	[NAME]cotton shoes;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:16:;
+	[TYPE]boot;
+	[VALUE]100:;
+[END]
+[COTTON GLOVE]
+	[NAME]cotton glove;
+	[DEFENSE]1:;
+	[TEXTURE]clothes.png,16:32:;
+	[TYPE]glove;
 	[VALUE]100:;
 [END]
