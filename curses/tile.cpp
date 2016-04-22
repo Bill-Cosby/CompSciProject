@@ -102,11 +102,34 @@ container::container(int dc, int mov, std::string mat,int x, int y) : tile(dc,mo
 void container::fillWithArmor()
 {
     int dumbNumber = rand()%11;
-    int randomNumber = RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0);
+    int randomNumber;
+    int matNumber = rand()%10 + 1;
 
     for (int i =0; i<dumbNumber;i++){
-        std::string name = RSL::returnRandomItem("data/items/armor_type.raw",rand()%randomNumber+1);
+        randomNumber = rand()%RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0)+1;
+        std::string name =  RSL::returnRandomItem("data/items/armor_type.raw",randomNumber);
         int value = RSL::getIntData("data/items/armor_type.raw",name+".value",0);
+
+        if(randomNumber>6)
+        {
+            contained.push_back(new clothing(name,'C',0,0,5,"cotton"));
+        }
+        else if(matNumber == 1 or matNumber == 2 or matNumber == 3 or matNumber == 4)
+        {
+            contained.push_back(new clothing(name,'C',0,0,5,"cotton"));
+        }
+        else if(matNumber == 5 or matNumber == 6 or matNumber == 7)
+        {
+            contained.push_back(new clothing(name,'C',0,0,5,"copper"));
+        }
+        else if(matNumber == 8 or matNumber == 9)
+        {
+            contained.push_back(new clothing(name,'C',0,0,5,"iron"));
+        }
+        else if(matNumber == 10)
+        {
+            contained.push_back(new clothing(name,'C',0,0,5,"steel"));
+        }
 
     }
 }

@@ -57,7 +57,7 @@
 	[TYPE]legging;
 	[VALUE]100:;
 [END]
-[COTTON ARMS]
+[COTTON SLEEVES]
 	[NAME]cotton sleeves;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:56:;
@@ -72,7 +72,7 @@
 	[VALUE]100:;
 [END]
 [COTTON SHOE]
-	[NAME]cotton shoes;
+	[NAME]cotton shoe;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:16:;
 	[TYPE]boot;
