@@ -298,7 +298,6 @@ class herdNode : public Node
 public:
     virtual bool run(actor* testingCharacter, std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList) override
     {
-        std::cout << testingCharacter->goal.x << "," << testingCharacter->goal.y << std::endl;
         if (testingCharacter->actorFollowing != NULL){
             if (testingCharacter->findDistance(coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row()))>6){
                 testingCharacter->goal = coordinate(testingCharacter->actorFollowing->col(),testingCharacter->actorFollowing->row());

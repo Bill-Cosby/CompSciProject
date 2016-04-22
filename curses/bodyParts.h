@@ -65,6 +65,14 @@ public:
         }
     }
 
+    void heal(int value){
+        damage+=value;
+        if (damage > weight*2)damage = weight*2;
+        for (bodyPart* _b : attachedParts){
+            _b->heal(value);
+        }
+    }
+
     void setHair(sf::Texture tex)
     {
         if (name == "head"){

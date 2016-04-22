@@ -182,6 +182,14 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                     else{
                         itemLookingAt->equipped = true;
                         itemToPickUp = itemLookingAt;
+
+                        if (itemLookingAt->health > 0){
+                            rootPart->heal(itemLookingAt->health);
+                            delete itemLookingAt;
+                            inventory.erase(inventory.begin()+itemSelected);
+                            return;
+                        }
+
                         equipItem(localItems);
 
                         equipment.push_back(itemLookingAt);
