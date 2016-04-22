@@ -3,13 +3,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
+#include <chrono>
+#include "generateCity.h"
 
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=10;
-    height=20;
-    width=20;
+    zoomOut=1;
+    height=40;
+    width=40;
     mesh=30;
     makeElevationMap();
     fillMap();
@@ -61,8 +63,8 @@ void tiles::fillMap()
                }
                else
                 {
-                tileMap[0][b][c]=NULL;
-                tileMap[1][b][c]=NULL;
+                tileMap[0][b][c]=new tile;
+                tileMap[1][b][c]=new tile;
                }
         }
     }
@@ -169,7 +171,7 @@ tiles::~tiles()
 
 std::string tiles::findTileType(double elevation)
 {
-     if(elevation<-waterBelow)
+     if(elevation<waterBelow)
     {
       return "water";
 
@@ -215,55 +217,64 @@ int gridyc=mod(gridy+c,height);
       {
          if(deltax!=0)//horizontal movement
          {
-
-             if(tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]!=NULL){if(tile[0][gridyc*mesh+a][gridxDelete*mesh+b]->isCity==false)tileMap[0][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;}
-            if(tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]!=NULL) {if(tile[1][gridyc*mesh+a][gridxDelete*mesh+b]->isCity==false)tileMap[1][gridyc*mesh+a][gridxDelete*mesh+b]=NULL;}
+             if(tileMap[0][gridyDelete*mesh+a][gridxDelete*mesh+b]->isCity==false)
+             {
+                 tileMap[0][gridyDelete*mesh+a][gridxDelete*mesh+b]=new tile;
+             }
 
 
             double x=mod(newGridx+deltax,width)*mesh+b;
             double y=gridyc*mesh+a;
+
+            if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
+            {
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
             tileMap[0][y][x]->position.y=y;
-            tileMap[1][y][x]=new tile();
-
-
+            }
 
          }
+
          if(deltay!=0) //vertical movement
          {
-             tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
-             tileMap[1][gridyDelete*mesh+a][gridxc*mesh+b]=NULL;
+             if(tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]->isCity==false)
+             {
+             tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]=new tile;
+             }
+
 
              double x=gridxc*mesh+b;
              double y=mod(newGridy+deltay,height)*mesh+a;
-             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh),y*zoomOut/(height*mesh), 0.5);
+             if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
+             {
+                 double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh),y*zoomOut/(height*mesh), 0.5);
              tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;
              tileMap[0][y][x]->position.y=y;
-             tileMap[1][y][x]=new tile();
+             }
 
          }
       }
       }
-
-
   }
 
 }
 
-void city::placeCities()
+void tiles::placeCities()
 {
     unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
      std::mt19937 generator(seed);
      std::uniform_int_distribution<int> chooseTestx(0,mesh*width);
-     std:uniform_int_distribution<int> chooseTesty(0, mesh*height);
+     std::uniform_int_distribution<int> chooseTesty(0, mesh*height);
  int cityWidth=100;
  int cityHeight=100;
+ int x;
+ int y;
  bool goodSpot;
+ city* A;
  double elevationHere;
     for(int a=0; a<20; a++)
     {
@@ -274,18 +285,23 @@ void city::placeCities()
     {
         for(double c=0; c<100; c++)
         {
-            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height));
+            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
            if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
            {
                goodSpot=false;
-               goto stopCheck;
+               break;
            }
         }
+        if(goodSpot==false)
+        {
+            break;
+        }
     }
-              stopCheck;
+
               if(goodSpot==true)
               {
-                  new city(x,y,100,100);
+                  std::cout<<"City Made \n";
+                   A=new city(x,y,100,100,tileMap);
               }
 
     }

@@ -32,6 +32,7 @@ public:
     int mod(signed int, int);
  std::string findTileType(double elevation);
 void updateTileMap(int,int,int,int);
+void placeCities();
 
 
 

@@ -48,11 +48,10 @@ class city: public box
 unsigned seed;
 int width;
 int height;
-std::vector<std::vector<std::vector<tile*> > > tileMap;
-city(xZero, yZero, int w, int h){width=w; height=h; left=xZero; bottom=yZero; right=xZero+width-1; top=yZero+height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);}
-void setTileMap();
-void generateCity();
-~city();
+city(int xZero, int yZero, int w, int h, std::vector<std::vector<std::vector<tile*> > > & tileMap);
+void setTileMap(std::vector<std::vector<std::vector<tile*> > > & tileMap);
+
+//~city();
 
 };
 

@@ -5,7 +5,6 @@ tile::tile(int hC, int cSF)
     hCost=hC;
     gCost=cSF;
     isDoor=false;
-    isCity=false;
 }
 
 tile::tile(coordinate pos, coordinate goal, int cSF)
@@ -14,7 +13,6 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     hCost=getDistance(position,goal);
     gCost=cSF;
     isDoor=false;
-    isCity=false;
 }
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
@@ -81,7 +79,6 @@ tile::tile(char dc, int mv, std::string mat)
     movementCost = mv;
     defaultchar = dc;
     darkenBy = 1;
-    isCity=false;
 }
 
 bool door::interactWithDoor(bool opening)
