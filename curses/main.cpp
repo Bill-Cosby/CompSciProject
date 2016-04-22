@@ -29,7 +29,6 @@ int main()
     sf::Shader lightingShader;
     sf::RenderStates renderState;
 
-
     int counter = 0;
 
     gameWorld gameworld(window);
@@ -67,6 +66,7 @@ int main()
     root->addChild(new findPathNode);
     root->addChild(new moveOnPathNode);
 
+    //window.setFramerateLimit(60);
 
     std::vector<std::vector<std::vector<tile* > > > _map;
     city myCity;
@@ -79,11 +79,29 @@ int main()
     _map[1][1][1]->occupied = controlledActor;
 
     std::vector<item*> localItems;;
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text title;
+    title.setFont(font);
+    title.setCharacterSize(50);
+    title.setPosition(220,100);
+    title.setString("Curses!");
 
+    sf::Text subtitle;
+    subtitle.setFont(font);
+    subtitle.setCharacterSize(10);
+    subtitle.setPosition(275,300);
+    subtitle.setString("Press 'ENTER' to begin!");
 
+    while(sf::Keyboard::isKeyPressed(sf::Keyboard::Return) == false)
+    {
+        window.clear(sf::Color::Black);
 
-    //window.setFramerateLimit(60);
+        window.draw(title);
+        window.draw(subtitle);
 
+        window.display();
+    }
 
     //char ch;
 
@@ -164,34 +182,48 @@ int main()
 
 
     //DUNGEON SETUP CODE
-//////    dungeon map_t;
-//////    int whatever = 0;
-//////    _map.resize(2);
-//////    _map[0].resize(map_t.dungeon_grid.size());
-//////    _map[1].resize(map_t.dungeon_grid.size());
-//////    for (int y=0;y<map_t.dungeon_grid.size();y++)
-//////    {
-//////        _map[0][y].resize(map_t.dungeon_grid[0].size());
-//////        _map[1][y].resize(map_t.dungeon_grid[0].size());
-//////        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
-//////        {
-//////            if (map_t.dungeon_grid[y][x])
-//////            {
-//////                whatever++;
-//////                _map[1][y][x]= new tile;
-//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
-//////                _map[0][y][x]->position = coordinate(x,y);
-//////            }
-//////            else
-//////            {
-//////
-//////                _map[1][y][x]= new tile(stonewall,-1,"stone");
-//////                _map[0][y][x]= new tile(stonefloor,0,"stone");
-//////                _map[1][y][x]->position = coordinate(x,y);
-//////                _map[0][y][x]->position = coordinate(x,y);
-//////            }
-//////        }
-//////    }
+//    dungeon map_t;
+//    int whatever = 0;
+//    _map.resize(2);
+//    _map[0].resize(map_t.dungeon_grid.size());
+//    _map[1].resize(map_t.dungeon_grid.size());
+//    for (int y=0;y<map_t.dungeon_grid.size();y++)
+//    {
+//        _map[0][y].resize(map_t.dungeon_grid[0].size());
+//        _map[1][y].resize(map_t.dungeon_grid[0].size());
+//        for (int x=0;x<map_t.dungeon_grid[0].size();x++)
+//        {
+//            if (map_t.dungeon_grid[y][x])
+//            {
+//                whatever++;
+//                _map[1][y][x]= new tile;
+//                _map[0][y][x]= new tile(stonefloor,0,"stone");
+//                _map[0][y][x]->position = coordinate(x,y);
+//                if(rand()%500+1 <= 10)
+//                {
+//                    int num = rand()%2 +1;
+//                    if(num == 1){
+//                        actors.push_back(new monster("bat"));
+//                    }
+//                    else if(num == 2){
+//                        actors.push_back(new monster("snake"));
+//                    }
+//                    actors[actors.size()-1]->pos(y,x);
+//                }
+//                actors[0]->pos(y,x);
+//            }
+//            else
+//            {
+//
+//                _map[1][y][x]= new tile(stonewall,-1,"stone");
+//                _map[0][y][x]= new tile(stonefloor,0,"stone");
+//                _map[1][y][x]->position = coordinate(x,y);
+//                _map[0][y][x]->position = coordinate(x,y);
+//            }
+//        }
+//    }
+
+    //localItems.push_back(new consumable(0,0,0,"bighealth",'x',actors[0]->col(),actors[0]->row(),0,"null"));
 
 bool keyrelease = true;
 bool waitforplayer = false;
