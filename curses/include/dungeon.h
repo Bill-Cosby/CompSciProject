@@ -18,8 +18,9 @@ class dungeon
 {
 private:
     xyspot directions[4]={xyspot(0,-1),xyspot(1,0),xyspot(0,1),xyspot(-1,0)};
-    int w,h;
 public:
+
+    int w=2000,h=2000;
     xyspot mazeBegin;
     std::vector<std::vector<bool> > dungeon_grid;
     dungeon();

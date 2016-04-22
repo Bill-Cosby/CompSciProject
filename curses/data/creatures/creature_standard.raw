@@ -47,7 +47,8 @@
 	[NAME]bat;
 	[HOME]cave;
 	[DESCRIPTION]A small, winged mammal.;
-	[TAGS]EVIL;
+	[EVIL]true;
+	[VERMIN]true;
 	[OPENDOORS]false;
 	[EQUIPS]false;
 	[SOCIAL]false;
@@ -68,7 +69,8 @@
 	[NAME]snake;
 	[HOME]cave;
 	[DESCRIPTION]Danger noodle.;
-	[TAGS]EVIL;
+	[EVIL]true;
+	[VERMIN]true;
 	[OPENDOORS]false;
 	[EQUIPS]false;
 	[SOCIAL]false;

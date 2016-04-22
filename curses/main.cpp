@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
 #include "generateCity.h"
-//#include "tiles.h"
+#include "tiles.h"
 #include "behaviorTree.h"
 #include "menu.h"
 
@@ -233,7 +233,17 @@ bool waitforplayer = false;
     {
 
         if (controlledActor->embarking){
+            fillInDungeon(_map);
 
+            while (1){
+                int x = rand()%2000,y = rand()%2000;
+                if (_map[1][y][x]->movementCost != -1){
+                    controlledActor->pos(y,x);
+                    _map[1][y][x]->occupied = controlledActor;
+                    break;
+                }
+            }
+            controlledActor->embarking = false;
         }
 
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);

@@ -12,7 +12,7 @@ class tile : public node
 {
 public:
 
-    actor* occupied = NULL;
+    actor* occupied = nullptr;
 
     int width, height;
 
