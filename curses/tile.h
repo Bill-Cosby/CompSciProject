@@ -15,7 +15,7 @@ class tile : public node
 public:
 
     int width, height;
-
+    bool isCity;
     bool isDoor;
     bool isContainer;
     bool visible;
@@ -33,7 +33,7 @@ public:
     tile(char dc,int mc, std::string mat);
     tile(coordinate,coordinate,int);
     tile(int hCost, int costSoFar);
-    tile(){isDoor=false;movementCost = 0;_material = "NULL";};
+    tile(){isDoor=false;movementCost = 0;_material = "NULL"; isCity=false;};
 
     std::string giveMaterial(){return _material;}
     void find_material();

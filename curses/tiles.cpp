@@ -7,8 +7,9 @@
 using namespace noise;
 tiles::tiles()
 {
-    height=20;
-    width=20;
+    zoomOut=1;
+    height=10;
+    width=10;
     mesh=30;
     makeElevationMap();
     fillMap();
@@ -50,7 +51,7 @@ void tiles::fillMap()
             if((b>=mesh*(height-1) or b<2*mesh) and (c>mesh*(width-1) or b<2*mesh))
                {
 
-            double elevation=finalTerrain.GetValue(c/(width*mesh), b/(height*mesh), 0.5);
+            double elevation=finalTerrain.GetValue(c*zoomOut/(width*mesh), b*zoomOut/(height*mesh), 0.5);
             tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
@@ -172,15 +173,15 @@ std::string tiles::findTileType(double elevation)
       return "water";
 
     }
-    else if(elevation<-.1)
+    else if(elevation<-.15)
     {
         return "sand";
     }
-    else if(elevation<.4)
+    else if(elevation<.3)
     {
         return "grass";
     }
-    else if(elevation<.7)
+    else if(elevation<.6)
     {
         return "dirt";
     }
@@ -219,7 +220,7 @@ int gridyc=mod(gridy+c,height);
 
             double x=mod(newGridx+deltax,width)*mesh+b;
             double y=gridyc*mesh+a;
-            double elevation=finalTerrain.GetValue(x/(width*mesh), y/(height*mesh), 0.5);
+            double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
@@ -236,7 +237,7 @@ int gridyc=mod(gridy+c,height);
 
              double x=gridxc*mesh+b;
              double y=mod(newGridy+deltay,height)*mesh+a;
-             double elevation=finalTerrain.GetValue(x/(width*mesh),y/(height*mesh), 0.5);
+             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh),y*zoomOut/(height*mesh), 0.5);
              tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;

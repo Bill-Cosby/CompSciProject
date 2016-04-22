@@ -12,6 +12,7 @@ public:
     int height;
     int width;
     int mesh;
+    double zoomOut;
     noise::module::Perlin preLandTerrain1;
     noise::module::ScaleBias landTerrain1;
     noise::module::Perlin preLandTerrain2;

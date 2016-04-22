@@ -29,6 +29,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             else{
                 tileMap[0][b][a]= new tile(woodfloor,0,"wood");
             }
+            tileMap[0][b][a]->isCity=true;
             if (emptyPlot);
             else if(b==bottom or a==right)
             {
@@ -42,6 +43,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
 
                 tileMap[1][b][a]->position = coordinate(a,b);
+
             }
 
             else if(a==left or b==top)
@@ -57,7 +59,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 tileMap[1][b][a]->position = coordinate(a,b);
             }
             tileMap[0][b][a]->position = coordinate(a,b);
-
+            tileMap[1][b][a]->isCity=true;
         }
     }
     top--;
@@ -74,7 +76,7 @@ void city:: setTileMap()
     tileMap.resize(2);
     tileMap[0].resize(height);
     tileMap[1].resize(height);
-  for(int a=0; a<tileMapSize; a++)
+  for(int a=0; a<height; a++)
     {
         tileMap[0][a].resize(width);
         tileMap[1][a].resize(width);
@@ -83,15 +85,17 @@ void city:: setTileMap()
             tileMap[0][a][b]=new tile(grass,10,"grass");
             tileMap[0][a][b]->position = coordinate(b,a);
             tileMap[0][a][b]->isDoor = false;
+            tileMap[0][a][b]->isCity=true;
             tileMap[1][a][b]=new tile;
             tileMap[1][a][b]->position = coordinate(b,a);
             tileMap[1][a][b]->isDoor = false;
+            tileMap[1][b][a]->isCity=true;
         }
     }
 }
 
 
-void city:: deleteTileMap()
+city::~city()
 {
     for(int a=0; a<tileMap[0].size(); a++)
     {
@@ -145,8 +149,8 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
     if(myLine->vertical==true)
     {
-        signed int q1=myLine->Point1->x-(width)/2;
-        signed int q2=myLine->Point1->x+(width)/2;
+        signed int q1=myLine->Point1->x-(Lwidth)/2;
+        signed int q2=myLine->Point1->x+(Lwidth)/2;
 
 
         if(0<=q1 and q2<tileMap[0].size())
@@ -164,6 +168,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         else tileMap[1][c][d]=new tile(dc,-1,mat);
 
                         tileMap[1][c][d]->position = coordinate(d,c);
+                        tileMap[1][c][d]->isCity=true;
                     }
                     else if (type=="ROADBOX")
                     {
@@ -175,6 +180,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                             tileMap[0][c][d]=new tile(dc,mc,mat);
                         }
                             tileMap[0][c][d]->position = coordinate(d,c);
+                            tileMap[0][c][d]->isCity=true;
                     }
                 }
                 }
@@ -185,8 +191,8 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
 
     else //horizontal
     {
-        signed int q1=myLine->Point1->y-(width)/2;
-        signed int q2=myLine->Point1->y+(width)/2;
+        signed int q1=myLine->Point1->y-(Lwidth)/2;
+        signed int q2=myLine->Point1->y+(Lwidth)/2;
 
         if(0<=q1 and q2<tileMap[0].size())
         {
@@ -201,6 +207,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         else tileMap[1][d][c]=new tile(dc,-1,mat);
 
                         tileMap[1][d][c]->position = coordinate(c,d);
+                        tileMap[1][d][c]->isCity=true;
                     }
 
                     else if (type=="ROADBOX")
@@ -214,6 +221,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         }
 
                         tileMap[0][d][c]->position = coordinate(c,d);
+                        tileMap[0][d][c]->isCity=true;
                     }
                 }
             }
@@ -228,7 +236,7 @@ void box::divideBox(int level, std::vector<std::vector<std::vector<tile*> > > & 
  {
 std::uniform_int_distribution<int> halfChance(0,1);
     int half = halfChance(generator);
-    int width;
+    int Lwidth;
     if(type=="ROADBOX")
     {
 
@@ -239,9 +247,9 @@ std::uniform_int_distribution<int> halfChance(0,1);
         Lwidth=1;
     }
 
-    if(half==0 and right-left>width+6) //if line vertical and there is space to draw line
+    if(half==0 and right-left>Lwidth+6) //if line vertical and there is space to draw line
     {//std::cout<<"Half0"<<std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(left+width/2+3, right-width/2-3);
+        std::uniform_int_distribution<int> findSplitPoint(left+Lwidth/2+3, right-Lwidth/2-3);
         int splitPoint=findSplitPoint(generator);
 
         coordinate lowPoint(splitPoint, bottom);
@@ -276,10 +284,10 @@ std::uniform_int_distribution<int> halfChance(0,1);
         divideBox(level-1, tileMap, type, generator);
     }
 
-    else if (half==1 and top-bottom>width+6)
+    else if (half==1 and top-bottom>Lwidth+6)
     {//line horizontal
         //std::cout<<"Half2"<<std::endl;
-        std::uniform_int_distribution<int> findSplitPoint(bottom+(width)/2+3,top-(width)/2-3);
+        std::uniform_int_distribution<int> findSplitPoint(bottom+(Lwidth)/2+3,top-(Lwidth)/2-3);
         int splitPoint=findSplitPoint(generator);
         coordinate leftPoint(left, splitPoint);
         coordinate rightPoint(right, splitPoint);
