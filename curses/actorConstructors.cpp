@@ -25,8 +25,7 @@ player::player(std::string speciesToLoad)
 
     species = RSL::getStringData(fileName,speciesToLoad+".name");
     description = RSL::getStringData(fileName, speciesToLoad+".description");
-    //attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
-    attack = 0;
+    attack = RSL::getIntData(fileName, speciesToLoad+".strength",0);
     dexterity = RSL::getIntData(fileName, speciesToLoad+".dexterity",0);
     hairColor = RSL::getStringData(fileName,speciesToLoad+".hairColor");
     eyeColor = RSL::getStringData(fileName, speciesToLoad+".eyeColor");

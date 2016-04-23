@@ -38,7 +38,7 @@ public:
     void clearDeadParts(bodyPart* partToCheck)
     {
         for (int i=0;i<attachedParts.size();i++){
-            if (attachedParts[i]== partToCheck){
+            if (attachedParts[i]->damage <= 0){
                 attachedParts.erase(attachedParts.begin()+i);
             }
             else{

@@ -60,12 +60,13 @@ void announcements::drawAnnouncements(sf::RenderWindow & window)
     sf::Text menuText;
     menuText.setCharacterSize(8);
     menuText.setFont(font);
-    int counter = 0;
 
     int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
-    for (int i = 29; i >-1;i--){
+    int counter = 0;
+    for (int i = announcementList.size()-1; i > 0;i--){
+        if (counter == 28)return;
         if (counter > announcementList.size()-1 or announcementList.size() == 0)return;
-        menuText.setString(announcementList[counter]);
+        menuText.setString(announcementList[i]);
         menuText.setPosition(x,y);
         window.draw(menuText);
         y-=15;
