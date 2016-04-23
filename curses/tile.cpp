@@ -103,9 +103,10 @@ void container::fillWithArmor()
 {
     int dumbNumber = rand()%11;
     int randomNumber;
-    int matNumber = rand()%10 + 1;
+    int matNumber;
 
     for (int i =0; i<dumbNumber;i++){
+        matNumber = rand()%10 + 1;
         randomNumber = rand()%RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0)+1;
         std::string name =  RSL::returnRandomItem("data/items/armor_type.raw",randomNumber);
         int value = RSL::getIntData("data/items/armor_type.raw",name+".value",0);

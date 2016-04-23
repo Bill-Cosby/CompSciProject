@@ -43,43 +43,43 @@
 	[TYPE]torso;
 	[VALUE]100:;
 [END]
-[COTTON SHIRT]
-	[NAME]cotton shirt;
+[SHIRT]
+	[NAME]shirt;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:78:;
 	[TYPE]torso;
 	[VALUE]100:;
 [END]
-[COTTON PANTS]
-	[NAME]cotton pants;
+[PANTS]
+	[NAME]pants;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:48:;
 	[TYPE]legging;
 	[VALUE]100:;
 [END]
-[COTTON SLEEVES]
-	[NAME]cotton sleeves;
+[SLEEVES]
+	[NAME]sleeves;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:56:;
 	[TYPE]arm;
 	[VALUE]100:;
 [END]
-[COTTON HOOD]
-	[NAME]cotton hood;
+[HOOD]
+	[NAME]hood;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:0:;
 	[TYPE]helm;
 	[VALUE]100:;
 [END]
-[COTTON SHOE]
-	[NAME]cotton shoe;
+[SHOE]
+	[NAME]shoe;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:16:;
 	[TYPE]boot;
 	[VALUE]100:;
 [END]
-[COTTON GLOVE]
-	[NAME]cotton glove;
+[GLOVE]
+	[NAME]glove;
 	[DEFENSE]1:;
 	[TEXTURE]clothes.png,16:32:;
 	[TYPE]glove;

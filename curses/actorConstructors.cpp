@@ -35,14 +35,14 @@ player::player(std::string speciesToLoad)
     name = giveName("data/names/firstnames.txt") + " " + giveName("data/names/lastnames.txt");
     std::cout << name << std::endl;
 
-    equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
-    equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
-    equipment.push_back(new clothing("cotton hood",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton glove",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton glove",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton shoe",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton shoe",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("shirt",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("hood",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("glove",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("glove",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("shoe",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("shoe",'C',0,0,10,"cotton"));
 
     for (item* _i : equipment){
         _i->equipped = true;
@@ -91,9 +91,9 @@ monster::monster(std::string speciesToLoad)
     skinColor = RSL::getStringData(fileName, speciesToLoad+".skinColor");
     rootPart = RSL::getBodyData(fileName, speciesToLoad+".limbs", temp, giveColor(skinColor), giveColor(eyeColor));
     name = giveName("data/names/firstnames.txt") + " " + giveName("data/names/firstnames.txt");
-    equipment.push_back(new clothing("cotton shirt",'C',0,0,10,"cotton"));
-    equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
-    equipment.push_back(new clothing("cotton pants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("shirt",'C',0,0,10,"cotton"));
+    equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
+    equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
     rootPart->equip(equipment[0],true);
     rootPart->equip(equipment[1],true);
     rootPart->equip(equipment[2],true);
