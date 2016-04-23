@@ -177,14 +177,11 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }
-                if (temp != coordinate(x,y)){
-                    if (_map[1][temp.y][temp.x]->occupied!=NULL and _map[1][temp.y][temp.x]->occupied!=this){
-                        actorAttacking = _map[1][temp.y][temp.x]->occupied;
-                        simpleAttackEnemy(_map,announcementList,localItems);
-                        return true;
-                    }
+                if (_map[1][temp.y][temp.x]->occupied!=NULL and _map[1][temp.y][temp.x]->occupied!=this){
+                    actorAttacking = _map[1][temp.y][temp.x]->occupied;
+                    simpleAttackEnemy(_map,announcementList,localItems);
+                    return true;
                 }
-
                 if (moveThroughDoor == true){
                     _map[1][y][x]->occupied = NULL;
                     _map[1][temp.y][temp.x]->occupied = this;

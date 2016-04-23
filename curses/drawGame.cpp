@@ -14,7 +14,39 @@ void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_m
     window.clear();
     do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
 
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text bodyPartText;
+    bodyPartText.setFont(font);
+    bodyPartText.setCharacterSize(12);
+    std::vector<bodyPart*> bodies;
+    controlledActor->rootPart->returnParts(bodies);
+
+    std::stringstream ss;
+
+    int counter = 0;
+
+
     window.setView(window.getDefaultView());
+
+    for(bodyPart* a : bodies)
+    {
+        if (a->connectedTo != "00")continue;
+        bodyPartText.setString(a->name);
+
+        bodyPartText.setPosition(600,10+(15*counter));
+        window.draw(bodyPartText);
+
+        ss << a->damage;
+        bodyPartText.setString(ss.str());
+        ss.str(std::string());
+        bodyPartText.setPosition(720,10+(15*counter));
+        counter++;
+        window.draw(bodyPartText);
+    }
+
+
+
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
     window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
