@@ -54,12 +54,12 @@ void fillInDungeon(std::vector<std::vector<std::vector<tile*>>> &_map)
                     if (rand()%2==0)_map[1][y][x]->occupied = new monster("bat");
                     else _map[1][y][x]->occupied = new monster("snake");
                 }
-                else if (rand()%300 == 1 and _map[1][y][x]->movementCost != -1){
+                else if (rand()%3000 == 1 and _map[1][y][x]->movementCost != -1){
                     _map[1][y][x] = new socialTile(closeddoor,-1,"wood");
                     _map[1][y][x]->position = coordinate(x,y);
                     for (int yy = y-6;yy<y+6;yy++){
                         for (int xx = x-6;xx<x+6;xx++){
-                            if (yy == y and xx == x or yy < 0  or xx < 0 or yy >=2000 or xx >=2000 or _map[1][yy][xx]->movementCost == -1)continue;
+                            if (yy == y and xx == x or yy < 0  or xx < 0 or yy >=2000 or xx >=2000)continue;
                             _map[1][yy][xx] = new tile;
                             _map[1][yy][xx]->position = coordinate(xx,yy);
                             if (rand()%40 == 1){

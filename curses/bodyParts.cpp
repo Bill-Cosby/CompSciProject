@@ -36,22 +36,27 @@ bool bodyPart::findItem(item* itemToRemove, bool unequipping)
 
 bool bodyPart::canEquip(item* itemToGrasp, bool equipping)
 {
+    std::cout << itemToGrasp->name << ":" << name << std::endl;
     bool didEquip = false;
     if (equipping == true){
         for (std::string _s : equips){
             if (_s == itemToGrasp->type){
                 if (itemToGrasp->canEquip){
                     didEquip = equip(itemToGrasp,true);
+                    return true;
                 }
                 else if (itemToGrasp->canWear and armor == NULL){
                     armor = itemToGrasp;
+                    didEquip = true;
                     return true;
                 }
             }
         }
     }
     for (bodyPart* _b : attachedParts){
-        _b->canEquip(itemToGrasp, equipping);
+        if (_b->canEquip(itemToGrasp, equipping)){
+            return true;
+        }
     }
     return didEquip;
 }
