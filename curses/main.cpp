@@ -259,6 +259,8 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
         int activeAI =0;
+
+
         if (controlledActor->movement(_map, localItems, window, keyrelease, announcementList, waitforplayer)){
             for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
                 for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){

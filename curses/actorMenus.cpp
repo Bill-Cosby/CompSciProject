@@ -190,11 +190,13 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                             return;
                         }
 
-                        equipItem(localItems);
+                        if (equipItem(localItems)){
+                            equipment.push_back(itemLookingAt);
+                            inventory.erase(inventory.begin()+itemSelected);
+                            itemSelected = equipment.size()-1;
+                        }
 
-                        equipment.push_back(itemLookingAt);
-                        inventory.erase(inventory.begin()+itemSelected);
-                        itemSelected = equipment.size()-1;
+
                     }
                     activeWindow = 1 - activeWindow;
                 }

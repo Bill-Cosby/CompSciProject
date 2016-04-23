@@ -55,31 +55,28 @@ void fillInDungeon(std::vector<std::vector<std::vector<tile*>>> &_map)
                     else _map[1][y][x]->occupied = new monster("snake");
                 }
                 else if (rand()%300 == 1 and _map[1][y][x]->movementCost != -1){
-                    std::cout << "Time4soc\n";
-                    _map[1][y][x] = new socialTile(opendoor,0,"wood");
+                    _map[1][y][x] = new socialTile(closeddoor,-1,"wood");
+                    _map[1][y][x]->position = coordinate(x,y);
                     for (int yy = y-6;yy<y+6;yy++){
                         for (int xx = x-6;xx<x+6;xx++){
-                            if (yy == y and xx == x or yy < 0  or xx < 0 or yy >=2000 or xx >=2000 or _map[1][yy][xx]->movementCost != -1)continue;
-
+                            if (yy == y and xx == x or yy < 0  or xx < 0 or yy >=2000 or xx >=2000 or _map[1][yy][xx]->movementCost == -1)continue;
                             _map[1][yy][xx] = new tile;
-                            if (rand()%6 == 1){
-                                    if (_map[1][yy][xx] != NULL)continue;
+                            _map[1][yy][xx]->position = coordinate(xx,yy);
+                            if (rand()%40 == 1){
                                     _map[1][yy][xx]->occupied = new monster("goblin");
                                     _map[1][yy][xx]->occupied->pos(yy,xx);
                                     numberOfEnemies++;
-                                    std::cout << numberOfEnemies << std::endl;
                             }
-                            else if (rand()%10 == 1){
-                                    if (_map[1][yy][xx] != NULL)continue;
+                            else if (rand()%80 == 5){
                                     _map[1][yy][xx]->occupied = new monster("orc");
                                     _map[1][yy][xx]->occupied->pos(yy,xx);
                                     numberOfEnemies++;
-                                    std::cout << numberOfEnemies << std::endl;
                             }
                         }
                     }
                 }
         }
+        std::cout << y << std::endl;
     }
     std::cout << "Number of sentient enemies: " << numberOfEnemies << std::endl;
     std::cout << "Done w dungeon\n";
