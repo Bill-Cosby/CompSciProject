@@ -1,0 +1,17 @@
+[NUMBEROFITEMS]
+	[NUMBER]3:;
+[MEDHEALTH]
+	[NAME]health potion;
+	[TEXTURE]items.png,0:0:;
+	[HEALTH]15;
+[END]
+[SMALLHEALTH]
+	[NAME]small health potion;
+	[TEXTURE]items.png,0:16:;
+	[HEALTH]7;
+[END]
+[BIGHEALTH]
+	[NAME]large health potion;
+	[TEXTURE]items.png,0:32:;
+	[HEALTH]25;
+[END]
