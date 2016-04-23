@@ -73,7 +73,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState,int 
     tempSprite.setPosition(position.x*16,position.y*16);
         tempSprite.setColor(darkenedColor);
 
-    if (isOpen()){
+    if (open){
         tempSprite.setTexture(textures[woodfloor]);
         window.draw(tempSprite);
         tempSprite.setTexture(textures[opendoor]);

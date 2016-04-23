@@ -37,7 +37,6 @@ player::player(std::string speciesToLoad)
     equipment.push_back(new clothing("shirt",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
     equipment.push_back(new clothing("pants",'C',0,0,5,"cotton"));
-    equipment.push_back(new clothing("hood",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("glove",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("glove",'C',0,0,10,"cotton"));
     equipment.push_back(new clothing("shoe",'C',0,0,10,"cotton"));

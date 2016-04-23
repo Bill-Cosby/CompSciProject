@@ -19,6 +19,10 @@
 	[TEXTURE]furniture.png,0:32:;
 [END]
 [START]
+[CHEST]
+	[NAME]chest;
+	[TEXTURE]furniture.png,64:0:;
+[START]
 [WOODCHAIR]
 	[NAME]woodchair;
 	[TEXTURE]furniture.png,0:48:;

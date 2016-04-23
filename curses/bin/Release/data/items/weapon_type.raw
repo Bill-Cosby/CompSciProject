@@ -1,3 +1,5 @@
+[NUMBEROFITEMS]
+	[NUMBER]2:;
 [SWORD]
 	[NAME]sword;
 	[ATTACK]10:;
@@ -9,3 +11,4 @@
 	[ATTACK]15:;
 	[TEXTURE]weapons.png,0:16:;
 	[TYPE]twohand;
+[END]

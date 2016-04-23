@@ -9,7 +9,7 @@
 void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator)
 {
     std::uniform_int_distribution<int> halfChance(0,1);
-    std::uniform_int_distribution<int> doorFinder((bottom-1)+(left+1),(top+1)+(right-1));
+    std::uniform_int_distribution<int> doorFinder(bottom+left+1,top+right-1);
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
 
@@ -77,37 +77,60 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
         {
                 tileMap[0][b][a]= new tile(floorTex,0,floormat,a,b);
                 if (type == 1){
-                    if (rand()%50 < 10){
+                    if (rand()%400 < 10){
                         tileMap[1][b][a]->occupied = new monster("human");
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
-                    if (rand()%301 < 50){
+                    if (rand()%150 < 50){
                         tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
-                    if (rand()%301 < 50){
+                    if (rand()%250 < 50){
                         tileMap[1][b][a]= new furniture(chair,0,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 }
                 if (type == 2){
-                    if (rand()%50 < 10){
+                    if (rand()%300 < 10){
                         tileMap[1][b][a]->occupied = new monster("human");
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
-                    if (rand()%400< 5){
+                    if (rand()%150< 5){
                         tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 }
                 if (type == 3){
-                    if (rand()%300 < 5){
+                    if (rand()%100 < 5){
                         tileMap[1][b][a] = new furniture(bigchair,-1,"redEye",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
-                    if (rand()%50 < 10){
+                    if (rand()%200< 5){
+                        tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%300 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
+
+                    }
+                }
+                if (type == 4){
+                    if (rand()%200< 5){
+                        tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%150 < 50){
+                        tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%250 < 50){
+                        tileMap[1][b][a]= new furniture(chair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%300 < 10){
                         tileMap[1][b][a]->occupied = new monster("human");
                         tileMap[1][b][a]->occupied->pos(b,a);
 

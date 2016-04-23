@@ -243,12 +243,9 @@ void monster::moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map)
             if ((row() == path[path.size()-1].y and col() == path[path.size()-1].x) or _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied or _map[1][path[path.size()-1].y][path[path.size()-1].x]->movementCost == -1){path.erase(path.begin()+path.size()-1);return;}
             _map[1][path[path.size()-1].y][path[path.size()-1].x]->occupied = this;
             _map[1][y][x]->occupied = NULL;
-            std::cout << name << std::endl;
             for (int i = 0; i < 8; i++){
-                std::cout << x-path[path.size()-1].x << "," << y-path[path.size()-1].y << std::endl;
                 if (coordinate(x-path[path.size()-1].x,y-path[path.size()-1].y) == dir[i]){
                         direction = i;
-                        std::cout << direction << std::endl;
                         break;
                 }
             }

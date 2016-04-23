@@ -297,9 +297,7 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
     }
     if (tempTile!=NULL){
         std::vector<item*> tempItems = tempTile->openContainer();
-        std::cout << tempItems.size() << std::endl;
         for (item* _i : tempItems){
-                std::cout << _i->name << std::endl;
             itemsYouFound.push_back(_i);
         }
     }
@@ -365,7 +363,6 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
                         if (itemsYouFound[j]->selected==true){
                             itemsYouFound[j]->selected=false;
                             inventory.push_back(itemsYouFound[j]);
-                            std::cout << itemsYouFound[j]->name << std::endl;
                             std::string temporary = "You picked up " + itemsYouFound[j]->name;
 
                             announcementList.addAnnouncement(temporary);

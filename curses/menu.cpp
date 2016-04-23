@@ -238,6 +238,14 @@ actor* speciesChoiceMenu(sf::RenderWindow &window)
     sf::Event event;
 
     std::vector<std::string>species = RSL::getSpecies("data/creatures/creature_standard.raw","name");
+
+    for (int i = 0;i < species.size(); i++){
+        if (RSL::getStringData("data/creatures/creature_standard.raw",species[i]+".vermin") == "true"){
+            species.erase(species.begin()+i);
+            i--;
+        }
+    }
+
     while (true){
             window.clear();
             text.setCharacterSize(20);
