@@ -21,6 +21,7 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     15 = EXECUTE
     16 = LOOK
     */
+
     int ch;
     coordinate temp = coordinate(x,y);
     bool moveThroughDoor=true;
@@ -32,7 +33,6 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     std::vector<item*> itemsExamining;
     sf::Event event;
 
-    tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
     if (counter>=customSpeed){

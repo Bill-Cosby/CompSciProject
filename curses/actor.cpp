@@ -9,7 +9,7 @@ const short int numberOfControls = 16;
 void actor::makeCorpse(std::vector<item*> &localItems)
 {
     std::string temp = name + "'s corpse";
-    localItems.push_back(new corpse(temp,rootPart,col(),row(),0,"corpse"));
+    localItems.push_back(new corpse(temp,rootPart,x,y,0,"corpse"));
     delete this;
 }
 
@@ -71,6 +71,7 @@ void actor::simpleAttackEnemy(std::vector<std::vector<std::vector<tile*> > > &_m
                 }
                 actorAttacking->rootPart->clearDeadParts(bodyPartToHit);
             }
+            if(actorAttacking->EVIL == EVIL)EVIL = 1-EVIL;
         }
         else{
             announcementList.addAnnouncement(name + " missed " + actorAttacking->name + "'s " + bodyPartToHit->name);

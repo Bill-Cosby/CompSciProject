@@ -82,8 +82,12 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
-                    if (rand()%201 < 50){
+                    if (rand()%301 < 50){
                         tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%301 < 50){
+                        tileMap[1][b][a]= new furniture(chair,0,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
                     }
                 }
@@ -93,9 +97,20 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
-                    if (rand()%400< 50){
+                    if (rand()%400< 5){
                         tileMap[1][b][a] = new container(chest,-1,"wood",a,b);
                         tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                }
+                if (type == 3){
+                    if (rand()%300 < 5){
+                        tileMap[1][b][a] = new furniture(bigchair,-1,"redEye",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%50 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
+
                     }
                 }
             if (emptyPlot);

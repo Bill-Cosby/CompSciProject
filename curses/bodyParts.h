@@ -40,6 +40,7 @@ public:
         for (int i=0;i<attachedParts.size();i++){
             if (attachedParts[i]->damage <= 0){
                 attachedParts.erase(attachedParts.begin()+i);
+                std::cout << "Dead Parts Gone\n";
             }
             else{
                 attachedParts[i]->clearDeadParts(partToCheck);
