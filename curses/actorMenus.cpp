@@ -347,8 +347,20 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyrelease == true){
                 int wait=0;
                 int temp=itemsYouFound.size();
+                int valueOfTotal = 0;
                 while (true){
                     unloadedItem=false;
+                    for(int a = 0; a<itemsYouFound.size(); a++)
+                    {
+                        if(itemsYouFound[a]->possessed)
+                        {
+                            valueOfTotal += itemsYouFound[a]->value;
+                        }
+                        if(valueOfTotal > money)
+                        {
+                            return;
+                        }
+                    }
                     for (int j=0;j<itemsYouFound.size();j++){
                         if (itemsYouFound[j]->selected==true){
                             itemsYouFound[j]->selected=false;

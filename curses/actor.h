@@ -82,6 +82,7 @@ public:
     int counter;
     float dangerThresh;
 
+    int money = rand()%1000;
 
     int totalAttack(){
         int temp = attack;
