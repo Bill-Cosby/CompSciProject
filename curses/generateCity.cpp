@@ -78,7 +78,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 tileMap[0][b][a]= new tile(floorTex,0,floormat,a,b);
                 if (type == 1){
                     if (rand()%50 < 10){
-                        tileMap[1][b][a]->occupied = new monster("goblin");
+                        tileMap[1][b][a]->occupied = new monster("human");
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
@@ -89,7 +89,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 }
                 if (type == 2){
                     if (rand()%50 < 10){
-                        tileMap[1][b][a]->occupied = new monster("goblin");
+                        tileMap[1][b][a]->occupied = new monster("human");
                         tileMap[1][b][a]->occupied->pos(b,a);
 
                     }
