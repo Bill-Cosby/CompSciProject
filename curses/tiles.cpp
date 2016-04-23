@@ -10,13 +10,15 @@ using namespace noise;
 tiles::tiles()
 {
     zoomOut=1;
-    height=40;
-    width=40;
+    height=10;
+    width=10;
     mesh=30;
+    citiesNeeded=3;
     makeElevationMap();
     fillMap();
+    std::cout<<"AAAAAAAAAAAAAAA"<<std::endl;
     placeCities();
-
+std::cout<<"BBBBBBBBBBBBBBB"<<std::endl;
 
 }
 
@@ -59,7 +61,7 @@ void tiles::fillMap()
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
             tileMap[0][b][c]->position.x=c;
-            tileMap[1][b][c]=new tile();
+            tileMap[1][b][c]=new tile;
                }
                else
                 {
@@ -154,20 +156,6 @@ utils::NoiseMap heightMap;
     //sets elevations*/
 }
 
-tiles::~tiles()
-{
-    for(int a=0; a<tileMap.size(); a++)
-    {
-        for(int b=0; b<tileMap[a].size(); b++)
-        {
-            for(int c=0; c<tileMap[a][b].size(); c++)
-            {
-                delete tileMap[a][b][c];
-            }
-
-        }
-    }
-}
 
 std::string tiles::findTileType(double elevation)
 {
@@ -265,28 +253,29 @@ int gridyc=mod(gridy+c,height);
 
 void tiles::placeCities()
 {
+int cityWidth=30;
+ int cityHeight=30;
     unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
      std::mt19937 generator(seed);
-     std::uniform_int_distribution<int> chooseTestx(0,mesh*width);
-     std::uniform_int_distribution<int> chooseTesty(0, mesh*height);
- int cityWidth=100;
- int cityHeight=100;
+     std::uniform_int_distribution<int> chooseTestx(0,mesh*width-cityWidth);
+     std::uniform_int_distribution<int> chooseTesty(0,mesh*height-cityHeight);
+
  int x;
  int y;
  bool goodSpot;
  city* A;
  double elevationHere;
-    for(int a=0; a<20; a++)
+    for(int a=0; a<citiesNeeded;)
     {
     x=chooseTestx(generator);
     y=chooseTesty(generator);
     goodSpot=true;
-    for(double b=0; b<100; b++)
+    for(double b=x; b<y+cityHeight; b++)
     {
-        for(double c=0; c<100; c++)
+        for(double c=y; c<x+cityWidth; c++)
         {
-            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
-           if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
+            elevationHere=finalTerrain.GetValue(zoomOut*c/(mesh*width),zoomOut*b/(mesh*height), 0.5);
+           if(sandBelow>=elevationHere or dirtBelow<=elevationHere or tileMap[0][b][c]->isCity==true)
            {
                goodSpot=false;
                break;
@@ -299,13 +288,29 @@ void tiles::placeCities()
     }
 
               if(goodSpot==true)
-              {
-                  std::cout<<"City Made \n";
-                   A=new city(x,y,100,100,tileMap);
+              {   a++;
+                  std::cout<<"City Made On "<<x<<", "<<y<<"\n";
+                   A=new city(x,y,cityWidth,cityHeight,tileMap);
               }
 
     }
 }
+
+tiles::~tiles()
+{
+    for(int a=0; a<tileMap.size(); a++)
+    {
+        for(int b=0; b<tileMap[a].size(); b++)
+        {
+            for(int c=0; c<tileMap[a][b].size(); c++)
+            {
+                delete tileMap[a][b][c];
+            }
+
+        }
+    }
+}
+
 
    /* module::Turbulence turbulence;
     turbulence.SetSourceModule(0,turbulence);

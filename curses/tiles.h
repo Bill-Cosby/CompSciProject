@@ -13,6 +13,7 @@ public:
     int width;
     int mesh;
     double zoomOut;
+    int citiesNeeded;
     const double waterBelow =-.2;
     const double sandBelow =-.15;
     const double grassBelow =.3;

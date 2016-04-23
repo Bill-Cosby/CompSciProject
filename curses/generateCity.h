@@ -34,7 +34,6 @@ int bottom;
 int top;
 
 box(){left = 0;right =0;top=0;bottom=0;}
-~box();
 void divideBox(int, std::vector<std::vector<std::vector<tile*> > > &, std::string, std::mt19937 &);
 void makeLine(road*, std::vector<std::vector<std::vector<tile*> > > &, int, std::string, std::mt19937 &);
 void makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 &);

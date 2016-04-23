@@ -6,17 +6,45 @@
 #include <vector>
 #include <random>
 
+city::city(int xZero, int yZero, int w, int h, std::vector<std::vector<std::vector<tile*> > > & tileMap)
+{
+width=w; height=h; left=xZero; bottom=yZero; right=xZero+width-1; top=yZero+height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);
+setTileMap(tileMap);
+divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
+
+}
+
+void city:: setTileMap(std::vector<std::vector<std::vector<tile*> > > & tileMap)
+{
+if(bottom<0 or left<0 or top>=tileMap[0].size() or right>=tileMap[0][0].size())
+{
+    std::cout<<"Bad"<<std::endl;
+}
+  for(int a=bottom; a<=top; a++)
+    {
+        for(int b=left; b<=right; b++)
+        {
+            tileMap[0][a][b]=new tile(grass,10,"grass");
+            tileMap[0][a][b]->position = coordinate(b,a);
+            tileMap[0][a][b]->isDoor = false;
+            tileMap[0][a][b]->isCity=true;
+            tileMap[1][a][b]=new tile;
+            tileMap[1][a][b]->position = coordinate(b,a);
+            tileMap[1][a][b]->isDoor = false;
+            tileMap[1][a][b]->isCity=true;
+        }
+    }
+}
+
 void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator)
 {
-    //std::cout<<"HMMM"<<std::endl;
     std::uniform_int_distribution<int> halfChance(0,1);
     std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
-
     bool emptyPlot = false;
 
-    if ((abs(bottom-top)>20 or abs(left-right)>20) or (abs(bottom-top)<4 or abs(left-right)<4))return;
+    if ((abs(bottom-top)>25 or abs(left-right)>25) or (abs(bottom-top)<4 or abs(left-right)<4))return;
 
     for(int a=left; a<=right; a++)
     {
@@ -29,7 +57,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             else{
                 tileMap[0][b][a]= new tile(woodfloor,0,"wood");
             }
-            tileMap[0][b][a]->isCity=true;
+
             if (emptyPlot);
             else if(b==bottom or a==right)
             {
@@ -41,8 +69,6 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 {
                     tileMap[1][b][a]=new tile(stonewall,-1,"stone");
                 }
-
-                tileMap[1][b][a]->position = coordinate(a,b);
 
             }
 
@@ -56,10 +82,12 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
                 {
                     tileMap[1][b][a]=new tile(stonewall,-1,"stone");
                 }
-                tileMap[1][b][a]->position = coordinate(a,b);
             }
             tileMap[0][b][a]->position = coordinate(a,b);
+            tileMap[1][b][a]->position = coordinate(a,b);
+            tileMap[0][b][a]->isCity=true;
             tileMap[1][b][a]->isCity=true;
+
         }
     }
     top--;
@@ -71,24 +99,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
 
 }
 
-void city:: setTileMap(std::vector<std::vector<std::vector<tile*> > > & tileMap)
-{
 
-  for(int a=0; a<height; a++)
-    {
-        for(int b=0; b<tileMap[0][a].size(); b++)
-        {
-            tileMap[0][bottom+a][left+b]=new tile(grass,10,"grass");
-            tileMap[0][bottom+a][left+b]->position = coordinate(left+b,bottom+a);
-            tileMap[0][bottom+a][left+b]->isDoor = false;
-            tileMap[0][bottom+a][bottom+b]->isCity=true;
-            tileMap[1][bottom+a][bottom+b]=new tile;
-            tileMap[1][bottom+a][bottom+b]->position = coordinate(left+b,bottom+a);
-            tileMap[1][bottom+a][bottom+b]->isDoor = false;
-            tileMap[1][bottom+a][bottom+b]->isCity=true;
-        }
-    }
-}
 
 /*
 city::~city()
@@ -150,12 +161,11 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
         signed int q2=myLine->Point1->x+(Lwidth)/2;
 
 
-        if(0<=q1 and q2<tileMap[0].size())
+        if(0<=q1 and q2<tileMap[0][0].size())
         {
             for(int c=myLine->Point1->y; c<=myLine->Point2->y; c++)
             {
-                if(0<=c and c<tileMap[0].size())
-                {
+
                     for(int d=q1; d<=q2; d++)
                 {
                     if(type=="HOUSE")
@@ -175,7 +185,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                             tileMap[0][c][d]->isCity=true;
                     }
                 }
-                }
+
 
             }
         }
@@ -311,21 +321,7 @@ std::uniform_int_distribution<int> halfChance(0,1);
    makeHouse(tileMap, generator);
      //many houses
 }
-
  }
 
-city::city(int xZero, int yZero, int w, int h, std::vector<std::vector<std::vector<tile*> > > & tileMap)
-{
-width=w; height=h; left=xZero; bottom=yZero; right=xZero+width-1; top=yZero+height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);
-setTileMap(tileMap);
-divideBox(6,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
 
-}
-
-
-
-box::~box()
-{
-
-}
 
