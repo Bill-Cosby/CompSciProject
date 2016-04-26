@@ -210,7 +210,7 @@ bool keyrelease = true;
             }
         }
 
-        else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList);
+        else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList, myWorld.waterBelow);
         if(actors[0]->col()/myWorld.mesh!=gridx or actors[0]->row()/myWorld.mesh!=gridy)
         {
                 myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/myWorld.mesh,(actors[0]->row())/myWorld.mesh);

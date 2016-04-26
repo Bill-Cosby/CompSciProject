@@ -1,6 +1,6 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList)
+void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, const double waterBelow)
 {
     /*
     0 = NORTH
@@ -36,7 +36,8 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter>=customSpeed){
+    if (counter>=customSpeed)
+        {
 
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
@@ -142,7 +143,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     actorAttacking = NULL;
                 }
             }
-            else if (_map[1][temp.y][temp.x]->movementCost != -1){
+            else if ((_map[1][temp.y][temp.x]->movementCost != -1 and _map[0][temp.y][temp.x]->movementCost != -1 and playerInBoat==false) or (playerInBoat==true and _map[0][temp.y][temp.x]->elevation<=waterBelow+0.05)){
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }

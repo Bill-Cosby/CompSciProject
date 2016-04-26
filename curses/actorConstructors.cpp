@@ -12,6 +12,7 @@ player::player(std::string speciesToLoad)
     controlled=true;
     sprinting=false;
     int temp;
+    playerInBoat=false;
     z = 1;
 
     itemToPickUp = NULL;

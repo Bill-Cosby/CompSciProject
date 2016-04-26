@@ -54,7 +54,9 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                     }
                 }
                 if (_map[actors[0]->zReturn()][ay][ax]!=NULL){
-
+int j=actors[0]->zReturn();
+                    int k=ay;
+                    int l=ax;
                     if (blocked) {
                         if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
 
@@ -68,6 +70,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                             start_slope = next_start_slope;
                         }
                     }
+
                     else if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
                         _map[1][ay][ax]->drawTile(window, renderState);
                         _map[1][ay][ax]->litHere = true;
