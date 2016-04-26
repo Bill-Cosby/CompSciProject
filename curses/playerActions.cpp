@@ -143,7 +143,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                     actorAttacking = NULL;
                 }
             }
-            else if ((_map[1][temp.y][temp.x]->movementCost != -1 and _map[0][temp.y][temp.x]->movementCost != -1 and playerInBoat==false) or (playerInBoat==true and _map[0][temp.y][temp.x]->elevation<=waterBelow+0.05)){
+            else if ((_map[1][temp.y][temp.x]->movementCost != -1 and _map[0][temp.y][temp.x]->movementCost != -1 and playerInBoat==false) or (playerInBoat==true and _map[0][temp.y][temp.x]->elevation<=waterBelow+0.05)){if(playerInBoat==true){std::cout<<"MMMM";}
                 if (_map[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
                 }

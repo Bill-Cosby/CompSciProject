@@ -61,14 +61,12 @@ void tiles::fillMap()
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
             tileMap[0][b][c]->position.x=c;
-            tileMap[1][b][c]=new tile(grass,0,findTileType(elevation));
-            tileMap[1][b][c]->position.y=b;
-            tileMap[1][b][c]->position.x=c;
+            tileMap[1][b][c]=new tile;
+
 
             if(elevation<waterBelow)
             {
                 tileMap[0][b][c]->movementCost=-1;
-                tileMap[1][b][c]->movementCost=-1;
             }
                }
                else
@@ -229,10 +227,12 @@ int gridyc=mod(gridy+c,height);
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
             tileMap[0][y][x]->position.y=y;
-            tileMap[1][y][x]=new tile(grass,0,findTileType(elevation));
-            tileMap[1][y][x]->elevation=elevation;
-            tileMap[1][y][x]->position.x=x;
-            tileMap[1][y][x]->position.y=y;
+            if(elevation<waterBelow)
+            {
+                 tileMap[0][y][x]->movementCost=-1;
+            }
+            tileMap[1][y][x]=new tile;
+
             }
 
          }
@@ -255,10 +255,11 @@ int gridyc=mod(gridy+c,height);
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;
              tileMap[0][y][x]->position.y=y;
-            tileMap[1][y][x]=new tile(grass,0,findTileType(elevation));
-            tileMap[1][y][x]->elevation=elevation;
-            tileMap[1][y][x]->position.x=x;
-            tileMap[1][y][x]->position.y=y;
+              if(elevation<waterBelow)
+            {
+                tileMap[0][y][x]->movementCost=-1;
+            }
+            tileMap[1][y][x]=new tile;
 
              }
 
