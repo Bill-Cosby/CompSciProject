@@ -1,5 +1,22 @@
 #include "item.h"
+boat::boat(char symbol, int _x, int_y, int _value)
+{
+    value=_value;
+    health=0;
+    defense=0;
+    speed=1;
+    equipped=false;
+    canEquip=true;
+    canUse=true;
+    x=_x;
+    y=_y;
+    selected=false;
+    texture = RSL::getTextureData("data/items/weapon_type.raw","sword"+".texture");
+    sprite.setTexture(texture);
 
+    sprite.setPosition(x*16,y*16);
+
+}
 weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
 {
     attack=RSL::getIntData("data/items/weapon_type.raw",name+".attack");

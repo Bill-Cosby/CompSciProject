@@ -54,9 +54,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                     }
                 }
                 if (_map[actors[0]->zReturn()][ay][ax]!=NULL){
-int j=actors[0]->zReturn();
-                    int k=ay;
-                    int l=ax;
+
                     if (blocked) {
                         if (_map[actors[0]->zReturn()][ay][ax]->movementCost == -1 or (_map[actors[0]->zReturn()][ay][ax]->isDoor and _map[actors[0]->zReturn()][ay][ax]->isOpen() == false)){
 

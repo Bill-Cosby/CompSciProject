@@ -38,6 +38,28 @@ public:
     virtual void draw(sf::RenderWindow &window){window.draw(sprite);}
 };
 
+class boat : public item
+{
+    std::string name;
+    bool selected;
+    bool inUse;
+    bool canUse;
+    int speed;
+    int attack;
+    int defense;
+    int health;
+    int x,y;//if item is on ground
+    int value;
+    int material;
+    std::string type;
+    sf::Texture texture;
+    sf::Sprite sprite;
+    virtual void equip(bool equipping){}
+    virtual std::string itemDescription(){}
+    virtual void use(){}
+    virtual void draw(sf::RenderWindow &window){window.draw(sprite);}
+};
+
 class container : public item
 {
     std::vector<item*> contained;
