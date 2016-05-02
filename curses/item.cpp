@@ -1,6 +1,7 @@
 #include "item.h"
-boat::boat(char symbol, int _x, int_y, int _value)
+boat::boat(char symbol, int _x, int _y, int _value)
 {
+    name = "boat";
     value=_value;
     health=0;
     defense=0;
@@ -11,9 +12,8 @@ boat::boat(char symbol, int _x, int_y, int _value)
     x=_x;
     y=_y;
     selected=false;
-    texture = RSL::getTextureData("data/items/weapon_type.raw","sword"+".texture");
+    texture = RSL::getTextureData("data/items/weapon_type.raw","sword.texture");
     sprite.setTexture(texture);
-
     sprite.setPosition(x*16,y*16);
 
 }

@@ -40,6 +40,7 @@ public:
 
 class boat : public item
 {
+public:
     std::string name;
     bool selected;
     bool inUse;
@@ -54,8 +55,11 @@ class boat : public item
     std::string type;
     sf::Texture texture;
     sf::Sprite sprite;
+
+    boat(char symbol, int _x, int _y, int _value);
+
     virtual void equip(bool equipping){}
-    virtual std::string itemDescription(){}
+    virtual std::string itemDescription(){return "A big ass boat";}
     virtual void use(){}
     virtual void draw(sf::RenderWindow &window){window.draw(sprite);}
 };

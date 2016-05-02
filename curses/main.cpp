@@ -84,11 +84,9 @@ actors.push_back(new player("human"));
 
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
-    localItems.push_back(new boat());
-    globalItems.push_back(new weapon("Sword",'/',10,18,7));
-    globalItems.push_back(new clothing("platearmor",'P',5,5,0));
-    localItems.push_back(globalItems[0]);
-    localItems.push_back(globalItems[1]);
+
+    localItems.push_back(new boat('B',1,1,0));
+
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
     lights[0]->intensity = 1;
