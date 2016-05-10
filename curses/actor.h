@@ -8,6 +8,8 @@
 #include <cctype>
 #include "bodyParts.h"
 #include "aStar.h"
+#include "shadowcasting.h"
+#include "CRandomName.h"
 #include <random>
 #include <string>
 
@@ -25,11 +27,17 @@ class actor
 {
 protected:
 
+
     char _symbol;
 
 
-    int x,y,z;
+    int x = 0,y = 0,z = 0;
 public:
+    bool embarking = false;
+    short direction = 0;
+    bool interactedWithDoor;
+    std::vector<actor*> followers;
+    actor* actorFollowing;
     bodyPart * rootPart;
     coordinate memory;
     coordinate goal;
@@ -55,6 +63,7 @@ public:
     int coolDown;
     bool sprinting;
     bool onGround;
+    bool inDanger;
 
 //  RETURN COORDINATES
     int row(){return y;}
@@ -73,6 +82,7 @@ public:
     int counter;
     float dangerThresh;
 
+    int money = rand()%1000;
 
     int totalAttack(){
         int temp = attack;
@@ -97,6 +107,9 @@ public:
 
 //  TAGS FOR AI
     bool EVIL;
+    bool social;
+    bool equipsArmor;
+    bool opensdoors;
 
 //  WHETHER CREATURE IS UNDER PLAYER CONTROL
     bool controlled;
@@ -121,10 +134,9 @@ public:
     void pos(int _y,int _x){
         x=_x;
         y=_y;
-        for(bodyPart * _b : body){_b->sprite.setPosition(_x*16,_y*16);}
     }
 
-    void drawActor(sf::RenderWindow &window);
+    void drawActor(sf::RenderWindow &window,int _x, int _y);
 
 
 //  METHODS FOR INTERACTING WITH COUNTERS
@@ -141,13 +153,15 @@ public:
     void makeCorpse(std::vector<item*> &localItems);
 
 //  METHODS FOR INTERACTING WITH THE WORLD
-    bool findPath(std::vector<std::vector<std::vector<tile*> > > &_map){path = pathFinder(_map,coordinate(x,y),goal,noGo); if (path.size()==0){return false;}if (path.size()>0){return true;}}
+    bool findPath(std::vector<std::vector<std::vector<tile*> > > &_map);
     double findDistance(coordinate goal){return floor(sqrt(pow((x-goal.x),2) + pow((y-goal.y),2)) / .1) * .1;}
     bool openDoor(std::vector<std::vector<std::vector<tile*> > > &_map);
-    coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile);
+    coordinate findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool findDoor, bool findHiddenTile, bool socialTile);
     bool findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems);
-    bool decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map);
+    bool decideIfCanAttack(std::vector<std::vector<std::vector<tile*> > > &_map);
     bool canSee(std::vector<std::vector<std::vector<tile*> > >, coordinate);
+
+    void dialogue(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, announcements & announcementList, sf::RenderWindow &window,actor* controlledActor);
 
 
 //  VIRTUAL METHODS TO BE OVERRIDDEN BY CHILD CLASSES (DO NOT PUT PURE VIRTUAL METHODS IN HERE)
@@ -159,11 +173,11 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual void movement(std::vector<std::vector<std::vector<tile*> > >& _map,std::vector<item*>&localItems,std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, const double){}
+    virtual bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double){}
     virtual void setPost(int x, int y){}
-    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList){}
+    virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &temptile){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
-    virtual void moveOnPath(){}
+    virtual void moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map){}
 };
 
 class player: public actor
@@ -171,14 +185,14 @@ class player: public actor
     bool keyIsPressed;
 public:
     bool playerInBoat;
-    void movement(std::vector<std::vector<std::vector<tile*> > >& _map, std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, const double);
-    void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList);
+    bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double);
+    void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &tempTile);
     void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems, bool & keyrelease);
     virtual void attackEnemy(std::vector<std::vector<std::vector<tile*> > > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window);
     player(std::string speciesToLoad);
 };
 
-class monster: public actor
+class monster : public actor
 {
     coordinate post;
 public:
@@ -187,7 +201,7 @@ public:
     bool musttouch;
     void setPost(int x, int y){post=coordinate(x,y);}
     void getPath(std::vector<std::vector<std::vector<tile*> > > _map,coordinate goal, std::vector<coordinate> noGo){path.clear();path=pathFinder(_map,coordinate(x,y),goal,noGo);}
-    void moveOnPath();
+    void moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map);
 };
 
 

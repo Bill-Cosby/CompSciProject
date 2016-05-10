@@ -1,9 +1,11 @@
 #include "tile.h"
+#include "actor.h"
 
 tile::tile(int hC, int cSF)
 {
     hCost=hC;
     gCost=cSF;
+    isContainer = false;
     isDoor=false;
     isCity=false;
 }
@@ -13,9 +15,12 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     position=pos;
     hCost=getDistance(position,goal);
     gCost=cSF;
+    isContainer = false;
     isDoor=false;
     isCity=false;
 }
+
+furniture::furniture(int dc, int movementCost, std::string material,int x, int y) : tile(dc,movementCost,material,x,y){}
 
 void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 {
@@ -26,28 +31,35 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     sf::Color tempColor = giveColor(_material);
     sf::Color darkenedColor;
 
-    if (darkenBy <=.1){
-        darkenedColor = sf::Color(30,30,30);
-    }
-    else{
-         darkenedColor = sf::Color(tempColor.r*darkenBy,tempColor.g*darkenBy,tempColor.b*darkenBy);
+        if (darkenBy <=.1){
+            darkenedColor = sf::Color(30,30,30);
+        }
+        else{
+            darkenedColor = sf::Color(tempColor.r*darkenBy,tempColor.g*darkenBy,tempColor.b*darkenBy);
+        }
+
+
+        tempSprite.setColor(darkenedColor);
+
+        window.draw(tempSprite,renderState);
+
+    if (occupied!=NULL){
+        occupied->drawActor(window,position.x,position.y);
     }
 
-    tempSprite.setColor(darkenedColor);
-
-    window.draw(tempSprite,renderState);
     darkenBy = 1;
 }
 
-door::door(bool _o, int dc, int mv, std::string mat) : tile(dc, mv, mat)
+door::door(bool _o, int dc, int mv, std::string mat,int x, int y) : tile(dc, mv, mat,x,y)
 {
     _material = mat;
     open=_o;
     isDoor=true;
     darkenBy = 1;
+    isContainer = false;
 }
 
-void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
+void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState,int x,int y)
 {
     sf::Sprite tempSprite;
     sf::Color tempColor = giveColor(_material);
@@ -62,7 +74,7 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     tempSprite.setPosition(position.x*16,position.y*16);
         tempSprite.setColor(darkenedColor);
 
-    if (isOpen()){
+    if (open){
         tempSprite.setTexture(textures[woodfloor]);
         window.draw(tempSprite);
         tempSprite.setTexture(textures[opendoor]);
@@ -74,15 +86,54 @@ void door::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
     darkenBy = 1;
 }
 
-tile::tile(char dc, int mv, std::string mat)
+tile::tile(coordinate pos){position = pos;}
+
+tile::tile(char dc, int mv, std::string mat, int x, int y) : tile(coordinate(x,y))
 {
-    //elevation=finalTerrain2.GetValue(p.x,p.y);
     _material = mat;
     movementCost = mv;
     defaultchar = dc;
     darkenBy = 1;
-    isCity=false;
+    isContainer = false;
+    occupied = NULL;
 }
+
+//void container::fillWithArmor()
+//{
+//    int dumbNumber = rand()%11;
+//    int randomNumber;
+//    int matNumber;
+//
+//    for (int i =0; i<dumbNumber;i++){
+//        matNumber = rand()%10 + 1;
+//        randomNumber = rand()%RSL::getIntData("data/items/armor_type.raw","numberofitems.number",0)+1;
+//        std::string name =  RSL::returnRandomItem("data/items/armor_type.raw",randomNumber);
+//        int value = RSL::getIntData("data/items/armor_type.raw",name+".value",0);
+//
+//        if(randomNumber>6)
+//        {
+//            contained.push_back(new clothing(name,'C',0,0,5,"cotton"));
+//        }
+//        else if(matNumber == 1 or matNumber == 2 or matNumber == 3 or matNumber == 4)
+//        {
+//            contained.push_back(new clothing(name,'C',0,0,5,"cotton"));
+//        }
+//        else if(matNumber == 5 or matNumber == 6 or matNumber == 7)
+//        {
+//            contained.push_back(new clothing(name,'C',0,0,5,"copper"));
+//        }
+//        else if(matNumber == 8 or matNumber == 9)
+//        {
+//            contained.push_back(new clothing(name,'C',0,0,5,"iron"));
+//        }
+//        else if(matNumber == 10)
+//        {
+//            contained.push_back(new clothing(name,'C',0,0,5,"steel"));
+//        }
+//
+//    }
+//    isCity=false;
+//}
 
 bool door::interactWithDoor(bool opening)
 {

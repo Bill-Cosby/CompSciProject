@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "materials.h"
+
 #ifndef RSL_H_INCLUDED
 #include "RSL.h"
 #define RSL_H_INCLUDED
@@ -22,6 +24,7 @@ public:
     bool canWield;
     bool canGrasp;
     bool canUse;
+    bool possessed;
     int speed;
     int attack;
     int defense;
@@ -68,7 +71,6 @@ class container : public item
 {
     std::vector<item*> contained;
 };
-
 class weapon : public item
 {
 protected:
@@ -83,7 +85,7 @@ class clothing : public item
 {
 protected:
 public:
-    clothing(std::string _name, char _symbol, int _x, int _y, int _value);
+    clothing(std::string _name, char _symbol, int _x, int _y, int _value, std::string material);
     void equip(bool equipping){}
     std::string itemDescription();
 };
@@ -92,9 +94,9 @@ class consumable : public item
 {
 protected:
 public:
-    consumable(int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
+    consumable(int _speed, int _defense, int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type);
     void equip(bool equipping){}
-    std::string itemDescription();
+    std::string itemDescription(){return "This potion heals you";}
 
 };
 

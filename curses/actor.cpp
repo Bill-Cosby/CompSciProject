@@ -1,6 +1,5 @@
 #include "actor.h"
 #include <cstdlib>
-
     char numpadControls[17] = {'8','5','2','6','4','7','9','3','1','c','o','i',27,'@','e','5','x'};
     char keyBrdControls[17] = {'w','.','s','d','a',-1,-1,-1,-1,'c','o','i',27,'@','e',10,'x'};
     char VIKEYSControls[17] = {'h','.','j','l','k','y','u','m','n','c','o','i',27,'@','e',10,'x'};
@@ -10,7 +9,7 @@ const short int numberOfControls = 16;
 void actor::makeCorpse(std::vector<item*> &localItems)
 {
     std::string temp = name + "'s corpse";
-    localItems.push_back(new corpse(temp,rootPart,col(),row(),0,"corpse"));
+    localItems.push_back(new corpse(temp,rootPart,x,y,0,"corpse"));
     delete this;
 }
 
@@ -65,7 +64,6 @@ void actor::simpleAttackEnemy(std::vector<std::vector<std::vector<tile*> > > &_m
             if (bodyPartToHit->damage <= 0){
                 if (bodyPartToHit->ID == "00"){
                     actorAttacking->makeCorpse(localItems);
-                    std::cout << "I've killed him!";
                     return;
                 }
                 else{
@@ -73,6 +71,7 @@ void actor::simpleAttackEnemy(std::vector<std::vector<std::vector<tile*> > > &_m
                 }
                 actorAttacking->rootPart->clearDeadParts(bodyPartToHit);
             }
+            if(actorAttacking->EVIL == EVIL)EVIL = 1-EVIL;
         }
         else{
             announcementList.addAnnouncement(name + " missed " + actorAttacking->name + "'s " + bodyPartToHit->name);
@@ -99,22 +98,23 @@ bool actor::isInDanger(std::vector<actor*> actors)
     }
     return false;
 }
-bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vector<std::vector<tile*> > > &_map)
+bool actor::decideIfCanAttack(std::vector<std::vector<std::vector<tile*> > > &_map)
 {
     int totalDanger = 0;
     float dangerRatio;
     bool foundEnemy = false;
 
-    for (actor* _a : actors){
+    std::vector<coordinate> enemyPos = findEnemiesAtAngle(direction,_map,x,y,15);
 
-        if (_a == this or findDistance(coordinate(_a->col(),_a->row())) > 30 or !canSee(_map,coordinate(_a->col(),_a->row())))continue;
+    for (coordinate _c : enemyPos){
+        if (EVIL == _map[1][_c.y][_c.x]->occupied->EVIL)continue;
 
-        std::cout << _a->col() << "," << _a->row() << std::endl;
+        totalDanger+=(_map[1][_c.y][_c.x]->occupied->totalAttack()+_map[1][_c.y][_c.x]->occupied->totalDefense() + _map[1][_c.y][_c.x]->occupied->dexterity);
 
-        totalDanger+=(_a->totalAttack()+_a->totalDefense() + _a->dexterity);
+
         dangerRatio = totalDanger/(totalAttack()+totalDefense() + dexterity);
         if (dangerRatio < 1){
-            actorAttacking = _a;
+            actorAttacking = _map[1][_c.y][_c.x]->occupied;
             foundEnemy = true;
         }
     }
@@ -129,14 +129,13 @@ bool actor::decideIfCanAttack(std::vector<actor*> actors, std::vector<std::vecto
     return false;
 }
 
-coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool isDoor, bool hiddenFromEnemy)
+coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map, bool isDoor, bool hiddenFromEnemy, bool socialTile)
 {
     std::vector<coordinate*> openSet;
     std::vector<coordinate> closedSet;
     coordinate temp;
 
     openSet.push_back(new coordinate(x,y));
-    std::cout << x << "," << y << std::endl;
 
     bool tileWorks;
 
@@ -164,22 +163,26 @@ coordinate actor::findTile(std::vector<std::vector<std::vector<tile*> > > &_map,
         }
         if (hiddenFromEnemy == true){
             temp = *openSet[i];
-            for (coordinate* _o : openSet){
-                delete openSet[i];
-            }
             if (!(canSee(_map,*openSet[i]))){
                 goal = temp;
                 return temp;
             }
         }
+        if (socialTile){
+            temp = *openSet[i];
+            if (_map[1][openSet[i]->y][openSet[i]->x]->isSocial() == true){
+                goal = temp;
+                return temp;
+            }
+        }
         closedSet.push_back(*openSet[i]);
-        for (int i=-1;i<2;i++){
-            for (int j=-1;j<2;j++){
-                if (abs(i) == abs(j)){
+        for (int y=-1;y<2;y++){
+            for (int x=-1;x<2;x++){
+                if (abs(x) == abs(y)){
                     continue;
                 }
-                if (temp.x+i>0 and temp.x+i < _map.size() and temp.y+j > 0 and temp.y+j < _map.size()){
-                    openSet.push_back(new coordinate(temp.x+i,temp.y+j));
+                if (temp.x+x>0 and temp.x+x < _map[1].size() and temp.y+y > 0 and temp.y+y < _map[1].size()){
+                    openSet.push_back(new coordinate(temp.x+x,temp.y+y));
                 }
             }
         }
@@ -202,16 +205,15 @@ bool actor::openDoor(std::vector<std::vector<std::vector<tile*> > > &_map)
 bool actor::equipItem(std::vector<item*> & localItems)
 {
     if (itemToPickUp != NULL){
-            std::cout << itemToPickUp->name << std::endl;
-        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.4){
-            if (itemToPickUp->canEquip){
+        if (findDistance(coordinate(itemToPickUp->x,itemToPickUp->y))<=1.41 or controlled){
+            if (itemToPickUp->canEquip or itemToPickUp->canWear){
                 if (rootPart->canEquip(itemToPickUp,true)){
                     for (int i = 0; i < localItems.size();i++){
                         if (localItems[i]==itemToPickUp){
-                            equipment.push_back(itemToPickUp);
                             localItems.erase(localItems.begin() + i);
                         }
                     }
+                    return true;
                 }
 
             }
@@ -241,7 +243,9 @@ bool actor::findItem(std::vector<std::vector<std::vector<tile*> > > &_map, std::
     return false;
 }
 
-void actor::drawActor(sf::RenderWindow& window)
+void actor::drawActor(sf::RenderWindow& window,int _x, int _y)
 {
-    rootPart->draw(window,col()*16,row()*16);
+    x= _x;
+    y = _y;
+    rootPart->draw(window,x*16,y*16);
 }

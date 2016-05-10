@@ -115,10 +115,6 @@ std::vector<coordinate> pathFinder(std::vector<std::vector<std::vector<tile*> > 
         currentNode.position.y=openSet.top().position.y;
         openSet.pop();
 
-        if (currentNode.position.x > 20 or currentNode.position.y > 20){
-            std::cout << "WHYYYYY";
-        }
-
         if (canSee(_map,currentNode.position,goal)){
             std::vector<coordinate> path;
             while (!(currentNode.position==start)){

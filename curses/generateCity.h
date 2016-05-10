@@ -42,6 +42,7 @@ void makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt
 
 class city: public box
 {
+    bool oneSmallStepForMan;
     public:
  std::mt19937 generator;
 unsigned seed;

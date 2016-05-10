@@ -13,7 +13,14 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 #include <random>
-#include "menu.h"
+
+class answers
+{
+public:
+    std::string answer;
+    std::string stat;
+    answers(std::string _q, std::string _s){ answer= _q; stat = _s;}
+};
 
 
 namespace RSL
@@ -21,16 +28,18 @@ namespace RSL
     std::string getStringData(std::string fileName, std::string dataToRecieve);
     std::string GET_FORMATTED_TYPE(std::string* typeToFix);
 
-    int getIntData(std::string fileName, std::string dataToRecieve);
+    int getIntData(std::string fileName, std::string dataToRecieve, int positionInArray);
 
     std::vector<int> getBuildingData(std::string fileName, std::string dataToRecieve);
+    std::vector<std::string> getSpecies(std::string fileName, std::string dataToRecieve);
+    std::vector<std::string> unloadColors(std::string fileName, std::string dataToRecieve);
 
     sf::Texture getTextureData(std::string fileName, std::string dataToRecieve);
+    std::string returnRandomItem(std::string fileName, int placeInIndex);
 
-    bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color);
+    bodyPart* getBodyData(std::string fileName, std::string dataToRecieve, int &weight, sf::Color color, sf::Color eyeColor);
+    answers getAnswers(std::string fileName, std::string dataToRecieve);
     //MENU FUNCTIONS
-    std::vector<menu_button> getButtons(std::string fileName);
-    void setupMenu(std::string fileName, sf::RenderWindow &window);
 }
 
 

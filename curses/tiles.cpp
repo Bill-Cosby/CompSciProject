@@ -16,9 +16,8 @@ tiles::tiles()
     citiesNeeded=5;
     makeElevationMap();
     fillMap();
-    std::cout<<"AAAAAAAAAAAAAAA"<<std::endl;
     placeCities();
-std::cout<<"BBBBBBBBBBBBBBB"<<std::endl;
+
 
 }
 
@@ -57,17 +56,15 @@ void tiles::fillMap()
                {
 
             double elevation=finalTerrain.GetValue(c*zoomOut/(width*mesh), b*zoomOut/(height*mesh), 0.5);
-            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation),c,b);
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
             tileMap[0][b][c]->position.x=c;
             tileMap[1][b][c]=new tile;
+            tileMap[1][b][c]->position.y=b;
+            tileMap[1][b][c]->position.x=c;
 
 
-            if(elevation<waterBelow)
-            {
-                tileMap[0][b][c]->movementCost=-1;
-            }
                }
                else
                 {
@@ -110,7 +107,6 @@ srand(time(NULL));
     oceanTerrain.SetSourceModule(0,preOceanTerrain);
     oceanTerrain.SetScale(1.2);
     oceanTerrain.SetBias(-0.2);
-    //preTerrainType.SetFrequency();
 
 
     finalTerrain_.SetSourceModule(0,oceanTerrain);
@@ -124,7 +120,6 @@ srand(time(NULL));
     finalTerrain.SetControlModule(landTerrain2);
     finalTerrain.SetBounds(-0.7,100);
     finalTerrain.SetEdgeFalloff(0.5);
-    //generate ma
 /*
 utils::NoiseMap heightMap;
     utils::NoiseMapBuilderPlane heightMapBuilder;
@@ -159,7 +154,7 @@ utils::NoiseMap heightMap;
   writer.WriteDestFile ();
   std::cout << "Here\n";
   std::cout<<finalTerrain.GetValue(0,0,0.5);
-    //sets elevations*/
+    sets elevations*/
 }
 
 
@@ -198,12 +193,11 @@ signed int deltax=newGridx-gridx;
 signed int deltay=newGridy-gridy;
 signed int gridxDelete=mod(gridx-deltax,width);
 signed int gridyDelete=mod(gridy-deltay,height);
-   //delete x stuff
 
   for(signed int c=-1; c<=1; c++)
   {
-int gridxc=mod(gridx+c,width);
-int gridyc=mod(gridy+c,height);
+int newgridxc=mod(newGridx+c,width);
+int newgridyc=mod(newGridy+c,height);
 
       for(int a=0; a<mesh; a++)
       {
@@ -218,48 +212,44 @@ int gridyc=mod(gridy+c,height);
 
 
             double x=mod(newGridx+deltax,width)*mesh+b;
-            double y=gridyc*mesh+a;
+            double y=newgridyc*mesh+a;
 
             if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
             {
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
-            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation),x,y);
             tileMap[0][y][x]->elevation=elevation;
             tileMap[0][y][x]->position.x=x;
             tileMap[0][y][x]->position.y=y;
-            if(elevation<waterBelow)
-            {
-                 tileMap[0][y][x]->movementCost=-1;
-            }
-            tileMap[1][y][x]=new tile;
 
+            tileMap[1][y][x]=new tile;
+            tileMap[1][y][x]->position.x=x;
+            tileMap[1][y][x]->position.y=y;
             }
 
          }
 
          if(deltay!=0) //vertical movement
          {
-             if(tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]->isCity==false)
+             if(tileMap[0][gridyDelete*mesh+a][newgridxc*mesh+b]->isCity==false)
              {
-             tileMap[0][gridyDelete*mesh+a][gridxc*mesh+b]=new tile;
-             tileMap[1][gridyDelete*mesh+a][gridxc*mesh+b]=new tile;
+             tileMap[0][gridyDelete*mesh+a][newgridxc*mesh+b]=new tile;
+             tileMap[1][gridyDelete*mesh+a][newgridxc*mesh+b]=new tile;
              }
 
-
-             double x=gridxc*mesh+b;
+             double x=newgridxc*mesh+b;
              double y=mod(newGridy+deltay,height)*mesh+a;
              if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
              {
                  double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh),y*zoomOut/(height*mesh), 0.5);
-             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation));
+             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation),x,y);
              tileMap[0][y][x]->elevation=elevation;
              tileMap[0][y][x]->position.x=x;
              tileMap[0][y][x]->position.y=y;
-              if(elevation<waterBelow)
-            {
-                tileMap[0][y][x]->movementCost=-1;
-            }
+
             tileMap[1][y][x]=new tile;
+            tileMap[1][y][x]->position.x=x;
+            tileMap[1][y][x]->position.y=y;
 
              }
 
@@ -272,8 +262,8 @@ int gridyc=mod(gridy+c,height);
 
 void tiles::placeCities()
 {
-int cityWidth=30;
- int cityHeight=30;
+int cityWidth=50;
+ int cityHeight=50;
     unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
      std::mt19937 generator(seed);
      std::uniform_int_distribution<int> chooseTestx(0,mesh*width-cityWidth);
@@ -284,7 +274,8 @@ int cityWidth=30;
  bool goodSpot;
  city* A;
  double elevationHere;
-    for(int a=0; a<citiesNeeded;)
+ int counter=0;
+    for(int a=0; a<citiesNeeded and counter<1000*citiesNeeded;counter++)
     {
     x=chooseTestx(generator);
     y=chooseTesty(generator);
@@ -340,12 +331,5 @@ tiles::~tiles()
 
 
 
-   // myModule.SetSeed(rand()%time(NULL));
 
-   // module::Perlin terrainType;
-   //e.SetSourceModule(0, myModule);
-   // inverter.SetSourceModule(myModule);
-
-// double perlin_map_width=2;
-// double perlin_map_height=2;
 

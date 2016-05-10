@@ -24,7 +24,7 @@ if(bottom<0 or left<0 or top>=tileMap[0].size() or right>=tileMap[0][0].size())
     {
         for(int b=left; b<=right; b++)
         {
-            tileMap[0][a][b]=new tile(grass,10,"grass");
+            tileMap[0][a][b]=new tile(grass,10,"grass",a,b);
             tileMap[0][a][b]->position = coordinate(b,a);
             tileMap[0][a][b]->isDoor = false;
             tileMap[0][a][b]->isCity=true;
@@ -39,35 +39,130 @@ if(bottom<0 or left<0 or top>=tileMap[0].size() or right>=tileMap[0][0].size())
 void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 & generator)
 {
     std::uniform_int_distribution<int> halfChance(0,1);
-    std::uniform_int_distribution<int> doorFinder(bottom+left,top+right);
+    std::uniform_int_distribution<int> doorFinder(bottom+left+1,top+right-1);
     int half=halfChance(generator);
     int doorPlace=doorFinder(generator);
-    bool emptyPlot = false;
 
-    if ((abs(bottom-top)>25 or abs(left-right)>25) or (abs(bottom-top)<4 or abs(left-right)<4))return;
+    int wallTex;
+    int innerwallTex;
+    int floorTex;
+    int mc;
+    std::string wallmat;
+    std::string innerwallmat;
+    std::string floormat;
+
+    int type = -1; //1 = blacksmith
+                   //2 = house
+                   //3 = store
+                   //4 = armorer
+
+    int width = abs(right-left), height = abs(bottom-top);
+
+    if (width < 5 or height < 5)return;
+
+    else if (width < 15 and height > 10 and height <15){
+        wallTex = stonewall;
+        floorTex = stonefloor;
+        wallmat = "stone";
+        floormat = "stone";
+        innerwallTex = stonewall;
+        innerwallmat = "stone";
+        type = 1;
+    }
+    else if (width<15 and height < 15){
+        wallTex = woodwall;
+        floorTex = woodfloor;
+        wallmat = "wood";
+        floormat = "wood";
+        innerwallTex = woodwall;
+        innerwallmat = "wood";
+        type = 2;
+    }
+    else if (width < 30 and height < 30){
+        wallTex = stonewall;
+        floorTex = woodfloor;
+        wallmat = "stone";
+        floormat = "wood";
+        innerwallTex = woodwall;
+        innerwallmat = "wood";
+        type = 3;
+    }
+    else if (height < 15 and width > 10 and width <15){
+        wallTex = stonewall;
+        floorTex = stonefloor;
+        wallmat = "stone";
+        floormat = "stone";
+        innerwallTex = stonewall;
+        innerwallmat = "stone";
+        type = 4;
+    }
+    else return;
+
+    bool emptyPlot = false;
 
     for(int a=left; a<=right; a++)
     {
         for(int b=bottom; b<=top; b++)
         {
-            if (abs(bottom-top)<6 and abs(left-right)<6){
-                tileMap[0][b][a]= new tile(dirt,0,"dirt");
-                emptyPlot = true;
-            }
-            else{
-                tileMap[0][b][a]= new tile(woodfloor,0,"wood");
-            }
+                tileMap[0][b][a]= new tile(floorTex,0,floormat,a,b);
+                if (type == 1){
+                    if (rand()%400 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
 
+                    }
+                    if (rand()%150 < 50){
+                        tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%250 < 50){
+                        tileMap[1][b][a]= new furniture(chair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                }
+                if (type == 2){
+                    if (rand()%300 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
+
+                    }
+                }
+                if (type == 3){
+                    if (rand()%100 < 5){
+                        tileMap[1][b][a] = new furniture(bigchair,-1,"redEye",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%300 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
+
+                    }
+                }
+                if (type == 4){
+                    if (rand()%150 < 50){
+                        tileMap[1][b][a]= new furniture(woodchair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%250 < 50){
+                        tileMap[1][b][a]= new furniture(chair,0,"wood",a,b);
+                        tileMap[1][b][a]->position=coordinate(a,b);
+                    }
+                    if (rand()%300 < 10){
+                        tileMap[1][b][a]->occupied = new monster("human");
+                        tileMap[1][b][a]->occupied->pos(b,a);
+
+                    }
+                }
             if (emptyPlot);
             else if(b==bottom or a==right)
             {
                 if(b+a==doorPlace and half==0)
                 {
-                    tileMap[1][b][a]=new door(false,closeddoor,0,"wood");
+                    tileMap[1][b][a]=new door(false,closeddoor,0,"wood",a,b);
                 }
                 else
                 {
-                    tileMap[1][b][a]=new tile(stonewall,-1,"stone");
+                    tileMap[1][b][a]=new tile(wallTex,-1,wallmat,a,b);
                 }
 
             }
@@ -76,11 +171,11 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             {
                 if(b+a==doorPlace and half==1)
                 {
-                    tileMap[1][b][a]=new door(false,closeddoor,0,"wood");
+                    tileMap[1][b][a]=new door(false,closeddoor,0,"wood",a,b);
                 }
                 else
                 {
-                    tileMap[1][b][a]=new tile(stonewall,-1,"stone");
+                    tileMap[1][b][a]=new tile(wallTex,-1,wallmat,a,b);
                 }
             }
             tileMap[0][b][a]->position = coordinate(a,b);
@@ -170,9 +265,9 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                 {
                     if(type=="HOUSE")
                     {
-                        if (doorPlace == c) tileMap[1][c][d] = new door(false,closeddoor,0,mat);
+                        if (doorPlace == c) tileMap[1][c][d] = new door(false,closeddoor,0,mat,a,b);
 
-                        else tileMap[1][c][d]=new tile(dc,-1,mat);
+                        else tileMap[1][c][d]=new tile(dc,-1,mat,a,b);
 
                         tileMap[1][c][d]->position = coordinate(d,c);
                         tileMap[1][c][d]->isCity=true;
@@ -180,7 +275,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                     else if (type=="ROADBOX")
                     {
 
-                            tileMap[0][c][d]=new tile(dc,mc,mat);
+                            tileMap[0][c][d]=new tile(dc,mc,mat,d,c);
                             tileMap[0][c][d]->position = coordinate(d,c);
                             tileMap[0][c][d]->isCity=true;
                     }
@@ -204,9 +299,9 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                 {
                     if(type=="HOUSE")
                     {
-                        if (doorPlace == c)tileMap[1][d][c] = new door(false,closeddoor,0,mat);
+                        if (doorPlace == c)tileMap[1][d][c] = new door(false,closeddoor,0,mat,c,d);
 
-                        else tileMap[1][d][c]=new tile(dc,-1,mat);
+                        else tileMap[1][d][c]=new tile(dc,-1,mat,c,d);
 
                         tileMap[1][d][c]->position = coordinate(c,d);
                         tileMap[1][d][c]->isCity=true;
@@ -215,7 +310,7 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                     else if (type=="ROADBOX")
                     {
 
-                        tileMap[0][d][c]=new tile(dc,mc,mat);
+                        tileMap[0][d][c]=new tile(dc,mc,mat,c,d);
 
                         tileMap[0][d][c]->position = coordinate(c,d);
                         tileMap[0][d][c]->isCity=true;

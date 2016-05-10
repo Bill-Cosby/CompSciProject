@@ -15,17 +15,35 @@ boat::boat(char symbol, int _x, int _y, int _value)
     texture = RSL::getTextureData("data/items/weapon_type.raw","sword.texture");
     sprite.setTexture(texture);
     sprite.setPosition(x*16,y*16);
-
 }
+
+consumable::consumable(int _speed, int _defense, int _health, std::string _name, char _symbol, int _x, int _y, int _value, std::string _type)
+{
+    value=_value;
+    health=_health;
+    defense=_defense;
+    speed=_speed;
+    name = RSL::getStringData("data/items/item_type.raw",_name+".name");
+    equipped = false;
+    canEquip = false;
+    canWear = false;
+    canUse = true;
+    x = _x;
+    y = _y;
+    selected = false;
+    texture = RSL::getTextureData("data/items/item_type.raw",_name+".texture");
+    sprite.setTexture(texture);
+    sprite.setPosition(x*16,y*16);
+}
+
 weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
 {
-    attack=RSL::getIntData("data/items/weapon_type.raw",name+".attack");
     value=_value;
     health=0;
     defense=0;
     speed=5;
-    name = _name;
-    type = _name;
+    name = RSL::getStringData("data/items/weapon_type.raw",_name+".name");
+    type = RSL::getStringData("data/items/weapon_type.raw",_name+".type");
     equipped = false;
     canEquip = true;
     canWear = false;
@@ -33,22 +51,21 @@ weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
     x = _x;
     y = _y;
     selected=false;
-    texture = RSL::getTextureData("data/items/weapon_type.raw",name+".texture");
+    texture = RSL::getTextureData("data/items/weapon_type.raw",_name+".texture");
+    attack=RSL::getIntData("data/items/weapon_type.raw",_name+".attack",0);
 
     sprite.setTexture(texture);
 
     sprite.setPosition(x*16,y*16);
 }
 
-clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value)
+clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value, std::string _material)
 {
     attack = 0;
     value = _value;
     health = 0;
-    defense = RSL::getIntData("data/items/armor_type.raw",name+".defense");
     speed = 0;
-    name = _name;
-    type = RSL::getStringData("data/items/armor_type.raw",name+".type");
+    type = RSL::getStringData("data/items/armor_type.raw",_name+".type");
     equipped = false;
     canEquip = false;
     canWear = true;
@@ -56,9 +73,11 @@ clothing::clothing(std::string _name,char _symbol,int _x, int _y, int _value)
     x = _x;
     y = _y;
     selected = false;
-    texture = RSL::getTextureData("data/items/armor_type.raw",name+".texture");
-
+    texture = RSL::getTextureData("data/items/armor_type.raw",_name+".texture");
+    name = _material + " " + RSL::getStringData("data/items/armor_type.raw",_name+".name");
+    defense = RSL::getIntData("data/items/armor_type.raw",_name+".defense",0);
     sprite.setTexture(texture);
+    sprite.setColor(giveColor(_material));
 
     sprite.setPosition(x*16,y*16);
 }
@@ -71,7 +90,7 @@ std::string weapon::itemDescription()
     std::string description;
 
 
-    description+="This " + name + " does " + str + " damage.";
+    description+="This " + name + " does " + str + " damage. ";
     return description;
 }
 
@@ -82,7 +101,7 @@ std::string clothing::itemDescription()
     std::string def = ss.str();
     std::string description;
 
-    description += "This " + name + "has " + def + " defense.";
+    description += "This " + name + " has " + def + " defense. ";
     return description;
 }
 

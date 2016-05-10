@@ -1,0 +1,12 @@
+[GREETING]
+	[TEXT]{Hey!:Hello:Good day:};
+[END]
+[NEGATIVE]
+	[TEXT]{bad:awful:miserable:depressing:};
+[END]
+[POSITIVE]
+	[TEXT]{good:wonderful:decent:pleasant:};
+[END]
+[HUMAN]
+	[TEXT]{Oh, what a time to be alive.:My farm is prospering lately.:The madam is doing well.:A story my father told me years ago has been on my mind.:My mother worries me some times.:I'm going to hit up the pub in the city tonight!:};
+[END]

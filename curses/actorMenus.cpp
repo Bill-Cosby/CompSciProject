@@ -91,14 +91,36 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
             }
 
         if (itemLookingAt != NULL){
+                int lineLength=0;
+                int wordLength=0;
+
+                std::string formattedDesc;
+                std::string tempStr;
             titleText.setString(itemLookingAt->name);
             titleText.setPosition(descriptionWindow.getPosition().x+4, 4);
             window.draw(titleText);
-            menuText.setString(itemLookingAt->itemDescription());
+            for (char _c : itemLookingAt->itemDescription()){
+                tempStr+=_c;
+                wordLength+=font.getGlyph(_c,12,false).advance;
+                if (_c == ' '){
+                    lineLength+=wordLength;
+                    if (lineLength + descriptionWindow.getPosition().x + 4 < window.getSize().x){
+                        formattedDesc+= tempStr;
+                        tempStr.clear();
+                        wordLength = 0;
+                    }
+                    else{
+                        formattedDesc+= '\n' + tempStr;
+                        lineLength = wordLength;
+                        wordLength = 0;
+                        tempStr.clear();
+                    }
+                }
+            }
+            menuText.setString(formattedDesc);
             menuText.setPosition(descriptionWindow.getPosition().x+4,24);
             window.draw(menuText);
         }
-
 
 
         if (examiningItem == true and buttonSelected == 0){
@@ -149,6 +171,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                 if (buttonSelected == 0){
                     if (itemLookingAt->equipped == true){
                             itemLookingAt->equipped = false;
+                        rootPart->findItem(itemLookingAt,true);
                         inventory.push_back(itemLookingAt);
                         equipment.erase(equipment.begin()+itemSelected);
                         itemSelected = inventory.size()-1;
@@ -156,11 +179,21 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
                     else{
                         itemLookingAt->equipped = true;
                         itemToPickUp = itemLookingAt;
-                        equipItem(localItems);
 
-                        equipment.push_back(itemLookingAt);
-                        inventory.erase(inventory.begin()+itemSelected);
-                        itemSelected = equipment.size()-1;
+                        if (itemLookingAt->health > 0){
+                            rootPart->heal(itemLookingAt->health);
+                            delete itemLookingAt;
+                            inventory.erase(inventory.begin()+itemSelected);
+                            return;
+                        }
+
+                        if (equipItem(localItems)){
+                            equipment.push_back(itemLookingAt);
+                            inventory.erase(inventory.begin()+itemSelected);
+                            itemSelected = equipment.size()-1;
+                        }
+
+
                     }
                     activeWindow = 1 - activeWindow;
                 }
@@ -189,6 +222,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemSelected = 0;
                 itemLookingAt = NULL;
             }
             else{
@@ -199,6 +233,7 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4) and keyrelease == true){
             if (examiningItem == false){
                 activeWindow = 1-activeWindow;
+                itemSelected = 0;
                 itemLookingAt = NULL;
             }
             else{
@@ -216,11 +251,10 @@ void player::openInventory(sf::RenderWindow &window, std::vector<item*> &localIt
 
         window.display();
     }
-    std::cout << "Here\n";
     window.clear();
 }
 
-void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList)
+void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining,coordinate spotExamining, announcements & announcementList, tile* &tempTile)
 {
     window.setView(window.getDefaultView());
     sf::Event event;
@@ -259,6 +293,12 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
     for (int i=0;i<itemsExamining.size();i++){
         if (coordinate((itemsExamining[i]->x),itemsExamining[i]->y)==spotExamining){
             itemsYouFound.push_back(itemsExamining[i]);
+        }
+    }
+    if (tempTile!=NULL){
+        std::vector<item*> tempItems = tempTile->openContainer();
+        for (item* _i : tempItems){
+            itemsYouFound.push_back(_i);
         }
     }
 
@@ -305,13 +345,24 @@ void player::examineGround(sf::RenderWindow &window, std::vector<item*> &itemsEx
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5) and keyrelease == true){
                 int wait=0;
                 int temp=itemsYouFound.size();
+                int valueOfTotal = 0;
                 while (true){
                     unloadedItem=false;
+                    for(int a = 0; a<itemsYouFound.size(); a++)
+                    {
+                        if(itemsYouFound[a]->possessed)
+                        {
+                            valueOfTotal += itemsYouFound[a]->value;
+                        }
+                        if(valueOfTotal > money)
+                        {
+                            return;
+                        }
+                    }
                     for (int j=0;j<itemsYouFound.size();j++){
                         if (itemsYouFound[j]->selected==true){
                             itemsYouFound[j]->selected=false;
                             inventory.push_back(itemsYouFound[j]);
-                            std::cout << itemsYouFound[j]->name << std::endl;
                             std::string temporary = "You picked up " + itemsYouFound[j]->name;
 
                             announcementList.addAnnouncement(temporary);

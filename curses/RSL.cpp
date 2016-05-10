@@ -4,7 +4,7 @@ namespace RSL
 {
 std::string getStringData(std::string fileName, std::string dataToGet)
 {
-    std::mt19937 generator(rand()%rand()%1000000);
+    std::mt19937 generator(rand()%100000);
     bool foundDatatype = false;
     bool foundDataMember = false;
     bool inArray = false;
@@ -23,6 +23,7 @@ std::string getStringData(std::string fileName, std::string dataToGet)
             while ( getline( loadFile , line ) ){
                 std::string LINE_READING;
                 for (char _c : line){
+
                     if (_c == '\t' or _c == '}'){
                         inArray = false;
                         continue;
@@ -51,6 +52,8 @@ std::string getStringData(std::string fileName, std::string dataToGet)
 
                     LINE_READING+=_c;
 
+                    if (foundDatatype and LINE_READING == "[ENDSPECIES]")return "no";
+
                     if (foundDatatype==false){
                         if (_c == ']'){
 
@@ -75,9 +78,10 @@ std::string getStringData(std::string fileName, std::string dataToGet)
             }
         }
     }
+    return "no";
 }
 
-int getIntData(std::string fileName, std::string dataToGet)
+int getIntData(std::string fileName, std::string dataToGet,int positionInArray)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -89,6 +93,8 @@ int getIntData(std::string fileName, std::string dataToGet)
     std::string line;
     std::ifstream loadFile(fileName);
 
+    int whatever = 0;
+
     if ( loadFile.is_open() ){
         while ( !loadFile.eof() ){
             while ( getline( loadFile , line ) ){
@@ -98,15 +104,15 @@ int getIntData(std::string fileName, std::string dataToGet)
                     if (_c == '\t'){
                         continue;
                     }
+                    if (foundDataMember == true and _c == ':' and whatever == positionInArray){
 
-                    if (foundDataMember == true and _c == ';'){
                         std::stringstream ss;
                         int convertedInt;
                         ss << LINE_READING;
                         ss>>convertedInt;
                         return convertedInt;
                     }
-
+                    if (_c == ':' and foundDataMember == true)whatever++;
                     LINE_READING+=_c;
 
                     if (foundDatatype==false){
@@ -134,7 +140,7 @@ int getIntData(std::string fileName, std::string dataToGet)
     }
 }
 
-bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, sf::Color color)
+bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, sf::Color color, sf::Color eyeColor)
 {
     bool foundDatatype = false;
     bool foundDataMember = false;
@@ -187,15 +193,15 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
                             continue;
                         }
                         else if(_c == ':'){
-                                std::cout << LINE_READING << std::endl;
                                 if (LINE_READING == "head"){body.push_back(new head(dataType,weight,id, connectedTo, color));}
-                                else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING =="eye"){body.push_back(new eye(dataType,weight,id, connectedTo, left, eyeColor));}
                                 else if (LINE_READING == "neck"){body.push_back(new neck(dataType,weight,id, connectedTo, color));}
                                 else if (LINE_READING=="torso"){body.push_back(new torso(dataType,weight,id, connectedTo, color));}
                                 else if (LINE_READING =="arm"){body.push_back(new arm(dataType,weight, id, connectedTo, left, color));}
                                 else if (LINE_READING =="leg"){body.push_back(new leg(dataType,weight, id, connectedTo, left, color));}
                                 else if (LINE_READING == "hand"){body.push_back(new hand(dataType,weight,id, connectedTo, left, color));}
                                 else if (LINE_READING == "foot"){body.push_back(new foot(dataType,weight,id, connectedTo, left, color));}
+                                else if (LINE_READING == "tail"){body.push_back(new tail(dataType,weight,id, connectedTo, color));}
                             left = false;
                             LINE_READING.clear();
                             continue;
@@ -241,6 +247,139 @@ bodyPart* getBodyData(std::string fileName, std::string dataToGet, int &weight, 
             }
         }
     }
+}
+
+std::vector<std::string> getSpecies(std::string fileName, std::string dataToGet)
+{
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> species;
+
+    bool foundSpecies = false;
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+                    if (LINE_READING == dataMember){
+                        foundSpecies = true;
+                        LINE_READING.clear();
+                    }
+                    if (foundSpecies == true){
+                        if (_c == ';'){
+                            species.push_back(LINE_READING);
+                            foundSpecies = false;
+                            break;
+                        }
+                    }
+
+                    LINE_READING+=_c;
+                }
+            }
+        }
+    }
+    return species;
+}
+std::string returnRandomItem(std::string fileName, int placeInIndex)
+{
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> species;
+    bool foundObject = false;
+
+    bool inObject = false;
+    int numberOfObjects = -1;
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+
+                    if (_c == ';' and foundObject)return LINE_READING;
+                    LINE_READING+=_c;
+                        if (LINE_READING == "[NAME]" and foundObject){
+                                LINE_READING.clear();
+                                continue;
+                        }
+
+                    if (_c == ']'){
+                        if (inObject == false){
+                            inObject = true;
+                            numberOfObjects++;
+                            if (numberOfObjects == placeInIndex){
+                                foundObject = true;
+                            }
+                        }
+                        else if (inObject and LINE_READING == "[END]"){
+                            inObject = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+std::vector<std::string> unloadColors(std::string fileName, std::string dataToGet)
+{
+    std::string dataType = GET_FORMATTED_TYPE(&dataToGet);
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToGet); // GET MEMBER OF OBJECT
+
+    std::string line;
+    std::ifstream loadFile(fileName);
+    std::vector<std::string> colors;
+
+    bool foundSpecies = false, foundType = false;
+
+    if ( loadFile.is_open() ){
+        while ( !loadFile.eof() ){
+            while ( getline( loadFile , line ) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+
+                    if (LINE_READING == dataType){
+                        foundSpecies = true;
+                        LINE_READING.clear();
+                        continue;
+                    }
+                    if (foundSpecies == true and foundType == false){
+                        if (LINE_READING == dataMember){
+                            foundType = true;
+                            LINE_READING.clear();
+                        }
+                    }
+                    if (foundType == true){
+                        if (_c == ':'){
+                            colors.push_back(LINE_READING);
+                            LINE_READING.clear();
+                            continue;
+                        }
+                        if (_c == ';'){
+                            foundSpecies = false;
+                            foundType = false;
+                        }
+                    }
+
+                    LINE_READING+=_c;
+                }
+            }
+        }
+    }
+    return colors;
 }
 
 sf::Texture getTextureData(std::string fileName, std::string dataToGet)
@@ -298,7 +437,6 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
                     if (foundDataMember == true and _c == ';'){
                         sf::Texture temp;
                         temp.loadFromFile(fileName,sf::IntRect(intRectangle[1],intRectangle[0],16,16));
-
                         return temp;
                     }
 
@@ -330,88 +468,61 @@ sf::Texture getTextureData(std::string fileName, std::string dataToGet)
     }
 }
 
-std::vector<menu_button> getButtons(std::string fileName)
-    {
-        bool startButtonList = false;
-        bool buttonName = false;
-        bool foundButton = false;
-        bool x = false,y=false;
-        std::vector<menu_button> buttons;
+answers getAnswers(std::string fileName, std::string dataToRecieve)
+{
+    std::string species = GET_FORMATTED_TYPE(&dataToRecieve);
+    std::string dataMember = GET_FORMATTED_TYPE(&dataToRecieve);
+    std::string dataType = GET_FORMATTED_TYPE(&dataToRecieve);
+    std::string stat;
+   std::string answer;
 
-        menu_button temp;
+    bool foundSpecies = false;
+    bool foundDataMember = false;
+    bool foundDataType = false;
 
-        std::string line;
-        std::ifstream loadFile(fileName);
+    std::string line;
+    std::ifstream loadFile(fileName);
 
-        if ( loadFile.is_open()){
-            while ( !loadFile.eof() ){
-                while ( getline( loadFile,line ) ){
-                    std::string LINE_READING;
-
-                    for (char _c : line){
-                        if (_c == '\t')continue;
+    if (loadFile.is_open()){
+        while (!loadFile.eof()){
+            while ( getline (loadFile,line) ){
+                std::string LINE_READING;
+                for (char _c : line){
+                    if (_c == '\t' or _c == '{' or _c == '}'){
+                        continue;
+                    }
+                    if (foundDataType == true){
                         if (_c == ':'){
-                            buttonName = true;
-                            continue;
-                        }
-                        if (LINE_READING == "[STARTBUTTONS]"){
+                            stat = LINE_READING;
                             LINE_READING.clear();
-                            startButtonList = true;
-                            continue;
-                        }
-                        else if (LINE_READING == "[ENDBUTTONS]"){
-                            LINE_READING.clear();
-                            return buttons;
-                        }
-                        else if (LINE_READING == "[BUTTON]"){
-                            LINE_READING.clear();
-                            continue;
-                        }
-
-                        if (startButtonList == true){
-                            if (buttonName == true){
-                                temp.name = LINE_READING;
-                                buttonName = false;
-                                LINE_READING.clear();
-                            }
-                            else if (x==false){
-                                if (_c == ','){
-                                    std::stringstream ss;
-                                    ss << LINE_READING;
-                                    ss>>temp.x;
-                                    LINE_READING.clear();
-                                    x = true;
-                                    continue;
-                                }
-                            }
-                            else if (y == false){
-                                if (_c == ';'){
-                                    std::stringstream ss;
-                                    ss << LINE_READING;
-                                    ss>>temp.y;
-                                    LINE_READING.clear();
-                                    y = true;
-                                    break;
-                                }
-                            }
-                            if (buttonName == false and x == true and y == true){
-                                x = false;
-                                y = false;
-                                buttons.push_back(temp);
-                            }
                         }
                         if (_c == ';'){
-                            LINE_READING.clear();
-                            break;
+                            answer = LINE_READING;
+                            return answers(answer,stat);
                         }
-                        LINE_READING+=_c;
                     }
-                    if (y == true)break;
+                    if (_c != ':')LINE_READING+=_c;
+
+
+                    if (LINE_READING == species){
+                        foundSpecies = true;
+                        break;
+                    }
+                    if (foundSpecies == true and LINE_READING == dataMember){
+                        foundDataMember = true;
+                        break;
+                    }
+                    if (foundDataMember == true and LINE_READING == dataType){
+                        foundDataType = true;
+                        LINE_READING.clear();
+                    }
+
                 }
             }
         }
     }
-
+    return answers("no","no");
+}
 
 
 std::string GET_FORMATTED_TYPE(std::string *typeToFix)

@@ -6,8 +6,8 @@
 #include "generateCity.h"
 #include "tiles.h"
 #include "behaviorTree.h"
+#include "menu.h"
 #include <noise/noise.h>
-
 
 using namespace std;
 
@@ -23,63 +23,81 @@ int main()
 
     coordinate viewSizeInTiles = coordinate(view.getSize().x/16,view.getSize().y/16);
 
+
     sf::Shader lightingShader;
     sf::RenderStates renderState;
-
 
     int counter = 0;
 
     gameWorld gameworld(window);
-    srand(time(NULL));
-    srand(rand()%time(NULL));
-    CheckAll * root = new CheckAll;
     announcements announcementList;
 
-    Selector* decisionMaker = new Selector;
-    Selector* actionPerformer = new Selector;
 
-    Sequence * doorSequence = new Sequence;
-            doorSequence->addChild(new findDoorNode);
+    CheckAll * root = new CheckAll;
 
-    Sequence * itemSequence = new Sequence;
-            itemSequence->addChild(new lookForItemNode);
-            itemSequence->addChild(new isItemBetterNode);
-
-    Sequence * attackSequence = new Sequence;
-            attackSequence->addChild(new decideIfCanAttackNode);
-
-    Selector * movement = new Selector;
-            movement->addChild(new moveOnPathNode);
-            movement->addChild(new findPathNode);
-
-        actionPerformer->addChild(new attackNode);
-        actionPerformer->addChild(new pickUpItemNode);
-        actionPerformer->addChild(new openDoorNode);
-        actionPerformer->addChild(movement);
+    Selector * thoughtProcess = new Selector;
 
 
-    decisionMaker->addChild(attackSequence);
-    decisionMaker->addChild(itemSequence);
-    decisionMaker->addChild(doorSequence);
+    Sequence * danger = new Sequence;
+        Selector * fightOrFlight = new Selector;
+            Sequence * tryToAttack = new Sequence;
+                tryToAttack->addChild(new decideIfCanAttackNode);
+                tryToAttack->addChild(new attackNode);
+            fightOrFlight->addChild(tryToAttack);
+            fightOrFlight->addChild(new findHidingSpot);
+        danger->addChild(fightOrFlight);
 
-    root->addChild(decisionMaker);
-    root->addChild(actionPerformer);
+    Sequence * lookForItems = new Sequence;
+        lookForItems->addChild(new lookForItemNode);
+        lookForItems->addChild(new pickUpItemNode);
 
+    Sequence * openDoors = new Sequence;
+        openDoors->addChild(new findDoorNode);
+        openDoors->addChild(new openDoorNode);
+
+    thoughtProcess->addChild(danger);
+    thoughtProcess->addChild(lookForItems);
+    //thoughtProcess->addChild(openDoors);
+
+    root->addChild(thoughtProcess);
+    root->addChild(new herdNode);
+    root->addChild(new findPathNode);
+    root->addChild(new moveOnPathNode);
 
     //window.setFramerateLimit(60);
 
-
-   // bool keyrelease=true;
-std::vector<actor*> actors;
-actors.push_back(new player("human"));
+    std::vector<std::vector<std::vector<tile* > > > _map;
 
 
+
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text title;
+    title.setFont(font);
+    title.setCharacterSize(50);
+    title.setPosition(220,100);
+    title.setString("Curses!");
+
+    sf::Text subtitle;
+    subtitle.setFont(font);
+    subtitle.setCharacterSize(10);
+    subtitle.setPosition(275,300);
+    subtitle.setString("Press 'ENTER' to begin!");
+
+    while(sf::Keyboard::isKeyPressed(sf::Keyboard::Return) == false)
+    {
+        window.clear(sf::Color::Black);
+
+        window.draw(title);
+        window.draw(subtitle);
+
+        window.display();
+    }
 
     //char ch;
 
-    actors[0]->pos(1,1);
 
-
+    actor* controlledActor = characterCreationMenu(window);
 
 
     std::vector<item*> globalItems;
@@ -105,15 +123,11 @@ actors.push_back(new player("human"));
     lights[3]->decreaseBy = .1;
     lights[3]->position = coordinate(12,1);
 
-    //coordinate temp;
     std::vector<std::vector<std::vector<tile* > > > * lightmap;
 
-    std::vector<std::vector<std::vector<tile* > > > _map;
 
 //    city myCity;
 //    myCity.generateCity();
-
-    _map.resize(2);
 //    _map[0].resize(20);
 //    _map[1].resize(20);
 //
@@ -192,48 +206,55 @@ actors.push_back(new player("human"));
 //    }
 
 tiles myWorld;
+
+myWorld.tileMap[1][1][1]->occupied = controlledActor;
+controlledActor->pos(1,1);
 bool keyrelease = true;
+bool waitforplayer = false;
+    sf::Event event;
+    actor* actorProcessing = NULL;
     while (window.isOpen())
     {
+        if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
+        if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
-        sf::Event event;
+        while (view.getCenter().x != (controlledActor->col()*16) and view.getCenter().x - view.getSize().x/2 < 0){
+            view.setCenter(view.getCenter().x-1,view.getCenter().y);
+        }
+        while (view.getCenter().y != (controlledActor->row()*16) and view.getCenter().y - view.getSize().y/2 < 0){
+            view.setCenter(view.getCenter().x,view.getCenter().y-1);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
-        if (keyrelease == false){
-            for (int i=0;i<actors.size();i++){
-                if (actors[i]->counter >= actors[i]->speed() and actors[i]->controlled == false){
-                    std::cout << "_______________________________________\n";
-                    root->run(actors[i],myWorld.tileMap,localItems,actors,announcementList);
-                    actors[i]->resetCounter();
+        int activeAI =0;
+
+
+        if (controlledActor->movement(&myWorld.tileMap, localItems, window, keyrelease, announcementList, waitforplayer,myWorld.waterBelow)){
+            //std::cout<<controlledActor->col()<<", "<<controlledActor->row()<<std::endl;
+            for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
+                for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
+                    if (coordinate(x,y) == coordinate(controlledActor->col(),controlledActor->row())) continue;
+                    if (y < 0 or x < 0 or y > myWorld.tileMap[1].size()-1 or x > myWorld.tileMap[1].size()-1)continue;
+//                    if(myWorld.tileMap[1][y][x]->occupied and myWorld.tileMap[1][y][x]->occupied!=controlledActor){
+//                                activeAI++;
+//                            myWorld.tileMap[1][y][x]->occupied->increaseCounter();
+//                            if (myWorld.tileMap[1][y][x]->occupied->counter == myWorld.tileMap[1][y][x]->occupied->speed()){
+//                                myWorld.tileMap[1][y][x]->occupied->resetCounter();
+//                                root->run(myWorld.tileMap[1][y][x]->occupied,myWorld.tileMap,localItems,announcementList);
+//                            }
+//                    }
                 }
-                actors[i]->increaseCounter();
             }
         }
+        sf::Event event;
 
-        else {actors[0]->movement(myWorld.tileMap, localItems, actors, window, keyrelease, announcementList, myWorld.waterBelow);
-        if(actors[0]->col()/myWorld.mesh!=gridx or actors[0]->row()/myWorld.mesh!=gridy)
+        if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.mesh!=gridy)
         {
-                myWorld.updateTileMap(gridx,gridy,(actors[0]->col())/myWorld.mesh,(actors[0]->row())/myWorld.mesh);
-                gridx=(actors[0]->col())/myWorld.mesh; gridy=(actors[0]->row())/myWorld.mesh;
-        }
-             }
-        if (actors[0]->col()*16 - view.getSize().x/2 >= 0)view.setCenter(actors[0]->col()*16,view.getCenter().y);
-        if (actors[0]->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, actors[0]->row()*16);
-
-
-//        lightmap = &_map;
-//        do_fov(lightmap,localItems,actors,actors[0]->col(),actors[0]->row(),1/.1,window,renderState,true,1,.1);
-//        for (lightSource * _l : lights){
-//            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-//        }
-////        for (lightSource * _l : lights){
-////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-////        for (lightSource * _l : lights){
-////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-////        }
-////        for (lightSource * _l : lights){
-////            do_fov(lightmap,localItems,actors,_l->position.x,_l->position.y,_l->intensity/_l->decreaseBy,window,renderState,true,_l->intensity,_l->decreaseBy);
-////        }
-//        _map = (*lightmap);
+                myWorld.updateTileMap(gridx,gridy,(controlledActor->col())/myWorld.mesh,(controlledActor->row())/myWorld.mesh);
+                gridx=(controlledActor->col())/myWorld.mesh; gridy=(controlledActor->row())/myWorld.mesh;        }
+        if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
+        if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
         while (window.pollEvent(event)){
             if (event.type == sf::Event::Closed){
@@ -243,30 +264,13 @@ bool keyrelease = true;
             }
                 keyrelease = true;
         }
-        int ystart = actors[0]->row() - (viewSizeInTiles.y/2);
-        int xstart = actors[0]->col() - (viewSizeInTiles.x/2);
-        int yend   = actors[0]->row() + (viewSizeInTiles.y/2);
-        int xend   = actors[0]->col() + (viewSizeInTiles.x/2);
-
-//        if (xstart < 0)xstart = 0;
-//        if (ystart < 0)ystart = 0;
-//        if (xend >= _map[0][0].size())xend = _map[0][0].size()-1;
-//        if (yend >= _map[0].size())yend = _map[0].size()-1;
-//
-//        for (ystart;ystart <= yend;ystart++){
-//            for (int x = xstart;x<=xend;x++){
-//                _map[0][ystart][x]->litHere = false;
-//                _map[1][ystart][x]->litHere = false;
-//            }
-//        }
+        int ystart = controlledActor->row() - (viewSizeInTiles.y/2);
+        int xstart = controlledActor->col() - (viewSizeInTiles.x/2);
+        int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
+        int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
         window.setView(view);
-        gameworld.drawGameworld(myWorld.tileMap, actors, localItems,window,announcementList, renderState);
+        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor);
     }
-
-
-        for (int i=0;i<actors.size();i++){
-            delete actors[i];
-        }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){
                 delete _map[i][j];

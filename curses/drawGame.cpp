@@ -1,10 +1,13 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<actor*> &actors,std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState)
+void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor)
 {
+int a=controlledActor->col();
+int b=controlledActor->row();
+
+//std::cout << controlledActor->col() << "," << controlledActor->row() << std::endl;
 
     renderState = sf::RenderStates::Default;
-    startingposition=coordinate((actors[0])->col(),(actors[0])->row());
-
+    startingposition=coordinate(controlledActor->col(),controlledActor->row());
 
     bool drawActor=false;
     bool drawItem=false;
@@ -12,17 +15,53 @@ void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_m
     item* itemToDraw;
 
     window.clear();
+    do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
 
-    if (actors[0]->controlled == true){
-        do_fov(_map, localItems, actors, actors[0]->col(), actors[0]->row(), 15, window, renderState,false,0,0);
+//std::cout << controlledActor->col() << "," << controlledActor->row() << std::endl;
+if(controlledActor->col()!=a or controlledActor->row()!=b)
+{
+    while(true)
+    {
+    }
+}
+
+    sf::Font font;
+    font.loadFromFile("data/PressStart2P-Regular.ttf");
+    sf::Text bodyPartText;
+    bodyPartText.setFont(font);
+    bodyPartText.setCharacterSize(12);
+    std::vector<bodyPart*> bodies;
+    controlledActor->rootPart->returnParts(bodies);
+
+    std::stringstream ss;
+
+    int counter = 0;
+
+
+    window.setView(window.getDefaultView());
+
+    for(bodyPart* a : bodies)
+    {
+        if (a->connectedTo != "00")continue;
+        bodyPartText.setString(a->name);
+
+        bodyPartText.setPosition(600,10+(15*counter));
+        window.draw(bodyPartText);
+
+        ss << a->damage;
+        bodyPartText.setString(ss.str());
+        ss.str(std::string());
+        bodyPartText.setPosition(720,10+(15*counter));
+        counter++;
+        window.draw(bodyPartText);
     }
 
-                actors[0]->drawActor(window);
-    window.setView(window.getDefaultView());
+
+
     announcementBorder.setPosition(window.getView().getCenter().x+window.getSize().x/10,window.getView().getCenter().y-window.getSize().y/5);
     window.draw(announcementBorder);
     announcementList.drawAnnouncements(window);
-                window.display();
+    window.display();
 }
 
 void announcements::drawAnnouncements(sf::RenderWindow & window)
@@ -34,12 +73,15 @@ void announcements::drawAnnouncements(sf::RenderWindow & window)
     menuText.setFont(font);
 
     int x = window.getSize().x*.60+6,y = window.getSize().y - 15;
-    for (int i = 29; i >-1;i--){
-        if (i > announcementList.size())return;
+    int counter = 0;
+    for (int i = announcementList.size()-1; i > 0;i--){
+        if (counter == 28)return;
+        if (counter > announcementList.size()-1 or announcementList.size() == 0)return;
         menuText.setString(announcementList[i]);
         menuText.setPosition(x,y);
         window.draw(menuText);
         y-=15;
+        counter++;
     }
 }
 

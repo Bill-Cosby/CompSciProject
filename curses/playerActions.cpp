@@ -1,6 +1,7 @@
 #include "actor.h"
 
-void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::vector<item*> &localItems, std::vector<actor*> &actors, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, const double waterBelow)
+bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer, const double waterBelow)
+
 {
     /*
     0 = NORTH
@@ -21,6 +22,7 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     15 = EXECUTE
     16 = LOOK
     */
+
     int ch;
     coordinate temp = coordinate(x,y);
     bool moveThroughDoor=true;
@@ -30,21 +32,20 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
     char closeDirection;
     char examineDirection;
     std::vector<item*> itemsExamining;
-
     sf::Event event;
 
-    tile tempFuckdebugging;
     coordinate tempShit=coordinate(x,y);
     customSpeed=speed();
-    if (counter>=customSpeed)
-        {
 
+    if (counter>=customSpeed and keyrelease == true){
                 while (window.pollEvent(event)){
                     if (event.type == sf::Event::KeyPressed){
                         pressedKey = true;
                     }
                 }
             pressedKey = false;
+
+            //if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){keyrelease = false;}
 
                  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
@@ -54,14 +55,18 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)){temp.x++;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)){temp.x--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)){temp.y--;keyrelease=false;}
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)){temp.y++;keyrelease=false;}
 
-
-
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){openInventory(window,localItems, keyrelease);}
+
+            if (temp.y < 0 or temp.x < 0 or temp.y > (*_map)[1].size() or temp.x > (*_map)[1][1].size()){
+                embarking = true;
+                return true;
+            }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
                 while (pressedKey == false){
@@ -83,7 +88,28 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         }
                     }
                 }
-                _map[1][temp.y][temp.x]->interactWithDoor(false);
+                (*_map)[1][temp.y][temp.x]->interactWithDoor(false);
+            }
+
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)){
+                while (pressedKey == false){
+                    while (window.pollEvent(event)){
+                        if (event.type == sf::Event::KeyPressed){
+                                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6)){temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4)){temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad8)){temp.y--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2)){temp.y++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3)){temp.y++;temp.x++;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1)){temp.y++;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7)){temp.y--;temp.x--;keyrelease=false;}
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad9)){temp.y--;temp.x++;keyrelease=false;}
+                            pressedKey = true;
+                        }
+                    }
+                }
+                if ((*_map)[1][temp.y][temp.x]->occupied){
+                    (*_map)[1][temp.y][temp.x]->occupied->dialogue((*_map),localItems,announcementList,window,this);
+                }
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
@@ -109,7 +135,10 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         }
                     }
                 }
-                examineGround(window,localItems,temp, announcementList);
+                tile* tempTile;
+                if ((*_map)[1][temp.y][temp.x]->isContainer)tempTile = (*_map)[1][temp.y][temp.x];
+                else tempTile = NULL;
+                examineGround(window,localItems,temp, announcementList,tempTile);
             }
 
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
@@ -134,42 +163,42 @@ void player::movement(std::vector<std::vector<std::vector<tile*> > > &_map,std::
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)){keyrelease=false;}
                         pressedKey = true;
                     }
-                    for (actor* _a : actors){
-                        if (coordinate(_a->col(),_a->row()) == temp){
-                            actorAttacking = _a;
-                        }
+                    if ((*_map)[1][temp.y][temp.x]->occupied != NULL and (*_map)[1][temp.y][temp.x]->occupied!=this){
+                        actorAttacking = (*_map)[1][temp.y][temp.x]->occupied;
                     }
-                    attackEnemy(_map,announcementList,localItems,window);
+                    attackEnemy((*_map),announcementList,localItems,window);
                     actorAttacking = NULL;
                 }
+                waitforplayer = false;
             }
-            else if ((_map[1][temp.y][temp.x]->movementCost != -1 and _map[0][temp.y][temp.x]->movementCost != -1 and playerInBoat==false) or (playerInBoat==true and _map[0][temp.y][temp.x]->elevation<=waterBelow+0.05))
+            else if ((*_map)[1][temp.y][temp.x]->movementCost != -1 and (true or
+                                                                          ((*_map)[0][temp.y][temp.x]->elevation>=waterBelow and playerInBoat==false) or
+                                                                          (playerInBoat==true and (*_map)[0][temp.y][temp.x]->elevation<=waterBelow+0.05)))
             {
-                if (_map[1][temp.y][temp.x]->isDoor){
-                    moveThroughDoor = _map[1][temp.y][temp.x]->interactWithDoor(true);
+                if ((*_map)[1][temp.y][temp.x]->isDoor){
+                    moveThroughDoor = (*_map)[1][temp.y][temp.x]->interactWithDoor(true);
                 }
-                for (actor* _a : actors){
-                    if (_a == this)continue;
-                    if (coordinate(_a->col(),_a->row()) == temp){
-                        actorAttacking = _a;
-                        simpleAttackEnemy(_map,announcementList,localItems);
-                        return;
-                    }
+                if ((*_map)[1][temp.y][temp.x]->occupied!=NULL and (*_map)[1][temp.y][temp.x]->occupied!=this){
+                    actorAttacking = (*_map)[1][temp.y][temp.x]->occupied;
+                    simpleAttackEnemy((*_map),announcementList,localItems);
+                    return true;
                 }
-                if (moveThroughDoor == true){
-                    pos(temp.y,temp.x);
+                if (moveThroughDoor == true and (temp.x!=x or temp.y!=y)){
+                    (*_map)[1][y][x]->occupied = NULL;
+                        y=temp.y;
+                        x=temp.x;
+                    (*_map)[1][y][x]->occupied = this;
+
+
                     counter=0;
+                    return true;
                 }
+                waitforplayer = false;
             }
-            else{
-
-
-            }
-
-
-        sprite.setPosition(x*16,y*16);
+        return false;
     }
-    counter++;
+    else counter++;
+    return true;
 }
 
 void player::attackEnemy(std::vector<std::vector<std::vector<tile*> > >& _map, announcements& announcementList, std::vector<item*> &localItems, sf::RenderWindow &window)

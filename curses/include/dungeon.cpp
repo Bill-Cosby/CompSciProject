@@ -52,8 +52,22 @@ dungeon::dungeon()
         dungeon_grid[i].resize(w-firstX);
     }
 
+    std::ofstream mapoutput;
+    mapoutput.open("map.txt");
 
-
+    for (int i = 0;i<dungeon_grid.size();i++){
+        for (int j = 0;j<dungeon_grid[i].size();j++){
+            if (dungeon_grid[i][j]){
+                mapoutput << ' ';
+            }
+            else
+            {
+                mapoutput << '#';
+            }
+        }
+        mapoutput << '\n';
+    }
+    mapoutput.close();
 }
 
 int dungeon::Passable(int Mx, int My)
