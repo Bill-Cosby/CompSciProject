@@ -43,7 +43,7 @@ void tile::drawTile(sf::RenderWindow &window, sf::RenderStates &renderState)
 
         window.draw(tempSprite,renderState);
 
-    if (occupied!=NULL){
+    if (occupied!=NULL){//if(!occupied->isPlayer()) while(true){std::cout<<"z";}
         occupied->drawActor(window,position.x,position.y);
     }
 

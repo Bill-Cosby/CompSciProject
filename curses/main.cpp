@@ -103,7 +103,7 @@ int main()
     std::vector<item*> globalItems;
     std::vector<item*> localItems;
 
-    localItems.push_back(new boat('B',1,1,0));
+    localItems.push_back(new boat('B',2,2,0));
 
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);

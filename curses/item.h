@@ -62,7 +62,7 @@ public:
     boat(char symbol, int _x, int _y, int _value);
 
     virtual void equip(bool equipping){}
-    virtual std::string itemDescription(){return "A big ass boat";}
+    virtual std::string itemDescription(){return "A boat";}
     virtual void use(){}
     virtual void draw(sf::RenderWindow &window){window.draw(sprite);}
 };
@@ -109,7 +109,7 @@ public:
     void equip(bool equipping){}
     std::string itemDescription(){}
     void draw(sf::RenderWindow &window){
-        torso->draw(window,sprite.getPosition().x,sprite.getPosition().y);
+    torso->draw(window,sprite.getPosition().x,sprite.getPosition().y, true);
     }
 
 };
@@ -127,7 +127,7 @@ public:
     void draw(sf::RenderWindow &window){
         window.draw(sprite);
         for (bodyPart * _b : partsAttached){
-            _b->draw(window,sprite.getPosition().x,sprite.getPosition().y);
+            _b->draw(window,sprite.getPosition().x,sprite.getPosition().y, true);
         }
     }
 };

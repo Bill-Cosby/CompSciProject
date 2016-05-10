@@ -104,15 +104,16 @@ void bodyPart::returnWeight(int &totalWeight)
     }
 }
 
-void bodyPart::draw(sf::RenderWindow &window, int x, int y){
+void bodyPart::draw(sf::RenderWindow &window, int x, int y, bool isPlayer){
+   if(isPlayer==false) std::cout<< "Non-Player \n";
     if (vanity != NULL){
-        if (left){
+        if (left){std::cout<<"vanity \n";
             vanity->sprite.scale(-1.0f,1.0f);
         }
         vanity->sprite.setPosition(x,y);
         window.draw(vanity->sprite);
     }
-    else if (armor != NULL){
+    else if (armor != NULL){if(isPlayer==false)  if(isPlayer==false) std::cout<<"Armor \n";
         armor->sprite.setPosition(x,y);
         if (left){
             armor->sprite.setOrigin(sprite.getPosition().x+17,sprite.getPosition().y);
@@ -127,14 +128,14 @@ void bodyPart::draw(sf::RenderWindow &window, int x, int y){
     else{
         sprite.setPosition(x,y);
         window.draw(sprite);
-        if (name == "head"){
+        if (name == "head"){if(isPlayer==false) std::cout<<"Armor \n";
             hair.setPosition(x,y);
             window.draw(hair);
         }
     }
 
     for (bodyPart * _b : attachedParts){
-        _b->draw(window,x,y);
+        _b->draw(window,x,y, true);
     }
 }
 

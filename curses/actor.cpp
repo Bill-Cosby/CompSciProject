@@ -247,5 +247,6 @@ void actor::drawActor(sf::RenderWindow& window,int _x, int _y)
 {
     x= _x;
     y = _y;
-    rootPart->draw(window,x*16,y*16);
+    rootPart->draw(window,x*16,y*16, isPlayer());
+    //if(isPlayer()==false) while(true) std::cout<<"X";
 }

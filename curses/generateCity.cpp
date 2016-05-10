@@ -58,7 +58,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
 
     int width = abs(right-left), height = abs(bottom-top);
 
-    if (width < 5 or height < 5)return;
+    if (width < 4 or height < 4)return;
 
     else if (width < 15 and height > 10 and height <15){
         wallTex = stonewall;
@@ -68,6 +68,16 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
         innerwallTex = stonewall;
         innerwallmat = "stone";
         type = 1;
+    }
+
+   else if (height < 15 and width > 10 and width <15){
+        wallTex = stonewall;
+        floorTex = stonefloor;
+        wallmat = "stone";
+        floormat = "stone";
+        innerwallTex = stonewall;
+        innerwallmat = "stone";
+        type = 4;
     }
     else if (width<15 and height < 15){
         wallTex = woodwall;
@@ -87,15 +97,7 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
         innerwallmat = "wood";
         type = 3;
     }
-    else if (height < 15 and width > 10 and width <15){
-        wallTex = stonewall;
-        floorTex = stonefloor;
-        wallmat = "stone";
-        floormat = "stone";
-        innerwallTex = stonewall;
-        innerwallmat = "stone";
-        type = 4;
-    }
+
     else return;
 
     bool emptyPlot = false;

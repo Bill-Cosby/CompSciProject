@@ -178,6 +178,7 @@ do not forget to "delete" every pointer at the end of the program.
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &temptile){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
     virtual void moveOnPath(std::vector<std::vector<std::vector<tile*> > > &_map){}
+    virtual bool isPlayer(){}
 };
 
 class player: public actor
@@ -190,6 +191,8 @@ public:
     void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems, bool & keyrelease);
     virtual void attackEnemy(std::vector<std::vector<std::vector<tile*> > > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window);
     player(std::string speciesToLoad);
+    bool isPlayer() {return true;}
+
 };
 
 class monster : public actor

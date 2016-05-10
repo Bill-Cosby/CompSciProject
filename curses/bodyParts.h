@@ -33,7 +33,7 @@ public:
 
     bool wear(item* itemToWear){if (armor==NULL){armor= itemToWear;return true;}return false;}
 
-    void draw(sf::RenderWindow &window, int x, int y);
+    void draw(sf::RenderWindow &window, int x, int y, bool isPlayer);
 
     void clearDeadParts(bodyPart* partToCheck)
     {
