@@ -270,7 +270,7 @@ bool waitforplayer = false;
         int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
         int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
         window.setView(view);
-        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor, (gridx)*myWorld.mesh, (gridy)*myWorld.mesh);
+        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor, (gridx-1)*myWorld.mesh, (gridy-1)*myWorld.mesh);
     }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){

@@ -57,11 +57,11 @@ void tiles::fillMap()
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
             tileMap[0][b][c]=new tile(grass,0,findTileType(elevation),x,y);
             tileMap[0][b][c]->elevation=elevation;
-            tileMap[0][b][c]->position.y=b;
-            tileMap[0][b][c]->position.x=c;
+            tileMap[0][b][c]->position.y=b-mesh;
+            tileMap[0][b][c]->position.x=c-mesh;
             tileMap[1][b][c]=new tile;
-            tileMap[1][b][c]->position.y=b;
-            tileMap[1][b][c]->position.x=c;
+            tileMap[1][b][c]->position.y=b-mesh;
+            tileMap[1][b][c]->position.x=c-mesh;
         }
     }
 }
@@ -188,8 +188,8 @@ void tiles::updateTileMap(int deltax, int deltay, int centergridx, int centergri
 double p=a*mesh+c;
 double q=b*mesh+d;
 
-            double x=mesh*(centergridx+deltax+c-1)*mesh+c;
-            double y=mesh*(centergridy+deltay+c-1)*mesh+d;
+            double x=mesh*(centergridx+deltax-1)+c;
+            double y=mesh*(centergridy+deltay-1)+d;
 
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
             tileMap[0][q][p]=new tile(grass,0,findTileType(elevation),x,y);
