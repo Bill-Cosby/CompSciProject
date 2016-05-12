@@ -6,22 +6,23 @@
 #include <vector>
 #include <random>
 
-city::city(int xZero, int yZero, int w, int h, std::vector<std::vector<std::vector<tile*> > > & tileMap)
+city::city(int w, int h)
 {
-width=w; height=h; left=xZero; bottom=yZero; right=xZero+width-1; top=yZero+height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);
-setTileMap(tileMap);
+width=w; height=h; left=0; 0; right=width-1; top=height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);
+setTileMap();
 divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing
-
 }
 
-void city:: setTileMap(std::vector<std::vector<std::vector<tile*> > > & tileMap)
+void city::setTileMap()
 {
-if(bottom<0 or left<0 or top>=tileMap[0].size() or right>=tileMap[0][0].size())
-{
-    std::cout<<"Bad"<<std::endl;
-}
+tileMap.resize(2);
+tileMap[0].resize(height);
+tileMap[1].resize(height);
+
   for(int a=bottom; a<=top; a++)
     {
+        tileMap[0][a].resize(width);
+        tileMap[1][a].resize(width);
         for(int b=left; b<=right; b++)
         {
             tileMap[0][a][b]=new tile(grass,10,"grass",a,b);

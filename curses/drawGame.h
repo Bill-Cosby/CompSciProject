@@ -12,7 +12,7 @@ class gameWorld
     coordinate charplaced;
 public:
 
-    void drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow &window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor);
+    void drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow &window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor, int, int);
     gameWorld(sf::RenderWindow &window){
         announcementBorder.setFillColor(sf::Color::Black);
         announcementBorder.setOutlineThickness(3);

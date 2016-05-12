@@ -251,8 +251,9 @@ bool waitforplayer = false;
 
         if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.mesh!=gridy)
         {
-                myWorld.updateTileMap(gridx,gridy,(controlledActor->col())/myWorld.mesh,(controlledActor->row())/myWorld.mesh);
-                gridx=(controlledActor->col())/myWorld.mesh; gridy=(controlledActor->row())/myWorld.mesh;        }
+                myWorld.updateTileMap((controlledActor->col())/myWorld.mesh-gridx,(controlledActor->row())/myWorld.mesh-gridy, gridx, gridy);
+                gridx=(controlledActor->col())/myWorld.mesh; gridy=(controlledActor->row())/myWorld.mesh;
+        }
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
         if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
@@ -269,7 +270,7 @@ bool waitforplayer = false;
         int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
         int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
         window.setView(view);
-        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor);
+        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor, (gridx)*myWorld.mesh, (gridy)*myWorld.mesh);
     }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){

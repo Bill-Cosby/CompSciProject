@@ -16,7 +16,7 @@ tiles::tiles()
     citiesNeeded=5;
     makeElevationMap();
     fillMap();
-    placeCities();
+    //placeCities();
 
 
 }
@@ -44,38 +44,26 @@ void tiles::fillMap()
 {
     tileMap.resize(2);
 
-        tileMap[0].resize(height*mesh);
-        tileMap[1].resize(height*mesh);
+        tileMap[0].resize(3*mesh);
+        tileMap[1].resize(3*mesh);
         for(double b=0; b<tileMap[0].size(); b++)
     {
-        tileMap[0][b].resize(width*mesh);
-        tileMap[1][b].resize(width*mesh);
+        tileMap[0][b].resize(3*mesh);
+        tileMap[1][b].resize(3*mesh);
         for(double c=0; c<tileMap[0][b].size(); c++)
         {
-            if((b>=mesh*(height-1) or b<2*mesh) and (c>=mesh*(width-1) or b<2*mesh))
-               {
-
-            double elevation=finalTerrain.GetValue(c*zoomOut/(width*mesh), b*zoomOut/(height*mesh), 0.5);
-            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation),c,b);
+            double x=c-mesh;
+            double y=b-mesh;
+            double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
+            tileMap[0][b][c]=new tile(grass,0,findTileType(elevation),x,y);
             tileMap[0][b][c]->elevation=elevation;
             tileMap[0][b][c]->position.y=b;
             tileMap[0][b][c]->position.x=c;
             tileMap[1][b][c]=new tile;
             tileMap[1][b][c]->position.y=b;
             tileMap[1][b][c]->position.x=c;
-
-
-               }
-               else
-                {
-tileMap[0][b][c]=new tile;
-tileMap[1][b][c]=new tile;
-               }
         }
     }
-
-
-    //fills tileMap with blanks
 }
 
 
@@ -186,84 +174,48 @@ std::string tiles::findTileType(double elevation)
         return "white";//snow
     }
 }
-void tiles::updateTileMap(signed int gridx,signed int gridy,signed int newGridx,signed int newGridy)
+void tiles::updateTileMap(int deltax, int deltay, int centergridx, int centergridy)
 {
 
-signed int deltax=newGridx-gridx;
-signed int deltay=newGridy-gridy;
-signed int gridxDelete=mod(gridx-deltax,width);
-signed int gridyDelete=mod(gridy-deltay,height);
-
-  for(signed int c=-1; c<=1; c++)
+  for(signed int a=0; a<3; a++)
   {
-int newgridxc=mod(newGridx+c,width);
-int newgridyc=mod(newGridy+c,height);
-
-      for(int a=0; a<mesh; a++)
+    for(int b=0; b<3; b++)
       {
-          for(int b=0; b<mesh; b++)
+      for(int c=0; c<mesh; c++)
       {
-         if(deltax!=0)//horizontal movement
-         {
-             if(tileMap[0][gridyDelete*mesh+a][gridxDelete*mesh+b]->isCity==false)
-             {
-                 tileMap[0][gridyDelete*mesh+a][gridxDelete*mesh+b]=new tile;
-             }
+        for(int d=0; d<mesh; d++)
+          {
+double p=a*mesh+c;
+double q=b*mesh+d;
 
+            double x=mesh*(centergridx+deltax+c-1)*mesh+c;
+            double y=mesh*(centergridy+deltay+c-1)*mesh+d;
 
-            double x=mod(newGridx+deltax,width)*mesh+b;
-            double y=newgridyc*mesh+a;
-
-            if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
-            {
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
-            tileMap[0][y][x]=new tile(grass,0,findTileType(elevation),x,y);
-            tileMap[0][y][x]->elevation=elevation;
-            tileMap[0][y][x]->position.x=x;
-            tileMap[0][y][x]->position.y=y;
+            tileMap[0][q][p]=new tile(grass,0,findTileType(elevation),x,y);
+            tileMap[0][q][p]->elevation=elevation;
+            tileMap[0][q][p]->position.x=x;
+            tileMap[0][q][p]->position.y=y;
 
-            tileMap[1][y][x]=new tile;
-            tileMap[1][y][x]->position.x=x;
-            tileMap[1][y][x]->position.y=y;
-            }
+            tileMap[1][q][p]=new tile;
+            tileMap[1][q][p]->position.x=x;
+            tileMap[1][q][p]->position.y=y;
 
-         }
-
-         if(deltay!=0) //vertical movement
-         {
-             if(tileMap[0][gridyDelete*mesh+a][newgridxc*mesh+b]->isCity==false)
-             {
-             tileMap[0][gridyDelete*mesh+a][newgridxc*mesh+b]=new tile;
-             tileMap[1][gridyDelete*mesh+a][newgridxc*mesh+b]=new tile;
-             }
-
-             double x=newgridxc*mesh+b;
-             double y=mod(newGridy+deltay,height)*mesh+a;
-             if(tileMap[0][y][x]->isCity==false and tileMap[1][y][x]->isCity==false)
-             {
-                 double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh),y*zoomOut/(height*mesh), 0.5);
-             tileMap[0][y][x]=new tile(grass,0,findTileType(elevation),x,y);
-             tileMap[0][y][x]->elevation=elevation;
-             tileMap[0][y][x]->position.x=x;
-             tileMap[0][y][x]->position.y=y;
-
-            tileMap[1][y][x]=new tile;
-            tileMap[1][y][x]->position.x=x;
-            tileMap[1][y][x]->position.y=y;
-
-             }
 
          }
+
+      }
       }
       }
   }
 
-}
+
+
 
 void tiles::placeCities()
 {
 int cityWidth=50;
- int cityHeight=50;
+int cityHeight=50;
     unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
      std::mt19937 generator(seed);
      std::uniform_int_distribution<int> chooseTestx(0,mesh*width-cityWidth);
@@ -280,11 +232,11 @@ int cityWidth=50;
     x=chooseTestx(generator);
     y=chooseTesty(generator);
     goodSpot=true;
-    for(double b=y; b<y+cityHeight; b++)
+    for(double b=0; b<cityHeight; b++)
     {
-        for(double c=x; c<x+cityWidth; c++)
+        for(double c=0; c<cityWidth; c++)
         {
-            elevationHere=finalTerrain.GetValue(zoomOut*c/(mesh*width),zoomOut*b/(mesh*height), 0.5);
+            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
            if(sandBelow>=elevationHere or dirtBelow<=elevationHere) //or tileMap[0][b][c]->isCity==true
            {
                goodSpot=false;
@@ -300,7 +252,16 @@ int cityWidth=50;
               if(goodSpot==true)
               {   a++;
                   std::cout<<"City Made On "<<x<<", "<<y<<"\n";
-                   A=new city(x,y,cityWidth,cityHeight,tileMap);
+                   A=new city(cityWidth,cityHeight);
+                for(double b=0; b<cityHeight; b++)
+                {
+                    for(int c=0; c<cityWidth; c++)
+                    {
+                        tileMap[0][b][c]=A->tileMap[0][b][c];
+                        tileMap[1][b][c]=A->tileMap[1][b][c];
+                    }
+                }
+
               }
 
     }

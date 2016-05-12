@@ -46,10 +46,11 @@ class city: public box
     public:
  std::mt19937 generator;
 unsigned seed;
+std::vector<std::vector<std::vector<tile*> > >  tileMap;
 int width;
 int height;
-city(int xZero, int yZero, int w, int h, std::vector<std::vector<std::vector<tile*> > > & tileMap);
-void setTileMap(std::vector<std::vector<std::vector<tile*> > > & tileMap);
+city(int w, int h);
+void setTileMap();
 
 //~city();
 

@@ -1,5 +1,5 @@
 #include "drawGame.h"
-void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor)
+void gameWorld::drawGameworld(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, sf::RenderWindow & window, announcements & announcementList, sf::RenderStates &renderState,actor* controlledActor, int xdisplace, int ydisplace)
 {
 int a=controlledActor->col();
 int b=controlledActor->row();
@@ -7,7 +7,7 @@ int b=controlledActor->row();
 //std::cout << controlledActor->col() << "," << controlledActor->row() << std::endl;
 
     renderState = sf::RenderStates::Default;
-    startingposition=coordinate(controlledActor->col(),controlledActor->row());
+    startingposition=coordinate(controlledActor->col()-xdisplace,controlledActor->row()-ydisplace);
 
     bool drawActor=false;
     bool drawItem=false;
@@ -18,12 +18,6 @@ int b=controlledActor->row();
     do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
 
 //std::cout << controlledActor->col() << "," << controlledActor->row() << std::endl;
-if(controlledActor->col()!=a or controlledActor->row()!=b)
-{
-    while(true)
-    {
-    }
-}
 
     sf::Font font;
     font.loadFromFile("data/PressStart2P-Regular.ttf");
