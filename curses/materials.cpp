@@ -13,6 +13,7 @@ sf::Color giveColor(std::string mat_name)
      if (mat_name == "wood") return woodColor;
      if (mat_name == "sand")return sf::Color::Yellow;
      if(mat_name == "water") return waterColor;
+     if(mat_name== "darkWater") return darkWaterColor;
 
     if (mat_name == "white")return whiteSkinColor;
     if (mat_name == "brown")return brownSkinColor;

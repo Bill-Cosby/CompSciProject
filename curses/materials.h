@@ -46,7 +46,8 @@ const sf::Color stoneColor  = sf::Color (sf::Color(128,128,128));
 const sf::Color grassColor  = sf::Color(sf::Color(49,99,0));
 const sf::Color  dirtColor  = sf::Color(sf::Color(155,118,83));
 const sf::Color  woodColor  = sf::Color(sf::Color(156,94,47));
-const sf::Color  waterColor  = sf::Color(sf::Color(0,0,100));
+const sf::Color  waterColor  = sf::Color(sf::Color(0,0,125));
+const sf::Color darkWaterColor=sf::Color(sf::Color(0,0,95));
 
 const sf::Color whiteSkinColor = sf::Color(sf::Color(242,221,220));
 const sf::Color brownSkinColor = sf::Color(sf::Color(109,70,0));

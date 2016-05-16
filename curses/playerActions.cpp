@@ -1,6 +1,6 @@
 #include "actor.h"
 
-bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer, const double waterBelow)
+bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer, const double waterBelow, int xdisplace, int ydisplace)
 
 {
     /*
@@ -24,7 +24,7 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::
     */
 
     int ch;
-    coordinate temp = coordinate(x,y);
+    coordinate temp = coordinate(x-xdisplace,y-ydisplace);
     bool moveThroughDoor=true;
     bool attacking=false;
     bool pressedKey = false;
@@ -34,7 +34,7 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::
     std::vector<item*> itemsExamining;
     sf::Event event;
 
-    coordinate tempShit=coordinate(x,y);
+    coordinate tempShit=coordinate(x-xdisplace,y-ydisplace);
     customSpeed=speed();
 
     if (counter>=customSpeed and keyrelease == true){
@@ -171,7 +171,7 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::
                 }
                 waitforplayer = false;
             }
-            else if ((*_map)[1][temp.y][temp.x]->movementCost != -1 and (true or ((*_map)[0][temp.y][temp.x]->elevation>=waterBelow and playerInBoat==false) or(playerInBoat==true and (*_map)[0][temp.y][temp.x]->elevation<=waterBelow+0.05)))
+            else if ((*_map)[1][temp.y][temp.x]->movementCost != -1 and (true or ((*_map)[0][temp.y][temp.x]->elevation>=waterBelow and playerInBoat==false) or (playerInBoat==true and (*_map)[0][temp.y][temp.x]->elevation<=waterBelow+0.05)))
             {
                 if ((*_map)[1][temp.y][temp.x]->isDoor){
                     moveThroughDoor = (*_map)[1][temp.y][temp.x]->interactWithDoor(true);
@@ -181,11 +181,11 @@ bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::
                     simpleAttackEnemy((*_map),announcementList,localItems);
                     return true;
                 }
-                if (moveThroughDoor == true and (temp.x!=x or temp.y!=y)){
-                    (*_map)[1][y][x]->occupied = NULL;
-                        y=temp.y;
-                        x=temp.x;
-                    (*_map)[1][y][x]->occupied = this;
+                if (moveThroughDoor == true and (temp.x!=x-xdisplace or temp.y!=y-ydisplace)){
+                    (*_map)[1][y-ydisplace][x-xdisplace]->occupied = NULL;
+                        y=temp.y+ydisplace;
+                        x=temp.x+xdisplace;
+                    (*_map)[1][y-ydisplace][x-xdisplace]->occupied = this;
 
 
                     counter=0;

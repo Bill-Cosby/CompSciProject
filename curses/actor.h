@@ -173,7 +173,7 @@ so:
    std::vector<actor*> actors.push_back(new monster(int, char);
 do not forget to "delete" every pointer at the end of the program.
 */
-    virtual bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double){}
+    virtual bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double, int, int){}
     virtual void setPost(int x, int y){}
     virtual void examineGround(sf::RenderWindow &window, std::vector<item*> *itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &temptile){}
     virtual void openInventory(sf::RenderWindow &window,std::vector<item*> *localItems){}
@@ -186,7 +186,7 @@ class player: public actor
     bool keyIsPressed;
 public:
     bool playerInBoat;
-    bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double);
+    bool movement(std::vector<std::vector<std::vector<tile*> > >* _map, std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitForPlayer, const double, int, int);
     void examineGround(sf::RenderWindow &window, std::vector<item*> &itemsExamining, coordinate spotExamining, announcements & announcementList, tile* &tempTile);
     void openInventory(sf::RenderWindow &window,std::vector<item*> &localItems, bool & keyrelease);
     virtual void attackEnemy(std::vector<std::vector<std::vector<tile*> > > &_map, announcements & announcementList,std::vector<item*> &localItems, sf::RenderWindow &window);

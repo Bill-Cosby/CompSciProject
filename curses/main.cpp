@@ -15,8 +15,8 @@ using namespace std;
 
 int main()
 {
-   signed int gridx=0;
-   signed int gridy=0;
+   int gridx=0;
+   int gridy=0;
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
     sf::View view(sf::FloatRect(0,0,window.getSize().x*.60,window.getSize().y*.70));
     view.setViewport(sf::FloatRect(0,0,0.6f,0.7f));
@@ -227,10 +227,15 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
-        int activeAI =0;
+        int activeAI=0;
 
+if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.mesh!=gridy)
+        {
+                myWorld.updateTileMap(controlledActor->col()/myWorld.mesh, controlledActor->row()/myWorld.mesh);
+                gridx=controlledActor->col()/myWorld.mesh; gridy=controlledActor->row()/myWorld.mesh;
+        }
 
-        if (controlledActor->movement(&myWorld.tileMap, localItems, window, keyrelease, announcementList, waitforplayer,myWorld.waterBelow)){
+        if (controlledActor->movement(&myWorld.tileMap, localItems, window, keyrelease, announcementList, waitforplayer,myWorld.waterBelow, myWorld.mesh*(gridx-1), myWorld.mesh*(gridy-1))){
             //std::cout<<controlledActor->col()<<", "<<controlledActor->row()<<std::endl;
             for (int y = controlledActor->row()-14;y<=controlledActor->row()+14;y++){
                 for (int x = controlledActor->col()-14;x<=controlledActor->col()+14;x++){
@@ -249,11 +254,7 @@ bool waitforplayer = false;
         }
         sf::Event event;
 
-        if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.mesh!=gridy)
-        {
-                myWorld.updateTileMap((controlledActor->col())/myWorld.mesh-gridx,(controlledActor->row())/myWorld.mesh-gridy, gridx, gridy);
-                gridx=(controlledActor->col())/myWorld.mesh; gridy=(controlledActor->row())/myWorld.mesh;
-        }
+
         if (controlledActor->col()*16 - view.getSize().x/2 >= 0)view.setCenter(controlledActor->col()*16,view.getCenter().y);
         if (controlledActor->row()*16 - view.getSize().y/2 >= 0)view.setCenter(view.getCenter().x, controlledActor->row()*16);
 
@@ -270,7 +271,7 @@ bool waitforplayer = false;
         int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
         int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
         window.setView(view);
-        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor, (gridx-1)*myWorld.mesh, (gridy-1)*myWorld.mesh);
+        gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor,(gridx-1)*myWorld.mesh, (gridy-1)*myWorld.mesh);
     }
         /*for (int i=0;i<myCity.tileMap.size();i++){
             for (int j=0;j<myCity.tileMap.size();i++){

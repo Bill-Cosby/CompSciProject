@@ -9,14 +9,14 @@
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=1;
-    height=10;
-    width=10;
+    zoomOut=50;
+    height=100;
+    width=100;
     mesh=30;
     citiesNeeded=5;
     makeElevationMap();
     fillMap();
-    //placeCities();
+    placeCities();
 
 
 }
@@ -148,7 +148,11 @@ utils::NoiseMap heightMap;
 
 std::string tiles::findTileType(double elevation)
 {
-     if(elevation<waterBelow)
+    if(elevation<darkWaterBelow)
+    {
+        return "darkWater";
+    }
+    else if(elevation<waterBelow)
     {
       return "water";
 
@@ -174,7 +178,7 @@ std::string tiles::findTileType(double elevation)
         return "white";//snow
     }
 }
-void tiles::updateTileMap(int deltax, int deltay, int centergridx, int centergridy)
+void tiles::updateTileMap(int centergridx, int centergridy)
 {
 
   for(signed int a=0; a<3; a++)
@@ -188,8 +192,8 @@ void tiles::updateTileMap(int deltax, int deltay, int centergridx, int centergri
 double p=a*mesh+c;
 double q=b*mesh+d;
 
-            double x=mesh*(centergridx+deltax-1)+c;
-            double y=mesh*(centergridy+deltay-1)+d;
+            double x=mesh*(centergridx-1+a)+c;
+            double y=mesh*(centergridy-1+b)+d;
 
             double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
             tileMap[0][q][p]=new tile(grass,0,findTileType(elevation),x,y);
@@ -200,12 +204,47 @@ double q=b*mesh+d;
             tileMap[1][q][p]=new tile;
             tileMap[1][q][p]->position.x=x;
             tileMap[1][q][p]->position.y=y;
-
-
          }
 
       }
       }
+      }
+      bool leftCheck;
+      bool bottomCheck;
+      bool rightCheck;
+      bool bottomCheck;
+      for(int z=0; z<cityList.size(); city++)
+      {
+            leftCheck=false;
+            bottomCheck=false;
+            rightCheck=false;
+            bottomCheck;=false;
+          if(mesh*(centergridx-1)<=city[z]->left and city[z]->left<mesh*(centergridx-1))
+             {
+                leftCheck=true
+             }
+          else if (mesh*(centergridx-1)<=city[z]->right and city[z]->right<mesh*(centergridx-1))
+          {
+              rightCheck=true;
+          }
+          if(mesh*(centergridy-1)<=city[z]->bottom and city[z]->bottom<mesh*(centergridy-1))
+          {
+              bottomCheck=true;
+          }
+          else if(mesh*(centergridy-1)<=city[z]->top and city[z]->top<mesh*(centergridy-1))
+             {
+                topCheck=true;
+             }
+
+
+             if((topCheck==true and leftCheck==true) or(topCheck==true and rightCheck==true) or (bottomCheck==true and leftCheck==true) or (bottomCheck and rightCheck==true))
+             {
+                 return true;
+             }
+             else
+             {
+                 return false;
+             }
       }
   }
 
@@ -220,7 +259,6 @@ int cityHeight=50;
      std::mt19937 generator(seed);
      std::uniform_int_distribution<int> chooseTestx(0,mesh*width-cityWidth);
      std::uniform_int_distribution<int> chooseTesty(0,mesh*height-cityHeight);
-
  int x;
  int y;
  bool goodSpot;
@@ -248,19 +286,12 @@ int cityHeight=50;
             break;
         }
     }
-
               if(goodSpot==true)
-              {   a++;
+              {a++;
                   std::cout<<"City Made On "<<x<<", "<<y<<"\n";
                    A=new city(cityWidth,cityHeight);
-                for(double b=0; b<cityHeight; b++)
-                {
-                    for(int c=0; c<cityWidth; c++)
-                    {
-                        tileMap[0][b][c]=A->tileMap[0][b][c];
-                        tileMap[1][b][c]=A->tileMap[1][b][c];
-                    }
-                }
+                   cityList.push_back(A);
+
 
               }
 
