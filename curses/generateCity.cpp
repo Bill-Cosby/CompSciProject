@@ -6,8 +6,10 @@
 #include <vector>
 #include <random>
 
-city::city(int w, int h)
+city::city(int w, int h, int X0, int Y0)
 {
+    x0=X0;
+    y0=Y0;
 width=w; height=h; left=0; 0; right=width-1; top=height-1; seed=std::chrono::system_clock::now().time_since_epoch().count(); generator.seed(seed);
 setTileMap();
 divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road drawing

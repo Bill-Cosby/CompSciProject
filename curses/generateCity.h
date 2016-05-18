@@ -33,7 +33,7 @@ int left;
 int bottom;
 int top;
 
-box(){left = 0;right =0;top=0;bottom=0;}
+box(){left = 0;right=0;top=0;bottom=0;}
 void divideBox(int, std::vector<std::vector<std::vector<tile*> > > &, std::string, std::mt19937 &);
 void makeLine(road*, std::vector<std::vector<std::vector<tile*> > > &, int, std::string, std::mt19937 &);
 void makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, std::mt19937 &);
@@ -49,7 +49,9 @@ unsigned seed;
 std::vector<std::vector<std::vector<tile*> > >  tileMap;
 int width;
 int height;
-city(int w, int h);
+int x0;
+int y0;
+city(int w, int h, int X0, int Y0);
 void setTileMap();
 
 //~city();

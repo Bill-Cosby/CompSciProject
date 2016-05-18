@@ -9,9 +9,9 @@
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=50;
-    height=100;
-    width=100;
+    zoomOut=1;
+    height=10;
+    width=10;
     mesh=30;
     citiesNeeded=5;
     makeElevationMap();
@@ -209,29 +209,35 @@ double q=b*mesh+d;
       }
       }
       }
+
       bool leftCheck;
       bool bottomCheck;
       bool rightCheck;
-      bool bottomCheck;
-      for(int z=0; z<cityList.size(); city++)
+      bool topCheck;
+      for(int z=0; z<cityList.size(); z++)
       {
             leftCheck=false;
             bottomCheck=false;
             rightCheck=false;
-            bottomCheck;=false;
-          if(mesh*(centergridx-1)<=city[z]->left and city[z]->left<mesh*(centergridx-1))
-             {
-                leftCheck=true
-             }
-          else if (mesh*(centergridx-1)<=city[z]->right and city[z]->right<mesh*(centergridx-1))
-          {
+            topCheck=false;
+            int Left=cityList[z]->left+cityList[z]->x0;
+            int Right=cityList[z]->right+cityList[z]->x0;
+            int Bottom=cityList[z]->bottom+cityList[z]->y0;
+            int Top=cityList[z]->top+cityList[z]->y0;
+
+          if(mesh*(centergridx-1)<=Left and Left<mesh*(centergridx+1))
+            {
+                leftCheck=true;
+            }
+          else if (mesh*(centergridx-1)<=Right and Right<mesh*(centergridx+1))
+            {
               rightCheck=true;
-          }
-          if(mesh*(centergridy-1)<=city[z]->bottom and city[z]->bottom<mesh*(centergridy-1))
-          {
+            }
+          if(mesh*(centergridy-1)<=Bottom and Bottom<mesh*(centergridy+1))
+            {
               bottomCheck=true;
-          }
-          else if(mesh*(centergridy-1)<=city[z]->top and city[z]->top<mesh*(centergridy-1))
+            }
+          else if(mesh*(centergridy-1)<=Top and Top<mesh*(centergridy+1))
              {
                 topCheck=true;
              }
@@ -239,11 +245,24 @@ double q=b*mesh+d;
 
              if((topCheck==true and leftCheck==true) or(topCheck==true and rightCheck==true) or (bottomCheck==true and leftCheck==true) or (bottomCheck and rightCheck==true))
              {
-                 return true;
-             }
-             else
-             {
-                 return false;
+std::cout<<"DDDDDDDDD \n";
+                 for(int w=Bottom; w<=Top; w++)
+                 {
+                     if(mesh*(centergridy-1)<=w and w<mesh*(centergridy+1))
+                     {
+                         for(int v=Left; v<=Right;v++)
+                        {
+                         if(mesh*(centergridx-1)<=v and v<mesh*(centergridx+1))
+                         {
+                             tileMap[0][w-(centergridy-1)*mesh][v-(centergridx-1)*mesh]=cityList[z]->tileMap[0][w-Bottom][v-Left];
+                             tileMap[0][w-(centergridy-1)*mesh][v-(centergridx-1)*mesh]->position=coordinate(v,w);
+                             tileMap[1][w-(centergridy-1)*mesh][v-(centergridx-1)*mesh]=cityList[z]->tileMap[1][w-Bottom][v-Left];
+                             tileMap[1][w-(centergridy-1)*mesh][v-(centergridx-1)*mesh]->position=coordinate(v,w);
+                         }
+                        }
+                     }
+
+                 }
              }
       }
   }
@@ -265,7 +284,7 @@ int cityHeight=50;
  city* A;
  double elevationHere;
  int counter=0;
-    for(int a=0; a<citiesNeeded and counter<1000*citiesNeeded;counter++)
+    for(int a=0; a<citiesNeeded and counter<50000*citiesNeeded;counter++)
     {
     x=chooseTestx(generator);
     y=chooseTesty(generator);
@@ -275,7 +294,7 @@ int cityHeight=50;
         for(double c=0; c<cityWidth; c++)
         {
             elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
-           if(sandBelow>=elevationHere or dirtBelow<=elevationHere) //or tileMap[0][b][c]->isCity==true
+           if(false)//sandBelow>=elevationHere or dirtBelow<=elevationHere or tileMap[0][b][c]->isCity==true
            {
                goodSpot=false;
                break;
@@ -287,14 +306,14 @@ int cityHeight=50;
         }
     }
               if(goodSpot==true)
-              {a++;
+              {
+                  a++;
                   std::cout<<"City Made On "<<x<<", "<<y<<"\n";
-                   A=new city(cityWidth,cityHeight);
-                   cityList.push_back(A);
+                  A=new city(cityWidth, cityHeight,x,y);
+                  cityList.push_back(A);
 
 
               }
-
     }
 }
 
