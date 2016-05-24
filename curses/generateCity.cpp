@@ -17,6 +17,7 @@ divideBox(5,tileMap, "ROADBOX", generator); //recursive box dividing and road dr
 
 void city::setTileMap()
 {
+
 tileMap.resize(2);
 tileMap[0].resize(height);
 tileMap[1].resize(height);
