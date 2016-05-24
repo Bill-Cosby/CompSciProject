@@ -9,11 +9,11 @@
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=1;
+    zoomOut=.2;
     height=10;
     width=10;
     mesh=30;
-    citiesNeeded=10;
+    citiesNeeded=20;
     makeElevationMap();
     placeCities();
     fillMap();
@@ -272,17 +272,21 @@ int cityHeight=50;
  city* A;
  double elevationHere;
  int counter=0;
-    for(int a=0; a<citiesNeeded and counter<2000*citiesNeeded;counter++)
-    {
+    for(int a=0; a<citiesNeeded and counter<30000;counter++)
+    {//
     x=chooseTestx(generator);
     y=chooseTesty(generator);
+   // std::cout<<"X "<<x<<" Y "<<y<<" \n";
+
     goodSpot=true;
+    if(!occupiedByCity(x,y))
+    {
     for(double b=0; b<cityHeight; b++)
     {
         for(double c=0; c<cityWidth; c++)
         {
             elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
-           if(sandBelow>=elevationHere or dirtBelow<=elevationHere) //or tileMap[0][b][c]->isCity==true
+           if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
            {
                goodSpot=false;
                break;
@@ -293,16 +297,29 @@ int cityHeight=50;
             break;
         }
     }
-              if(goodSpot==true)
-              {
+
+                if(goodSpot==true)
+              {std::cout<<counter <<"\n";
                   a++;
                   std::cout<<"City Made On "<<x<<", "<<y<<"\n";
-                  A=new city(cityWidth, cityHeight,x,y);
+                  A=new city(cityWidth,cityHeight,x,y);
                   cityList.push_back(A);
 
-
               }
+        }
     }
+}
+
+bool tiles::occupiedByCity(int x,int y)
+{
+    for(int z=0; z<cityList.size(); z++)
+    { //std::cout<<"X "<<cityList[z]->left<<" Y "<<cityList[z]->bottom<<" Z "<<z<<"\n";
+        if(2*cityList[z]->x0-(cityList[z]->x0+cityList[z]->right)<=x and x<=cityList[z]->right+cityList[z]->x0 and 2*cityList[z]->y0-(cityList[z]->y0+cityList[z]->top)<=y and y<=cityList[z]->top+cityList[z]->y0)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 tiles::~tiles()

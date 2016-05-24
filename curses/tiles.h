@@ -32,7 +32,7 @@ public:
     noise::module::ScaleBias oceanTerrain;
     noise::module::Select finalTerrain_;
     noise::module::Select finalTerrain;
-
+bool occupiedByCity(int,int);
    void fillMap();
    void makeElevationMap();
     int mod(signed int, int);
