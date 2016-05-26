@@ -36,7 +36,7 @@ consumable::consumable(int _speed, int _defense, int _health, std::string _name,
     sprite.setPosition(x*16,y*16);
 }
 
-weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value)
+weapon::weapon(std::string _name, char _symbol, int _x, int _y, int _value )
 {
     value=_value;
     health=0;

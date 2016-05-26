@@ -253,12 +253,20 @@ double q=b*mesh+d;
                  }
              }
       }
+
+      /*for(int m=0; m<localItems.size(); m++)
+      {
+          if(mesh*(centrgridx-1)<=localItem[m].x and localItem[m].x<mesh*(centergridx+2) and mesh*(centrgridy-1)<=localItem[m].y and localItem[m].y<mesh*(centergridy+2))
+          {
+              tileMap[1][localItem[m].y-mesh*(centergridy-1)][localItem[m].x-mesh*(centergridx-1)]
+          }
+      }*/
   }
 
 
 
 
-void tiles::placeCities()
+void tiles::placeCitiesandSprings()
 {
 int cityWidth=50;
 int cityHeight=50;
@@ -272,15 +280,17 @@ int cityHeight=50;
  city* A;
  double elevationHere;
  int counter=0;
-    for(int a=0; a<citiesNeeded and counter<30000;counter++)
+    for(int a=0, int b=0; a<citiesNeeded and b<springsNeeded and counter<30000;counter++)
     {//
     x=chooseTestx(generator);
     y=chooseTesty(generator);
    // std::cout<<"X "<<x<<" Y "<<y<<" \n";
 
-    goodSpot=true;
+    goodSpotforCity=true;
+    goodSpotforSpring=true;
     if(!occupiedByCity(x,y))
     {
+
     for(double b=0; b<cityHeight; b++)
     {
         for(double c=0; c<cityWidth; c++)

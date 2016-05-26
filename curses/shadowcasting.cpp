@@ -1,7 +1,7 @@
 #include "shadowcasting.h"
 
 
-void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, unsigned int radius, unsigned int row,
+void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, int xdisplace, int ydisplace, unsigned int radius, unsigned int row,
                 float start_slope, float end_slope, unsigned int xx, unsigned int xy, unsigned int yx, unsigned int yy, sf::RenderWindow &window, sf::RenderStates &renderState)
 {
     if (start_slope < end_slope)return;
@@ -39,10 +39,10 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                         int k=0;
                         int l=ay;
                         int m=ax;
-                   _map[0][ay][ax]->drawTile(window, renderState);
+                    _map[0][ay][ax]->drawTile(window, renderState);//if(ax==30)std::cout<<"ay "<<ay<<" ax "<<ax<< " \n";
                     _map[0][ay][ax]->litHere = true;
-                    for (item* _i : localItems){
-                        if (_i->x == ax and _i->y == ay){
+                    for (item* _i : localItems){std::string Q="boat";
+                        if (_i->x-xdisplace+2 == ax and _i->y-ydisplace+2 == ay){
                             _i->draw(window);
                         }
                     }
@@ -67,7 +67,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                         _map[1][ay][ax]->drawTile(window, renderState);
                         _map[1][ay][ax]->litHere = true;
                         blocked = true;
-                        cast_light(_map,localItems,x,y,radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);
+                        cast_light(_map,localItems,x,y,xdisplace, ydisplace, radius,i+1,start_slope,l_slope,xx,xy,yx,yy,window, renderState);
                         next_start_slope = r_slope;
                     }
 
@@ -158,6 +158,7 @@ std::vector<coordinate> findEnemies(std::vector<std::vector<std::vector<tile*> >
         int dy = -i;
         unsigned int radius2 = radius * radius;
         for (int dx = -i;dx <= 0; dx++){
+
             float l_slope = (dx - .5) / (dy + .5);
             float r_slope =  (dx + .5) / (dy - .5);
 
@@ -166,7 +167,7 @@ std::vector<coordinate> findEnemies(std::vector<std::vector<std::vector<tile*> >
             else if (end_slope > l_slope)break;
 
             int sax = dx * xx + dy * xy;
-            int say =  dx * yx + dy * yy;
+            int say = dx * yx + dy * yy;
 
             if ((sax < 0 and (unsigned int)std::abs(sax) > x) or (say < 0 and (unsigned int)std::abs(say) > y)){
                 continue;
@@ -208,10 +209,10 @@ std::vector<coordinate> findEnemies(std::vector<std::vector<std::vector<tile*> >
     }
 }
 
-void do_fov(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
+void do_fov(std::vector<std::vector<std::vector<tile*> > > &_map, std::vector<item*> &localItems, unsigned int x, unsigned int y, int xdisplace, int ydisplace, unsigned int radius, sf::RenderWindow &window, sf::RenderStates &renderState, bool castingLight, float intensity, float decreaseBy)
 {
     for (unsigned int i = 0; i < 8; i++){
-        cast_light(_map,localItems,x,y,radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window, renderState);
+        cast_light(_map,localItems,x,y, xdisplace, ydisplace, radius,1,1.0,0.0,multipliers[0][i],multipliers[1][i],multipliers[2][i],multipliers[3][i], window, renderState);
     }
 }
 

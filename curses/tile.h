@@ -15,7 +15,7 @@ public:
     actor* occupied = nullptr;
 
     int width, height;
-    bool isCity;
+    bool hasBoat;
     bool isDoor;
     bool isContainer;
     bool visible;
@@ -33,7 +33,7 @@ public:
     tile(coordinate,coordinate,int);
     tile(coordinate);
     tile(int hCost, int costSoFar);
-    tile(){isDoor=false;movementCost = 0;_material = "NULL"; isCity=false;};
+    tile(){isDoor=false;movementCost = 0;_material = "NULL"; hasBoat==false;}
 
     std::string giveMaterial(){return _material;}
     void find_material();

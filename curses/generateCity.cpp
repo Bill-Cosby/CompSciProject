@@ -31,11 +31,9 @@ tileMap[1].resize(height);
             tileMap[0][a][b]=new tile(grass,10,"grass",a,b);
             tileMap[0][a][b]->position = coordinate(b,a);
             tileMap[0][a][b]->isDoor = false;
-            tileMap[0][a][b]->isCity=true;
             tileMap[1][a][b]=new tile;
             tileMap[1][a][b]->position = coordinate(b,a);
             tileMap[1][a][b]->isDoor = false;
-            tileMap[1][a][b]->isCity=true;
         }
     }
 }
@@ -186,8 +184,6 @@ void box::makeHouse(std::vector<std::vector<std::vector<tile*> > > & tileMap, st
             }
             tileMap[0][b][a]->position = coordinate(a,b);
             tileMap[1][b][a]->position = coordinate(a,b);
-            tileMap[0][b][a]->isCity=true;
-            tileMap[1][b][a]->isCity=true;
 
         }
     }
@@ -276,14 +272,12 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         else tileMap[1][c][d]=new tile(dc,-1,mat,a,b);
 
                         tileMap[1][c][d]->position = coordinate(d,c);
-                        tileMap[1][c][d]->isCity=true;
                     }
                     else if (type=="ROADBOX")
                     {
 
                             tileMap[0][c][d]=new tile(dc,mc,mat,d,c);
                             tileMap[0][c][d]->position = coordinate(d,c);
-                            tileMap[0][c][d]->isCity=true;
                     }
                 }
 
@@ -310,7 +304,6 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         else tileMap[1][d][c]=new tile(dc,-1,mat,c,d);
 
                         tileMap[1][d][c]->position = coordinate(c,d);
-                        tileMap[1][d][c]->isCity=true;
                     }
 
                     else if (type=="ROADBOX")
@@ -319,7 +312,6 @@ void box::makeLine(road* myLine, std::vector<std::vector<std::vector<tile*> > > 
                         tileMap[0][d][c]=new tile(dc,mc,mat,c,d);
 
                         tileMap[0][d][c]->position = coordinate(c,d);
-                        tileMap[0][d][c]->isCity=true;
                     }
                 }
             }

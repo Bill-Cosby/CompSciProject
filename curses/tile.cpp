@@ -7,7 +7,7 @@ tile::tile(int hC, int cSF)
     gCost=cSF;
     isContainer = false;
     isDoor=false;
-    isCity=false;
+    hasBoat=false;
 }
 
 tile::tile(coordinate pos, coordinate goal, int cSF)
@@ -17,7 +17,7 @@ tile::tile(coordinate pos, coordinate goal, int cSF)
     gCost=cSF;
     isContainer = false;
     isDoor=false;
-    isCity=false;
+    hasBoat=false;
 }
 
 furniture::furniture(int dc, int movementCost, std::string material,int x, int y) : tile(dc,movementCost,material,x,y){}
@@ -90,6 +90,7 @@ tile::tile(coordinate pos){position = pos;}
 
 tile::tile(char dc, int mv, std::string mat, int x, int y) : tile(coordinate(x,y))
 {
+    hasBoat=false;
     _material = mat;
     movementCost = mv;
     defaultchar = dc;

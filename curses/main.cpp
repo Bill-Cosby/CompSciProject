@@ -15,6 +15,9 @@ using namespace std;
 
 int main()
 {
+    item * A=new boat('B',2,2,0);
+
+
    int gridx=0;
    int gridy=0;
     sf::RenderWindow window(sf::VideoMode(800,600), "Curses!");
@@ -104,6 +107,12 @@ int main()
     std::vector<item*> localItems;
 
     localItems.push_back(new boat('B',2,2,0));
+
+   /* for(int k=0; k<localItems.size(); k++)
+        {
+            if (localItems[k]->name=="boat")
+                std::cout<<"FoundBoat"<<std::endl;
+        }*/
 
     std::vector<lightSource*> lights;
     lights.push_back(new lightSource);
@@ -227,6 +236,7 @@ bool waitforplayer = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add) and keyrelease == true){view.zoom(0.5f);keyrelease=false;}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract) and keyrelease == true){view.zoom(2);keyrelease=false;}
 
+
         int activeAI=0;
 
 if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.mesh!=gridy)
@@ -234,6 +244,7 @@ if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.
                 myWorld.updateTileMap(controlledActor->col()/myWorld.mesh, controlledActor->row()/myWorld.mesh);
                 gridx=controlledActor->col()/myWorld.mesh; gridy=controlledActor->row()/myWorld.mesh;
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B) and keyrelease == true and myWorld.tileMap[1][controlledActor->col()-myWorld.mesh*(gridx-1)][controlledActor->row()-myWorld.mesh*(gridy-1)]){}
 
         if (controlledActor->movement(&myWorld.tileMap, localItems, window, keyrelease, announcementList, waitforplayer,myWorld.waterBelow, myWorld.mesh*(gridx-1), myWorld.mesh*(gridy-1))){
             //std::cout<<controlledActor->col()<<", "<<controlledActor->row()<<std::endl;
@@ -271,6 +282,7 @@ if(controlledActor->col()/myWorld.mesh!=gridx or controlledActor->row()/myWorld.
         int yend   = controlledActor->row() + (viewSizeInTiles.y/2);
         int xend   = controlledActor->col() + (viewSizeInTiles.x/2);
         window.setView(view);
+
         gameworld.drawGameworld(myWorld.tileMap, localItems,window,announcementList, renderState, controlledActor,(gridx-1)*myWorld.mesh, (gridy-1)*myWorld.mesh);
     }
         /*for (int i=0;i<myCity.tileMap.size();i++){

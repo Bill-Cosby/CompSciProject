@@ -15,7 +15,7 @@ int b=controlledActor->row();
     item* itemToDraw;
 
     window.clear();
-    do_fov(_map, localItems, startingposition.x, startingposition.y, 15, window, renderState,false,0,0);
+    do_fov(_map, localItems, startingposition.x, startingposition.y, xdisplace, ydisplace, 15, window, renderState,false,0,0);
 
 //std::cout << controlledActor->col() << "," << controlledActor->row() << std::endl;
 
