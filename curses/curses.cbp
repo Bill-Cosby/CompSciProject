@@ -157,6 +157,12 @@
 		<Unit filename="playerActions.cpp" />
 		<Unit filename="shadowcasting.cpp" />
 		<Unit filename="shadowcasting.h" />
+		<Unit filename="spring.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="spring.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="tile.cpp" />
 		<Unit filename="tile.h" />
 		<Unit filename="tiles.cpp" />

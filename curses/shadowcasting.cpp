@@ -31,10 +31,10 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
             }
             unsigned int ax = x + sax;
             unsigned int ay = y + say;
-            if (ax >= _map[1].size() or ay >= _map[1].size()){
-                continue;
-            }
-            else{
+            //if (ax >= _map[1].size() or ay >= _map[1].size()){
+            //    continue;
+           // }
+
                 if ((unsigned int)(dx * dx + dy * dy) < radius2 /*and _map[0][ay][ax]->litHere == false*/){
                         int k=0;
                         int l=ay;
@@ -72,7 +72,7 @@ void cast_light(std::vector<std::vector<std::vector<tile*> > > &_map, std::vecto
                     }
 
                 }
-            }
+
         }
         if (blocked)break;
     }

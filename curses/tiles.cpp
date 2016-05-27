@@ -5,6 +5,7 @@
 #include <vector>
 #include <chrono>
 #include "generateCity.h"
+#include "spring.h"
 
 using namespace noise;
 tiles::tiles()
@@ -13,9 +14,10 @@ tiles::tiles()
     height=10;
     width=10;
     mesh=30;
-    citiesNeeded=20;
+    citiesNeeded=1;
+    springsNeeded=50;
     makeElevationMap();
-    placeCities();
+    placeCitiesandSprings();
     fillMap();
 
 
@@ -167,9 +169,14 @@ std::string tiles::findTileType(double elevation)
         return "white";//snow
     }
 }
+
+
 void tiles::updateTileMap(int centergridx, int centergridy)
 {
-
+int xstart=mesh*(centergridx-1);
+int ystart=mesh*(centergridy-1);
+int xend=mesh*(centergridx+2);
+int yend=mesh*(centergridy+2);
   for(signed int a=0; a<3; a++)
   {
     for(int b=0; b<3; b++)
@@ -203,6 +210,29 @@ double q=b*mesh+d;
       bool bottomCheck;
       bool rightCheck;
       bool topCheck;
+      std::vector<spring*> someWhatLocalSprings;
+      for(int z=0; z<springList.size(); z++)
+      {
+          if(xstart-200<springList[z]->x0 and ystart-200<springList[z]->y0 and xend+200>springList[z]->x0 and yend+200>springList[z]->y0)
+          {
+              someWhatLocalSprings.push_back(springList[z]);
+          }
+      }
+     // std::cout<<"Somewhat local spring size "<<someWhatLocalSprings.size()<<" \n";
+      for(int z=0; z<someWhatLocalSprings.size(); z++)
+      {
+            for(int m=0; m<someWhatLocalSprings[z]->wetTiles.size(); m++)
+            {
+                double x=someWhatLocalSprings[z]->wetTiles[m].x;
+                double y=someWhatLocalSprings[z]->wetTiles[m].y;
+                if(xstart<=x and ystart<=y and xend>x and yend>y)
+                {
+                    tileMap[1][y-ystart][x-xstart]=new tile(grass,0,"waterColor",x,y);
+                    std::cout<<"HERE"<<std::endl;
+                }
+            }
+      }
+
       for(int z=0; z<cityList.size(); z++)
       {
             leftCheck=false;
@@ -276,48 +306,63 @@ int cityHeight=50;
      std::uniform_int_distribution<int> chooseTesty(0,mesh*height-cityHeight);
  int x;
  int y;
- bool goodSpot;
+ bool goodSpotforCity;
+ bool goodSpotforSpring;
  city* A;
  double elevationHere;
  int counter=0;
-    for(int a=0, int b=0; a<citiesNeeded and b<springsNeeded and counter<30000;counter++)
+    for(int a=0, b=0; (a<citiesNeeded or b<springsNeeded) and counter<20000; counter++)
     {//
     x=chooseTestx(generator);
     y=chooseTesty(generator);
    // std::cout<<"X "<<x<<" Y "<<y<<" \n";
-
     goodSpotforCity=true;
     goodSpotforSpring=true;
-    if(!occupiedByCity(x,y))
-    {
 
-    for(double b=0; b<cityHeight; b++)
+elevationHere=finalTerrain.GetValue(zoomOut*(x)/(mesh*width),zoomOut*(y)/(mesh*height), 0.5);
+//std::cout<<"GrassBelow "<<grassBelow<< " elevationHere "<<elevationHere<<" \n" ;
+
+      if(sandBelow<elevationHere and b<springsNeeded)
+      {
+          goodSpotforSpring=true;
+          b++;
+          spring * S=new spring(x,y);
+          makeSpring(S);
+          springList.push_back(S);
+      }
+
+    else if(!occupiedByCity(x,y))
     {
+     if(a<citiesNeeded)
+    {
+        for(double b=0; b<cityHeight; b++)
+     {
         for(double c=0; c<cityWidth; c++)
         {
             elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
-           if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
-           {
-               goodSpot=false;
-               break;
-           }
-        }
-        if(goodSpot==false)
-        {
-            break;
-        }
-    }
 
-                if(goodSpot==true)
-              {std::cout<<counter <<"\n";
+            if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
+             {
+               goodSpotforCity=false;
+               break;
+             }
+        }
+        if(goodSpotforCity==false)
+         {
+            break;
+         }
+       }
+     }
+
+                if(goodSpotforCity==true)
+                {
                   a++;
                   std::cout<<"City Made On "<<x<<", "<<y<<"\n";
                   A=new city(cityWidth,cityHeight,x,y);
                   cityList.push_back(A);
-
-              }
-        }
+                }
     }
+  }
 }
 
 bool tiles::occupiedByCity(int x,int y)
@@ -330,6 +375,57 @@ bool tiles::occupiedByCity(int x,int y)
         }
     }
     return false;
+}
+
+void tiles::makeSpring(spring * Spring)
+{
+    int x=Spring->x0;
+    int y=Spring->y0;
+    std::cout<<"Spring made at " <<x<<" "<<y<<" \n";
+
+
+     std::vector<double> surroundingElevations;
+    bool riverFlowing=true;
+    std::cout<<"AAA \n";
+    while(riverFlowing)
+    {
+    coordinate D0(x,y);
+    coordinate D1(x+1,y);
+    coordinate D2(x,y+1);
+    coordinate D3(x-1,y);
+    coordinate D4(x,y+1);
+        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D0.x)/(mesh*width),zoomOut*(D0.y)/(mesh*height), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D1.x)/(mesh*width),zoomOut*(D1.y)/(mesh*height), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D2.x)/(mesh*width),zoomOut*(D2.y)/(mesh*height), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D3.x)/(mesh*width),zoomOut*(D3.y)/(mesh*height), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D4.x)/(mesh*width),zoomOut*(D4.y)/(mesh*height), 0.5));
+        double lowestSurroundingElevation=100;
+        int k=0;
+        for(int b=0; b<surroundingElevations.size(); b++)
+        {
+            if(surroundingElevations[b]<lowestSurroundingElevation)
+            {
+                lowestSurroundingElevation=surroundingElevations[b];
+                k=b;
+            }
+
+        }
+std::cout<<"CCC \n";
+        if(k==0) {Spring->wetTiles.push_back(D0); x=D0.x; y=D0.y;}
+        if(k==1) {Spring->wetTiles.push_back(D1); x=D1.x; y=D1.y;}
+        if(k==2) {Spring->wetTiles.push_back(D2); x=D2.x; y=D2.y;}
+        if(k==3) {Spring->wetTiles.push_back(D3); x=D3.x; y=D3.y;}
+        if(k==4) {Spring->wetTiles.push_back(D4); x=D4.x; y=D4.y;}
+
+        if(lowestSurroundingElevation<waterBelow or k==0)
+        {
+           riverFlowing=false;
+        }
+
+surroundingElevations.clear();
+    }
+    std::cout<<"BBB \n";
+
 }
 
 tiles::~tiles()

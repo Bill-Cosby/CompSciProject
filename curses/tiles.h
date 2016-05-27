@@ -7,17 +7,20 @@
 #include <noise/noise.h>
 #include "noiseutils.h"
 #include "generateCity.h"
+#include "spring.h"
 
 class tiles
 {
 public:
     std::vector<std::vector<std::vector<tile*> > > tileMap;
     std::vector<city*> cityList;
+    std::vector<spring*> springList;
     int height;
     int width;
     int mesh;
     double zoomOut;
     int citiesNeeded;
+    int springsNeeded;
     const double darkWaterBelow=-.4;
     const double waterBelow =-.2;
     const double sandBelow =-.15;
@@ -38,8 +41,9 @@ bool occupiedByCity(int,int);
     int mod(signed int, int);
  std::string findTileType(double elevation);
 void updateTileMap(int,int);
-void placeCities();
+void placeCitiesandSprings();
 
+void makeSpring (spring *);
 
 
 tiles();
