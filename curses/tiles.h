@@ -18,7 +18,7 @@ public:
     int height;
     int width;
     int mesh;
-    double zoomOut;
+    double zoomIn;
     int citiesNeeded;
     int springsNeeded;
     const double darkWaterBelow=-.4;
@@ -28,6 +28,7 @@ public:
     const double dirtBelow = .6;
     const double rockBelow = .9;
     noise::module::Perlin preLandTerrain1;
+    noise::module::Perlin prelandTerrain1;
     noise::module::ScaleBias landTerrain1;
     noise::module::Perlin preLandTerrain2;
     noise::module::ScaleBias landTerrain2;

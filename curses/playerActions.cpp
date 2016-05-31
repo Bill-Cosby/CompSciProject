@@ -3,6 +3,7 @@
 bool player::movement(std::vector<std::vector<std::vector<tile*> > > *_map,std::vector<item*> &localItems, sf::RenderWindow &window, bool &keyrelease, announcements & announcementList, bool &waitforplayer, const double waterBelow, int xdisplace, int ydisplace)
 
 {
+    //std::cout<<x<<" "<<y<<"\n";
     /*
     0 = NORTH
     1 = CENTER

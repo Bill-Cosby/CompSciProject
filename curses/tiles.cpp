@@ -10,15 +10,17 @@
 using namespace noise;
 tiles::tiles()
 {
-    zoomOut=.2;
-    height=10;
-    width=10;
+    zoomIn=10;
+    height=50;
+    width=50;
     mesh=30;
     citiesNeeded=1;
-    springsNeeded=50;
+    springsNeeded=200;
+    srand(time(NULL));
     makeElevationMap();
     placeCitiesandSprings();
     fillMap();
+
 
 
 
@@ -61,11 +63,13 @@ void tiles::fillMap()
 
 void tiles::makeElevationMap()
 {
-srand(time(NULL));
 
     preLandTerrain1.SetFrequency(1);
     preLandTerrain1.SetSeed(rand());
+    preLandTerrain1.SetOctaveCount(9);
+    preLandTerrain1.SetPersistence(0.7);
 
+    //preLandterrain1.SetFrequency(16);
 
     landTerrain1.SetSourceModule(0,preLandTerrain1);
     landTerrain1.SetBias(-0.1);
@@ -80,7 +84,7 @@ srand(time(NULL));
     landTerrain2.SetBias(-0.2);
 
 
-    preOceanTerrain.SetFrequency(32);
+    preOceanTerrain.SetFrequency(10);
 
 
     oceanTerrain.SetSourceModule(0,preOceanTerrain);
@@ -173,11 +177,12 @@ std::string tiles::findTileType(double elevation)
 
 void tiles::updateTileMap(int centergridx, int centergridy)
 {
+
 int xstart=mesh*(centergridx-1);
 int ystart=mesh*(centergridy-1);
 int xend=mesh*(centergridx+2);
 int yend=mesh*(centergridy+2);
-  for(signed int a=0; a<3; a++)
+  for(int a=0; a<3; a++)
   {
     for(int b=0; b<3; b++)
       {
@@ -191,7 +196,7 @@ double q=b*mesh+d;
             double x=mesh*(centergridx-1+a)+c;
             double y=mesh*(centergridy-1+b)+d;
 
-            double elevation=finalTerrain.GetValue(x*zoomOut/(width*mesh), y*zoomOut/(height*mesh), 0.5);
+            double elevation=finalTerrain.GetValue(x/(mesh*zoomIn), y/(mesh*zoomIn), 0.5);
             tileMap[0][q][p]=new tile(grass,0,findTileType(elevation),x,y);
             tileMap[0][q][p]->elevation=elevation;
             tileMap[0][q][p]->position.x=x;
@@ -213,7 +218,7 @@ double q=b*mesh+d;
       std::vector<spring*> someWhatLocalSprings;
       for(int z=0; z<springList.size(); z++)
       {
-          if(xstart-200<springList[z]->x0 and ystart-200<springList[z]->y0 and xend+200>springList[z]->x0 and yend+200>springList[z]->y0)
+          if(xstart-100<springList[z]->x0 and ystart-100<springList[z]->y0 and xend+100>springList[z]->x0 and yend+100>springList[z]->y0)
           {
               someWhatLocalSprings.push_back(springList[z]);
           }
@@ -227,8 +232,8 @@ double q=b*mesh+d;
                 double y=someWhatLocalSprings[z]->wetTiles[m].y;
                 if(xstart<=x and ystart<=y and xend>x and yend>y)
                 {
-                    tileMap[1][y-ystart][x-xstart]=new tile(grass,0,"waterColor",x,y);
-                    std::cout<<"HERE"<<std::endl;
+                    tileMap[0][y-ystart][x-xstart]=new tile(grass,0,"lightblue",x,y);
+
                 }
             }
       }
@@ -302,8 +307,8 @@ int cityWidth=50;
 int cityHeight=50;
     unsigned seed=std::chrono::system_clock::now().time_since_epoch().count();
      std::mt19937 generator(seed);
-     std::uniform_int_distribution<int> chooseTestx(0,mesh*width-cityWidth);
-     std::uniform_int_distribution<int> chooseTesty(0,mesh*height-cityHeight);
+     std::uniform_int_distribution<int> chooseTestx(0,mesh*zoomIn-cityWidth);
+     std::uniform_int_distribution<int> chooseTesty(0,mesh*zoomIn-cityHeight);
  int x;
  int y;
  bool goodSpotforCity;
@@ -319,10 +324,10 @@ int cityHeight=50;
     goodSpotforCity=true;
     goodSpotforSpring=true;
 
-elevationHere=finalTerrain.GetValue(zoomOut*(x)/(mesh*width),zoomOut*(y)/(mesh*height), 0.5);
+elevationHere=finalTerrain.GetValue((x)/(mesh*zoomIn),(y)/(mesh*zoomIn), 0.5);
 //std::cout<<"GrassBelow "<<grassBelow<< " elevationHere "<<elevationHere<<" \n" ;
 
-      if(sandBelow<elevationHere and b<springsNeeded)
+      if(sandBelow-.02<elevationHere and b<springsNeeded)
       {
           goodSpotforSpring=true;
           b++;
@@ -334,12 +339,12 @@ elevationHere=finalTerrain.GetValue(zoomOut*(x)/(mesh*width),zoomOut*(y)/(mesh*h
     else if(!occupiedByCity(x,y))
     {
      if(a<citiesNeeded)
-    {
+      {
         for(double b=0; b<cityHeight; b++)
      {
         for(double c=0; c<cityWidth; c++)
         {
-            elevationHere=finalTerrain.GetValue(zoomOut*(x+c)/(mesh*width),zoomOut*(y+b)/(mesh*height), 0.5);
+            elevationHere=finalTerrain.GetValue((x+c)/(mesh*zoomIn),(y+b)/(mesh*zoomIn), 0.5);
 
             if(sandBelow>=elevationHere or dirtBelow<=elevationHere)
              {
@@ -381,50 +386,80 @@ void tiles::makeSpring(spring * Spring)
 {
     int x=Spring->x0;
     int y=Spring->y0;
-    std::cout<<"Spring made at " <<x<<" "<<y<<" \n";
 
+std::cout<<"Spring made \n";
 
      std::vector<double> surroundingElevations;
     bool riverFlowing=true;
-    std::cout<<"AAA \n";
-    while(riverFlowing)
+    for(int d=0;  d<50 and riverFlowing; d++)//
     {
+
     coordinate D0(x,y);
     coordinate D1(x+1,y);
     coordinate D2(x,y+1);
     coordinate D3(x-1,y);
     coordinate D4(x,y+1);
-        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D0.x)/(mesh*width),zoomOut*(D0.y)/(mesh*height), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D1.x)/(mesh*width),zoomOut*(D1.y)/(mesh*height), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D2.x)/(mesh*width),zoomOut*(D2.y)/(mesh*height), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D3.x)/(mesh*width),zoomOut*(D3.y)/(mesh*height), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue(zoomOut*(D4.x)/(mesh*width),zoomOut*(D4.y)/(mesh*height), 0.5));
-        double lowestSurroundingElevation=100;
+        surroundingElevations.push_back(finalTerrain.GetValue((D0.x)/(mesh*zoomIn),(D0.y)/(mesh*zoomIn), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue((D1.x)/(mesh*zoomIn),(D1.y)/(mesh*zoomIn), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue((D2.x)/(mesh*zoomIn),(D2.y)/(mesh*zoomIn), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue((D3.x)/(mesh*zoomIn),(D3.y)/(mesh*zoomIn), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue((D4.x)/(mesh*zoomIn),(D4.y)/(mesh*zoomIn), 0.5));
+
+        int temp;
         int k=0;
-        for(int b=0; b<surroundingElevations.size(); b++)
+        int R;
+        std::vector<int> tileOrder;
+        bool H=true;
+        for(int e=0; e<5; e++)
         {
-            if(surroundingElevations[b]<lowestSurroundingElevation)
+           tileOrder.push_back(e);
+        }
+
+        for(int f=0; f<4; f++)
+        {
+            H=false;
+        for(int b=0; b<tileOrder.size()-1-f; b++)
+          {
+            if(surroundingElevations[tileOrder[b]]>surroundingElevations[tileOrder[b+1]])
             {
-                lowestSurroundingElevation=surroundingElevations[b];
-                k=b;
+                temp=tileOrder[b];
+                tileOrder[b]=tileOrder[b+1];
+                tileOrder[b+1]=temp;
+                H=true;
             }
 
+          }
+
         }
-std::cout<<"CCC \n";
+
+        R=rand()%1000;
+        if(R<=800)
+        {
+            k=tileOrder[0];
+        }
+        else if (R<=930)
+        {
+            k=tileOrder[1];
+        }
+         else
+        {
+            k=tileOrder[2];
+        }
+
+
         if(k==0) {Spring->wetTiles.push_back(D0); x=D0.x; y=D0.y;}
         if(k==1) {Spring->wetTiles.push_back(D1); x=D1.x; y=D1.y;}
         if(k==2) {Spring->wetTiles.push_back(D2); x=D2.x; y=D2.y;}
         if(k==3) {Spring->wetTiles.push_back(D3); x=D3.x; y=D3.y;}
         if(k==4) {Spring->wetTiles.push_back(D4); x=D4.x; y=D4.y;}
 
-        if(lowestSurroundingElevation<waterBelow or k==0)
+        if(surroundingElevations[k]<waterBelow )//or(0==tileOrder[0] and 1==tileOrder[1])
         {
            riverFlowing=false;
         }
 
 surroundingElevations.clear();
     }
-    std::cout<<"BBB \n";
 
 }
 
