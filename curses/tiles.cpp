@@ -399,11 +399,11 @@ std::cout<<"Spring made \n";
     coordinate D2(x,y+1);
     coordinate D3(x-1,y);
     coordinate D4(x,y+1);
-        surroundingElevations.push_back(finalTerrain.GetValue((D0.x)/(mesh*zoomIn),(D0.y)/(mesh*zoomIn), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue((D1.x)/(mesh*zoomIn),(D1.y)/(mesh*zoomIn), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue((D2.x)/(mesh*zoomIn),(D2.y)/(mesh*zoomIn), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue((D3.x)/(mesh*zoomIn),(D3.y)/(mesh*zoomIn), 0.5));
-        surroundingElevations.push_back(finalTerrain.GetValue((D4.x)/(mesh*zoomIn),(D4.y)/(mesh*zoomIn), 0.5));
+        surroundingElevations.push_back(finalTerrain.GetValue((D0.x)/(mesh*zoomIn),(D0.y)/(mesh*zoomIn), 0.5)+Spring->findHeight(D0));
+        surroundingElevations.push_back(finalTerrain.GetValue((D1.x)/(mesh*zoomIn),(D1.y)/(mesh*zoomIn), 0.5)+Spring->findHeight(D1));
+        surroundingElevations.push_back(finalTerrain.GetValue((D2.x)/(mesh*zoomIn),(D2.y)/(mesh*zoomIn), 0.5)+Spring->findHeight(D2));
+        surroundingElevations.push_back(finalTerrain.GetValue((D3.x)/(mesh*zoomIn),(D3.y)/(mesh*zoomIn), 0.5)+Spring->findHeight(D3));
+        surroundingElevations.push_back(finalTerrain.GetValue((D4.x)/(mesh*zoomIn),(D4.y)/(mesh*zoomIn), 0.5)+Spring->findHeight(D4));
 
         int temp;
         int k=0;
@@ -437,7 +437,7 @@ std::cout<<"Spring made \n";
         {
             k=tileOrder[0];
         }
-        else if (R<=930)
+        else if (R<=940)
         {
             k=tileOrder[1];
         }
@@ -447,13 +447,13 @@ std::cout<<"Spring made \n";
         }
 
 
-        if(k==0) {Spring->wetTiles.push_back(D0); x=D0.x; y=D0.y;}
-        if(k==1) {Spring->wetTiles.push_back(D1); x=D1.x; y=D1.y;}
-        if(k==2) {Spring->wetTiles.push_back(D2); x=D2.x; y=D2.y;}
-        if(k==3) {Spring->wetTiles.push_back(D3); x=D3.x; y=D3.y;}
-        if(k==4) {Spring->wetTiles.push_back(D4); x=D4.x; y=D4.y;}
+        if(k==0) { x=D0.x; y=D0.y; Spring->wetTileHeights.push_back(Spring->findHeight(D0)+.01); Spring->wetTiles.push_back(D0);}
+        if(k==1) { x=D1.x; y=D1.y; Spring->wetTileHeights.push_back(Spring->findHeight(D1)+.01); Spring->wetTiles.push_back(D1);}
+        if(k==2) { x=D2.x; y=D2.y; Spring->wetTileHeights.push_back(Spring->findHeight(D2)+.01); Spring->wetTiles.push_back(D2);}
+        if(k==3) { x=D3.x; y=D3.y; Spring->wetTileHeights.push_back(Spring->findHeight(D3)+.01); Spring->wetTiles.push_back(D3);}
+        if(k==4) { x=D4.x; y=D4.y; Spring->wetTileHeights.push_back(Spring->findHeight(D4)+.01); Spring->wetTiles.push_back(D4);}
 
-        if(surroundingElevations[k]<waterBelow )//or(0==tileOrder[0] and 1==tileOrder[1])
+        if(surroundingElevations[k]<waterBelow)//or(0==tileOrder[0] and 1==tileOrder[1])
         {
            riverFlowing=false;
         }

@@ -8,6 +8,7 @@ class spring
     int x0;
     int y0;
     std::vector<coordinate> wetTiles;
+    double findHeight(coordinate);
     spring(int x, int y){x0=x; y0=y; coordinate E(x0,y0); wetTiles.push_back(E);}
 };
 
